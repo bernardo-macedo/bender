@@ -1,15 +1,13 @@
-//============================================================================
-// Name        : trabalho1.cpp
-// Author      : Pedro
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
 #include <iostream>
-using namespace std;
+#include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_mixer.h"
+#include "SDL_ttf.h"
+#include "GameRenderer.h"
 
-int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
-	return 0;
+using namespace std;
+int main (int argc, char** argv) {
+	GameRenderer *gm = new GameRenderer("Teste", 500, 500);
+	gm->Run();
+    return 0;
 }

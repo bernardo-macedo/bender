@@ -1,0 +1,3 @@
+int WINDOW_FAIL = 0;
+int RENDERER_FAIL = 1;
+int IMG_LOAD_FAIL = 2;
