@@ -29,6 +29,7 @@ public:
 	SDL_Renderer* GetRenderer();
 	State* GetState();
 	static GameRenderer* GetInstance();
+	void SetStateManager(State* s);
 };
 
 #endif /* ENGINE_GAMERENDERER_H_ */

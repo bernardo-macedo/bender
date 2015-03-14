@@ -4,11 +4,13 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 #include "Engine/GameRenderer.h"
+#include "MyState.h"
 
 using namespace std;
 int main (int argc, char** argv) {
 	try{
-		GameRenderer *gm = new GameRenderer("Teste", 500, 500);
+		GameRenderer *gm = new GameRenderer("IdeiaGlimpse", 500, 500);
+		gm->SetStateManager(new MyState());
 		gm->Run();
 	}catch(int e){
 		switch(e){

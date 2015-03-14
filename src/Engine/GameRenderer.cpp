@@ -10,6 +10,7 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
+#include "Physics/Physic.h"
 
 #include "GameRenderer.h"
 
@@ -32,12 +33,13 @@ GameRenderer::GameRenderer(string title, int width, int height) {
 		throw WINDOW_FAIL;
 	}
 
-	this->renderer = SDL_CreateRenderer (window , -1, 0);
+	this->renderer = SDL_CreateRenderer (window , -1, SDL_RENDERER_ACCELERATED);
 	if(this->renderer == NULL){
 		throw RENDERER_FAIL;
 	}
+	new Physic();
 
-	state = new State();
+
 }
 
 GameRenderer::~GameRenderer() {
@@ -72,4 +74,9 @@ void GameRenderer::Run() {
 		SDL_RenderPresent(renderer);
 		SDL_Delay(17);
 	}
+}
+
+void GameRenderer::SetStateManager(State* s) {
+	this->state = s;
+	this->state->initialize();
 }
