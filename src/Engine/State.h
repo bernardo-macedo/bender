@@ -9,7 +9,7 @@
 #define ENGINE_STATE_H_
 
 #include "SDL.h"
-#include "Sprite.h";
+#include "Sprite.h"
 
 class State {
 private:
