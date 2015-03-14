@@ -6,7 +6,9 @@
  */
 
 #include "Sprite.h"
+#include "GameRenderer.h"
 
+using namespace std;
 Sprite::Sprite() {
 	texture = NULL;
 }
@@ -24,8 +26,10 @@ void Sprite::Open(std::string file) {
 	if(IsOpen()){
 		SDL_DestroyTexture(texture);
 	}
-	texture = IMG_LoadTexture (GameRenderer::GetInstance()->GetRenderer(), file.c_str());
+	SDL_Renderer* renderer = GameRenderer::GetInstance()->GetRenderer();
+	texture = IMG_LoadTexture (renderer, file.c_str());
 	if(texture == NULL){
+		cout << SDL_GetError() << endl;
 		throw IMG_LOAD_FAIL;
 	}
 

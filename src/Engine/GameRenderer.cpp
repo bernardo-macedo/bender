@@ -4,11 +4,19 @@
  *  Created on: 13/03/2015
  *      Author: Pedro
  */
+#include <iostream>
+
+#include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_mixer.h"
+#include "SDL_ttf.h"
 
 #include "GameRenderer.h"
 
+
 using namespace std;
 
+GameRenderer* GameRenderer::instance = NULL;
 int GameRenderer::SCREEN_WIDTH = 500;
 int GameRenderer::SCREEN_HEIGHT = 500;
 
@@ -16,7 +24,7 @@ GameRenderer::GameRenderer(string title, int width, int height) {
 	if(instance == NULL){
 		instance = this;
 	}
-	state = new State();
+
 	init();
 	this->window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 			SCREEN_WIDTH, SCREEN_HEIGHT, 0);
@@ -29,6 +37,7 @@ GameRenderer::GameRenderer(string title, int width, int height) {
 		throw RENDERER_FAIL;
 	}
 
+	state = new State();
 }
 
 GameRenderer::~GameRenderer() {
@@ -57,9 +66,9 @@ GameRenderer* GameRenderer::GetInstance() {
 }
 
 void GameRenderer::Run() {
-	while(!state->quitRequested()){
+	while(!state->QuitRequested()){
 		state->Update();
-		state->Render();
+		state->Render(renderer);
 		SDL_RenderPresent(renderer);
 		SDL_Delay(17);
 	}

@@ -13,14 +13,14 @@
 
 class State {
 private:
-	Sprite bg;
+	Sprite* bg;
 	bool quitRequested;
 public:
 	State();
 
 	bool QuitRequested();
 	void Update();
-	void Render();
+	void Render(SDL_Renderer* renderer);
 };
 
 #endif /* ENGINE_STATE_H_ */

@@ -8,9 +8,9 @@
 #ifndef ENGINE_SPRITE_H_
 #define ENGINE_SPRITE_H_
 
+#include <iostream>
 #include "SDL.h"
 #include "SDL_image.h"
-#include "GameRenderer.h"
 #include "Exceptions.h"
 
 class Sprite {
