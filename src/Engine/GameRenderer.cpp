@@ -68,7 +68,7 @@ GameRenderer* GameRenderer::GetInstance() {
 void GameRenderer::Run() {
 	while(!state->QuitRequested()){
 		state->Update();
-		state->Render(renderer);
+		state->Render();
 		SDL_RenderPresent(renderer);
 		SDL_Delay(17);
 	}

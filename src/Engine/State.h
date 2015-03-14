@@ -20,7 +20,7 @@ public:
 
 	bool QuitRequested();
 	void Update();
-	void Render(SDL_Renderer* renderer);
+	void Render();
 };
 
 #endif /* ENGINE_STATE_H_ */

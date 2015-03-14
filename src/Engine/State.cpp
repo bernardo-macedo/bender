@@ -22,6 +22,6 @@ void State::Update() {
 	}
 }
 
-void State::Render(SDL_Renderer* renderer) {
+void State::Render() {
 	bg->Render(0, 0);
 }
