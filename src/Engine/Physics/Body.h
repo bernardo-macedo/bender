@@ -9,11 +9,14 @@
 #define ENGINE_PHYSICS_BODY_H_
 
 #include "../Drawable.h"
+#include "Force.h"
+#include <list>
 
 class Body : public Drawable{
 private:
 	float velX, velY;
 	float accelX, accelY;
+	std::list<Force*> forces;
 public:
 	Body(std::string id, float x, float y) : Drawable(id, x, y){
 		velX = 0;
@@ -32,6 +35,10 @@ public:
 	void setVelX(float velX);
 	float getVelY() const;
 	void setVelY(float velY);
+
+	std::list<Force*> GetForces();
+	void ApplyForce(Force* f);
+	void removeForce(std::string id);
 };
 
 #endif /* ENGINE_PHYSICS_BODY_H_ */

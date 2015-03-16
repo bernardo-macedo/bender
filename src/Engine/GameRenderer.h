@@ -21,6 +21,7 @@ private:
 public:
 	static int SCREEN_WIDTH;
 	static int SCREEN_HEIGHT;
+	static int FPS;
 
 	GameRenderer(std::string title, int width, int height);
 	virtual ~GameRenderer();

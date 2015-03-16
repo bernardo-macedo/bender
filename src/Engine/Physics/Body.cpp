@@ -45,3 +45,20 @@ void Body::setVelY(float velY) {
 	this->velY = velY;
 }
 
+std::list<Force*> Body::GetForces() {
+	return forces;
+}
+
+void Body::ApplyForce(Force* f) {
+	forces.push_back(f);
+}
+
+void Body::removeForce(std::string id) {
+	for(std::list<Force*>::iterator i = forces.begin(); i != forces.end(); i++){
+		Force* f = (Force*)*i;
+		if(f->GetId().compare(id) == 0){
+			forces.remove(f);
+			break;
+		}
+	}
+}

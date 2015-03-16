@@ -14,8 +14,12 @@
 using namespace std;
 
 State::State() {
+	board = {};
 	quitRequested = false;
-	bg = new Sprite("ocean.jpg");
+}
+
+State::~State(){
+
 }
 
 bool State::QuitRequested() {
@@ -26,10 +30,14 @@ void State::Update() {
 	if(SDL_QuitRequested()){
 		quitRequested = true;
 	}
-	for(list<Drawable*>::iterator i = board.begin(); i != board.end(); i++){
-		Drawable* d = (Drawable*)*i;
-		if(d->IsPhysicalBody()){
-			Physic::GetInstance()->UpdatePhysic((Body*)d);
+
+	ProcessEvents();
+
+	if(!board.empty()){
+		for(Drawable* d : board){
+			if(d->IsPhysicalBody()){
+				Physic::GetInstance()->UpdatePhysic((Body*)d);
+			}
 		}
 	}
 }
@@ -60,6 +68,19 @@ void State::Add(Drawable* d){
 Drawable* State::GetById(string id) {
 	for(list<Drawable*>::iterator i = board.begin(); i != board.end(); i++){
 		Drawable* d = (Drawable*)*i;
-		cout << d->getId() << endl;
+		if(d->getId().compare(id) == 0){
+			return d;
+		}
+	}
+	return NULL;
+}
+
+void State::ProcessEvents(){
+	while (SDL_PollEvent(&event)) {
+		switch(event.type){
+		case SDL_MOUSEBUTTONDOWN:
+			OnMouseDown(event);
+			break;
+		}
 	}
 }

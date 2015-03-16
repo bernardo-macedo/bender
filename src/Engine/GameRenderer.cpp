@@ -18,8 +18,10 @@
 using namespace std;
 
 GameRenderer* GameRenderer::instance = NULL;
+
 int GameRenderer::SCREEN_WIDTH = 500;
 int GameRenderer::SCREEN_HEIGHT = 500;
+int GameRenderer::FPS = 60;
 
 GameRenderer::GameRenderer(string title, int width, int height) {
 	if(instance == NULL){
@@ -72,7 +74,7 @@ void GameRenderer::Run() {
 		state->Update();
 		state->Render();
 		SDL_RenderPresent(renderer);
-		SDL_Delay(17);
+		SDL_Delay(1000/FPS);
 	}
 }
 

@@ -15,14 +15,18 @@
 
 class State {
 private:
-	Sprite* bg;
 	bool quitRequested;
 	std::list<Drawable*> board;
+	SDL_Event event;
 public:
 	virtual void Setup() = 0;
 	virtual void OnRender() = 0;
 
+	/*Events*/
+	virtual void OnMouseDown(SDL_Event event) = 0;
+
 	State();
+	virtual ~State();
 
 	void Add(Drawable* d);
 	Drawable* GetById(std::string id);
@@ -30,6 +34,7 @@ public:
 	void Update();
 	void Render();
 	void initialize();
+	void ProcessEvents();
 };
 
 #endif /* ENGINE_STATE_H_ */

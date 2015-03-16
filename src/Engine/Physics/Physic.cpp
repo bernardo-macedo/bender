@@ -6,7 +6,7 @@
  */
 
 #include "Physic.h"
-
+using namespace std;
 Physic* Physic::instance = NULL;
 Physic::Physic(){
 	if(instance == NULL){
@@ -19,13 +19,27 @@ Physic::~Physic() {
 }
 
 void Physic::UpdatePhysic(Body* b){
+	int count = 0;
+	if(!(b->GetForces()).empty()){
+		Force* resulting = new Force("result", 0, 0);
+		for(Force* f : (b->GetForces())){
+			//Force* f = (Force*)*i;
+			resulting->SetX(resulting->GetX() + f->GetX());
+			resulting->SetY(resulting->GetY() + f->GetY());
+		}
+		b->setAccelX(resulting->GetX());
+		b->setAccelY(resulting->GetY());
+	}
+
 	b->setVelX(b->getVelX() + b->getAccelX());
 	b->setVelY(b->getVelY() + b->getAccelY());
 	b->setX(b->getX() + b->getVelX());
 	b->setY(b->getY() + b->getVelY());
+
+	b->setAccelX(0);
+	b->setAccelY(0);
 }
 
 Physic* Physic::GetInstance(){
 	return instance;
 }
-

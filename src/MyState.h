@@ -12,11 +12,15 @@
 #include "Drone.h"
 
 class MyState: public State {
+private:
+	bool applied;
 public:
+	MyState();
 	virtual ~MyState();
 
 	void OnRender();
 	void Setup();
+	void OnMouseDown(SDL_Event event);
 };
 
 #endif /* MYSTATE_H_ */

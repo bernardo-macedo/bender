@@ -7,8 +7,10 @@
 
 #ifndef ENGINE_PHYSICS_PHYSIC_H_
 #define ENGINE_PHYSICS_PHYSIC_H_
-
+#include <iostream>
+#include <list>
 #include "Body.h"
+#include "Force.h"
 
 class Physic {
 public:
