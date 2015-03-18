@@ -29,6 +29,9 @@ void Physic::UpdatePhysic(Body* b){
 		}
 		b->setAccelX(resulting->GetX());
 		b->setAccelY(resulting->GetY());
+
+		b->SetAngularVel(b->GetAngularVel() + b->GetAngularAccel());
+		b->setRotation(b->getRotation() + b->GetAngularVel());
 	}
 
 	b->setVelX(b->getVelX() + b->getAccelX());

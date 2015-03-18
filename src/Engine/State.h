@@ -21,6 +21,7 @@ private:
 public:
 	virtual void Setup() = 0;
 	virtual void OnRender() = 0;
+	virtual void ClearScreen(int red, int green, int blue, int alpha);
 
 	/*Events*/
 	virtual void OnMouseDown(SDL_Event event) = 0;

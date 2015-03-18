@@ -9,15 +9,22 @@
 #define DRONE_H_
 
 #include "Engine/Geometry/Rectangle.h"
-class Drone : public Rectangle{
+#include "Engine/Sprite.h"
+class Drone : public Sprite{
+private:
 public:
 	static int WIDTH;
 	static int HEIGHT;
 
-	Drone(std::string id, float x, float y) : Rectangle(id, x, y, WIDTH, HEIGHT){}
+	Drone(std::string id, float x, float y) : Sprite(id, x, y){
+		Open("ocean.jpg");
+		SetClip(0, 0, WIDTH, HEIGHT);
+	}
 	void Update();
 	bool IsDead();
 	virtual ~Drone();
+
+	Sprite* GetSprite();
 };
 
 #endif /* DRONE_H_ */

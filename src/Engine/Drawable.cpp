@@ -12,8 +12,7 @@ Drawable::Drawable(string id, float x, float y) {
 	this->id = id;
 	this->x = x;
 	this->y = y;
-	rotationX = 0;
-	rotationY = 0;
+	rotation = 0;
 	SetPhysicalBody(false);
 	red = 255;
 	green = 255;
@@ -25,20 +24,12 @@ Drawable::~Drawable() {
 	// TODO Auto-generated destructor stub
 }
 
-float Drawable::getRotationX() const {
-	return rotationX;
+float Drawable::getRotation() const {
+	return rotation;
 }
 
-void Drawable::setRotationX(float rotationX) {
-	this->rotationX = rotationX;
-}
-
-float Drawable::getRotationY() const {
-	return rotationY;
-}
-
-void Drawable::setRotationY(float rotationY) {
-	this->rotationY = rotationY;
+void Drawable::setRotation(float rotation) {
+	this->rotation = rotation;
 }
 
 float Drawable::getX() const {
@@ -82,4 +73,11 @@ void Drawable::SetColor(int r, int g, int b, int a) {
 	green = g;
 	blue = b;
 	alpha = a;
+}
+SDL_Texture* Drawable::GetTexture() {
+	return texture;
+}
+
+void Drawable::SetTexture(SDL_Texture* texture) {
+	this->texture = texture;
 }

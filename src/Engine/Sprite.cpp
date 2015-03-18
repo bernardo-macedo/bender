@@ -9,14 +9,6 @@
 #include "GameRenderer.h"
 
 using namespace std;
-Sprite::Sprite() {
-	texture = NULL;
-}
-
-Sprite::Sprite(std::string file) {
-	texture = NULL;
-	Open(file);
-}
 
 Sprite::~Sprite() {
 	SDL_DestroyTexture(texture);
@@ -45,13 +37,14 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 	clipRect.w = w;
 }
 
-void Sprite::Render(int x, int y) {
+void Sprite::OnRender() {
+	SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL;
 	SDL_Rect rect;
-	rect.x = x;
-	rect.y = y;
+	rect.x = getX();
+	rect.y = getY();
 	rect.h = clipRect.h;
 	rect.w = clipRect.w;
-	SDL_RenderCopy(GameRenderer::GetInstance()->GetRenderer(), texture, &clipRect, &rect);
+	SDL_RenderCopyEx( GameRenderer::GetInstance()->GetRenderer(), texture, &clipRect, &rect, getRotation(), NULL, flip);
 }
 
 int Sprite::GetWidth() {
@@ -64,4 +57,9 @@ int Sprite::GetHeight() {
 
 bool Sprite::IsOpen() {
 	return open;
+}
+
+void Sprite::SetCenter(int cX, int cY) {
+	center.x = cX;
+	center.y = cY;
 }

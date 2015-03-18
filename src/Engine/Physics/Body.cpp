@@ -53,6 +53,22 @@ void Body::ApplyForce(Force* f) {
 	forces.push_back(f);
 }
 
+void Body::SetAngularVel(float vel) {
+	this->angularVel = vel;
+}
+
+float Body::GetAngularVel() {
+	return angularVel;
+}
+
+void Body::SetAngularAccel(float accel) {
+	this->angularAccel = accel;
+}
+
+float Body::GetAngularAccel() {
+	return angularAccel;
+}
+
 void Body::removeForce(std::string id) {
 	for(std::list<Force*>::iterator i = forces.begin(); i != forces.end(); i++){
 		Force* f = (Force*)*i;

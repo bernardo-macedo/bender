@@ -16,6 +16,8 @@ class Body : public Drawable{
 private:
 	float velX, velY;
 	float accelX, accelY;
+
+	float angularVel, angularAccel;
 	std::list<Force*> forces;
 public:
 	Body(std::string id, float x, float y) : Drawable(id, x, y){
@@ -23,6 +25,8 @@ public:
 		velY = 0;
 		accelX = 0;
 		accelY = 0;
+		angularVel = 0;
+		angularAccel = 0;
 		SetPhysicalBody(true);
 	}
 	virtual ~Body();
@@ -35,6 +39,11 @@ public:
 	void setVelX(float velX);
 	float getVelY() const;
 	void setVelY(float velY);
+	void SetAngularVel(float vel);
+	float GetAngularVel();
+	void SetAngularAccel(float accel);
+	float GetAngularAccel();
+
 
 	std::list<Force*> GetForces();
 	void ApplyForce(Force* f);

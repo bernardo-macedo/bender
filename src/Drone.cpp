@@ -16,7 +16,6 @@ Drone::~Drone() {
 }
 
 void Drone::Update(){
-	SetColor(red, green - 6, blue, alpha);
 }
 
 bool Drone::IsDead(){

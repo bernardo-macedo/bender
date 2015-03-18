@@ -81,3 +81,13 @@ void State::ProcessEvents(){
 		}
 	}
 }
+
+void State::ClearScreen(int red, int green, int blue, int alpha){
+	SDL_Rect r;
+	SDL_SetRenderDrawColor(GameRenderer::GetInstance()->GetRenderer(), red, green, blue, alpha);
+	r.x = 0;
+	r.y = 0;
+	r.w = GameRenderer::SCREEN_WIDTH;
+	r.h = GameRenderer::SCREEN_HEIGHT;
+	SDL_RenderFillRect(GameRenderer::GetInstance()->GetRenderer(), &r);
+}
