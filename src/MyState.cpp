@@ -17,6 +17,8 @@ MyState::~MyState(){
 }
 
 void MyState::Setup(){
+	bg = new Sprite("ocean.jpg");
+	bg->SetClip(0, 0, 100, 100);
 	Drone* d = new Drone("teste", 0, 0);
 	Drone* d2 = new Drone("teste2", GameRenderer::SCREEN_WIDTH - Drone::WIDTH, 0);
 	d->ApplyForce(new Force("gravity", 0, 0.2));
@@ -26,6 +28,7 @@ void MyState::Setup(){
 }
 
 void MyState::OnRender(){
+	bg->Render(0, 0);
 	Drone* d = (Drone*)GetById("teste");
 	if(d->getY() >= 200 && !applied){
 		d->ApplyForce(new Force("antigravity", 0, -0.4));

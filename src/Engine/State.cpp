@@ -47,13 +47,7 @@ void State::initialize(){
 }
 
 void State::Render() {
-	SDL_Rect r;
-	r.h = GameRenderer::SCREEN_HEIGHT;
-	r.w = GameRenderer::SCREEN_WIDTH;
-	r.x = 0;
-	r.y = 0;
-	SDL_SetRenderDrawColor(GameRenderer::GetInstance()->GetRenderer(), 0, 0, 0, 200);
-	SDL_RenderFillRect(GameRenderer::GetInstance()->GetRenderer(), &r);
+	OnRender();
 	for(GameObject* go : board){
 		if(go->IsDead()){
 			board.remove(go);
@@ -63,7 +57,6 @@ void State::Render() {
 			go->Render();
 		}
 	}
-	OnRender();
 }
 
 void State::Add(GameObject* go){
@@ -71,8 +64,7 @@ void State::Add(GameObject* go){
 }
 
 Drawable* State::GetById(string id) {
-	for(list<GameObject*>::iterator i = board.begin(); i != board.end(); i++){
-		GameObject* go = (GameObject*)*i;
+	for(GameObject* go : board){
 		if(go->getId().compare(id) == 0){
 			return go;
 		}

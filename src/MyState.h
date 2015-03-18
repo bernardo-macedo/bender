@@ -14,6 +14,7 @@
 class MyState: public State {
 private:
 	bool applied;
+	Sprite *bg;
 public:
 	MyState();
 	virtual ~MyState();
