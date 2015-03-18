@@ -34,9 +34,9 @@ void State::Update() {
 	ProcessEvents();
 
 	if(!board.empty()){
-		for(Drawable* d : board){
-			if(d->IsPhysicalBody()){
-				Physic::GetInstance()->UpdatePhysic((Body*)d);
+		for(GameObject* go : board){
+			if(go->IsPhysicalBody()){
+				Physic::GetInstance()->UpdatePhysic((Body*)go);
 			}
 		}
 	}
@@ -54,22 +54,27 @@ void State::Render() {
 	r.y = 0;
 	SDL_SetRenderDrawColor(GameRenderer::GetInstance()->GetRenderer(), 0, 0, 0, 200);
 	SDL_RenderFillRect(GameRenderer::GetInstance()->GetRenderer(), &r);
-	for(list<Drawable*>::iterator i = board.begin(); i != board.end(); i++){
-		Drawable* d = (Drawable*)*i;
-		d->Render();
+	for(GameObject* go : board){
+		if(go->IsDead()){
+			board.remove(go);
+		}
+		else{
+			go->Update();
+			go->Render();
+		}
 	}
 	OnRender();
 }
 
-void State::Add(Drawable* d){
-	board.push_back(d);
+void State::Add(GameObject* go){
+	board.push_back(go);
 }
 
 Drawable* State::GetById(string id) {
-	for(list<Drawable*>::iterator i = board.begin(); i != board.end(); i++){
-		Drawable* d = (Drawable*)*i;
-		if(d->getId().compare(id) == 0){
-			return d;
+	for(list<GameObject*>::iterator i = board.begin(); i != board.end(); i++){
+		GameObject* go = (GameObject*)*i;
+		if(go->getId().compare(id) == 0){
+			return go;
 		}
 	}
 	return NULL;

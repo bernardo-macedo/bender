@@ -8,16 +8,17 @@
 #include "Drone.h"
 #include "SDL.h"
 
+int Drone::WIDTH = 60;
+int Drone::HEIGHT = 20;
+
 Drone::~Drone() {
+
 }
 
-void Drone::OnRender() {
-	SDL_Renderer* renderer = GameRenderer::GetInstance()->GetRenderer();
-	SDL_Rect r;
-	r.w = 60;
-	r.h = 20;
-	r.x = (int)getX();
-	r.y = (int)getY();
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(GameRenderer::GetInstance()->GetRenderer(), &r);
+void Drone::Update(){
+	SetColor(red, green - 6, blue, alpha);
+}
+
+bool Drone::IsDead(){
+	return false;
 }

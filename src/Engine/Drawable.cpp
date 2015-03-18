@@ -15,6 +15,10 @@ Drawable::Drawable(string id, float x, float y) {
 	rotationX = 0;
 	rotationY = 0;
 	SetPhysicalBody(false);
+	red = 255;
+	green = 255;
+	blue = 255;
+	alpha = 1;
 }
 
 Drawable::~Drawable() {
@@ -71,4 +75,11 @@ string Drawable::getID() const {
 
 void Drawable::Render(){
 	OnRender();
+}
+
+void Drawable::SetColor(int r, int g, int b, int a) {
+	red = r;
+	green = g;
+	blue = b;
+	alpha = a;
 }

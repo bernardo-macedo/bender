@@ -17,6 +17,7 @@ private:
 	bool phisicalBody;
 protected:
 	void SetPhysicalBody(bool isBody);
+	int red, green, blue, alpha;
 public:
 	Drawable(std::string id, float x, float y);
 	virtual ~Drawable();
@@ -35,6 +36,8 @@ public:
 	void setID(std::string id);
 	std::string getID() const;
 	bool IsPhysicalBody();
+	void SetColor(int r, int g, int b, int a);
+
 
 	const std::string& getId() const {
 		return id;

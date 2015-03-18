@@ -8,15 +8,16 @@
 #ifndef DRONE_H_
 #define DRONE_H_
 
-#include "Engine/Physics/Body.h"
-#include "Engine/GameRenderer.h"
-
-class Drone: public Body {
+#include "Engine/Geometry/Rectangle.h"
+class Drone : public Rectangle{
 public:
-	Drone(std::string id, float x, float y) : Body(id, x, y){ }
-	virtual ~Drone();
+	static int WIDTH;
+	static int HEIGHT;
 
-	void OnRender();
+	Drone(std::string id, float x, float y) : Rectangle(id, x, y, WIDTH, HEIGHT){}
+	void Update();
+	bool IsDead();
+	virtual ~Drone();
 };
 
 #endif /* DRONE_H_ */

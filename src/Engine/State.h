@@ -11,12 +11,12 @@
 
 #include "SDL.h"
 #include "Sprite.h"
-#include "Drawable.h"
+#include "GameObject.h"
 
 class State {
 private:
 	bool quitRequested;
-	std::list<Drawable*> board;
+	std::list<GameObject*> board;
 	SDL_Event event;
 public:
 	virtual void Setup() = 0;
@@ -28,7 +28,7 @@ public:
 	State();
 	virtual ~State();
 
-	void Add(Drawable* d);
+	void Add(GameObject* go);
 	Drawable* GetById(std::string id);
 	bool QuitRequested();
 	void Update();

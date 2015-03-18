@@ -6,6 +6,7 @@
  */
 
 #include "MyState.h"
+#include "Engine/GameRenderer.h"
 
 MyState::MyState() {
 	applied = false;
@@ -17,8 +18,11 @@ MyState::~MyState(){
 
 void MyState::Setup(){
 	Drone* d = new Drone("teste", 0, 0);
+	Drone* d2 = new Drone("teste2", GameRenderer::SCREEN_WIDTH - Drone::WIDTH, 0);
 	d->ApplyForce(new Force("gravity", 0, 0.2));
 	this->Add(d);
+	this->Add(d2);
+	d2->ApplyForce(new Force("teste", -0.2, 0.2));
 }
 
 void MyState::OnRender(){
