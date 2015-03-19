@@ -24,6 +24,8 @@ public:
 	float GetH();
 	void SetH(float h);
 
+	bool IsInside(float mouseX, float mouseY);
+
 };
 
 #endif /* ENGINE_GEOMETRY_RECT_H_ */

@@ -9,9 +9,10 @@
 #define ENGINE_GAMEOBJECT_H_
 
 #include <iostream>
+#include "Geometry/Rect.h"
 
 class GameObject{
-private:
+protected:
 	Rect box;
 public:
 	virtual ~GameObject();

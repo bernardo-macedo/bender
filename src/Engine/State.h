@@ -8,16 +8,26 @@
 #ifndef ENGINE_STATE_H_
 #define ENGINE_STATE_H_
 
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+
 #include "SDL.h"
 #include "Sprite.h"
+#include "../Face.h"
 
 class State {
 private:
 	Sprite* bg;
 	bool quitRequested;
+	std::vector<GameObject*> objectArray;
 public:
 	State();
+	virtual ~State();
 
+	void Input();
+	void AddObject(float mouseX, float mouseY);
 	bool QuitRequested();
 	void Update();
 	void Render();

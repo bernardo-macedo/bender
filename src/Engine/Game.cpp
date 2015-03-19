@@ -1,5 +1,5 @@
 /*
- * GameRenderer.cpp
+ * Game.cpp
  *
  *  Created on: 13/03/2015
  *      Author: Pedro
@@ -11,16 +11,16 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
-#include "GameRenderer.h"
+#include "Game.h"
 
 
 using namespace std;
 
-GameRenderer* GameRenderer::instance = NULL;
-int GameRenderer::SCREEN_WIDTH = 500;
-int GameRenderer::SCREEN_HEIGHT = 500;
+Game* Game::instance = NULL;
+int Game::SCREEN_WIDTH = 500;
+int Game::SCREEN_HEIGHT = 500;
 
-GameRenderer::GameRenderer(string title, int width, int height) {
+Game::Game(string title, int width, int height) {
 	if(instance == NULL){
 		instance = this;
 	}
@@ -40,32 +40,32 @@ GameRenderer::GameRenderer(string title, int width, int height) {
 	state = new State();
 }
 
-GameRenderer::~GameRenderer() {
+Game::~Game() {
 	IMG_Quit();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 }
 
-void GameRenderer::init() {
+void Game::init() {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
 	Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG);
 	TTF_Init();
 }
 
-SDL_Renderer* GameRenderer::GetRenderer() {
+SDL_Renderer* Game::GetRenderer() {
 	return renderer;
 }
 
-State* GameRenderer::GetState() {
+State* Game::GetState() {
 	return state;
 }
 
-GameRenderer* GameRenderer::GetInstance() {
+Game* Game::GetInstance() {
 	return instance;
 }
 
-void GameRenderer::Run() {
+void Game::Run() {
 	while(!state->QuitRequested()){
 		state->Update();
 		state->Render();
