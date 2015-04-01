@@ -12,12 +12,12 @@
 Face::Face(int x, int y) {
 	int newX, newY, angle;
 
-	angle = (int)(rand() % 360);
+	angle = (rand() % 360);
 	newX = x + 200*cos(angle);
 	newY = y + 200*sin(angle);
 
 
-	sp = new Sprite("penguin.png");
+	sp = new Sprite("penguinface.png");
 	box.SetX(newX - sp->GetWidth()/2);
 	box.SetY(newY - sp->GetHeight()/2);
 	box.SetW(sp->GetWidth());
