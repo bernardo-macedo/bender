@@ -21,6 +21,9 @@ int main (int argc, char** argv) {
 		case IMG_LOAD_FAIL:
 			cout << "Erro ao abrir uma imagem!" << endl;
 			break;
+		case INDEX_OUT_OF_RANGE:
+			cout << "Indice invalido" << endl;
+			break;
 		}
 	}
     return 0;
