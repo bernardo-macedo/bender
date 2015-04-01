@@ -3,12 +3,12 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
-#include "Engine/GameRenderer.h"
+#include "Engine/Game.h"
 
 using namespace std;
 int main (int argc, char** argv) {
 	try{
-		GameRenderer *gm = new GameRenderer("Teste", 500, 500);
+		Game *gm = new Game("Teste", 500, 500);
 		gm->Run();
 	}catch(int e){
 		switch(e){

@@ -6,7 +6,7 @@
  */
 
 #include "Sprite.h"
-#include "GameRenderer.h"
+#include "Game.h"
 
 using namespace std;
 Sprite::Sprite() {
@@ -26,7 +26,7 @@ void Sprite::Open(std::string file) {
 	if(IsOpen()){
 		SDL_DestroyTexture(texture);
 	}
-	SDL_Renderer* renderer = GameRenderer::GetInstance()->GetRenderer();
+	SDL_Renderer* renderer = Game::GetInstance()->GetRenderer();
 	texture = IMG_LoadTexture (renderer, file.c_str());
 	if(texture == NULL){
 		cout << SDL_GetError() << endl;
@@ -51,7 +51,7 @@ void Sprite::Render(int x, int y) {
 	rect.y = y;
 	rect.h = clipRect.h;
 	rect.w = clipRect.w;
-	SDL_RenderCopy(GameRenderer::GetInstance()->GetRenderer(), texture, &clipRect, &rect);
+	SDL_RenderCopy(Game::GetInstance()->GetRenderer(), texture, &clipRect, &rect);
 }
 
 int Sprite::GetWidth() {
