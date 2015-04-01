@@ -9,8 +9,6 @@
 #define ENGINE_STATE_H_
 
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
 #include <vector>
 
 #include "SDL.h"

@@ -6,11 +6,20 @@
  */
 
 #include "Face.h"
+#include <cstdlib>
+#include <math.h>
 
 Face::Face(int x, int y) {
+	int newX, newY, angle;
+
+	angle = (int)(rand() % 360);
+	newX = x + 200*cos(angle);
+	newY = y + 200*sin(angle);
+
+
 	sp = new Sprite("penguin.png");
-	box.SetX(x - sp->GetWidth()/2);
-	box.SetY(y - sp->GetHeight()/2);
+	box.SetX(newX - sp->GetWidth()/2);
+	box.SetY(newY - sp->GetHeight()/2);
 	box.SetW(sp->GetWidth());
 	box.SetH(sp->GetHeight());
 	hitPoints = 30;
