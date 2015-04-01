@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 
 #include "SDL.h"
 #include "Sprite.h"
@@ -19,7 +20,7 @@ class State {
 private:
 	Sprite* bg;
 	bool quitRequested;
-	std::vector<GameObject*> objectArray;
+	std::vector<std::unique_ptr<GameObject>> objectArray;
 public:
 	State();
 	virtual ~State();

@@ -34,11 +34,11 @@ void State::Update() {
 void State::Render() {
 	bg->Render(0, 0);
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
-		if(((GameObject*)objectArray[i])->IsDead()){
+		if((objectArray[i])->IsDead()){
 			objectArray.erase(objectArray.begin() + i);
 		}
 		else{
-			((GameObject*)objectArray[i])->Render();
+			objectArray[i]->Render();
 		}
 	}
 }
@@ -68,11 +68,11 @@ void State::Input(){
 
 			// Percorrer de trás pra frente pra sempre clicar no objeto mais de cima
 			for(int i = objectArray.size() - 1; i >= 0; --i) {
-				Face* face = (Face*) objectArray[i];
+				Face* face = (Face*) objectArray[i].get();
 
 				if(face->GetBox().IsInside((float)mouseX, (float)mouseY)) {
 					achouFace = true;
-					face->Damage((int)(rand() % 10 + 10));
+					face->Damage((rand() % 10 + 10));
 					break;
 				}
 			}
