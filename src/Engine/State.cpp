@@ -12,7 +12,7 @@
 
 State::State() {
 	quitRequested = false;
-	bg = new Sprite("ocean.jpg");
+	bg = new Sprite("img/ocean.jpg");
 	srand(time(NULL));
 }
 

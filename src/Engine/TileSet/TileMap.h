@@ -8,6 +8,10 @@
 #ifndef ENGINE_TILESET_TILEMAP_H_
 #define ENGINE_TILESET_TILEMAP_H_
 
+#include <iostream>
+#include <vector>
+#include "TileSet.h"
+
 class TileMap {
 private:
 	std::vector<int> tileMatrix ;

@@ -4,11 +4,13 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 #include "Engine/Game.h"
+#include "Engine/TileSet/TileMap.h"
 
 using namespace std;
 int main (int argc, char** argv) {
 	try{
-		Game *gm = new Game("Teste", 500, 500);
+		Game *gm = new Game("Pedro Henrique Leal - 100019226", 1024, 600);
+		TileMap *t = new TileMap("map/tileMap.txt", new TileSet(50, 50, "img/penguinface.png"));
 		gm->Run();
 	}catch(int e){
 		switch(e){
