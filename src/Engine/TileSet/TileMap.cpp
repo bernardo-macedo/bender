@@ -42,14 +42,23 @@ int& TileMap::At(int x, int y, int z) {
 }
 
 void TileMap::Render(int cameraX, int cameraY) {
-
+	for(int i = 0; i < mapDepth; i++){
+		for(int j = 0; j < mapHeight; j++){
+			for(int h = 0; h < mapWidth; h++){
+				tileSet->Render(At(h, j, i), h*(tileSet->GetTileWidth()), j*(tileSet->GetTileHeight()));
+			}
+		}
+	}
 }
 
 int TileMap::GetWidth() {
+	return mapWidth;
 }
 
 int TileMap::GetHeight() {
+	return mapHeight;
 }
 
 int TileMap::GetDepth() {
+	return mapDepth;
 }

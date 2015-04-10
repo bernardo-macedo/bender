@@ -15,15 +15,18 @@ TileSet::TileSet(int tileWidth, int tileHeight, std::string file) {
 	this->rows = tileSet->GetHeight()/this->tileHeight;
 }
 
-void TileSet::Render(unsigned index, float x, float y) {
+void TileSet::Render(int index, float x, float y) {
 	float xt, yt;
-	if(index > (unsigned)(rows*columns - 1)){
+	if(index > (rows*columns - 1)){
 		throw INDEX_OUT_OF_RANGE;
 	}
 	else{
-		xt = index % columns;
-		yt = index / columns;
+		xt = (index-1) % columns;
+		yt = (index-1) / columns;
 		tileSet->SetClip(xt*tileWidth, yt*tileHeight, tileWidth, tileHeight);
+		if(index > 0){
+			tileSet->Render(x, y);
+		}
 	}
 }
 

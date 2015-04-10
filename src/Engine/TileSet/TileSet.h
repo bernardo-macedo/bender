@@ -21,7 +21,7 @@ private:
 public:
 	TileSet();
 	TileSet (int tileWidth,	int tileHeight, std::string file);
-	void Render (unsigned index, float x, float y);
+	void Render (int index, float x, float y);
 	int GetTileWidth ();
 	int GetTileHeight();
 };

@@ -11,6 +11,8 @@
 #include "State.h"
 
 State::State() {
+	tileSet = new TileSet(64, 64, "img/tileset.png");
+	tileMap = new TileMap("map/tileMap.txt", tileSet);
 	quitRequested = false;
 	bg = new Sprite("img/ocean.jpg");
 	srand(time(NULL));
@@ -32,7 +34,7 @@ void State::Update() {
 }
 
 void State::Render() {
-	bg->Render(0, 0);
+	tileMap->Render(0, 0);
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
 		if((objectArray[i])->IsDead()){
 			objectArray.erase(objectArray.begin() + i);
