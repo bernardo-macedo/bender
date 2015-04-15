@@ -15,12 +15,17 @@
 #include "SDL.h"
 #include "Sprite.h"
 #include "../Face.h"
+#include "TileSet/TileSet.h"
+#include "TileSet/TileMap.h"
+#include "Resources.h"
 
 class State {
 private:
 	Sprite* bg;
 	bool quitRequested;
 	std::vector<std::unique_ptr<GameObject>> objectArray;
+	TileSet *tileSet;
+	TileMap *tileMap;
 public:
 	State();
 	virtual ~State();

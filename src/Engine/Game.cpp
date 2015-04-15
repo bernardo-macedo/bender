@@ -24,7 +24,8 @@ Game::Game(string title, int width, int height) {
 	if(instance == NULL){
 		instance = this;
 	}
-
+	Game::SCREEN_HEIGHT = height;
+	Game::SCREEN_WIDTH = width;
 	init();
 	this->window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 			SCREEN_WIDTH, SCREEN_HEIGHT, 0);
