@@ -19,19 +19,10 @@ Sprite::Sprite(std::string file) {
 }
 
 Sprite::~Sprite() {
-	SDL_DestroyTexture(texture);
 }
 
 void Sprite::Open(std::string file) {
-	if(IsOpen()){
-		SDL_DestroyTexture(texture);
-	}
-	SDL_Renderer* renderer = Game::GetInstance()->GetRenderer();
-	texture = IMG_LoadTexture (renderer, file.c_str());
-	if(texture == NULL){
-		cout << SDL_GetError() << endl;
-		throw IMG_LOAD_FAIL;
-	}
+	texture = Resources::GetImage(file);
 
 	SDL_QueryTexture (texture , NULL, NULL, &width, &height);
 	SetClip(0, 0, width, height);

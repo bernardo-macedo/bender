@@ -17,6 +17,7 @@
 #include "../Face.h"
 #include "TileSet/TileSet.h"
 #include "TileSet/TileMap.h"
+#include "Resources.h"
 
 class State {
 private:
