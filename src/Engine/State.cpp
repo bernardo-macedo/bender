@@ -81,7 +81,7 @@ void State::Update() {
 
 void State::Render() {
 	bg->Render(0, 0);
-	tileMap->Render(camera->pos.getX(), camera->pos.getY());
+	tileMap->Render(0, 1, camera->pos.getX(), camera->pos.getY());
 	for(int i = 0; i < objectArray.size(); i++) {
 		if((objectArray[i])->IsDead()){
 			objectArray.erase(objectArray.begin() + i);
@@ -90,6 +90,7 @@ void State::Render() {
 			objectArray[i]->Render(camera->pos.getX(), camera->pos.getY());
 		}
 	}
+	tileMap->Render(1, 1, camera->pos.getX(), camera->pos.getY());
 }
 
 void State::AddObject(float mouseX, float mouseY){
