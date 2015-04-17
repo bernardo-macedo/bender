@@ -14,3 +14,8 @@ GameObject::~GameObject() {
 Rect GameObject::GetBox(){
 	return box;
 }
+
+void GameObject::SetPos(int x, int y) {
+	box.SetX(x);
+	box.SetY(y);
+}

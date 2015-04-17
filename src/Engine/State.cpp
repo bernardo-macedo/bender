@@ -9,6 +9,15 @@
 #include <ctime>
 
 #include "State.h"
+#include "InputManager.h"
+#include "Game.h"
+
+#define LEFT_ARROW_KEY SDLK_LEFT
+#define RIGHT_ARROW_KEY SDLK_RIGHT
+#define UP_ARROW_KEY SDLK_UP
+#define DOWN_ARROW_KEY SDLK_DOWN
+#define ESCAPE_KEY SDLK_ESCAPE
+#define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
 
 State::State() {
 	tileSet = new TileSet(64, 64, "img/tileset.png");
@@ -16,6 +25,7 @@ State::State() {
 	quitRequested = false;
 	bg = new Sprite("img/ocean.jpg");
 	srand(time(NULL));
+	camera = new Camera();
 }
 
 State::~State(){
@@ -27,70 +37,61 @@ bool State::QuitRequested() {
 }
 
 void State::Update() {
-	if(SDL_QuitRequested()){
+	int mouseX, mouseY;
+	bool achouFace = false;
+
+	mouseX = InputManager::GetInstance().GetMouseX();
+	mouseY = InputManager::GetInstance().GetMouseY();
+
+	if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
 		quitRequested = true;
 	}
-	Input();
+
+	if(InputManager::GetInstance().MousePress(1)){
+		for(int i = objectArray.size() - 1; i >= 0; --i) {
+			Face* face = (Face*) objectArray[i].get();
+
+			if(face->GetBox().IsInside((float)(mouseX - camera->pos.getX()), (float)(mouseY - camera->pos.getY()))) {
+				achouFace = true;
+				face->Damage((rand() % 10 + 10));
+				break;
+			}
+		}
+		if(!achouFace){
+			AddObject(mouseX - camera->pos.getX(), mouseY - camera->pos.getY());
+		}
+	}
+
+	if(InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY)){
+		camera->pos.setX(camera->pos.getX() - 200*Game::GetInstance()->GetDeltaTime());
+	}
+
+	if(InputManager::GetInstance().IsKeyDown(RIGHT_ARROW_KEY)){
+		camera->pos.setX(camera->pos.getX() + 200*Game::GetInstance()->GetDeltaTime());
+	}
+
+	if(InputManager::GetInstance().IsKeyDown(DOWN_ARROW_KEY)){
+		camera->pos.setY(camera->pos.getY() + 200*Game::GetInstance()->GetDeltaTime());
+	}
+
+	if(InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY)){
+		camera->pos.setY(camera->pos.getY() - 200*Game::GetInstance()->GetDeltaTime());
+	}
 }
 
 void State::Render() {
-	tileMap->Render(0, 0);
-	for(int i = objectArray.size() - 1; i >= 0; --i) {
+	bg->Render(0, 0);
+	tileMap->Render(camera->pos.getX(), camera->pos.getY());
+	for(int i = 0; i < objectArray.size(); i++) {
 		if((objectArray[i])->IsDead()){
 			objectArray.erase(objectArray.begin() + i);
 		}
 		else{
-			objectArray[i]->Render();
+			objectArray[i]->Render(camera->pos.getX(), camera->pos.getY());
 		}
 	}
 }
 
 void State::AddObject(float mouseX, float mouseY){
 	objectArray.emplace_back(new Face(mouseX, mouseY));
-}
-
-void State::Input(){
-	SDL_Event event;
-	int mouseX, mouseY;
-	bool achouFace = false;
-
-	// Obtenha as coordenadas do mouse
-	SDL_GetMouseState(&mouseX, &mouseY);
-
-	// SDL_PollEvent retorna 1 se encontrar eventos, zero caso contrário
-	while (SDL_PollEvent(&event)) {
-
-		// Se o evento for quit, setar a flag para terminação
-		if(event.type == SDL_QUIT) {
-			quitRequested = true;
-		}
-
-		// Se o evento for clique...
-		if(event.type == SDL_MOUSEBUTTONDOWN) {
-
-			// Percorrer de trás pra frente pra sempre clicar no objeto mais de cima
-			for(int i = objectArray.size() - 1; i >= 0; --i) {
-				Face* face = (Face*) objectArray[i].get();
-
-				if(face->GetBox().IsInside((float)mouseX, (float)mouseY)) {
-					achouFace = true;
-					face->Damage((rand() % 10 + 10));
-					break;
-				}
-			}
-			if(!achouFace){
-				AddObject(mouseX, mouseY);
-			}
-		}
-		if( event.type == SDL_KEYDOWN ) {
-			// Se a tecla for ESC, setar a flag de quit
-			if( event.key.keysym.sym == SDLK_ESCAPE ) {
-				quitRequested = true;
-			}
-			// Se não, crie um objeto
-			else {
-				AddObject((float)mouseX, (float)mouseY);
-			}
-		}
-	}
 }

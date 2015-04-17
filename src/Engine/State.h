@@ -18,6 +18,8 @@
 #include "TileSet/TileSet.h"
 #include "TileSet/TileMap.h"
 #include "Resources.h"
+#include "InputManager.h"
+#include "Camera.h"
 
 class State {
 private:
@@ -26,6 +28,7 @@ private:
 	std::vector<std::unique_ptr<GameObject>> objectArray;
 	TileSet *tileSet;
 	TileMap *tileMap;
+	Camera *camera;
 public:
 	State();
 	virtual ~State();

@@ -36,8 +36,8 @@ void Face::Damage(int damage) {
 void Face::Update() {
 }
 
-void Face::Render() {
-	sp->Render(GetBox().GetX(), GetBox().GetY());
+void Face::Render(int cameraX, int cameraY) {
+	sp->Render(GetBox().GetX() + cameraX, GetBox().GetY() + cameraY);
 }
 
 bool Face::IsDead() {
