@@ -12,6 +12,7 @@
 #include "SDL_ttf.h"
 
 #include "Game.h"
+#include "InputManager.h"
 
 
 using namespace std;
@@ -68,9 +69,21 @@ Game* Game::GetInstance() {
 
 void Game::Run() {
 	while(!state->QuitRequested()){
+		CalculaDeltaTime();
+		InputManager::GetInstance().Update();
 		state->Update();
 		state->Render();
 		SDL_RenderPresent(renderer);
 		SDL_Delay(17);
 	}
+}
+
+void Game::CalculaDeltaTime() {
+	dt = SDL_GetTicks() - frameStart;
+	frameStart = SDL_GetTicks();
+	dt = dt/1000;
+}
+
+float Game::GetDeltaTime() {
+	return dt;
 }

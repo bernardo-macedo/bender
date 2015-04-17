@@ -23,7 +23,7 @@ public:
 	void Damage(int damage);
 
 	void Update();
-	void Render();
+	void Render(int cameraX, int cameraY);
 	bool IsDead();
 };
 

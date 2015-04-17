@@ -16,7 +16,10 @@ private:
 	SDL_Renderer* renderer;
 	State* state;
 	static Game* instance;
+	int frameStart;
+	float dt;
 
+	void CalculaDeltaTime();
 	void init();
 public:
 	static int SCREEN_WIDTH;
@@ -29,6 +32,7 @@ public:
 	SDL_Renderer* GetRenderer();
 	State* GetState();
 	static Game* GetInstance();
+	float GetDeltaTime();
 };
 
 #endif /* ENGINE_GAME_H_ */

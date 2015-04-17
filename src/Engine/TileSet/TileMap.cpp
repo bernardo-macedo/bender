@@ -41,12 +41,11 @@ int& TileMap::At(int x, int y, int z) {
 	return tileMatrix[(mapWidth*y + x) + (mapWidth*mapHeight*z)];
 }
 
-void TileMap::Render(int cameraX, int cameraY) {
-	for(int i = 0; i < mapDepth; i++){
-		for(int j = 0; j < mapHeight; j++){
-			for(int h = 0; h < mapWidth; h++){
-				tileSet->Render(At(h, j, i), h*(tileSet->GetTileWidth()), j*(tileSet->GetTileHeight()));
-			}
+void TileMap::Render(int layer, float parallaxFactor, int cameraX, int cameraY) {
+	float parallax = 1 + layer*parallaxFactor;
+	for(int j = 0; j < mapHeight; j++){
+		for(int h = 0; h < mapWidth; h++){
+			tileSet->Render(At(h, j, layer), h*(tileSet->GetTileWidth()) + cameraX*parallax, j*(tileSet->GetTileHeight()) + cameraY*parallax);
 		}
 	}
 }
