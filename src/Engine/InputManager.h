@@ -11,7 +11,18 @@
 #include <unordered_map>
 #include <iostream>
 
+#ifdef __linux__
+
+#include <SDL2/SDL.h>
+
+#elif _WIN32
+
 #include "SDL.h"
+
+#else     
+#error Platform not supported
+
+#endif
 
 class InputManager {
 private:

@@ -6,10 +6,24 @@
  */
 #include <iostream>
 
+#ifdef __linux__
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
+
+#elif _WIN32
+
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
+
+#else     
+#error Platform not supported
+
+#endif
 
 #include "Game.h"
 #include "InputManager.h"

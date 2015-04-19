@@ -8,8 +8,8 @@
 #ifndef FACE_H_
 #define FACE_H_
 
-#include "Engine/GameObject.h"
-#include "Engine/Sprite.h"
+#include "GameObject.h"
+#include "Sprite.h"
 
 class Face : public GameObject{
 private:

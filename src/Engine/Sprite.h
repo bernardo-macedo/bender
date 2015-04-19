@@ -9,10 +9,23 @@
 #define ENGINE_SPRITE_H_
 
 #include <iostream>
-#include "SDL.h"
-#include "SDL_image.h"
 #include "Exceptions.h"
 #include "Resources.h"
+
+#ifdef __linux__
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+
+#elif _WIN32
+
+#include "SDL.h"
+#include "SDL_image.h"
+
+#else     
+#error Platform not supported
+
+#endif
 
 class Sprite {
 private:

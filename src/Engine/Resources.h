@@ -8,9 +8,21 @@
 #ifndef ENGINE_RESOURCES_H_
 #define ENGINE_RESOURCES_H_
 
-#include <SDL_render.h>
 #include <unordered_map>
 #include <string>
+
+#ifdef __linux__
+
+#include <SDL2/SDL.h>
+
+#elif _WIN32
+
+#include "SDL.h"
+
+#else     
+#error Platform not supported
+
+#endif
 
 class Resources {
 private:

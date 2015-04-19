@@ -12,14 +12,26 @@
 #include <vector>
 #include <memory>
 
-#include "SDL.h"
 #include "Sprite.h"
-#include "../Face.h"
+#include "Face.h"
 #include "TileSet/TileSet.h"
 #include "TileSet/TileMap.h"
 #include "Resources.h"
 #include "InputManager.h"
 #include "Camera.h"
+
+#ifdef __linux__
+
+#include <SDL2/SDL.h>
+
+#elif _WIN32
+
+#include "SDL.h"
+
+#else     
+#error Platform not supported
+
+#endif
 
 class State {
 private:

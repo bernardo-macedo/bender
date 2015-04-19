@@ -23,7 +23,7 @@ State::State() {
 	tileSet = new TileSet(64, 64, "img/tileset.png");
 	tileMap = new TileMap("map/tileMap.txt", tileSet);
 	quitRequested = false;
-	bg = new Sprite("img/ocean.jpg");
+	bg = new Sprite("img/ocean.png");
 	srand(time(NULL));
 	camera = new Camera();
 }
