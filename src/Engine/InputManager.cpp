@@ -7,7 +7,11 @@
 
 #include "InputManager.h"
 
-InputManager::InputManager() {
+#include <iostream>
+
+InputManager::InputManager():
+	controllerHandler(new ControllerHandler())
+{
 	quitRequested = false;
 	updateCounter = 0;
 	for (int i = 0; i < 6; i++){
@@ -18,6 +22,10 @@ InputManager::InputManager() {
 
 InputManager::~InputManager() {
 	// TODO Auto-generated destructor stub
+	if(this->controllerHandler != nullptr){
+		delete this->controllerHandler;
+		this->controllerHandler = nullptr;
+	}
 }
 
 void InputManager::Update() {
@@ -29,6 +37,14 @@ void InputManager::Update() {
 
 	// SDL_PollEvent retorna 1 se encontrar eventos, zero caso contrário
 	while (SDL_PollEvent(&event)) {
+
+		this->controllerHandler->handleInput(event);
+
+		for(unsigned int i = 0; i < this->controllStates.size(); i++)
+			if(this->controllerHandler->controllStates[i]){
+				keyState[SDLK_UP] = true;
+				keyUpdate[SDLK_UP] = updateCounter;
+		}
 
 		// Se o evento for quit, setar a flag para terminação
 		if(event.type == SDL_QUIT) {
@@ -82,6 +98,16 @@ bool InputManager::MousePress(int button) {
 		return true;
 	}
 	return false;
+}
+
+void InputManager::SetKeyPressed(SDL_Keycode key){
+	keyState[key] = true;
+	keyUpdate[key] = updateCounter;
+}
+
+void InputManager::SetKeyReleased(SDL_Keycode key){
+	keyState[key] = false;
+	keyUpdate[key] = updateCounter;
 }
 
 bool InputManager::MouseRelease(int button) {

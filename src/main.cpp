@@ -22,7 +22,7 @@
 #endif
 
 using namespace std;
-int main (int argc, char** argv) {
+int main (void) {
 	try{
 		Game *gm = new Game("Pedro Henrique Leal - 100019226", 1024, 600);
 		gm->Run();
