@@ -16,6 +16,7 @@ void Camera::Unfollow() {
 }
 
 void Camera::Update(float dt) {
+	((void) dt);
 	if(focus != NULL){
 		pos.setX(focus->GetBox().GetX());
 		pos.setY(focus->GetBox().GetY());

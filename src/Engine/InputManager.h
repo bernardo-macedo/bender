@@ -10,6 +10,7 @@
 
 #include <unordered_map>
 #include <iostream>
+#include "ControllerHandler.h"
 
 #ifdef __linux__
 
@@ -32,6 +33,10 @@ private:
 	std::unordered_map<int, bool> keyState;
 	std::unordered_map<int, int> keyUpdate;
 
+	ControllerHandler* controllerHandler; /**< Handles input if joystick is present. */
+	std::array<bool, 6> controllStates; /**< Boolean array that controls which keys are
+		pressed or not. */
+
 	bool quitRequested;
 	int updateCounter;
 
@@ -45,10 +50,12 @@ public:
 	bool KeyPress(int key);
 	bool KeyRelease(int key);
 	bool IsKeyDown(int key);
+	void SetKeyPressed(SDL_Keycode key);
 
 	bool MousePress(int button);
 	bool MouseRelease(int button);
 	bool IsMouseDown(int button);
+	void SetKeyReleased(SDL_Keycode key);
 
 	int GetMouseX();
 	int GetMouseY();
