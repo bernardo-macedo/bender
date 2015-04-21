@@ -24,7 +24,7 @@ State::State() {
 	tileSet = new TileSet(64, 64, Constants::ImgPath + "tileset.png");
 	tileMap = new TileMap(Constants::MapPath + "tileMap.txt", tileSet);
 	quitRequested = false;
-	bg = new Sprite(Constants::ImgPath + "ocean.jpg");
+	bg = new Sprite(Constants::ImgPath + "ocean" + Constants::ImgExtension);
 	srand(time(NULL));
 	camera = new Camera();
 }

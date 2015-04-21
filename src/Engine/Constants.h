@@ -16,12 +16,15 @@ namespace Constants {
 	const std::string MapPath = "map/";
 	const std::string FontPath = "font/";
 	const std::string audioPath = "audio/";
+	const std::string ImgExtension = ".png";
 #else
 	const std::string ImgPath = "src/img/";
 	const std::string MapPath = "src/map/";
 	const std::string FontPath = "src/font/";
 	const std::string audioPath = "src/audio/";
+	const std::string ImgExtension = ".jpg";
 #endif
+	const std::string GameTitle = "Bender";
 }
 
 

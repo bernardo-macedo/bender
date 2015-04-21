@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Engine/Game.h"
 #include "Engine/TileSet/TileMap.h"
+#include "Engine/Constants.h"
 
 #ifdef __linux__
 
@@ -9,11 +10,6 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-#define IMG_PATH "img/"
-#define MAP_PATH "map/"
-#define FONT_PATH "font/"
-#define AUDIO_PATH "audio/"
-
 #elif _WIN32
 
 #include "SDL.h"
@@ -21,20 +17,15 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
-#define IMG_PATH "src/img/"
-#define MAP_PATH "src/map/"
-#define FONT_PATH "src/font/"
-#define AUDIO_PATH "src/audio/"
-
 #else     
 #error Platform not supported
 
 #endif
 
 using namespace std;
-int main (void) {
+int main (int argc, char** argv) {
 	try{
-		Game *gm = new Game("Pedro Henrique Leal - 100019226", 1024, 600);
+		Game *gm = new Game(Constants::GameTitle, 1024, 600);
 		gm->Run();
 	}catch(int e){
 		switch(e){

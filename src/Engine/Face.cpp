@@ -8,6 +8,7 @@
 #include "Face.h"
 #include <cstdlib>
 #include <math.h>
+#include "Constants.h"
 
 Face::Face(int x, int y) {
 	int newX, newY, angle;
@@ -17,7 +18,7 @@ Face::Face(int x, int y) {
 	newY = y + 200*sin(angle);
 
 
-	sp = new Sprite("img/penguinface.png");
+	sp = new Sprite(Constants::ImgPath + "penguinface.png");
 	box.SetX(newX - sp->GetWidth()/2);
 	box.SetY(newY - sp->GetHeight()/2);
 	box.SetW(sp->GetWidth());
