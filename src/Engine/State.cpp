@@ -11,6 +11,7 @@
 #include "State.h"
 #include "InputManager.h"
 #include "Game.h"
+#include "Constants.h"
 
 #define LEFT_ARROW_KEY SDLK_LEFT
 #define RIGHT_ARROW_KEY SDLK_RIGHT
@@ -20,10 +21,10 @@
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
 
 State::State() {
-	tileSet = new TileSet(64, 64, "img/tileset.png");
-	tileMap = new TileMap("map/tileMap.txt", tileSet);
+	tileSet = new TileSet(64, 64, Constants::ImgPath + "tileset.png");
+	tileMap = new TileMap(Constants::MapPath + "tileMap.txt", tileSet);
 	quitRequested = false;
-	bg = new Sprite("img/ocean.png");
+	bg = new Sprite(Constants::ImgPath + "ocean.jpg");
 	srand(time(NULL));
 	camera = new Camera();
 }

@@ -24,6 +24,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.1042981454" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base">
 								<option id="gnu.cpp.compiler.option.include.paths.1988992361" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;C:\SDL\i686-w64-mingw32\include\SDL2&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Softwares\SDL2-2.0.3\i686-w64-mingw32\include\SDL2&quot;"/>
 									<listOptionValue builtIn="false" value="C:/MinGW/lib/gcc/mingw32/4.8.1/include/c++/backward"/>
 									<listOptionValue builtIn="false" value="C:/MinGW/lib/gcc/mingw32/4.8.1/include/c++/mingw32"/>
 									<listOptionValue builtIn="false" value="C:/MinGW/lib/gcc/mingw32/4.8.1/include-fixed"/>
@@ -56,7 +57,8 @@
 									<listOptionValue builtIn="false" value="SDL2"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1755223309" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;C:\SDL\i686-w64-mingw32\lib&quot;"/>
+									<listOptionValue builtIn="false" value="C:/SDL/i686-w64-mingw32/lib"/>
+									<listOptionValue builtIn="false" value="D:/Softwares/SDL2-2.0.3/i686-w64-mingw32/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.823352078" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
