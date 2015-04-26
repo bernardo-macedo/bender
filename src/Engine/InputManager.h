@@ -18,9 +18,11 @@
 #define DOWN_ARROW_KEY SDLK_DOWN
 #define ESCAPE_KEY SDLK_ESCAPE
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
-#define A_KEY SDL_SCANCODE_A
-#define D_KEY SDL_SCANCODE_D
-#define SPACEBAR_KEY SDL_SCANCODE_SPACE
+#define A_KEY SDLK_a
+#define D_KEY SDLK_d
+#define W_KEY SDLK_w
+#define S_KEY SDLK_s
+#define SPACEBAR_KEY SDLK_SPACE
 
 #ifdef __linux__
 

@@ -40,21 +40,16 @@ void State::Update(float dt) {
 	int mouseX, mouseY;
 	bool achouFace = false;
 
-	std::cout << "2.1" << std::endl;
 	// atualiza posicao da camera
 	Camera::Update(dt);
-	std::cout << "2.2" << std::endl;
 	if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
 		quitRequested = true;
 	}
 
-	std::cout << "2.3" << std::endl;
 	// atualiza estado das entidades
 	player->Update(dt);
-	std::cout << "2.4" << std::endl;
 	// testa colisoes
 	tileMap->CheckCollision(player);
-	std::cout << "2.5" << std::endl;
 
 	/*
 	mouseX = InputManager::GetInstance().GetMouseX();

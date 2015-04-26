@@ -53,7 +53,7 @@ bool Rect::IsInside(float x, float y) {
 }
 
 bool Rect::CollidesWith(Rect other) {
-	float diffX = (this->x - this->w / 2)
+	/*float diffX = (this->x - this->w / 2)
 			- (other.x - other.w / 2);
 	float diffY = (this->y - this->h / 2)
 			- (other.y - other.h / 2);
@@ -63,10 +63,12 @@ bool Rect::CollidesWith(Rect other) {
 	}
 	if (diffY > other.h || -diffY > this->h) {
 		return false;
+	}*/
+	Point p = Intersection(other);
+	if(p.getX() != 0 || p.getY() != 0){
+		return true;
 	}
-
-	return true;
-
+	return false;
 }
 
 Point Rect::Intersection(Rect other) {

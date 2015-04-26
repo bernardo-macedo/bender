@@ -93,8 +93,8 @@ int TileMap::GetDepth() {
 }
 
 void TileMap::PositionToIndex(float x, float y, int* i, int* j) {
-	*i = (int) floor(y / this->tileSet->GetTileHeight());
-	*j = (int) floor(x / this->tileSet->GetTileWidth());
+	*i = (int) round(x / this->tileSet->GetTileWidth());
+	*j = (int) round(y / this->tileSet->GetTileHeight());
 }
 
 void TileMap::Sort(CollidingTile* collidingTiles, int size) {
@@ -115,39 +115,20 @@ void TileMap::Sort(CollidingTile* collidingTiles, int size) {
 }
 
 void TileMap::CheckCollision(Player* player) {
-	CollidingTile collidingTiles[30];
-	int n = 0;
-	int line, column;
+	int i, j;
+	PositionToIndex(player->GetBox().GetX(), player->GetBox().GetY(), &i, &j);
+	if(i < mapWidth - 1 && i > 0
+		&& j < mapHeight - 1 && j > 0){
 
-	std::cout << "2.5.1" << std::endl;
-	player->SetOnGround(false);
-
-	std::cout << "2.5.2" << std::endl;
-	PositionToIndex(player->GetBox().GetX(), player->GetBox().GetY(), &line, &column);
-	std::cout << "2.5.3" << std::endl;
-	for (int i = std::max(0, line - 1); i <= std::min(mapHeight - 1, line + 1); i++) {
-		for (int j = std::max(0, column - 1); j <= std::min(mapWidth - 1, column + 1); j++) {
-			Tile* tile = At(mapDepth - 1, i, j);
-			std::cout << "2.5.4" << std::endl;
-			if (tile->CollidesWith(player)) {
-				std::cout << "2.5.5" << std::endl;
-				CollidingTile temp;
-				Point playerPoint(player->GetBox().GetX(), player->GetBox().GetY());
-				Point tilePoint(tile->GetBox().GetX(), tile->GetBox().GetY());
-				temp.distanceToPlayer = playerPoint.distance(tilePoint);
-				temp.tile = tile;
-				std::cout << "2.5.6" << std::endl;
-				collidingTiles[n] = temp;
-				n++;
-				std::cout << "2.5.7" << std::endl;
+		for(int linha = j - 1; linha <= j + 1; linha++){
+			for(int coluna = i - 1; coluna <= i + 1; coluna++){
+				std::cout << i << ", " << j;
+				Tile* tile = At(coluna, linha, mapDepth - 1);
+				if(tile->CollidesWith(player)){
+					std::cout << " Colidiu!" << std::endl;
+				}
+				std::cout << std::endl;
 			}
 		}
-	}
-
-	Sort(collidingTiles, n);
-	std::cout << "2.5.8" << std::endl;
-	for (int i = 0; i < n; i++) {
-		(collidingTiles[i]).tile->OnCollision(player);
-		std::cout << "2.5.9" << std::endl;
 	}
 }
