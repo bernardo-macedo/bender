@@ -34,11 +34,11 @@ void Face::Damage(int damage) {
 	hitPoints -= damage;
 }
 
-void Face::Update() {
+void Face::Update(float dt) {
 }
 
-void Face::Render(int cameraX, int cameraY) {
-	sp->Render(GetBox().GetX() + cameraX, GetBox().GetY() + cameraY);
+void Face::Render() {
+	sp->Render(GetBox().GetX() + Camera::pos.getX(), GetBox().GetY() + Camera::pos.getY());
 }
 
 bool Face::IsDead() {

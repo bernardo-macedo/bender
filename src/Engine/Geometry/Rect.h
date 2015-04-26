@@ -8,6 +8,8 @@
 #ifndef ENGINE_GEOMETRY_RECT_H_
 #define ENGINE_GEOMETRY_RECT_H_
 
+#include "Point.h"
+
 class Rect {
 private:
 	float x,y, w, h;
@@ -25,6 +27,8 @@ public:
 	void SetH(float h);
 
 	bool IsInside(float mouseX, float mouseY);
+	bool CollidesWith(Rect other);
+	Point Intersection(Rect other);
 
 };
 

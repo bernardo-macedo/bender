@@ -11,10 +11,12 @@
 using namespace std;
 Sprite::Sprite() {
 	texture = NULL;
+	hidden = false;
 }
 
-Sprite::Sprite(std::string file) {
+Sprite::Sprite(std::string file, bool hidden) {
 	texture = NULL;
+	this->hidden = hidden;
 	Open(file);
 }
 

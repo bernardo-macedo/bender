@@ -14,6 +14,7 @@
 
 #include "Sprite.h"
 #include "Face.h"
+#include "Player.h"
 #include "TileSet/TileSet.h"
 #include "TileSet/TileMap.h"
 #include "Resources.h"
@@ -40,7 +41,7 @@ private:
 	std::vector<std::unique_ptr<GameObject>> objectArray;
 	TileSet *tileSet;
 	TileMap *tileMap;
-	Camera *camera;
+	Player *player;
 public:
 	State();
 	virtual ~State();
@@ -48,7 +49,7 @@ public:
 	void Input();
 	void AddObject(float mouseX, float mouseY);
 	bool QuitRequested();
-	void Update();
+	void Update(float dt);
 	void Render();
 };
 

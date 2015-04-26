@@ -25,6 +25,8 @@ namespace Constants {
 	const std::string ImgExtension = ".jpg";
 #endif
 	const std::string GameTitle = "Bender";
+	const int WindowWidth = 1024;
+	const int WindowHeight = 600;
 }
 
 

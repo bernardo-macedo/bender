@@ -11,16 +11,18 @@
 #include <stdlib.h>
 #include "Geometry/Point.h"
 #include "GameObject.h"
+#include "InputManager.h"
+#include "Constants.h"
 
 class Camera {
-	GameObject* focus;
+	static GameObject* focus;
 public:
-	Point pos;
-	Point speed;
+	static Point pos;
+	static Point speed;
 
-	void Follow(GameObject* newFocus);
-	void Unfollow();
-	void Update(float dt);
+	static void Follow(GameObject* newFocus);
+	static void Unfollow();
+	static void Update(float dt);
 };
 
 #endif /* CAMERA_H_ */

@@ -51,3 +51,39 @@ bool Rect::IsInside(float x, float y) {
 
 	return false;
 }
+
+bool Rect::CollidesWith(Rect other) {
+	float diffX = (this->x - this->w / 2)
+			- (other.x - other.w / 2);
+	float diffY = (this->y - this->h / 2)
+			- (other.y - other.h / 2);
+
+	if (diffX > other.w || -diffX > this->w) {
+		return false;
+	}
+	if (diffY > other.h || -diffY > this->h) {
+		return false;
+	}
+
+	return true;
+
+}
+
+Point Rect::Intersection(Rect other) {
+	float minDistanceX = this->w / 2 + other.w / 2;
+	float minDistanceY = this->h / 2 + other.h / 2;
+
+	float distanceX = this->x - other.x;
+	float distanceY = this->y - other.y;
+
+	if (fabs(distanceX) > minDistanceX || fabs(distanceY) > minDistanceY) {
+		Point p;
+		return p;
+	}
+
+	distanceX = distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;
+	distanceY = distanceY > 0 ? minDistanceY - distanceY : -minDistanceY - distanceY;
+
+	Point p(distanceX, distanceY);
+	return p;
+}

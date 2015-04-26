@@ -35,9 +35,10 @@ private:
 	SDL_Rect clipRect;
 	bool open;
 	Resources* resources;
+	bool hidden;
 public:
 	Sprite();
-	Sprite(std::string file);
+	Sprite(std::string file, bool hidden = false);
 	virtual ~Sprite();
 
 	void Open(std::string file);
@@ -46,6 +47,9 @@ public:
 	int GetWidth();
 	int GetHeight();
 	bool IsOpen();
+	void SetHidden(bool hidden) {
+			this->hidden = hidden;
+		}
 };
 
 #endif /* ENGINE_SPRITE_H_ */

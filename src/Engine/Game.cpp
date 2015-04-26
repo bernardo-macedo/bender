@@ -27,6 +27,7 @@
 
 #include "Game.h"
 #include "InputManager.h"
+#include <iostream>
 
 
 using namespace std;
@@ -84,9 +85,13 @@ Game* Game::GetInstance() {
 void Game::Run() {
 	while(!state->QuitRequested()){
 		CalculaDeltaTime();
+		std::cout << "1" << std::endl;
 		InputManager::GetInstance().Update();
-		state->Update();
+		std::cout << "2" << std::endl;
+		state->Update(dt);
+		std::cout << "3" << std::endl;
 		state->Render();
+		std::cout << "4" << std::endl;
 		SDL_RenderPresent(renderer);
 		SDL_Delay(17);
 	}

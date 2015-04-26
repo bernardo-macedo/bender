@@ -13,20 +13,19 @@
 #include "Game.h"
 #include "Constants.h"
 
-#define LEFT_ARROW_KEY SDLK_LEFT
-#define RIGHT_ARROW_KEY SDLK_RIGHT
-#define UP_ARROW_KEY SDLK_UP
-#define DOWN_ARROW_KEY SDLK_DOWN
-#define ESCAPE_KEY SDLK_ESCAPE
-#define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
-
 State::State() {
-	tileSet = new TileSet(64, 64, Constants::ImgPath + "tileset.png");
-	tileMap = new TileMap(Constants::MapPath + "tileMap.txt", tileSet);
+	tileSet = new TileSet(64, 64, Constants::ImgPath + "testTileset.png");
+	tileMap = new TileMap(Constants::MapPath + "testMap.txt", tileSet);
 	quitRequested = false;
 	bg = new Sprite(Constants::ImgPath + "ocean" + Constants::ImgExtension);
 	srand(time(NULL));
-	camera = new Camera();
+
+	// TODO: ao inves de iniciar o personagem aqui, ler posicao dele do tileMap
+	// perimitindo que o mapa configure a posicao inicial do player.
+	player = new Player(400, 300, new Animation(Constants::ImgPath + "testeAnimacao.png", 64, 64, 200, true));
+
+	//Camera::Follow(player);
+
 }
 
 State::~State(){
@@ -37,16 +36,35 @@ bool State::QuitRequested() {
 	return quitRequested;
 }
 
-void State::Update() {
+void State::Update(float dt) {
 	int mouseX, mouseY;
 	bool achouFace = false;
 
-	mouseX = InputManager::GetInstance().GetMouseX();
-	mouseY = InputManager::GetInstance().GetMouseY();
-
+	std::cout << "2.1" << std::endl;
+	// atualiza posicao da camera
+	Camera::Update(dt);
+	std::cout << "2.2" << std::endl;
 	if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
 		quitRequested = true;
 	}
+
+	std::cout << "2.3" << std::endl;
+	// atualiza estado das entidades
+	player->Update(dt);
+	std::cout << "2.4" << std::endl;
+	// testa colisoes
+	tileMap->CheckCollision(player);
+	std::cout << "2.5" << std::endl;
+
+	/*
+	mouseX = InputManager::GetInstance().GetMouseX();
+	mouseY = InputManager::GetInstance().GetMouseY();
+
+
+	for (int i = objectArray.size() - 1; i >= 0; --i) {
+		(objectArray[i])->Update(dt);
+	}
+
 
 	if(InputManager::GetInstance().MousePress(1)){
 		for(int i = objectArray.size() - 1; i >= 0; --i) {
@@ -63,6 +81,7 @@ void State::Update() {
 		}
 	}
 
+
 	if(InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY)){
 		camera->pos.setX(camera->pos.getX() - 200*Game::GetInstance()->GetDeltaTime());
 	}
@@ -78,22 +97,30 @@ void State::Update() {
 	if(InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY)){
 		camera->pos.setY(camera->pos.getY() - 200*Game::GetInstance()->GetDeltaTime());
 	}
+	*/
 }
 
 void State::Render() {
 	bg->Render(0, 0);
-	tileMap->Render(0, 1, camera->pos.getX(), camera->pos.getY());
+	tileMap->Render(0, 1, Camera::pos.getX(), Camera::pos.getY());
+
+
+
+	/*
 	for(unsigned int i = 0; i < objectArray.size(); i++) {
 		if((objectArray[i])->IsDead()){
 			objectArray.erase(objectArray.begin() + i);
 		}
 		else{
-			objectArray[i]->Render(camera->pos.getX(), camera->pos.getY());
+			objectArray[i]->Render();
 		}
 	}
-	tileMap->Render(1, 1, camera->pos.getX(), camera->pos.getY());
+	*/
+	tileMap->Render(1, 1, Camera::pos.getX(), Camera::pos.getY());
+
+	player->Render();
 }
 
 void State::AddObject(float mouseX, float mouseY){
-	objectArray.emplace_back(new Face(mouseX, mouseY));
+	objectArray.emplace_back(new Player(mouseX, mouseY));
 }
