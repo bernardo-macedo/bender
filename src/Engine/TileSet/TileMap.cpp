@@ -115,7 +115,12 @@ void TileMap::Sort(CollidingTile* collidingTiles, int size) {
 }
 
 void TileMap::CheckCollision(Player* player) {
-	int i, j;
+	if(player->GetBox().GetY() > 600 - 75){
+		player->SetPos(player->GetBox().GetX(), 600-75);
+		player->state = 2;
+	}
+	/*int i, j;
+	int cont = 0;
 	PositionToIndex(player->GetBox().GetX(), player->GetBox().GetY(), &i, &j);
 	if(i < mapWidth - 1 && i > 0
 		&& j < mapHeight - 1 && j > 0){
@@ -124,11 +129,14 @@ void TileMap::CheckCollision(Player* player) {
 			for(int coluna = i - 1; coluna <= i + 1; coluna++){
 				std::cout << i << ", " << j;
 				Tile* tile = At(coluna, linha, mapDepth - 1);
+				std::cout << " tile -> " << tile->GetTileIndex();
 				if(tile->CollidesWith(player)){
 					std::cout << " Colidiu!" << std::endl;
+					cont ++;
 				}
 				std::cout << std::endl;
 			}
 		}
-	}
+		std::cout << "colisoes: " << cont << std::endl;
+	}*/
 }

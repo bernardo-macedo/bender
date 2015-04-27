@@ -12,13 +12,13 @@ Player::Player(float x, float y, Animation* anim) :
 	acceleration(0, 0), speed(0,0), onGround(true) {
 
 	sp = new Sprite(Constants::ImgPath + "penguinface.png");
-
-	box.SetX(x - sp->GetWidth()/2);
-	box.SetY(y - sp->GetHeight()/2);
-	box.SetW(sp->GetWidth());
-	box.SetH(sp->GetHeight());
-
 	animation = anim;
+
+	box.SetX(x - animation->GetFrameWidth()/2);
+	box.SetY(y - animation->GetFrameHeight()/2);
+	box.SetW(animation->GetFrameWidth());
+	box.SetH(animation->GetFrameHeight());
+
 
 	hp = 30;
 }
@@ -36,25 +36,21 @@ void Player::Update(float dt) {
 	if (InputManager::GetInstance().IsKeyDown(D_KEY)) {
 		acceleration += Point(ACCELERATION, 0);
 	}
-	if (InputManager::GetInstance().IsKeyDown(W_KEY)) {
-		acceleration += Point(0, -ACCELERATION);
-	}
+
 	if (InputManager::GetInstance().IsKeyDown(S_KEY)) {
 		acceleration += Point(0, ACCELERATION);
 	}
 
-	if (InputManager::GetInstance().IsKeyDown(SPACEBAR_KEY) && onGround) {
-		acceleration += Point(0, -JUMP);
-	}
 	// Pulo de tamanho variavel
 	if (InputManager::GetInstance().IsKeyDown(SPACEBAR_KEY)) {
-		if (speed.getY() < -JUMP_SPEED_CUT) {
+		if(state == nochao){
 			speed.setY(-JUMP_SPEED_CUT);
+			state = caindo;
 		}
 	}
 
 	Point gravity = Point(0, GRAVITY);
-	Point totalForce =  acceleration;
+	Point totalForce =  gravity + acceleration;
 
 	speed += (totalForce * dt);
 	box.SetX(box.GetX() + (speed.getX() * dt));

@@ -20,7 +20,7 @@
 #define ACCELERATION 1000.0
 #define GRAVITY 1500.0
 #define JUMP 80000.0
-#define JUMP_SPEED_CUT 380
+#define JUMP_SPEED_CUT 1000
 #define FRICTION 3.5
 #define MAX_ANIMATION_TIME 400
 
@@ -32,8 +32,11 @@ private:
 	int hp;
 	Animation* animation;
 	bool onGround;
+	const int pulando = 0, caindo = 1, nochao = 2;
 
 public:
+	int state;
+
 	Player(float x, float y, Animation* anim = NULL);
 	virtual ~Player();
 	void Update(float dt);

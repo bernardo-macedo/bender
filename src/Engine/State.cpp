@@ -14,7 +14,7 @@
 #include "Constants.h"
 
 State::State() {
-	tileSet = new TileSet(64, 64, Constants::ImgPath + "testTileset.png");
+	tileSet = new TileSet(75, 75, Constants::ImgPath + "testTileset.png");
 	tileMap = new TileMap(Constants::MapPath + "testMap.txt", tileSet);
 	quitRequested = false;
 	bg = new Sprite(Constants::ImgPath + "ocean" + Constants::ImgExtension);
@@ -22,7 +22,7 @@ State::State() {
 
 	// TODO: ao inves de iniciar o personagem aqui, ler posicao dele do tileMap
 	// perimitindo que o mapa configure a posicao inicial do player.
-	player = new Player(400, 300, new Animation(Constants::ImgPath + "testeAnimacao.png", 64, 64, 200, true));
+	player = new Player(400, 300, new Animation(Constants::ImgPath + "testeAnimacao.png", 64, 64,200, true));
 
 	//Camera::Follow(player);
 
