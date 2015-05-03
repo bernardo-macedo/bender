@@ -8,15 +8,18 @@
 #ifndef ENGINE_GAME_H_
 #define ENGINE_GAME_H_
 
-#include "State.h"
+#include "../BenderState.h"
 
 class Game {
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-	State* state;
+	BenderState* state;
 	static Game* instance;
+	int frameStart;
+	float dt;
 
+	void CalculaDeltaTime();
 	void init();
 public:
 	static int SCREEN_WIDTH;
@@ -29,6 +32,7 @@ public:
 	SDL_Renderer* GetRenderer();
 	State* GetState();
 	static Game* GetInstance();
+	float GetDeltaTime();
 };
 
 #endif /* ENGINE_GAME_H_ */

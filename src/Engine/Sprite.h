@@ -12,6 +12,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "Exceptions.h"
+#include "Resources.h"
 
 class Sprite {
 private:
@@ -20,6 +21,7 @@ private:
 	int height;
 	SDL_Rect clipRect;
 	bool open;
+	Resources* resources;
 public:
 	Sprite();
 	Sprite(std::string file);
@@ -27,7 +29,7 @@ public:
 
 	void Open(std::string file);
 	void SetClip (int x, int y, int w, int h);
-	void Render(int x, int y);
+	void Render(int x, int y, int rot);
 	int GetWidth();
 	int GetHeight();
 	bool IsOpen();

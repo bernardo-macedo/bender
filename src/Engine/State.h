@@ -15,21 +15,26 @@
 #include "SDL.h"
 #include "Sprite.h"
 #include "../Face.h"
+#include "../Minion.h"
+#include "TileSet/TileSet.h"
+#include "TileSet/TileMap.h"
+#include "Resources.h"
+#include "InputManager.h"
+#include "Camera.h"
 
 class State {
-private:
-	Sprite* bg;
+protected:
 	bool quitRequested;
 	std::vector<std::unique_ptr<GameObject>> objectArray;
 public:
 	State();
 	virtual ~State();
 
-	void Input();
-	void AddObject(float mouseX, float mouseY);
+	void AddObject(GameObject* object);
 	bool QuitRequested();
-	void Update();
-	void Render();
+	virtual void Update() = 0;
+	virtual void Render() = 0;
+	virtual void Setup() = 0;
 };
 
 #endif /* ENGINE_STATE_H_ */

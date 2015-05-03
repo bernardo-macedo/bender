@@ -12,6 +12,7 @@
 #include "SDL_ttf.h"
 
 #include "Game.h"
+#include "InputManager.h"
 
 
 using namespace std;
@@ -24,7 +25,8 @@ Game::Game(string title, int width, int height) {
 	if(instance == NULL){
 		instance = this;
 	}
-
+	Game::SCREEN_HEIGHT = height;
+	Game::SCREEN_WIDTH = width;
 	init();
 	this->window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 			SCREEN_WIDTH, SCREEN_HEIGHT, 0);
@@ -37,7 +39,7 @@ Game::Game(string title, int width, int height) {
 		throw RENDERER_FAIL;
 	}
 
-	state = new State();
+	state = new BenderState();
 }
 
 Game::~Game() {
@@ -66,10 +68,23 @@ Game* Game::GetInstance() {
 }
 
 void Game::Run() {
+	state->Setup();
 	while(!state->QuitRequested()){
+		CalculaDeltaTime();
+		InputManager::GetInstance().Update();
 		state->Update();
 		state->Render();
 		SDL_RenderPresent(renderer);
 		SDL_Delay(17);
 	}
+}
+
+void Game::CalculaDeltaTime() {
+	dt = SDL_GetTicks() - frameStart;
+	frameStart = SDL_GetTicks();
+	dt = dt/1000;
+}
+
+float Game::GetDeltaTime() {
+	return dt;
 }

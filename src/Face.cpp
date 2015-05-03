@@ -17,7 +17,7 @@ Face::Face(int x, int y) {
 	newY = y + 200*sin(angle);
 
 
-	sp = new Sprite("penguinface.png");
+	sp = new Sprite("img/penguinface.png");
 	box.SetX(newX - sp->GetWidth()/2);
 	box.SetY(newY - sp->GetHeight()/2);
 	box.SetW(sp->GetWidth());
@@ -33,11 +33,11 @@ void Face::Damage(int damage) {
 	hitPoints -= damage;
 }
 
-void Face::Update() {
+void Face::Update(float dt) {
 }
 
 void Face::Render() {
-	sp->Render(GetBox().GetX(), GetBox().GetY());
+	sp->Render(GetBox().GetX() + Camera::pos.getX(), GetBox().GetY() + Camera::pos.getY(), 0);
 }
 
 bool Face::IsDead() {

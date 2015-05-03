@@ -19,19 +19,10 @@ Sprite::Sprite(std::string file) {
 }
 
 Sprite::~Sprite() {
-	SDL_DestroyTexture(texture);
 }
 
 void Sprite::Open(std::string file) {
-	if(IsOpen()){
-		SDL_DestroyTexture(texture);
-	}
-	SDL_Renderer* renderer = Game::GetInstance()->GetRenderer();
-	texture = IMG_LoadTexture (renderer, file.c_str());
-	if(texture == NULL){
-		cout << SDL_GetError() << endl;
-		throw IMG_LOAD_FAIL;
-	}
+	texture = Resources::GetImage(file);
 
 	SDL_QueryTexture (texture , NULL, NULL, &width, &height);
 	SetClip(0, 0, width, height);
@@ -45,13 +36,17 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 	clipRect.w = w;
 }
 
-void Sprite::Render(int x, int y) {
+void Sprite::Render(int x, int y, int rot) {
 	SDL_Rect rect;
 	rect.x = x;
 	rect.y = y;
 	rect.h = clipRect.h;
 	rect.w = clipRect.w;
-	SDL_RenderCopy(Game::GetInstance()->GetRenderer(), texture, &clipRect, &rect);
+	SDL_Point point;
+	point.x = clipRect.w/2;
+	point.y = clipRect.h/2;
+
+	SDL_RenderCopyEx(Game::GetInstance()->GetRenderer(), texture, &clipRect, &rect, rot, &point, SDL_FLIP_NONE);
 }
 
 int Sprite::GetWidth() {

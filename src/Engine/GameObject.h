@@ -17,11 +17,12 @@ protected:
 public:
 	virtual ~GameObject();
 
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 	virtual bool IsDead() = 0;
 	virtual void Render() = 0;
 
 	Rect GetBox();
+	void SetPos(int x, int y);
 };
 
 #endif /* ENGINE_GAMEOBJECT_H_ */

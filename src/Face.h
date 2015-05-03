@@ -10,6 +10,7 @@
 
 #include "Engine/GameObject.h"
 #include "Engine/Sprite.h"
+#include "Engine/Camera.h"
 
 class Face : public GameObject{
 private:
@@ -22,7 +23,7 @@ public:
 
 	void Damage(int damage);
 
-	void Update();
+	void Update(float dt);
 	void Render();
 	bool IsDead();
 };
