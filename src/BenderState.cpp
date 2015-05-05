@@ -8,6 +8,7 @@
 #include "BenderState.h"
 #include "Engine/InputManager.h"
 #include "Engine/Game.h"
+#include "Engine/Geometry/Point.h"
 #include <math.h>
 
 BenderState::~BenderState() {
@@ -36,11 +37,17 @@ void BenderState::Update() {
 
 	Camera::Update(Game::GetInstance()->GetDeltaTime());
 	m->Update(Game::GetInstance()->GetDeltaTime());
-	tileMap->collides(m, 0, colPos);
-	if(colPos[3] || colPos[1]){
-		m->GetBody()->SetVelY(-m->GetBody()->GetVelY());
+	Point col;
+	int c = tileMap->collides(m, 0, &col);
+	if(c == Rect::BOTTOM){
+		m->GetBody()->SetVelY(0);
+		m->GetBody()->SetY(col.getY() - m->GetBox().GetH()/2 - 1);
 	}
-	if(colPos[0] || colPos[2]){
+	if(c == Rect::TOP){
+		m->GetBody()->SetVelY(-m->GetBody()->GetVelY());
+		m->GetBody()->SetY(col.getY() + m->GetBox().GetH()/2 + 1);
+	}
+	if(c == Rect::LEFT || c == Rect::RIGHT){
 		m->GetBody()->SetVelX(-m->GetBody()->GetVelX());
 		m->GetBody()->SetAngularVel(-m->GetBody()->GetAngularVel());
 	}

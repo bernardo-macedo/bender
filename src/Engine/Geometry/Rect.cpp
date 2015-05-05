@@ -7,6 +7,12 @@
 
 #include "Rect.h"
 
+int Rect::BOTTOM = 0;
+int Rect::LEFT = 1;
+int Rect::RIGHT = 2;
+int Rect::TOP = 3;
+int Rect::NONE = 4;
+
 float Rect::GetX() {
 	return x;
 }

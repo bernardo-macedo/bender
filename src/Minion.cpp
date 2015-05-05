@@ -23,7 +23,7 @@ Minion::Minion(float x, float y) {
 	box.SetY(y);
 	walkForceRight = 200;
 	walkForceLeft = -200;
-	b->ApplyForce(new Force("gravidade", 0, 200));
+	b->ApplyForce(new Force("gravidade", 0, 400));
 }
 
 Minion::~Minion() {
@@ -31,20 +31,24 @@ Minion::~Minion() {
 
 void Minion::Update(float dt) {
 	if(InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
-		b->ApplyForce(new Force("direcao", walkForceLeft, 0));
 		b->SetAngularAccel(-200);
+		b->ApplyForce(new Force("direcao", walkForceLeft, 0));
 	}
 	if(InputManager::GetInstance().KeyPress(RIGHT_ARROW_KEY)){
-		b->ApplyForce(new Force("direcao1", walkForceRight, 0));
 		b->SetAngularAccel(200);
+		b->ApplyForce(new Force("direcao1", walkForceRight, 0));
 	}
 	if(InputManager::GetInstance().KeyRelease(LEFT_ARROW_KEY)){
-		b->removeForce("direcao");
 		b->SetAngularAccel(0);
+		b->removeForce("direcao");
 	}
 	if(InputManager::GetInstance().KeyRelease(RIGHT_ARROW_KEY)){
-		b->removeForce("direcao1");
 		b->SetAngularAccel(0);
+		b->removeForce("direcao1");
+	}
+
+	if(InputManager::GetInstance().KeyPress(UP_ARROW_KEY)){
+		b->SetVelY(-300);
 	}
 	Physic::GetInstance()->UpdatePhysic(b, dt);
 	box.SetX(b->GetX());

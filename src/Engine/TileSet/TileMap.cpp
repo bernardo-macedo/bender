@@ -62,10 +62,8 @@ int TileMap::GetDepth() {
 	return mapDepth;
 }
 
-bool* TileMap::collides(Minion* minion, int layer, bool *colPos){
-	for(int i = 0; i < 4; i++){
-		colPos[i] = false;
-	}
+int TileMap::collides(Minion* minion, int layer, Point* colPoint){
+	double w, h, centerAx,centerBx, centerAy, centerBy, dx, dy, wy, hx;
 	int xT, yT, xBoxScreen, yBoxScreen;
 	int start = layer*mapHeight*mapWidth;
 	for(int i = start; i < start + 625; i++){
@@ -74,28 +72,49 @@ bool* TileMap::collides(Minion* minion, int layer, bool *colPos){
 			yT = (i - start) / mapWidth;
 			xBoxScreen = xT*tileSet->GetTileWidth();
 			yBoxScreen = yT*tileSet->GetTileHeight();
-			if(minion->GetBox().GetX() + minion->GetBox().GetW()/2 > xBoxScreen
-					&& minion->GetBox().GetX() - minion->GetBox().GetW()/2 <= xBoxScreen + tileSet->GetTileWidth()
-					&& minion->GetBox().GetY() + minion->GetBox().GetH()/2 > yBoxScreen
-					&& minion->GetBox().GetY() - minion->GetBox().GetH()/2 <= yBoxScreen + tileSet->GetTileHeight()){
-				if(yBoxScreen / tileSet->GetTileHeight() > minion->GetBox().GetY() / tileSet->GetTileHeight()
-						&& xBoxScreen / tileSet->GetTileWidth() == int(minion->GetBox().GetX() / tileSet->GetTileWidth())){
-					colPos[3] = true;
+			w = 0.5 * (minion->GetBox().GetW() + tileSet->GetTileWidth());
+			h = 0.5 * (minion->GetBox().GetH() + tileSet->GetTileHeight());
+
+			centerAx = minion->GetBox().GetX();
+			centerAy = minion->GetBox().GetY();
+			centerBx = xBoxScreen + (tileSet->GetTileWidth() / 2);
+			centerBy = yBoxScreen + (tileSet->GetTileHeight() / 2);
+
+			dx = centerAx - centerBx;
+			dy = centerAy - centerBy;
+
+			std::cout << yT<< std::endl;
+
+			if (abs(dx) <= w && abs(dy) <= h){
+				/* collision! */
+				wy = w * dy;
+				hx = h * dx;
+				if (wy > hx){
+					if (wy > -hx){
+						colPoint->setX(xBoxScreen);
+						colPoint->setY(yBoxScreen + tileSet->GetTileHeight());
+						return Rect::TOP;
+					}
+					else{
+						colPoint->setX(xBoxScreen + tileSet->GetTileWidth());
+						colPoint->setY(yBoxScreen);
+						return Rect::LEFT;
+					}
 				}
-				if(yBoxScreen / tileSet->GetTileHeight() < minion->GetBox().GetY() / tileSet->GetTileHeight()
-						&& xBoxScreen / tileSet->GetTileWidth() == int(minion->GetBox().GetX() / tileSet->GetTileWidth())){
-					colPos[1] = true;
-				}
-				if(xBoxScreen / tileSet->GetTileWidth() > minion->GetBox().GetX() / tileSet->GetTileWidth()
-						&& yBoxScreen / tileSet->GetTileHeight() == int(minion->GetBox().GetY() / tileSet->GetTileHeight())){
-					colPos[2] = true;
-				}
-				if(xBoxScreen / tileSet->GetTileWidth() < minion->GetBox().GetX() / tileSet->GetTileWidth()
-						&& yBoxScreen / tileSet->GetTileHeight() == int(minion->GetBox().GetY() / tileSet->GetTileHeight())){
-					colPos[0] = true;
+				else{
+					if (wy > -hx){
+						colPoint->setX(xBoxScreen);
+						colPoint->setY(yBoxScreen);
+						return Rect::RIGHT;
+					}
+					else{
+						colPoint->setX(xBoxScreen);
+						colPoint->setY(yBoxScreen);
+						return Rect::BOTTOM;
+					}
 				}
 			}
 		}
 	}
-	return colPos;
+	return Rect::NONE;
 }

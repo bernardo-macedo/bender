@@ -13,6 +13,7 @@
 #include "TileSet.h"
 #include "../GameObject.h"
 #include "../../Minion.h"
+#include "../Geometry/Point.h"
 
 class TileMap {
 private:
@@ -30,7 +31,7 @@ public:
 	int GetWidth ();
 	int GetHeight ();
 	int GetDepth ();
-	bool* collides(Minion* minion, int layer, bool *colPos);
+	int collides(Minion* minion, int layer, Point* colPoint);
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

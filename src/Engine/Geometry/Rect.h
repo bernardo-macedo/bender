@@ -12,6 +12,12 @@ class Rect {
 private:
 	float x,y, w, h;
 public:
+	static int TOP;
+	static int LEFT;
+	static int RIGHT;
+	static int BOTTOM;
+	static int NONE;
+
 	virtual ~Rect();
 
 	float GetX();
