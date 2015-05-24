@@ -14,15 +14,24 @@
 class GameObject{
 protected:
 	Rect box;
+	int id;
 public:
 	virtual ~GameObject();
 
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 	virtual bool IsDead() = 0;
-	virtual void Render(int cameraY, int cameraX) = 0;
+	virtual void Render() = 0;
+	virtual void NotifyCollision(GameObject* other) = 0;
+	virtual bool Is(std::string type) = 0;
+	virtual int GetAngle(){
+		return rotation;
+	}
 
 	Rect GetBox();
 	void SetPos(int x, int y);
+	int GetID();
+
+	float rotation;
 };
 
 #endif /* ENGINE_GAMEOBJECT_H_ */

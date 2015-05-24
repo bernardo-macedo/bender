@@ -7,7 +7,7 @@
 
 #ifndef ENGINE_GEOMETRY_RECT_H_
 #define ENGINE_GEOMETRY_RECT_H_
-
+#include "Point.h"
 class Rect {
 private:
 	float x,y, w, h;
@@ -23,6 +23,8 @@ public:
 	void SetW(float w);
 	float GetH();
 	void SetH(float h);
+
+	Point GetCenter();
 
 	bool IsInside(float mouseX, float mouseY);
 

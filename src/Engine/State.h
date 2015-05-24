@@ -1,55 +1,45 @@
 /*
  * State.h
  *
- *  Created on: 13/03/2015
- *      Author: Pedro
+ *  Created on: 19/05/2015
+ *      Author: Pedro2
  */
 
 #ifndef ENGINE_STATE_H_
 #define ENGINE_STATE_H_
 
-#include <iostream>
 #include <vector>
 #include <memory>
+#include <iostream>
 
-#include "Sprite.h"
-#include "Face.h"
-#include "TileSet/TileSet.h"
-#include "TileSet/TileMap.h"
-#include "Resources.h"
-#include "InputManager.h"
-#include "Camera.h"
-
-#ifdef __linux__
-
-#include <SDL2/SDL.h>
-
-#elif _WIN32
-
-#include "SDL.h"
-
-#else     
-#error Platform not supported
-
-#endif
+#include "GameObject.h"
 
 class State {
-private:
-	Sprite* bg;
+protected:
+	void UpdateArray(float dt);
+	void RenderArray();
+
+	bool popRequested;
 	bool quitRequested;
+
 	std::vector<std::unique_ptr<GameObject>> objectArray;
-	TileSet *tileSet;
-	TileMap *tileMap;
-	Camera *camera;
 public:
 	State();
 	virtual ~State();
 
-	void Input();
-	void AddObject(float mouseX, float mouseY);
+	virtual void Update(float dt) = 0;
+	virtual void Render() = 0;
+
+	virtual void Pause() = 0;
+	virtual void Resume() = 0;
+
+	void AddObject(GameObject* object);
+
+	bool PopRequested();
 	bool QuitRequested();
-	void Update();
-	void Render();
+
+	GameObject* FindByID(int id);
+
 };
 
 #endif /* ENGINE_STATE_H_ */

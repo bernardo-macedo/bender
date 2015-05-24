@@ -1,31 +1,18 @@
 #include <iostream>
-#include "Engine/Game.h"
-#include "Engine/TileSet/TileMap.h"
-#include "Engine/Constants.h"
-
-#ifdef __linux__
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
-
-#elif _WIN32
-
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
-
-#else     
-#error Platform not supported
-
-#endif
+#include "Engine/Game.h"
+#include "Engine/TileSet/TileMap.h"
+#include "Engine/StageState.h"
+#include "TitleState.h"
 
 using namespace std;
 int main (int argc, char** argv) {
 	try{
-		Game *gm = new Game(Constants::GameTitle, 1024, 600);
+		Game *gm = new Game("Pedro Henrique Leal - 100019226", 1024, 600);
+		gm->Push(new TitleState());
 		gm->Run();
 	}catch(int e){
 		switch(e){
@@ -40,6 +27,12 @@ int main (int argc, char** argv) {
 			break;
 		case INDEX_OUT_OF_RANGE:
 			cout << "Indice invalido" << endl;
+			break;
+		case NO_INITIAL_STATE:
+			cout << "Estado inicial nao definido" << endl;
+			break;
+		case MUSIC_LOAD_FAIL:
+			cout << "Falha ao abrir uma musica" << endl;
 			break;
 		}
 	}

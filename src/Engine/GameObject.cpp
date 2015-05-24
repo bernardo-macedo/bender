@@ -19,3 +19,7 @@ void GameObject::SetPos(int x, int y) {
 	box.SetX(x);
 	box.SetY(y);
 }
+
+int GameObject::GetID() {
+	return id;
+}

@@ -6,27 +6,15 @@
  */
 #include <iostream>
 
-#ifdef __linux__
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
-
-#elif _WIN32
-
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
-#else     
-#error Platform not supported
-
-#endif
-
 #include "Game.h"
 #include "InputManager.h"
+#include "Exceptions.h"
+#include "Resources.h"
 
 
 using namespace std;
@@ -52,11 +40,14 @@ Game::Game(string title, int width, int height) {
 	if(this->renderer == NULL){
 		throw RENDERER_FAIL;
 	}
-
-	state = new State();
+	physic = new Physic();
+	storedState = NULL;
 }
 
 Game::~Game() {
+	while(!stateStack.empty()){
+		stateStack.pop();
+	}
 	IMG_Quit();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
@@ -66,6 +57,7 @@ void Game::init() {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
 	Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG);
+	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024);
 	TTF_Init();
 }
 
@@ -73,8 +65,8 @@ SDL_Renderer* Game::GetRenderer() {
 	return renderer;
 }
 
-State* Game::GetState() {
-	return state;
+State* Game::GetCurrentState() {
+	return stateStack.top().get();
 }
 
 Game* Game::GetInstance() {
@@ -82,14 +74,40 @@ Game* Game::GetInstance() {
 }
 
 void Game::Run() {
-	while(!state->QuitRequested()){
+	if(storedState == NULL){
+		throw NO_INITIAL_STATE;
+	}
+	else{
+		stateStack.emplace(storedState);
+		storedState = NULL;
+	}
+	while(!stateStack.empty() && !GetCurrentState()->QuitRequested()){
 		CalculaDeltaTime();
 		InputManager::GetInstance().Update();
-		state->Update();
-		state->Render();
+		GetCurrentState()->Update(GetDeltaTime());
+		GetCurrentState()->Render();
 		SDL_RenderPresent(renderer);
+
+		if(GetCurrentState()->PopRequested()){
+			GetCurrentState()->Pause();
+			stateStack.pop();
+			if(!stateStack.empty()){
+				GetCurrentState()->Resume();
+			}
+		}
+		if(storedState != NULL){
+			if(!stateStack.empty()){
+				GetCurrentState()->Pause();
+			}
+			stateStack.emplace(storedState);
+			GetCurrentState()->Resume();
+			storedState = NULL;
+		}
 		SDL_Delay(17);
 	}
+	Resources::ClearImages();
+	Mix_CloseAudio();
+	TTF_Quit();
 }
 
 void Game::CalculaDeltaTime() {
@@ -100,4 +118,8 @@ void Game::CalculaDeltaTime() {
 
 float Game::GetDeltaTime() {
 	return dt;
+}
+
+void Game::Push(State* state){
+	storedState = state;
 }

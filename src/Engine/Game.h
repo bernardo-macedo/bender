@@ -9,15 +9,21 @@
 #define ENGINE_GAME_H_
 
 #include "State.h"
+#include "Physics/Physic.h"
+#include "SDL_render.h"
+#include <stack>
 
 class Game {
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-	State* state;
+	State* storedState;
 	static Game* instance;
 	int frameStart;
 	float dt;
+	Physic *physic;
+
+	std::stack<std::unique_ptr<State>> stateStack;
 
 	void CalculaDeltaTime();
 	void init();
@@ -30,9 +36,10 @@ public:
 
 	void Run();
 	SDL_Renderer* GetRenderer();
-	State* GetState();
+	State* GetCurrentState();
 	static Game* GetInstance();
 	float GetDeltaTime();
+	void Push(State* state);
 };
 
 #endif /* ENGINE_GAME_H_ */

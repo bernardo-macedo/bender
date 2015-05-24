@@ -51,3 +51,7 @@ bool Rect::IsInside(float x, float y) {
 
 	return false;
 }
+
+Point Rect::GetCenter() {
+	return Point(x + w/2, y + h/2);
+}
