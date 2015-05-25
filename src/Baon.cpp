@@ -118,7 +118,17 @@ void Baon::Update(float dt) {
 			box.SetY(Game::GetInstance()->SCREEN_HEIGHT/2);
 			b->removeForce("gravity");
 			b->SetVelY(0);
-			Stand(flipped);
+			if(InputManager::GetInstance().IsKeyDown(D_KEY)){
+				Walk(false);
+			}
+			else{
+				if(InputManager::GetInstance().IsKeyDown(A_KEY)){
+					Walk(true);
+				}
+				else{
+					Stand(flipped);
+				}
+			}
 		}
 	}
 	if(state == JUMP){
