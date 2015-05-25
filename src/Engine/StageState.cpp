@@ -17,10 +17,9 @@
 #include "../EndState.h"
 
 StageState::StageState() {
-	alienCount = 20;
+	alienCount = 0;
 	initialAlienCount = alienCount;
-	tileSet = new TileSet(64, 64, "img/tileset.png");
-	tileMap = new TileMap("map/tileMap.txt", tileSet);
+	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx");
 	quitRequested = false;
 	bg = new Sprite("img/ocean.jpg");
 	srand(time(NULL));
@@ -78,7 +77,10 @@ void StageState::Update(float dt) {
 
 void StageState::Render() {
 	bg->Render(0, 0);
-	tileMap->Render(0, 1, Camera::pos.getX(), Camera::pos.getY());
+	for (int i = 0; i < tileMap->GetDepth() - 1; i++) {
+		tileMap->Render(i, 0, camera->pos.getX(), camera->pos.getY());
+	}
+
 	for(int i = 0; i < objectArray.size(); i++) {
 		if((objectArray[i])->IsDead()){
 			if(objectArray[i]->Is("Alien")){
@@ -102,7 +104,8 @@ void StageState::Render() {
 			objectArray[i]->Render();
 		}
 	}
-	tileMap->Render(1, 1, camera->pos.getX(), camera->pos.getY());
+
+	tileMap->Render(tileMap->GetDepth() - 1, 0, camera->pos.getX(), camera->pos.getY());
 }
 
 void StageState::Resume(){

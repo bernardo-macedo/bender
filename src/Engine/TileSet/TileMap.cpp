@@ -6,31 +6,49 @@
  */
 
 #include "TileMap.h"
+#include "../../libs/tmxparser/Tmx.h"
 
 #include <string>
 #include <stdio.h>
+#include <iostream>
 
-TileMap::TileMap(std::string file, TileSet* tileSet) {
+TileMap::TileMap(std::string file) {
 	Load(file);
-	this->tileSet = tileSet;
 }
 
 void TileMap::Load(std::string file) {
-	char comma;
-	FILE *fp = fopen(file.c_str(), "r");
-	fscanf(fp, "%d", &(this->mapWidth));
-	fscanf(fp, "%c", &comma);
-	fscanf(fp, "%d", &(this->mapHeight));
-	fscanf(fp, "%c", &comma);
-	fscanf(fp, "%d", &(this->mapDepth));
-	fscanf(fp, "%c", &comma);
+	Tmx::Map map;
+
+	map.ParseFile(file);
+
+	if (map.HasError()) {
+		std::cout << "Nao foi possivel fazer parse do mapa : " << file <<
+				"Erro: " << map.GetErrorText() << std::endl;
+		return;
+	}
+
+	this->mapWidth = map.GetLayer(0)->GetWidth();
+	this->mapHeight = map.GetLayer(0)->GetHeight();
+	this->mapDepth = map.GetNumLayers();
+
+
+	const Tmx::Tileset* tileSet = map.GetTileset(0);
+	TileSet* localTileSet = new TileSet(tileSet->GetTileWidth(),
+			tileSet->GetTileHeight(), "img/" + tileSet->GetImage()->GetSource());
+
+	SetTileSet(localTileSet);
 
 	int index;
-	for (int i = 0; i < mapWidth*mapHeight*mapDepth; i++){
-		fscanf(fp, "%d", &index);
-		fscanf(fp, "%c", &comma);
-		tileMatrix.push_back(index);
+	for (int i = 0; i < mapDepth; i++) {
+		const Tmx::TileLayer* layer = map.GetTileLayer(i);
+		for (int k = 0; k < mapHeight; k++) {
+			for (int j = 0; j < mapWidth; j++) {
+				index = layer->GetTileGid(j, k);
+				tileMatrix.push_back(index);
+			}
+		}
 	}
+
 }
 
 void TileMap::SetTileSet(TileSet* tileSet) {

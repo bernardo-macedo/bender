@@ -73,6 +73,7 @@ void Penguins::Update(float dt) {
 	box.SetX(body->GetX());
 	box.SetY(body->GetY());
 	rotation = body->GetRotation();
+	/*
 	if(GetBox().GetX() <= 0){
 		GetBox().SetX(1);
 		body->SetVelX(-body->GetVelX());
@@ -89,6 +90,7 @@ void Penguins::Update(float dt) {
 		GetBox().SetY(1279);
 		body->SetVelY(-body->GetVelY());
 	}
+	*/
 }
 
 void Penguins::Render() {
