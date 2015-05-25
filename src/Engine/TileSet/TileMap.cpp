@@ -64,7 +64,7 @@ void TileMap::Render(int layer, float parallaxFactor, int cameraX, int cameraY) 
 	float parallax = 1 + layer*parallaxFactor;
 	for(int j = 0; j < mapHeight; j++){
 		for(int h = 0; h < mapWidth; h++){
-			tileSet->Render(At(h, j, layer), h*(tileSet->GetTileWidth()) + cameraX*parallax, j*(tileSet->GetTileHeight()) + cameraY*parallax);
+			tileSet->Render(At(h, j, layer), h*(tileSet->GetTileWidth()) + cameraX*parallax/3, j*(tileSet->GetTileHeight()) + cameraY*parallax/3);
 		}
 	}
 }

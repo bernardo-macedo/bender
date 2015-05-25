@@ -53,10 +53,4 @@ void Camera::Update(float dt) {
 		}
 	}
 
-	if (pos.getX() > 0) {
-		pos.setX(0);
-	} else if (pos.getX() < -5656) {
-		pos.setX(-5656);
-	}
-
 }

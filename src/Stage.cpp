@@ -17,8 +17,8 @@ Stage::Stage() {
 	baon = new Baon();
 	sp = new Sprite("img/blackback.png");
 	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx");
-	sp->SetScaleX(8);
-	sp->SetScaleY(8);
+	sp->SetScaleX(2);
+	sp->SetScaleY(2);
 	Camera::Follow(baon);
 }
 
@@ -34,8 +34,8 @@ void Stage::Update(float dt) {
 		Camera::Unfollow();
 	}
 
-	std::cout << "Baon.x = " << baon->GetBox().GetX() << " Baon.y = " << baon->GetBox().GetY() << std::endl;
-	std::cout << "Camera.x = " << Camera::pos.getX() << " Camera.y = " << Camera::pos.getY() << std::endl;
+	//std::cout << "Baon.x = " << baon->GetBox().GetX() << " Baon.y = " << baon->GetBox().GetY() << std::endl;
+	//std::cout << "Camera.x = " << Camera::pos.getX() << " Camera.y = " << Camera::pos.getY() << std::endl;
 }
 
 void Stage::Render() {
