@@ -30,7 +30,7 @@ void StillAnimation::Update(float dt) {
 }
 
 bool StillAnimation::IsDead() {
-	return endTimer->Get() >= timeLimit;
+	return oneTimeOnly && endTimer->Get() >= timeLimit;
 }
 
 void StillAnimation::NotifyCollision(GameObject* other) {

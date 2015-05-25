@@ -28,6 +28,7 @@ private:
 	int currentFrame;
 	float timeElapsed;
 	float frameTime;
+	int frameWidth, frameHeight;
 public:
 	Sprite();
 	Sprite(std::string file, int frameCount = 1, float frameTime = 1);
@@ -35,18 +36,22 @@ public:
 
 	void Open(std::string file);
 	void SetClip (int x, int y, int w, int h);
-	void Render(int x, int y, int angle = 0);
+	void Render(int x, int y, int angle = 0, bool flipped = false);
 	int GetWidth();
 	int GetFrameWidth();
+	void SetFrameWidth(int frameWidth);
+	int GetFrameHeight();
+	void SetFrameHeight(int frameHeight);
 	int GetHeight();
 	bool IsOpen();
 	void SetScaleX(float scale);
 	void SetScaleY(float scale);
 
-	void Update(float dt);
+	bool Update(float dt);
 	void SetFrame(int frame);
 	void SetFrameCount(int frameCount);
 	void SetFrameTime(float frameTime);
+	void SetLine(int line, int linesize);
 };
 
 #endif /* ENGINE_SPRITE_H_ */

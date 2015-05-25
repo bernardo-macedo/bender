@@ -45,7 +45,8 @@ void Sprite::Open(std::string file) {
 	texture = Resources::GetImage(file);
 
 	SDL_QueryTexture (texture , NULL, NULL, &width, &height);
-	SetClip(0, 0, width/frameCount, height);
+	this->frameWidth = width/frameCount;
+	SetClip(0, 0, frameWidth, height);
 	open = true;
 }
 
@@ -56,13 +57,18 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 	clipRect.w = w;
 }
 
-void Sprite::Render(int x, int y, int angle) {
+void Sprite::Render(int x, int y, int angle, bool flipped) {
 	SDL_Rect rect;
 	rect.x = x;
 	rect.y = y;
 	rect.h = clipRect.h*scaleY;
 	rect.w = clipRect.w*scaleX;
-	SDL_RenderCopyEx(Game::GetInstance()->GetRenderer(), texture, &clipRect, &rect, angle, NULL, SDL_FLIP_NONE);
+	if(flipped){
+		SDL_RenderCopyEx(Game::GetInstance()->GetRenderer(), texture, &clipRect, &rect, angle, NULL, SDL_FLIP_HORIZONTAL);
+	}
+	else{
+		SDL_RenderCopyEx(Game::GetInstance()->GetRenderer(), texture, &clipRect, &rect, angle, NULL, SDL_FLIP_NONE);
+	}
 }
 
 int Sprite::GetWidth() {
@@ -86,24 +92,31 @@ void Sprite::SetScaleY(float scale) {
 
 }
 
-void Sprite::Update(float dt) {
+bool Sprite::Update(float dt) {
 	timeElapsed += dt;
-	float frameW = width/frameCount;
 	if(timeElapsed >= frameTime){
-		if(clipRect.x + frameW + 1 >= width){
+		if(currentFrame + 1 > frameCount){
 			clipRect.x = 0;
-			currentFrame = 0;
+			currentFrame = 1;
 		}
 		else{
-			clipRect.x += frameW;
+			clipRect.x += frameWidth;
+			currentFrame++;
 		}
 		timeElapsed = 0;
+		return true;
 	}
+	return false;
 }
 
 void Sprite::SetFrame(int frame) {
 	currentFrame = frame;
-	clipRect.x = frame*(width/frameCount);
+	if(frame <= frameCount){
+		clipRect.x = (frame-1)*frameWidth;
+	}
+	else{
+		clipRect.x = (frameCount-1)*frameWidth;
+	}
 }
 
 void Sprite::SetFrameCount(int frameCount) {
@@ -111,9 +124,28 @@ void Sprite::SetFrameCount(int frameCount) {
 }
 
 int Sprite::GetFrameWidth() {
-	return width/frameCount;
+	return frameWidth;
+}
+
+int Sprite::GetFrameHeight() {
+	return frameHeight;
+}
+
+void Sprite::SetFrameHeight(int frameHeight) {
+	this->frameHeight = frameHeight;
+	SetClip(clipRect.x, clipRect.y, clipRect.w, frameHeight);
 }
 
 void Sprite::SetFrameTime(float frameTime) {
 	this->frameTime = frameTime;
+}
+
+void Sprite::SetFrameWidth(int frameWidth) {
+	this->frameWidth = frameWidth;
+	SetClip(0, 0, this->frameWidth, frameHeight);
+}
+
+void Sprite::SetLine(int line, int lineSize) {
+	SetClip(0,line*lineSize , this->frameWidth, frameHeight);
+	currentFrame = 1;
 }
