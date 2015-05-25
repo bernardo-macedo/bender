@@ -5,14 +5,13 @@
 #include "SDL_ttf.h"
 #include "Engine/Game.h"
 #include "Engine/TileSet/TileMap.h"
-#include "Engine/StageState.h"
-#include "TitleState.h"
+#include "Stage.h"
 
 using namespace std;
 int main (int argc, char** argv) {
 	try{
-		Game *gm = new Game("Pedro Henrique Leal - 100019226", 1024, 600);
-		gm->Push(new TitleState());
+		Game *gm = new Game("30%", 1024, 720);
+		gm->Push(new Stage());
 		gm->Run();
 	}catch(int e){
 		switch(e){

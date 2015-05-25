@@ -32,8 +32,8 @@ void Camera::Unfollow() {
 
 void Camera::Update(float dt) {
 	if(focus != NULL){
-			pos.setX(-focus->GetBox().GetX() + Game::SCREEN_WIDTH/2);
-			pos.setY(-focus->GetBox().GetY() + Game::SCREEN_HEIGHT/2);
+		pos.setX(-focus->GetBox().GetX() + Game::SCREEN_WIDTH/2);
+		//pos.setY(-focus->GetBox().GetY() + Game::SCREEN_HEIGHT/2);
 	}
 	else{
 		if(InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY)){
@@ -52,4 +52,11 @@ void Camera::Update(float dt) {
 			pos.setY(pos.getY() + 200*dt);
 		}
 	}
+
+	if (pos.getX() > 0) {
+		pos.setX(0);
+	} else if (pos.getX() < -5656) {
+		pos.setX(-5656);
+	}
+
 }

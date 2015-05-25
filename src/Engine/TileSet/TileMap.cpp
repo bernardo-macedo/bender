@@ -41,6 +41,7 @@ void TileMap::Load(std::string file) {
 	int index;
 	for (int i = 0; i < mapDepth; i++) {
 		const Tmx::TileLayer* layer = map.GetTileLayer(i);
+		std::cout << "i = " << i << " layer name = " << layer->GetName() << std::endl;
 		for (int k = 0; k < mapHeight; k++) {
 			for (int j = 0; j < mapWidth; j++) {
 				index = layer->GetTileGid(j, k);

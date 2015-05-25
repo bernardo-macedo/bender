@@ -11,6 +11,8 @@
 #include <iostream>
 #include "../Sprite.h"
 
+#define TILESET_SCALE 3
+
 class TileSet {
 private:
 	Sprite* tileSet;

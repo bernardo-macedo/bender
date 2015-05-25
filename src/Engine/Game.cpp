@@ -20,8 +20,8 @@
 using namespace std;
 
 Game* Game::instance = NULL;
-int Game::SCREEN_WIDTH = 500;
-int Game::SCREEN_HEIGHT = 500;
+int Game::SCREEN_WIDTH = 1024;
+int Game::SCREEN_HEIGHT = 720;
 
 Game::Game(string title, int width, int height) {
 	if(instance == NULL){

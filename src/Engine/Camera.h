@@ -21,7 +21,7 @@ public:
 
 	static void Follow(GameObject* newFocus);
 	static void Unfollow();
-	void Update(float dt);
+	static void Update(float dt);
 };
 
 #endif /* CAMERA_H_ */
