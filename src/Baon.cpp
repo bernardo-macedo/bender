@@ -62,9 +62,18 @@ void Baon::Update(float dt) {
 		}
 		else{
 			if(state == JUMP || state == FALLING){
-				flipped = false;
-				b->SetVelX(WALK_SPEED);
+				if(beforeJump == WALK || beforeJump == STAND){
+					flipped = false;
+					b->SetVelX(WALK_SPEED);
+				}
+				else{
+					if(beforeJump == RUN){
+						flipped = false;
+						b->SetVelX(RUN_SPEED);
+					}
+				}
 			}
+
 		}
 	}
 	if(InputManager::GetInstance().KeyPress(A_KEY)){
@@ -78,8 +87,16 @@ void Baon::Update(float dt) {
 		}
 		else{
 			if(state == JUMP || state == FALLING){
-				flipped = true;
-				b->SetVelX(-WALK_SPEED);
+				if(beforeJump == WALK || beforeJump == STAND){
+					flipped = true;
+					b->SetVelX(-WALK_SPEED);
+				}
+				else{
+					if(beforeJump == RUN){
+						flipped = true;
+						b->SetVelX(-RUN_SPEED);
+					}
+				}
 			}
 		}
 	}
@@ -119,11 +136,25 @@ void Baon::Update(float dt) {
 			b->removeForce("gravity");
 			b->SetVelY(0);
 			if(InputManager::GetInstance().IsKeyDown(D_KEY)){
-				Walk(false);
+				if(beforeJump == WALK || beforeJump == STAND){
+					Walk(false);
+				}
+				else{
+					if(beforeJump == RUN){
+						Run(false);
+					}
+				}
 			}
 			else{
 				if(InputManager::GetInstance().IsKeyDown(A_KEY)){
-					Walk(true);
+					if(beforeJump == WALK || beforeJump == STAND){
+						Walk(true);
+					}
+					else{
+						if(beforeJump == RUN){
+							Run(true);
+						}
+					}
 				}
 				else{
 					Stand(flipped);
@@ -146,6 +177,13 @@ void Baon::Update(float dt) {
 
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
+
+	if(box.GetX() <= 512){
+		Camera::Unfollow();
+	}
+	if(box.GetX() > 512){
+		Camera::Follow(this);
+	}
 }
 
 void Baon::Render() {
@@ -168,6 +206,9 @@ bool Baon::Is(std::string type) {
 //--------------------------------------------------------
 //--------------------------------------------------------
 
+
+//--------------------------------------------------------
+//--------------------------------------------------------
 void Baon::Run(bool flipped) {
 	sp->SetFrameHeight(spriteData[RUN*3]);
 	sp->SetFrameWidth(spriteData[RUN*3 + 1]);
@@ -231,6 +272,6 @@ void Baon::Jump(bool flipped) {
 
 	b->SetVelY(-500);
 	b->ApplyForce(new Force("gravity", 0, 900));
-
+	beforeJump = state;
 	state = JUMP;
 }

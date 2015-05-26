@@ -17,8 +17,8 @@ Stage::Stage() {
 	baon = new Baon();
 	sp = new Sprite("img/blackback.png");
 	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx");
-	sp->SetScaleX(8);
-	sp->SetScaleY(8);
+	sp->SetScaleX(2);
+	sp->SetScaleY(2);
 	Camera::Follow(baon);
 }
 

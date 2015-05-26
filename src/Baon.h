@@ -40,6 +40,7 @@ private:
 
 	Sprite *sp;
 	baonStates state;
+	baonStates beforeJump;
 	runController runStates;
 	std::vector<int> spriteData;
 	int numEst;
