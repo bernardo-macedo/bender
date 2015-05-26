@@ -178,10 +178,9 @@ void Baon::Update(float dt) {
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
 
-	if(box.GetX() <= 512){
+	if(box.GetX() <= 512 || box.GetX() >= 17485){
 		Camera::Unfollow();
-	}
-	if(box.GetX() > 512){
+	} else if(box.GetX() > 512){
 		Camera::Follow(this);
 	}
 }

@@ -80,3 +80,6 @@ int TileMap::GetHeight() {
 int TileMap::GetDepth() {
 	return mapDepth;
 }
+
+void TileMap::CheckCollisions(Baon* being) {
+}

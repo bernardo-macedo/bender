@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include "TileSet.h"
+#include "../../Baon.h"
 
 class TileMap {
 private:
@@ -28,6 +29,7 @@ public:
 	int GetWidth ();
 	int GetHeight ();
 	int GetDepth ();
+	void CheckCollisions(Baon* being);
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

@@ -34,8 +34,8 @@ void Stage::Update(float dt) {
 		Camera::Unfollow();
 	}
 
-	//std::cout << "Baon.x = " << baon->GetBox().GetX() << " Baon.y = " << baon->GetBox().GetY() << std::endl;
-	//std::cout << "Camera.x = " << Camera::pos.getX() << " Camera.y = " << Camera::pos.getY() << std::endl;
+	std::cout << "Baon.x = " << baon->GetBox().GetX() << " Baon.y = " << baon->GetBox().GetY() << std::endl;
+	std::cout << "Camera.x = " << Camera::pos.getX() << " Camera.y = " << Camera::pos.getY() << std::endl;
 }
 
 void Stage::Render() {
