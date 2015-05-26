@@ -15,7 +15,7 @@
 #include "Engine/Physics/Body.h"
 #include "Engine/Timer.h"
 
-#define MAP_GROUND 500
+#define MAP_GROUND 450
 
 class Baon : public GameObject {
 public:

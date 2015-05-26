@@ -39,8 +39,8 @@ Baon::Baon() {
 	box.SetY(MAP_GROUND);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
-	sp->SetScaleX(2);
-	sp->SetScaleY(2);
+	sp->SetScaleX(3);
+	sp->SetScaleY(3);
 
 	b = new Body("baon", box.GetX(), box.GetY());
 	b->SetSpeedLimit(1000);
