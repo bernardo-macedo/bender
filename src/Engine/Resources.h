@@ -8,10 +8,7 @@
 #ifndef ENGINE_RESOURCES_H_
 #define ENGINE_RESOURCES_H_
 
-#include "SDL_render.h"
-#include "SDL.h"
-#include "SDL_mixer.h"
-#include "SDL_ttf.h"
+#include "SDL_Wrapper.h"
 
 #include <unordered_map>
 #include <string>

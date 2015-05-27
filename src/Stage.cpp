@@ -15,6 +15,7 @@ Stage::Stage() {
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);
 	baon = new Baon();
+	enemies.push_back(new Enemy());
 	sp = new Sprite("img/blackback.png");
 	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx", 5, 3);
 	sp->SetScaleX(2);
@@ -30,6 +31,10 @@ void Stage::Update(float dt) {
 	}
 	baon->Update(dt);
 
+	for(auto enemy : enemies){
+		enemy->Update(dt);
+	}
+
 	if (baon == NULL) {
 		Camera::Unfollow();
 	} else {
@@ -44,6 +49,11 @@ void Stage::Render() {
 	for (int i = 0; i < tileMap->GetDepth(); i++) {
 		tileMap->Render(i, 0, Camera::pos.getX(), Camera::pos.getY());
 	}
+
+	for(auto enemy : enemies){
+		enemy->Render();
+	}
+
 	baon->Render();
 }
 

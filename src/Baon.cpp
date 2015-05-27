@@ -11,6 +11,7 @@
 #include "Engine/InputManager.h"
 #include "Engine/Physics/Physic.h"
 #include "Engine/Physics/Force.h"
+#include "Engine/Physics/Body.h"
 
 #include <stdio.h>
 
@@ -26,12 +27,14 @@ Baon::Baon() {
 		fscanf(fp, "%d", &val);
 		spriteData.push_back(val);
 	}
+
+	fclose(fp);
 	t = new Timer();
     //----------------------------------------
 	state = STAND;
 	sp = new Sprite("img/baon.png", 1, 0.1);
 	runStates = NONE;
-
+	
 	sp->SetFrameHeight(spriteData[0]);
 	sp->SetFrameWidth(spriteData[1]);
 

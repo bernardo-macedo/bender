@@ -9,7 +9,8 @@
 #define ENGINE_SOUND_H_
 
 #include <iostream>
-#include "SDL_mixer.h"
+#include "SDL_Wrapper.h"
+ 
 class Sound {
 public:
 private:

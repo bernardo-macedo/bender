@@ -12,6 +12,7 @@
 #include "Engine/TileSet/TileMap.h"
 #include "Engine/Game.h"
 #include "Baon.h"
+#include "Enemy.h"
 
 class Stage : public State{
 public:
@@ -24,6 +25,7 @@ public:
 	void Resume();
 private:
 	Baon* baon;
+	std::vector<Enemy*> enemies;
 	Sprite *sp;
 	TileMap* tileMap;
 };

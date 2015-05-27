@@ -26,7 +26,7 @@
 #include <unordered_map>
 #include <iostream>
 
-#include "SDL.h"
+#include "SDL_Wrapper.h"
 
 class InputManager {
 private:
