@@ -6,11 +6,16 @@
  */
 
 #include "TileMap.h"
-#include "../../libs/tmxparser/Tmx.h"
 
+#include <TmxImage.h>
+#include <TmxLayer.h>
+#include <TmxMap.h>
+#include <TmxTileLayer.h>
+#include <TmxTileset.h>
+#include <cmath>
 #include <string>
-#include <stdio.h>
-#include <iostream>
+
+#include "../Game.h"
 
 TileMap::TileMap(std::string file) {
 	Load(file);
@@ -63,7 +68,10 @@ int& TileMap::At(int x, int y, int z) {
 void TileMap::Render(int layer, float parallaxFactor, int cameraX, int cameraY) {
 	float parallax = 1 + layer*parallaxFactor;
 	for(int j = 0; j < mapHeight; j++){
-		for(int h = 0; h < mapWidth; h++){
+		int min = std::max(0, (-cameraX)/(tileSet->GetTileWidth()*3) - 3);
+		int max = std::min(mapWidth, 3 + (-cameraX + Game::SCREEN_WIDTH)/(tileSet->GetTileWidth()*3));
+		std::cout << min << " " << max << " " << cameraX << std::endl;
+		for(int h = min; h < max; h++){
 			tileSet->Render(At(h, j, layer), h*(tileSet->GetTileWidth()) + cameraX*parallax/3, j*(tileSet->GetTileHeight()) + cameraY*parallax/3);
 		}
 	}

@@ -21,7 +21,7 @@
 #include "Engine/Physics/Physic.h"
 
 int Baon::WALK_SPEED = 150;
-int Baon::RUN_SPEED  = 300;
+int Baon::RUN_SPEED  = 500;
 float Baon::DOUBLECLICK_TIME = 0.2;
 
 Baon::Baon() {
