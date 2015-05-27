@@ -11,7 +11,9 @@
 #include <iostream>
 #include <vector>
 #include "TileSet.h"
+#include "../Geometry/Rect.h"
 #include "../../Baon.h"
+#include "../Collision.h"
 
 class TileMap {
 private:
@@ -20,8 +22,14 @@ private:
 	int mapWidth ;
 	int mapHeight ;
 	int mapDepth ;
+	int collisionLayerIndex ;
+	int mapScale ;
+
+	void GetTileMatrixIndexesAtPos(float x, float y, int* i, int* j);
+	std::vector<Rect> GetTilesSurroundingRect(Rect rect);
+
 public:
-	TileMap (std::string file);
+	TileMap (std::string file, int collisionLayerIndex, int mapScale = 1);
 	void Load (std::string file);
 	void SetTileSet (TileSet* tileSet);
 	int& At (int x, int y, int z = 0);
@@ -29,7 +37,7 @@ public:
 	int GetWidth ();
 	int GetHeight ();
 	int GetDepth ();
-	void CheckCollisions(Baon* being);
+	bool CheckCollisions(Rect rect);
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

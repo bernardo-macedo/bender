@@ -190,3 +190,7 @@ void Baon::MidAir(){
 Body* Baon::GetBody() {
 	return b;
 }
+
+void Baon::NotifyTileCollision() {
+	std::cout << "Notificou colisao!" << std::endl;
+}
