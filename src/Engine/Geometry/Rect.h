@@ -8,20 +8,21 @@
 #ifndef ENGINE_GEOMETRY_RECT_H_
 #define ENGINE_GEOMETRY_RECT_H_
 #include "Point.h"
+
 class Rect {
 private:
 	float x,y, w, h;
 public:
 	virtual ~Rect();
 
-	float GetX();
+	float GetX() const;
 	void SetX(float x);
-	float GetY();
+	float GetY() const;
 	void SetY(float y);
 
-	float GetW();
+	float GetW() const;
 	void SetW(float w);
-	float GetH();
+	float GetH() const;
 	void SetH(float h);
 
 	Point GetCenter();
@@ -29,5 +30,10 @@ public:
 	bool IsInside(float mouseX, float mouseY);
 
 };
+
+inline bool operator==(const Rect& rect, const Rect& other) {
+		return  rect.GetX() == other.GetX() && rect.GetY() == other.GetY()
+				&& rect.GetW() == other.GetW() && rect.GetH() == other.GetH();
+	}
 
 #endif /* ENGINE_GEOMETRY_RECT_H_ */

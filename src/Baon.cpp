@@ -274,3 +274,7 @@ void Baon::Jump(bool flipped) {
 	beforeJump = state;
 	state = JUMP;
 }
+
+void Baon::NotifyTileCollision() {
+	std::cout << "Notificou colisao!" << std::endl;
+}

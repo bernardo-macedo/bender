@@ -8,12 +8,13 @@
 #include "TileMap.h"
 #include "../../libs/tmxparser/Tmx.h"
 
-#include <string>
-#include <stdio.h>
 #include <iostream>
+#include <math.h>
 
-TileMap::TileMap(std::string file) {
+TileMap::TileMap(std::string file, int collisionLayerIndex, int mapScale) {
 	Load(file);
+	this->collisionLayerIndex = collisionLayerIndex;
+	this->mapScale = mapScale;
 }
 
 void TileMap::Load(std::string file) {
@@ -64,7 +65,7 @@ void TileMap::Render(int layer, float parallaxFactor, int cameraX, int cameraY) 
 	float parallax = 1 + layer*parallaxFactor;
 	for(int j = 0; j < mapHeight; j++){
 		for(int h = 0; h < mapWidth; h++){
-			tileSet->Render(At(h, j, layer), h*(tileSet->GetTileWidth()) + cameraX*parallax/3, j*(tileSet->GetTileHeight()) + cameraY*parallax/3);
+			tileSet->Render(At(h, j, layer), h*(tileSet->GetTileWidth()) + cameraX*parallax/mapScale, j*(tileSet->GetTileHeight()) + cameraY*parallax/mapScale);
 		}
 	}
 }
@@ -81,5 +82,68 @@ int TileMap::GetDepth() {
 	return mapDepth;
 }
 
-void TileMap::CheckCollisions(Baon* being) {
+bool TileMap::CheckCollisions(Rect rect) {
+	Rect scaledRect;
+	scaledRect.SetX(rect.GetX());
+	scaledRect.SetY(rect.GetY());
+	scaledRect.SetW(rect.GetW() * mapScale);
+	scaledRect.SetH(rect.GetH() * mapScale);
+	// pega tiles do layer de colisao
+	std::vector<Rect> tilesToCheck = GetTilesSurroundingRect(scaledRect);
+	// checa colisao com os tiles ao redor dele
+	for (unsigned int i = 0; i < tilesToCheck.size(); i++) {
+		Rect tile = tilesToCheck[i];
+		if (Collision::IsColliding(tilesToCheck[i], scaledRect, 0, 0)) {
+			// se houve colisao, notifica o player para reposiciona-lo
+			return true;
+		}
+	}
+	return false;
+
+
+
+
+}
+
+std::vector<Rect> TileMap::GetTilesSurroundingRect(Rect rect) {
+	std::vector<Rect> tiles;
+	int centerX, centerY;
+
+	// pega centro do player em coordenadas matriciais
+	Point center = rect.GetCenter();
+	GetTileMatrixIndexesAtPos(center.getX(), center.getY(), &centerX, &centerY);
+
+	// pega lista dos tiles que possivelmente estao colidindo
+	int rangeTilesX = ceil(rect.GetW()/(tileSet->GetTileWidth() * mapScale)) + 1;
+	int rangeTilesY = ceil(rect.GetH()/(tileSet->GetTileHeight() * mapScale)) + 1;
+
+	int minMatrixIndexRow = centerX - floor(rangeTilesX/2);
+	int maxMatrixIndexRow = centerX + ceil(rangeTilesX/2);
+	int minMatrixIndexCol = centerY - floor(rangeTilesY/2);
+	int maxMatrixIndexCol = centerY + ceil(rangeTilesY/2);
+
+	for (int row = std::max(0, minMatrixIndexRow); row <= std::min(mapWidth, maxMatrixIndexRow);  row++) {
+		for (int col = std::max(0, minMatrixIndexCol); col <= std::min(mapHeight, maxMatrixIndexCol); col++) {
+			// seleciona apenas os tiles com indice != 0
+			int tileIndex = At(row, col, collisionLayerIndex);
+			// o indice 90 eh erro do mapa
+			if (tileIndex != 0 && tileIndex != 90) {
+				// Cria Rect para estes tiles
+				Rect tileRect;
+				tileRect.SetX(row * tileSet->GetTileWidth() * mapScale);
+				tileRect.SetY(col * tileSet->GetTileHeight() * mapScale);
+				tileRect.SetW(tileSet->GetTileWidth() * mapScale);
+				tileRect.SetH(tileSet->GetTileHeight() * mapScale);
+				// Adiciona Rect na lista de retorno
+				tiles.push_back(tileRect);
+			}
+		}
+	}
+	return tiles;
+
+}
+
+void TileMap::GetTileMatrixIndexesAtPos(float x, float y, int* i, int* j) {
+	*i = (int) x/(tileSet->GetTileWidth() * mapScale);
+	*j = (int) y/(tileSet->GetTileHeight() * mapScale);
 }

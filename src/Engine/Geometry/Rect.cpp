@@ -7,7 +7,7 @@
 
 #include "Rect.h"
 
-float Rect::GetX() {
+float Rect::GetX() const{
 	return x;
 }
 
@@ -15,7 +15,7 @@ void Rect::SetX(float x) {
 	this->x = x;
 }
 
-float Rect::GetY() {
+float Rect::GetY() const{
 	return y;
 }
 
@@ -27,7 +27,7 @@ Rect::~Rect() {
 	// TODO Auto-generated destructor stub
 }
 
-float Rect::GetW() {
+float Rect::GetW() const{
 	return w;
 }
 
@@ -35,7 +35,7 @@ void Rect::SetW(float w) {
 	this->w = w;
 }
 
-float Rect::GetH() {
+float Rect::GetH() const{
 	return h;
 }
 

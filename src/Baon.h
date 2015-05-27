@@ -15,7 +15,7 @@
 #include "Engine/Physics/Body.h"
 #include "Engine/Timer.h"
 
-#define MAP_GROUND 450
+#define MAP_GROUND 425
 
 class Baon : public GameObject {
 public:
@@ -26,6 +26,7 @@ public:
 	void Update(float dt);
 	void Render();
 	void NotifyCollision(GameObject* other);
+	void NotifyTileCollision();
 	bool IsDead();
 	bool Is(std::string type);
 
