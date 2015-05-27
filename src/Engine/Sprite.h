@@ -9,8 +9,7 @@
 #define ENGINE_SPRITE_H_
 
 #include <iostream>
-#include "SDL_render.h"
-#include "SDL_image.h"
+#include "SDL_Wrapper.h"
 #include "Exceptions.h"
 #include "Resources.h"
 #include <memory>

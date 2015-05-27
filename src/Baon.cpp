@@ -11,6 +11,7 @@
 #include "Engine/InputManager.h"
 #include "Engine/Physics/Physic.h"
 #include "Engine/Physics/Force.h"
+#include "Engine/Physics/Body.h"
 
 #include <stdio.h>
 

@@ -7,7 +7,7 @@
 
 #include "Camera.h"
 
-#include <SDL_keycode.h>
+#include "SDL_Wrapper.h"
 
 #include "Game.h"
 #include "InputManager.h"

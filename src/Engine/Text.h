@@ -8,8 +8,7 @@
 #ifndef ENGINE_TEXT_H_
 #define ENGINE_TEXT_H_
 
-#include <SDL_pixels.h>
-#include <SDL_ttf.h>
+#include "SDL_Wrapper.h"
 #include <string>
 
 #include "Geometry/Rect.h"
