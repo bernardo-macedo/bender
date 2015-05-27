@@ -1,8 +1,8 @@
 /*
  * Enemy.h
  *
- *  Created on: 24/05/2015
- *      Author: Pedro2
+ *  Created on: 26/05/2015
+ *      Author: Simiao
  */
 
 #ifndef ENEMY_H_
@@ -14,12 +14,15 @@
 #include "Engine/Sprite.h"
 #include "Engine/Physics/Body.h"
 #include "Engine/Timer.h"
-
+#include "StateEnemy.h"
+#include <map>
 #define MAP_GROUND 500
+
+class StateEnemy;
 
 class Enemy : public GameObject {
 public:
-	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING};
+	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW};
 	enum runController {NONE, PRERUNR, PRERUNL};
 	Enemy();
 
@@ -29,17 +32,24 @@ public:
 	bool IsDead();
 	bool Is(std::string type);
 
+	Sprite* getSprite();
+
 	void Run(bool flipped);
 	void Walk(bool flipped);
 	void Stand(bool flipped);
 	void Jump(bool flipped);
+
+	void changeState(const enemyStates state_);
+
+	Timer* Time();
 private:
 	int WALK_SPEED_E;
 	int RUN_SPEED_E;
 	float DOUBLECLICK_TIME;
 
 	Sprite *sp;
-	enemyStates state;
+	StateEnemy* currentState;
+	std::map<enemyStates, StateEnemy*> enemyStatesMap;
 	runController runStates;
 	std::vector<int> spriteData;
 	int numEst;
@@ -47,6 +57,8 @@ private:
 	Body *b;
 	Timer *t;
 	int fallUpdateCount;
+	void InitializeStates();
+
 };
 
 #endif /* ENEMY_H_ */

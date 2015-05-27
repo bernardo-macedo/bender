@@ -1,8 +1,8 @@
 /*
  * Enemy.cpp
  *
- *  Created on: 24/05/2015
- *      Author: Pedro2
+ *  Created on: 26/05/2015
+ *      Author: Simiao
  */
 
 #include "Enemy.h"
@@ -13,7 +13,14 @@
 #include "Engine/Physics/Force.h"
 #include "Engine/Physics/Body.h"
 
+#include "EnemyStatePatrolling.h"
+ #include "EnemyStateFollow.h"
+
 #include <stdio.h>
+
+#define ADD_STATE_EMPLACE(enemyStates, StateEnemy) this->enemyStatesMap.emplace(enemyStates, new StateEnemy(this))
+#define ADD_STATE_INSERT(enemyStates, StateEnemy) this->enemyStatesMap.insert(std::make_pair<enemyStates, StateEnemy*>(enemyStates, new StateEnemy(this)));
+
 
 Enemy::Enemy():
 	WALK_SPEED_E(50),
@@ -28,9 +35,12 @@ Enemy::Enemy():
 		fscanf(fp, "%d", &val);
 		spriteData.push_back(val);
 	}
+	fclose(fp);
 	t = new Timer();
     //----------------------------------------
-	state = STAND;
+
+    InitializeStates();
+    currentState = enemyStatesMap.at(PATROLLING);
 	sp = new Sprite("img/baon.png", 1, 0.1);
 	runStates = NONE;
 
@@ -50,18 +60,18 @@ Enemy::Enemy():
 	flipped = false;
 	fallUpdateCount = 0;
 
+	this->currentState->enter();
+
 }
 
 void Enemy::Update(float dt) {
-	
-	Run(false);
+
+	currentState->update(dt);
 
 	t->Update(dt);
 	Physic::GetInstance()->UpdatePhysic(b, dt);
 
-	if(state != JUMP && state != FALLING){
-		sp->Update(dt);
-	}
+	sp->Update(dt);
 
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
@@ -101,7 +111,6 @@ void Enemy::Run(bool flipped) {
 		b->SetVelX(-RUN_SPEED_E);
 	}
 
-	state = RUN;
 }
 
 void Enemy::Walk(bool flipped) {
@@ -119,7 +128,6 @@ void Enemy::Walk(bool flipped) {
 	}
 	t->Restart();
 
-	state = WALK;
 }
 
 void Enemy::Stand(bool flipped) {
@@ -130,16 +138,16 @@ void Enemy::Stand(bool flipped) {
 	b->SetVelX(0);
 
 	runStates= NONE;
-	if(state == WALK){
-		if(flipped){
-			runStates = PRERUNL;
-		}
-		else{
-			runStates = PRERUNR;
-		}
+
+	if(flipped){
+		runStates = PRERUNL;
 	}
+	else{
+		runStates = PRERUNR;
+	}
+
 	fallUpdateCount = 0;
-	state = STAND;
+
 }
 
 void Enemy::Jump(bool flipped) {
@@ -151,5 +159,24 @@ void Enemy::Jump(bool flipped) {
 	b->SetVelY(-500);
 	b->ApplyForce(new Force("gravity", 0, 900));
 
-	state = JUMP;
+}
+
+void Enemy::InitializeStates(){
+	// Initialize all the states in Enemy here.
+	ADD_STATE_EMPLACE(PATROLLING,   EnemyStatePatrolling);
+	ADD_STATE_EMPLACE(FOLLOW,   	EnemyStateFollow);
+}
+
+void Enemy::changeState(const enemyStates state_){
+	this->currentState->exit();
+	this->currentState = this->enemyStatesMap.at(state_);
+	this->currentState->enter();
+}
+
+Sprite* Enemy::getSprite(){
+	return sp;
+}
+
+Timer* Enemy::Time(){
+	return t;
 }
