@@ -10,7 +10,7 @@
 
 #include "State.h"
 #include "Physics/Physic.h"
-#include "SDL_render.h"
+#include "SDL_Wrapper.h"
 #include <stack>
 
 class Game {

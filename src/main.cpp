@@ -1,8 +1,5 @@
 #include <iostream>
-#include "SDL.h"
-#include "SDL_image.h"
-#include "SDL_mixer.h"
-#include "SDL_ttf.h"
+#include "Engine/SDL_Wrapper.h"
 #include "Engine/Game.h"
 #include "Engine/TileSet/TileMap.h"
 #include "Stage.h"

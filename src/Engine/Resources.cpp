@@ -7,8 +7,7 @@
 
 #include "Resources.h"
 
-#include "SDL_error.h"
-#include "SDL_image.h"
+#include "SDL_Wrapper.h"
 #include <iostream>
 #include <stdlib.h>
 #include <sstream>

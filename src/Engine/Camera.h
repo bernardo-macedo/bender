@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include "Geometry/Point.h"
 #include "GameObject.h"
-#include <SDL.h>
+#include "SDL_Wrapper.h"
 
 class Camera {
 	static GameObject* focus;

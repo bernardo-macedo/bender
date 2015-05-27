@@ -8,7 +8,7 @@
 #ifndef ENGINE_MUSIC_H_
 #define ENGINE_MUSIC_H_
 
-#include <SDL_mixer.h>
+#include "SDL_Wrapper.h"
 #include <iostream>
 
 class Music {
