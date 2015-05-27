@@ -26,8 +26,8 @@ TileSet::TileSet(int tileWidth, int tileHeight, std::string file) {
 void TileSet::Render(int index, float x, float y) {
 	float xt, yt;
 	if(index > (rows*columns - 1)){
-		std::cout << "Indice max = " << rows*columns - 1 << std::endl;
-		std::cout << "Indice invalido = " << index << std::endl;
+		//std::cout << "Indice max = " << rows*columns - 1 << std::endl;
+		//std::cout << "Indice invalido = " << index << std::endl;
 		throw INDEX_OUT_OF_RANGE;
 	}
 	else{

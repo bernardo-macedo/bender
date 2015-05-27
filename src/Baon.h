@@ -17,6 +17,7 @@
 
 #define MAP_GROUND 450
 
+class BaonStateManager;
 class Baon : public GameObject {
 public:
 	enum baonStates {STAND, WALK, JUMP, RUN, FALLING};
@@ -28,11 +29,18 @@ public:
 	void NotifyCollision(GameObject* other);
 	bool IsDead();
 	bool Is(std::string type);
+	Body* GetBody();
 
 	void Run(bool flipped);
 	void Walk(bool flipped);
 	void Stand(bool flipped);
 	void Jump(bool flipped);
+	void Fall();
+	void MidAir();
+
+	int fallUpdateCount;
+
+
 private:
 	static int WALK_SPEED;
 	static int RUN_SPEED;
@@ -47,7 +55,7 @@ private:
 	bool flipped;
 	Body *b;
 	Timer *t;
-	int fallUpdateCount;
+	BaonStateManager *stateManager;
 };
 
 #endif /* BAON_H_ */

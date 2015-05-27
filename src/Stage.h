@@ -22,6 +22,7 @@ public:
 
 	void Pause() ;
 	void Resume();
+	Baon* GetPlayer();
 private:
 	Baon* baon;
 	Sprite *sp;

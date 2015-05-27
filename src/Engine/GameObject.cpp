@@ -23,3 +23,7 @@ void GameObject::SetPos(int x, int y) {
 int GameObject::GetID() {
 	return id;
 }
+
+int GameObject::GetAngle(){
+	return rotation;
+}

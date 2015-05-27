@@ -23,9 +23,7 @@ public:
 	virtual void Render() = 0;
 	virtual void NotifyCollision(GameObject* other) = 0;
 	virtual bool Is(std::string type) = 0;
-	virtual int GetAngle(){
-		return rotation;
-	}
+	virtual int GetAngle();
 
 	Rect GetBox();
 	void SetPos(int x, int y);

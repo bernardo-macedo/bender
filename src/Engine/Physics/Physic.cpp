@@ -34,7 +34,7 @@ void Physic::UpdatePhysic(Body* b, float dt){
 	b->SetAngularVel(b->GetAngularVel());
 	b->SetRotation(b->GetRotation() + b->GetAngularVel()*dt);
 
-	if(sqrt(pow(b->GetVelX() + b->GetAccelX()*dt,2) + pow(b->GetVelY() + b->GetAccelY()*dt, 2)) <= fabs(b->GetSpeedLimit())){
+	if(b->GetSpeedLimit() == -1 || sqrt(pow(b->GetVelX() + b->GetAccelX()*dt,2) + pow(b->GetVelY() + b->GetAccelY()*dt, 2)) <= fabs(b->GetSpeedLimit())){
 		b->SetVelX(b->GetVelX() + b->GetAccelX()*dt);
 		b->SetVelY(b->GetVelY() + b->GetAccelY()*dt);
 	}

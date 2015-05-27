@@ -35,22 +35,4 @@ void Camera::Update(float dt) {
 		pos.setX(-focus->GetBox().GetX() + Game::SCREEN_WIDTH/2);
 		//pos.setY(-focus->GetBox().GetY() + Game::SCREEN_HEIGHT/2);
 	}
-	else{
-		if(InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY)){
-			pos.setX(pos.getX() + 200*dt);
-		}
-
-		if(InputManager::GetInstance().IsKeyDown(RIGHT_ARROW_KEY)){
-			pos.setX(pos.getX() - 200*dt);
-		}
-
-		if(InputManager::GetInstance().IsKeyDown(DOWN_ARROW_KEY)){
-			pos.setY(pos.getY() - 200*dt);
-		}
-
-		if(InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY)){
-			pos.setY(pos.getY() + 200*dt);
-		}
-	}
-
 }

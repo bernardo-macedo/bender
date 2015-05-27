@@ -6,17 +6,24 @@
  */
 
 #include "Baon.h"
-#include "Engine/Camera.h"
-#include "Engine/Game.h"
-#include "Engine/InputManager.h"
-#include "Engine/Physics/Physic.h"
-#include "Engine/Physics/Force.h"
 
 #include <stdio.h>
+#include <cwchar>
+#include <string>
+
+#include "baonstates/BaonState.h"
+#include "baonstates/BaonStateManager.h"
+#include "Engine/Camera.h"
+#include "Engine/Game.h"
+#include "Engine/Geometry/Point.h"
+#include "Engine/InputManager.h"
+#include "Engine/Physics/Force.h"
+#include "Engine/Physics/Physic.h"
 
 int Baon::WALK_SPEED = 150;
 int Baon::RUN_SPEED  = 300;
 float Baon::DOUBLECLICK_TIME = 0.2;
+
 Baon::Baon() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);
@@ -27,6 +34,7 @@ Baon::Baon() {
 		spriteData.push_back(val);
 	}
 	t = new Timer();
+	stateManager = new BaonStateManager();
     //----------------------------------------
 	state = STAND;
 	sp = new Sprite("img/baon.png", 1, 0.1);
@@ -43,138 +51,18 @@ Baon::Baon() {
 	sp->SetScaleY(3);
 
 	b = new Body("baon", box.GetX(), box.GetY());
-	b->SetSpeedLimit(1000);
 
 	flipped = false;
-	fallUpdateCount = 0;
-
+	fallUpdateCount = 2;
 }
 
 void Baon::Update(float dt) {
-	if(InputManager::GetInstance().KeyPress(D_KEY)){
-		if(state != WALK && state != RUN && state != JUMP && state != FALLING){
-			if(runStates == PRERUNR && t->Get() < DOUBLECLICK_TIME){
-				Run(false);
-			}
-			else {
-				Walk(false);
-			}
-		}
-		else{
-			if(state == JUMP || state == FALLING){
-				if(beforeJump == WALK || beforeJump == STAND){
-					flipped = false;
-					b->SetVelX(WALK_SPEED);
-				}
-				else{
-					if(beforeJump == RUN){
-						flipped = false;
-						b->SetVelX(RUN_SPEED);
-					}
-				}
-			}
-
-		}
-	}
-	if(InputManager::GetInstance().KeyPress(A_KEY)){
-		if(state != WALK && state != RUN && state != JUMP && state != FALLING){
-			if(runStates == PRERUNL && t->Get() < DOUBLECLICK_TIME){
-				Run(true);
-			}
-			else{
-				Walk(true);
-			}
-		}
-		else{
-			if(state == JUMP || state == FALLING){
-				if(beforeJump == WALK || beforeJump == STAND){
-					flipped = true;
-					b->SetVelX(-WALK_SPEED);
-				}
-				else{
-					if(beforeJump == RUN){
-						flipped = true;
-						b->SetVelX(-RUN_SPEED);
-					}
-				}
-			}
-		}
-	}
-	if(InputManager::GetInstance().KeyRelease(A_KEY)){
-		if(state != JUMP && state != FALLING){
-			Stand(true);
-		}
-		else{
-			b->SetVelX(0);
-		}
-	}
-	if(InputManager::GetInstance().KeyRelease(D_KEY)){
-		if(state != JUMP && state != FALLING){
-			Stand(false);
-		}
-		else{
-			b->SetVelX(0);
-		}
-	}
-	if(InputManager::GetInstance().KeyPress(W_KEY)){
-		if(state != JUMP && state != FALLING){
-			Jump(flipped);
-		}
-	}
-
-	//-----------------------------------------------------------
-	//-----------------------------------------------------------
-
-	if(state == FALLING){
-		if(fallUpdateCount < 3){
-			if(sp->Update(dt)){
-				fallUpdateCount++;
-			}
-		}
-		if(box.GetY() >= MAP_GROUND){
-			box.SetY(MAP_GROUND);
-			b->removeForce("gravity");
-			b->SetVelY(0);
-			if(InputManager::GetInstance().IsKeyDown(D_KEY)){
-				if(beforeJump == WALK || beforeJump == STAND){
-					Walk(false);
-				}
-				else{
-					if(beforeJump == RUN){
-						Run(false);
-					}
-				}
-			}
-			else{
-				if(InputManager::GetInstance().IsKeyDown(A_KEY)){
-					if(beforeJump == WALK || beforeJump == STAND){
-						Walk(true);
-					}
-					else{
-						if(beforeJump == RUN){
-							Run(true);
-						}
-					}
-				}
-				else{
-					Stand(flipped);
-				}
-			}
-		}
-	}
-	if(state == JUMP){
-		if(b->GetVelY() > 0){
-			state = FALLING;
-		}
-	}
-
-	t->Update(dt);
-	Physic::GetInstance()->UpdatePhysic(b, dt);
-
-	if(state != JUMP && state != FALLING){
+	stateManager->Update(this, dt);
+	if(!stateManager->GetCurrentState()->Is("JUMPING")
+			&& !stateManager->GetCurrentState()->Is("FALLING")){
 		sp->Update(dt);
 	}
-
+	Physic::GetInstance()->UpdatePhysic(b, dt);
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
 
@@ -187,7 +75,7 @@ void Baon::Update(float dt) {
 
 void Baon::Render() {
 	//sp->Render(box.GetX() -  box.GetW()/2 - Camera::pos.getX(), box.GetY() - box.GetH()/2 - Camera::pos.getY(), 0, flipped);
-	sp->Render(box.GetX() + Camera::pos.getX(), box.GetY() + Camera::pos.getY(), 0, flipped);
+	sp->Render(box.GetX() + Camera::pos.getX(), box.GetY() + Camera::pos.getY(), 0, stateManager->GetCurrentState()->IsFlipped());
 }
 
 void Baon::NotifyCollision(GameObject* other) {
@@ -221,8 +109,6 @@ void Baon::Run(bool flipped) {
 		this->flipped = true;
 		b->SetVelX(-RUN_SPEED);
 	}
-
-	state = RUN;
 }
 
 void Baon::Walk(bool flipped) {
@@ -249,18 +135,6 @@ void Baon::Stand(bool flipped) {
 	sp->SetFrameCount(1);
 	sp->SetLine(STAND, spriteData[0]);
 	b->SetVelX(0);
-
-	runStates= NONE;
-	if(state == WALK){
-		if(flipped){
-			runStates = PRERUNL;
-		}
-		else{
-			runStates = PRERUNR;
-		}
-	}
-	fallUpdateCount = 0;
-	state = STAND;
 }
 
 void Baon::Jump(bool flipped) {
@@ -271,6 +145,48 @@ void Baon::Jump(bool flipped) {
 
 	b->SetVelY(-500);
 	b->ApplyForce(new Force("gravity", 0, 900));
-	beforeJump = state;
-	state = JUMP;
+}
+void Baon::Fall() {
+	if(fallUpdateCount < 5){
+		sp->SetFrame(fallUpdateCount);
+		fallUpdateCount++;
+	}
+}
+
+void Baon::MidAir(){
+	if(InputManager::GetInstance().KeyPress(A_KEY)){
+		if(stateManager->GetPreviousState()->Is("WALK")
+				|| stateManager->GetPreviousState()->Is("STAND")){
+			b->SetVelX(-WALK_SPEED);
+			stateManager->GetCurrentState()->SetFlipped(true);
+		}
+		else{
+			b->SetVelX(-RUN_SPEED);
+			stateManager->GetCurrentState()->SetFlipped(true);
+		}
+	}
+	else{
+		if(InputManager::GetInstance().KeyPress(D_KEY)){
+			if(stateManager->GetPreviousState()->Is("WALK")
+					|| stateManager->GetPreviousState()->Is("STAND")){
+				b->SetVelX(WALK_SPEED);
+				stateManager->GetCurrentState()->SetFlipped(false);
+			}
+			else{
+				b->SetVelX(RUN_SPEED);
+				stateManager->GetCurrentState()->SetFlipped(false);
+			}
+		}
+	}
+	if(InputManager::GetInstance().KeyRelease(A_KEY)){
+		b->SetVelX(0);
+	}
+	else{
+		if(InputManager::GetInstance().KeyRelease(D_KEY)){
+			b->SetVelX(0);
+		}
+	}
+}
+Body* Baon::GetBody() {
+	return b;
 }

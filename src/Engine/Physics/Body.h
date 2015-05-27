@@ -22,18 +22,7 @@ private:
 	float rotation, angularVel, angularAccel;
 	std::list<Force*> forces;
 public:
-	Body(std::string id, float x, float y){
-		velX = 0;
-		velY = 0;
-		accelX = 0;
-		accelY = 0;
-		angularVel = 0;
-		angularAccel = 0;
-		rotation = 0;
-		resistance = 1;
-		this->x = x;
-		this->y = y;
-	}
+	Body(std::string id, float x, float y);
 	virtual ~Body();
 
 	float GetAccelX();
