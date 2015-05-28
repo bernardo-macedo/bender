@@ -48,7 +48,7 @@ Enemy::Enemy():
 	sp->SetFrameWidth(spriteData[1]);
 
 	box.SetX(Game::SCREEN_WIDTH/2 + 100);
-	box.SetY(MAP_GROUND);
+	box.SetY(ENEMY_MAP_GROUND);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
 	sp->SetScaleX(2);

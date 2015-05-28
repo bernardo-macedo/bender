@@ -99,7 +99,7 @@ void Game::Run() {
 			GetCurrentState()->Resume();
 			storedState = NULL;
 		}
-		SDL_Delay(17);
+		SDL_Delay(15);
 	}
 	Resources::ClearImages();
 	Mix_CloseAudio();

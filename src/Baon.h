@@ -15,7 +15,7 @@
 #include "Engine/Physics/Body.h"
 #include "Engine/Timer.h"
 
-#define MAP_GROUND 425
+#define PLAYER_MAP_GROUND 425
 
 class BaonStateManager;
 class Baon : public GameObject {
