@@ -21,7 +21,7 @@ BaonFallingState::BaonFallingState(bool flipped) {
 	nextRequested = false;
 }
 
-void BaonFallingState::Update(Baon* baon, BaonStateManager* sm) {
+void BaonFallingState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 	baon->MidAir();
 	baon->Fall();
 	if(baon->GetBox().GetY() >= MAP_GROUND){

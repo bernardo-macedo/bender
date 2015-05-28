@@ -14,6 +14,7 @@
 
 BaonStateManager::BaonStateManager() {
 	currentState = new BaonStandState(false);
+	previousState = currentState;
 	executed = false;
 	t = new Timer();
 	runTest = 0;
@@ -48,7 +49,7 @@ void BaonStateManager::Update(Baon* baon, float dt) {
 		}
 	}
 
-	currentState->Update(baon, this);
+	currentState->Update(baon, this, dt);
 
 	if(currentState->NextRequested()){
 		if(!currentState->Is("JUMPING")){

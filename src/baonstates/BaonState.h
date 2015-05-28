@@ -17,7 +17,7 @@ class BaonState {
 public:
 	virtual ~BaonState();
 
-	virtual void Update(Baon* baon, BaonStateManager* sm) = 0;
+	virtual void Update(Baon* baon, BaonStateManager* sm, float dt) = 0;
 	BaonState* Next();
 	void SetNext(BaonState* next);
 	bool NextRequested();
@@ -26,11 +26,13 @@ public:
 	void SetNextRequested(bool nextRequested);
 	bool IsFlipped();
 	void SetFlipped(bool flipped);
+	void SetExecuted(bool executed);
+	void Reset();
 
 	virtual bool Is(std::string state) = 0;
 protected:
 	BaonState *next;
-	bool nextRequested, popRequested, flipped;
+	bool nextRequested, popRequested, flipped, executed;
 };
 
 #endif /* BAONSTATE_H_ */

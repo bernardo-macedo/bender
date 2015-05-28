@@ -15,10 +15,8 @@
 class BaonRunState : public BaonState{
 public:
 	BaonRunState(bool flipped);
-	void Update(Baon* baon, BaonStateManager* sm);
+	void Update(Baon* baon, BaonStateManager* sm, float dt);
 	bool Is(std::string state);
-private:
-	bool executed;
 };
 
 #endif /* BAONRUNSTATE_H_ */

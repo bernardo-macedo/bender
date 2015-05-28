@@ -32,3 +32,12 @@ void BaonState::SetNext(BaonState* next){
 void BaonState::SetFlipped(bool flipped){
 	this->flipped = flipped;
 }
+
+void BaonState::SetExecuted(bool executed) {
+	this->executed = executed;
+}
+
+void BaonState::Reset() {
+	executed = false;
+	nextRequested = false;
+}

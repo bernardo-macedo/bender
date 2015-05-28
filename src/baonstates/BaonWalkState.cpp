@@ -12,6 +12,8 @@
 #include "../Baon.h"
 #include "../Engine/InputManager.h"
 #include "BaonJumpState.h"
+#include "BaonKickState.h"
+#include "BaonPunchState.h"
 #include "BaonStandState.h"
 
 BaonWalkState::BaonWalkState(bool fliped) {
@@ -20,7 +22,7 @@ BaonWalkState::BaonWalkState(bool fliped) {
 	nextRequested = false;
 }
 
-void BaonWalkState::Update(Baon* baon, BaonStateManager* sm){
+void BaonWalkState::Update(Baon* baon, BaonStateManager* sm, float dt){
 	if(!executed){
 		baon->Walk(flipped);
 		executed = true;
@@ -37,6 +39,14 @@ void BaonWalkState::Update(Baon* baon, BaonStateManager* sm){
 	if(InputManager::GetInstance().KeyPress(W_KEY)){
 		nextRequested = true;
 		next = new BaonJumpState(flipped);
+	}
+	if(InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
+		nextRequested = true;
+		next = new BaonPunchState(flipped);
+	}
+	if(InputManager::GetInstance().KeyPress(RIGHT_ARROW_KEY)){
+		nextRequested = true;
+		next = new BaonKickState(flipped);
 	}
 }
 

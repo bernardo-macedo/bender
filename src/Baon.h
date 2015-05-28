@@ -38,6 +38,8 @@ public:
 	void Jump(bool flipped);
 	void Fall();
 	void MidAir();
+	void Punch();
+	void Kick();
 
 	int fallUpdateCount;
 

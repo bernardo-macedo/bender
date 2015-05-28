@@ -21,7 +21,7 @@
 #include "Engine/Physics/Physic.h"
 
 int Baon::WALK_SPEED = 150;
-int Baon::RUN_SPEED  = 500;
+int Baon::RUN_SPEED  = 400;
 float Baon::DOUBLECLICK_TIME = 0.2;
 
 Baon::Baon() {
@@ -153,6 +153,21 @@ void Baon::Fall() {
 	}
 }
 
+void Baon::Punch(){
+	sp->SetFrameHeight(spriteData[6*3]);
+	sp->SetFrameWidth(spriteData[6*3 + 1]);
+	sp->SetFrameCount(spriteData[6*3 + 2]);
+	sp->SetLine(6, spriteData[0]);
+	b->SetVelX(0);
+}
+
+void Baon::Kick(){
+	sp->SetFrameHeight(spriteData[7*3]);
+	sp->SetFrameWidth(spriteData[7*3 + 1]);
+	sp->SetFrameCount(spriteData[7*3 + 2]);
+	sp->SetLine(7, spriteData[0]);
+	b->SetVelX(0);
+}
 void Baon::MidAir(){
 	if(InputManager::GetInstance().KeyPress(A_KEY)){
 		if(stateManager->GetPreviousState()->Is("WALK")

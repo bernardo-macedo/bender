@@ -17,7 +17,7 @@ BaonJumpState::BaonJumpState(bool flipped) {
 	nextRequested = false;
 }
 
-void BaonJumpState::Update(Baon* baon, BaonStateManager* sm) {
+void BaonJumpState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 	if(!executed){
 		baon->Jump(flipped);
 		executed = true;

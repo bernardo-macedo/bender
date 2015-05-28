@@ -17,7 +17,7 @@ BaonRunState::BaonRunState(bool flipped){
 	this->flipped = flipped;
 	nextRequested = false;
 }
-void BaonRunState::Update(Baon* baon, BaonStateManager* sm) {
+void BaonRunState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 	if(!executed){
 		baon->Run(flipped);
 		executed = true;
