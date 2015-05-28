@@ -28,13 +28,17 @@ void BaonWalkState::Update(float dt){
 		executed = true;
 	}
 
-	if(InputManager::GetInstance().KeyRelease(A_KEY)){
-		nextRequested = true;
-		next = new BaonStandState(flipped);
+	if(!InputManager::GetInstance().IsKeyDown(A_KEY)){
+		if(flipped){
+			nextRequested = true;
+			next = new BaonStandState(flipped);
+		}
 	}
-	if(InputManager::GetInstance().KeyRelease(D_KEY)){
-		next = new BaonStandState(flipped);
-		nextRequested = true;
+	if(!InputManager::GetInstance().IsKeyDown(D_KEY)){
+		if(!flipped){
+			next = new BaonStandState(flipped);
+			nextRequested = true;
+		}
 	}
 	if(InputManager::GetInstance().KeyPress(W_KEY)){
 		nextRequested = true;

@@ -38,6 +38,7 @@ void BaonFallingState::NotifyTileCollision() {
 
 	sm->GetPreviousState()->Reset();
 	next = sm->GetPreviousState();
+	next->SetFlipped(flipped);
 	nextRequested = true;
 	/*
 	if(InputManager::GetInstance().IsKeyDown(A_KEY)){
