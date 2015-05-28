@@ -14,14 +14,15 @@ class Timer;
 class Baon;
 class BaonStateManager {
 public:
-	BaonStateManager();
+	BaonStateManager(Baon* baon);
 	virtual ~BaonStateManager();
 
-	void Update(Baon* baon, float dt);
+	void Update(float dt);
 	BaonState* GetCurrentState();
 	BaonState* GetPreviousState();
 private:
 	BaonState* currentState, *previousState;
+	Baon* baon;
 	bool executed;
 	bool flipped;
 	Timer* t;

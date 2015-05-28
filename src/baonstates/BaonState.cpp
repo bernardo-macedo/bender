@@ -41,3 +41,11 @@ void BaonState::Reset() {
 	executed = false;
 	nextRequested = false;
 }
+
+void BaonState::SetBaon(Baon* baon) {
+	this->baon = baon;
+}
+
+void BaonState::SetStateManager(BaonStateManager* sm) {
+	this->sm = sm;
+}

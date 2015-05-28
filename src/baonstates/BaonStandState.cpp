@@ -13,6 +13,7 @@
 #include "BaonKickState.h"
 #include "BaonPunchState.h"
 #include "BaonWalkState.h"
+#include <iostream>
 
 BaonStandState::BaonStandState(bool flipped) {
 	this->flipped = flipped;
@@ -21,7 +22,7 @@ BaonStandState::BaonStandState(bool flipped) {
 	executed = false;
 }
 
-void BaonStandState::Update(Baon* baon, BaonStateManager* sm, float dt) {
+void BaonStandState::Update(float dt) {
 	if(!executed){
 		baon->Stand(flipped);
 		executed = true;
@@ -31,6 +32,7 @@ void BaonStandState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 		nextRequested = true;
 		next = new BaonWalkState(false);
 		flipped = false;
+		std::cout << "passou" << std::endl;
 	}
 	if(InputManager::GetInstance().IsKeyDown(A_KEY)){
 		nextRequested = true;
@@ -57,4 +59,9 @@ void BaonStandState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 
 bool BaonStandState::Is(std::string name) {
 	return name.compare("STAND") == 0;
+}
+
+void BaonStandState::NotifyTileCollision() {
+	baon->GetBody()->SetVelY(0);
+	baon->GetBody()->SetY(PLAYER_MAP_GROUND);
 }

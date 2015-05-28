@@ -19,7 +19,7 @@ BaonKickState::BaonKickState(bool flipped) {
 	executed = false;
 }
 
-void BaonKickState::Update(Baon* baon, BaonStateManager* sm, float dt) {
+void BaonKickState::Update(float dt) {
 	if(!executed){
 		baon->Kick();
 		executed = true;
@@ -33,6 +33,11 @@ void BaonKickState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 	else{
 		t->Update(dt);
 	}
+}
+
+void BaonKickState::NotifyTileCollision() {
+	baon->GetBody()->SetVelY(0);
+	baon->GetBox().SetY(PLAYER_MAP_GROUND);
 }
 
 bool BaonKickState::Is(std::string state) {

@@ -13,7 +13,8 @@
 class BaonWalkState : public BaonState{
 public:
 	BaonWalkState(bool flipped);
-	void Update(Baon* baon, BaonStateManager* sm, float dt);
+	void Update(float dt);
+	void NotifyTileCollision();
 	bool Is(std::string state);
 };
 

@@ -19,7 +19,7 @@ BaonPunchState::BaonPunchState(bool flipped) {
 	t = new Timer();
 }
 
-void BaonPunchState::Update(Baon* baon, BaonStateManager* sm, float dt) {
+void BaonPunchState::Update(float dt) {
 	if(!executed){
 		baon->Punch();
 		executed = true;
@@ -32,6 +32,11 @@ void BaonPunchState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 	else{
 		t->Update(dt);
 	}
+}
+
+void BaonPunchState::NotifyTileCollision() {
+	baon->GetBody()->SetVelY(0);
+	baon->GetBox().SetY(PLAYER_MAP_GROUND);
 }
 
 bool BaonPunchState::Is(std::string state) {

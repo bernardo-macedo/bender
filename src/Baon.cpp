@@ -34,9 +34,9 @@ Baon::Baon() {
 		spriteData.push_back(val);
 	}
 	t = new Timer();
-	stateManager = new BaonStateManager();
+	stateManager = new BaonStateManager(this);
     //----------------------------------------
-	state = STAND;
+	//state = STAND;
 	sp = new Sprite("img/baon.png", 1, 0.1);
 	runStates = NONE;
 
@@ -44,7 +44,7 @@ Baon::Baon() {
 	sp->SetFrameWidth(spriteData[1]);
 
 	box.SetX(Game::SCREEN_WIDTH/2);
-	box.SetY(PLAYER_MAP_GROUND);
+	box.SetY(0);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
 	sp->SetScaleX(3);
@@ -52,12 +52,14 @@ Baon::Baon() {
 
 	b = new Body("baon", box.GetX(), box.GetY());
 
+	b->ApplyForce(new Force("gravity", 0, 900));
+
 	flipped = false;
 	fallUpdateCount = 2;
 }
 
 void Baon::Update(float dt) {
-	stateManager->Update(this, dt);
+	stateManager->Update(dt);
 	if(!stateManager->GetCurrentState()->Is("JUMPING")
 			&& !stateManager->GetCurrentState()->Is("FALLING")){
 		sp->Update(dt);
@@ -143,7 +145,7 @@ void Baon::Jump(bool flipped) {
 	sp->SetLine(JUMP, spriteData[0]);
 
 	b->SetVelY(-500);
-	b->ApplyForce(new Force("gravity", 0, 900));
+	//b->ApplyForce(new Force("gravity", 0, 900));
 }
 void Baon::Fall() {
 	if(fallUpdateCount < 5){
@@ -207,4 +209,5 @@ Body* Baon::GetBody() {
 
 void Baon::NotifyTileCollision() {
 	//std::cout << "Notificou colisao!" << std::endl;
+	stateManager->GetCurrentState()->NotifyTileCollision();
 }

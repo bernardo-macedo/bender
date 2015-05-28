@@ -15,47 +15,60 @@
 #include "BaonStateManager.h"
 #include "BaonWalkState.h"
 
+// TODO: receber Baon no construtor
 BaonFallingState::BaonFallingState(bool flipped) {
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
 }
 
-void BaonFallingState::Update(Baon* baon, BaonStateManager* sm, float dt) {
+void BaonFallingState::Update(float dt) {
 	baon->MidAir();
 	baon->Fall();
-	if(baon->GetBox().GetY() >= PLAYER_MAP_GROUND){
-		baon->fallUpdateCount = 2;
-		baon->GetBody()->SetVelY(0);
-		baon->GetBox().SetY(PLAYER_MAP_GROUND);
-		baon->GetBody()->removeForce("gravity");
-		if(InputManager::GetInstance().IsKeyDown(A_KEY)){
+	//if(baon->GetBox().GetY() >= PLAYER_MAP_GROUND) {
+
+	//}
+}
+
+void BaonFallingState::NotifyTileCollision() {
+	baon->fallUpdateCount = 2;
+	baon->GetBody()->SetVelY(0);
+	baon->GetBox().SetY(PLAYER_MAP_GROUND);
+	//baon->GetBody()->removeForce("gravity");
+
+	sm->GetPreviousState()->Reset();
+	next = sm->GetPreviousState();
+	nextRequested = true;
+	/*
+	if(InputManager::GetInstance().IsKeyDown(A_KEY)){
+
+		if(sm->GetPreviousState()->Is("WALK") || sm->GetPreviousState()->Is("STAND")){
+			next = new BaonWalkState(true);
+			nextRequested = true;
+		}
+		else{
+			next = new BaonRunState(true);
+			nextRequested = true;
+		}
+
+	}
+	else{
+		if(InputManager::GetInstance().IsKeyDown(D_KEY)){
 			if(sm->GetPreviousState()->Is("WALK") || sm->GetPreviousState()->Is("STAND")){
-				next = new BaonWalkState(true);
+				next = new BaonWalkState(false);
 				nextRequested = true;
 			}
 			else{
-				next = new BaonRunState(true);
+				next = new BaonRunState(false);
 				nextRequested = true;
 			}
 		}
 		else{
-			if(InputManager::GetInstance().IsKeyDown(D_KEY)){
-				if(sm->GetPreviousState()->Is("WALK") || sm->GetPreviousState()->Is("STAND")){
-					next = new BaonWalkState(false);
-					nextRequested = true;
-				}
-				else{
-					next = new BaonRunState(false);
-					nextRequested = true;
-				}
-			}
-			else{
-				next = new BaonStandState(flipped);
-				nextRequested = true;
-			}
+			next = new BaonStandState(flipped);
+			nextRequested = true;
 		}
 	}
+	*/
 }
 
 bool BaonFallingState::Is(std::string state) {

@@ -17,7 +17,7 @@ BaonRunState::BaonRunState(bool flipped){
 	this->flipped = flipped;
 	nextRequested = false;
 }
-void BaonRunState::Update(Baon* baon, BaonStateManager* sm, float dt) {
+void BaonRunState::Update(float dt) {
 	if(!executed){
 		baon->Run(flipped);
 		executed = true;
@@ -39,4 +39,9 @@ void BaonRunState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 
 bool BaonRunState::Is(std::string state) {
 	return state.compare("RUN") == 0;
+}
+
+void BaonRunState::NotifyTileCollision() {
+	baon->GetBody()->SetVelY(0);
+	baon->GetBody()->SetY(PLAYER_MAP_GROUND);
 }

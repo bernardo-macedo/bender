@@ -12,9 +12,14 @@
 #include "BaonRunState.h"
 #include "BaonStandState.h"
 
-BaonStateManager::BaonStateManager() {
+BaonStateManager::BaonStateManager(Baon* baon) {
 	currentState = new BaonStandState(false);
+	currentState->SetBaon(baon);
+	currentState->SetStateManager(this);
+	this->baon = baon;
+
 	previousState = currentState;
+
 	executed = false;
 	t = new Timer();
 	runTest = 0;
@@ -24,7 +29,7 @@ BaonStateManager::~BaonStateManager() {
 	// TODO Auto-generated destructor stub
 }
 
-void BaonStateManager::Update(Baon* baon, float dt) {
+void BaonStateManager::Update(float dt) {
 	if(runTest == 1){
 		t->Update(dt);
 		if(InputManager::GetInstance().KeyPress(D_KEY)){
@@ -39,6 +44,10 @@ void BaonStateManager::Update(Baon* baon, float dt) {
 				}
 			}
 		}
+		if (currentState != NULL) {
+			currentState->SetBaon(baon);
+			currentState->SetStateManager(this);
+		}
 	}
 
 	if(InputManager::GetInstance().KeyPress(D_KEY)
@@ -49,13 +58,15 @@ void BaonStateManager::Update(Baon* baon, float dt) {
 		}
 	}
 
-	currentState->Update(baon, this, dt);
+	currentState->Update(dt);
 
 	if(currentState->NextRequested()){
 		if(!currentState->Is("JUMPING")){
 			previousState = currentState;
 		}
 		currentState = currentState->Next();
+		currentState->SetBaon(baon);
+		currentState->SetStateManager(this);
 		executed = false;
 	}
 }

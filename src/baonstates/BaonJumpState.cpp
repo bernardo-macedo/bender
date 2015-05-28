@@ -17,7 +17,7 @@ BaonJumpState::BaonJumpState(bool flipped) {
 	nextRequested = false;
 }
 
-void BaonJumpState::Update(Baon* baon, BaonStateManager* sm, float dt) {
+void BaonJumpState::Update(float dt) {
 	if(!executed){
 		baon->Jump(flipped);
 		executed = true;
@@ -30,6 +30,9 @@ void BaonJumpState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 			next = new BaonFallingState(flipped);
 		}
 	}
+}
+
+void BaonJumpState::NotifyTileCollision() {
 }
 
 bool BaonJumpState::Is(std::string state){

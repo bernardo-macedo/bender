@@ -22,7 +22,7 @@ BaonWalkState::BaonWalkState(bool fliped) {
 	nextRequested = false;
 }
 
-void BaonWalkState::Update(Baon* baon, BaonStateManager* sm, float dt){
+void BaonWalkState::Update(float dt){
 	if(!executed){
 		baon->Walk(flipped);
 		executed = true;
@@ -52,4 +52,10 @@ void BaonWalkState::Update(Baon* baon, BaonStateManager* sm, float dt){
 
 bool BaonWalkState::Is(std::string state) {
 	return state.compare("WALK") == 0;
+}
+
+void BaonWalkState::NotifyTileCollision() {
+	std::cout << "passou3" << std::endl;
+	baon->GetBody()->SetVelY(0);
+	baon->GetBody()->SetY(PLAYER_MAP_GROUND);
 }

@@ -38,6 +38,8 @@ Game::Game(string title, int width, int height) {
 	}
 	physic = new Physic();
 	storedState = NULL;
+
+	frameStart = SDL_GetTicks();
 }
 
 Game::~Game() {

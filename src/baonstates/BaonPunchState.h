@@ -17,7 +17,8 @@ class Timer;
 class BaonPunchState : public BaonState{
 public:
 	BaonPunchState(bool flipped);
-	void Update(Baon* baon, BaonStateManager* sm, float dt);
+	void Update(float dt);
+	void NotifyTileCollision();
 	bool Is(std::string state);
 private:
 	int count;

@@ -31,6 +31,11 @@ void Stage::Update(float dt) {
 			|| InputManager::GetInstance().QuitRequested()){
 		quitRequested = true;
 	}
+
+	if (tileMap->CheckCollisions(baon->GetBox())) {
+		baon->NotifyTileCollision();
+	}
+
 	baon->Update(dt);
 
 	for(auto enemy : enemies){
@@ -39,10 +44,6 @@ void Stage::Update(float dt) {
 
 	if (baon == NULL) {
 		Camera::Unfollow();
-	} else {
-		if (tileMap->CheckCollisions(baon->GetBox())) {
-			baon->NotifyTileCollision();
-		}
 	}
 
 }

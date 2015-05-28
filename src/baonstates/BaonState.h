@@ -17,13 +17,16 @@ class BaonState {
 public:
 	virtual ~BaonState();
 
-	virtual void Update(Baon* baon, BaonStateManager* sm, float dt) = 0;
+	virtual void Update(float dt) = 0;
+	virtual void NotifyTileCollision() = 0;
 	BaonState* Next();
 	void SetNext(BaonState* next);
 	bool NextRequested();
 	bool PopRequested();
 	void SetPopRequested(bool popRequested);
 	void SetNextRequested(bool nextRequested);
+	void SetBaon(Baon* baon);
+	void SetStateManager(BaonStateManager* sm);
 	bool IsFlipped();
 	void SetFlipped(bool flipped);
 	void SetExecuted(bool executed);
@@ -31,6 +34,8 @@ public:
 
 	virtual bool Is(std::string state) = 0;
 protected:
+	Baon* baon;
+	BaonStateManager* sm;
 	BaonState *next;
 	bool nextRequested, popRequested, flipped, executed;
 };
