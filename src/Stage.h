@@ -13,6 +13,7 @@
 #include "Engine/Game.h"
 #include "Baon.h"
 #include "Enemy.h"
+#include "Monumento.h"
 
 class Stage : public State{
 public:
@@ -27,6 +28,7 @@ public:
 private:
 	Baon* baon;
 	std::vector<Enemy*> enemies;
+	std::vector<Monumento*> monuments;
 	Sprite *sp;
 	TileMap* tileMap;
 };

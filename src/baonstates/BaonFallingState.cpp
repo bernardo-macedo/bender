@@ -24,10 +24,10 @@ BaonFallingState::BaonFallingState(bool flipped) {
 void BaonFallingState::Update(Baon* baon, BaonStateManager* sm, float dt) {
 	baon->MidAir();
 	baon->Fall();
-	if(baon->GetBox().GetY() >= MAP_GROUND){
+	if(baon->GetBox().GetY() >= PLAYER_MAP_GROUND){
 		baon->fallUpdateCount = 2;
 		baon->GetBody()->SetVelY(0);
-		baon->GetBox().SetY(MAP_GROUND);
+		baon->GetBox().SetY(PLAYER_MAP_GROUND);
 		baon->GetBody()->removeForce("gravity");
 		if(InputManager::GetInstance().IsKeyDown(A_KEY)){
 			if(sm->GetPreviousState()->Is("WALK") || sm->GetPreviousState()->Is("STAND")){

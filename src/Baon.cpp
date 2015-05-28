@@ -44,7 +44,7 @@ Baon::Baon() {
 	sp->SetFrameWidth(spriteData[1]);
 
 	box.SetX(Game::SCREEN_WIDTH/2);
-	box.SetY(MAP_GROUND);
+	box.SetY(PLAYER_MAP_GROUND);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
 	sp->SetScaleX(3);
@@ -74,7 +74,6 @@ void Baon::Update(float dt) {
 }
 
 void Baon::Render() {
-	//sp->Render(box.GetX() -  box.GetW()/2 - Camera::pos.getX(), box.GetY() - box.GetH()/2 - Camera::pos.getY(), 0, flipped);
 	sp->Render(box.GetX() + Camera::pos.getX(), box.GetY() + Camera::pos.getY(), 0, stateManager->GetCurrentState()->IsFlipped());
 }
 
@@ -207,5 +206,5 @@ Body* Baon::GetBody() {
 }
 
 void Baon::NotifyTileCollision() {
-	std::cout << "Notificou colisao!" << std::endl;
+	//std::cout << "Notificou colisao!" << std::endl;
 }

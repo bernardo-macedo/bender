@@ -68,12 +68,13 @@ int& TileMap::At(int x, int y, int z) {
 }
 
 void TileMap::Render(int layer, float parallaxFactor, int cameraX, int cameraY) {
+	int loadOffset = 3;
 	float parallax = 1 + layer*parallaxFactor;
 	for(int j = 0; j < mapHeight; j++){
-		int min = std::max(0, (-cameraX)/(tileSet->GetTileWidth()*3) - 3);
-		int max = std::min(mapWidth, 3 + (-cameraX + Game::SCREEN_WIDTH)/(tileSet->GetTileWidth()*3));
+		int min = std::max(0, (-cameraX)/(tileSet->GetTileWidth() * mapScale) - loadOffset);
+		int max = std::min(mapWidth, loadOffset + (-cameraX + Game::SCREEN_WIDTH)/(tileSet->GetTileWidth() * mapScale));
 		for(int h = min; h < max; h++){
-			tileSet->Render(At(h, j, layer), h*(tileSet->GetTileWidth()) + cameraX*parallax/3, j*(tileSet->GetTileHeight()) + cameraY*parallax/3);
+			tileSet->Render(At(h, j, layer), h*(tileSet->GetTileWidth()) + cameraX*parallax/mapScale, j*(tileSet->GetTileHeight()) + cameraY*parallax/mapScale);
 		}
 	}
 }

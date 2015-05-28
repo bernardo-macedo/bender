@@ -16,6 +16,8 @@ Stage::Stage() {
 	Camera::pos.setY(0);
 	baon = new Baon();
 	enemies.push_back(new Enemy());
+	monuments.push_back(new Monumento(1744));
+	monuments.push_back(new Monumento(5456));
 	sp = new Sprite("img/blackback.png");
 	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx", 5, 3);
 	sp->SetScaleX(2);
@@ -53,6 +55,10 @@ void Stage::Render() {
 
 	for(auto enemy : enemies){
 		enemy->Render();
+	}
+
+	for(auto monument : monuments) {
+		monument->Render();
 	}
 
 	baon->Render();
