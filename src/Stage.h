@@ -14,6 +14,7 @@
 #include "Baon.h"
 #include "Enemy.h"
 #include "Monumento.h"
+#include "EnemyAIManager.h" 
 
 class Stage : public State{
 public:
@@ -32,6 +33,7 @@ private:
 	std::vector<Monumento*> monuments;
 	Sprite *sp;
 	TileMap* tileMap;
+	EnemyAIManager *enemyAI;
 };
 
 #endif /* STAGE_H_ */

@@ -56,6 +56,7 @@ Baon::Baon() {
 
 	flipped = false;
 	fallUpdateCount = 2;
+	isDamage = false;
 }
 
 void Baon::Update(float dt) {
@@ -72,6 +73,11 @@ void Baon::Update(float dt) {
 		Camera::Unfollow();
 	} else if(box.GetX() > 512){
 		Camera::Follow(this);
+	}
+
+	if(stateManager->GetCurrentState()->Is("PUNCHING") || 
+	stateManager->GetCurrentState()->Is("KICKING")){
+		isDamage = true;
 	}
 
 	// Impede o player a sair do mapa pela esquerda
@@ -197,7 +203,7 @@ void Baon::Kick(){
 void Baon::MidAir(){
 	std::cout << "chamou midAir" << std::endl;
 	if (b->GetForce("gravity") == NULL) {
-		b->ApplyForce(new Force("gravity", 0, 900));
+		b->ApplyForce(new Force("gravity", 0, 1200));
 	}
 	if(InputManager::GetInstance().KeyPress(A_KEY)){
 		if(stateManager->GetPreviousState()->Is("WALK")
@@ -231,9 +237,6 @@ void Baon::MidAir(){
 			b->SetVelX(0);
 		}
 	}
-}
-Body* Baon::GetBody() {
-	return b;
 }
 
 Body Baon::GetBodyValue() {
@@ -281,4 +284,12 @@ void Baon::SetBodyY(Body body) {
 void Baon::NotifyTileCollision(Body* previousBody, float dt) {
 	//std::cout << "Notificou colisao!" << std::endl;
 	stateManager->GetCurrentState()->NotifyTileCollision(previousBody, dt);
+}
+
+Body* Baon::GetBody(){
+	return b;
+}
+
+BaonStateManager* Baon::GetState(){
+	return stateManager;
 }

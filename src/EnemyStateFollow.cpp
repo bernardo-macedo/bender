@@ -12,12 +12,8 @@ void EnemyStateFollow::exit(){
 
 void EnemyStateFollow::update(const float dt_){
 	
-	// Patrol.
-	enemy->Run(true);
-	if(enemy->Time()->Get() > 3){
-		enemy->changeState(Enemy::enemyStates::PATROLLING);
-	}
-	//enemy->getSprite()->
+	// Follow.
+	
 }
 
 EnemyStateFollow::EnemyStateFollow(Enemy* const enemy_) :

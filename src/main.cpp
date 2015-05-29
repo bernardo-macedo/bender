@@ -5,7 +5,7 @@
 #include "Stage.h"
 
 using namespace std;
-int main (int argc, char** argv) {
+int main (void) {
 	try{
 		Game *gm = new Game("30%", 1024, 720);
 		gm->Push(new Stage());

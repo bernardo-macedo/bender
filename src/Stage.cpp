@@ -16,6 +16,7 @@ Stage::Stage() {
 	Camera::pos.setY(0);
 	baon = new Baon();
 	enemies.push_back(new Enemy());
+	enemyAI = new EnemyAIManager(baon, enemies[0]);
 	monuments.push_back(new Monumento(1744));
 	monuments.push_back(new Monumento(5456));
 	sp = new Sprite("img/blackback.png");
@@ -33,19 +34,20 @@ void Stage::Update(float dt) {
 	}
 
 	Body previousBody = baon->GetBodyValue();
-	std::cout << "PreviousBody antes de Update: x = " << previousBody.GetX() << " y = " << previousBody.GetY() << std::endl;
 	//previousBody.SetX(baon->GetBox().GetX());
 	//previousBody.SetY(baon->GetBox().GetY());
 	//std::cout << "PreviousBody antes de Update 2: x = " << previousBody.GetX() << " y = " << previousBody.GetY() << std::endl;
 	baon->Update(dt);
 
 	if (baon->GetBody()->GetForce("gravity") != NULL) {
-		std::cout << "existe gravidade atuando" << std::endl;
+		//std::cout << "existe gravidade atuando" << std::endl;
 	}
 
 	for(auto enemy : enemies){
 		enemy->Update(dt);
 	}
+
+	enemyAI->update(dt);
 
 	if (baon == NULL) {
 		Camera::Unfollow();

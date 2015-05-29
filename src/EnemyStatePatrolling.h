@@ -30,7 +30,13 @@ class EnemyStatePatrolling : public StateEnemy {
 		/**
 		* @see StateEnemy::update
 		*/
-		virtual void update(float dt_);
+		virtual void update(const float dt_);
+
+	private:
+
+		float patrollDistance;
+		float patrollMaxDistance;
+		bool isLeft;
 
 };
 

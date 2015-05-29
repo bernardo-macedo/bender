@@ -16,7 +16,7 @@
 #include "Engine/Timer.h"
 #include "StateEnemy.h"
 #include <map>
-#define ENEMY_MAP_GROUND 450
+#define ENEMY_MAP_GROUND 430
 
 class StateEnemy;
 
@@ -32,7 +32,8 @@ public:
 	bool IsDead();
 	bool Is(std::string type);
 
-	Sprite* getSprite();
+	Sprite* GetSprite();
+	Body* GetBody();
 
 	void Run(bool flipped);
 	void Walk(bool flipped);
@@ -40,8 +41,12 @@ public:
 	void Jump(bool flipped);
 
 	void changeState(const enemyStates state_);
+	bool IsState(const enemyStates state_);
 
 	Timer* Time();
+
+	void SetDead(bool isDead_);
+
 private:
 	int WALK_SPEED_E;
 	int RUN_SPEED_E;
@@ -56,6 +61,7 @@ private:
 	bool flipped;
 	Body *b;
 	Timer *t;
+	bool isDead;
 	int fallUpdateCount;
 	void InitializeStates();
 

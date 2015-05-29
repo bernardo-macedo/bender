@@ -13,7 +13,7 @@ INCLUDE = -I$(LIB_TMXPARSER)   \
           -I$(LIB_BASE64)
 
 all:
-	g++ *cpp $(LIBS_CFILES) $(LIBS_CXXFILES) Engine/*.cpp Engine/Geometry/*.cpp Engine/Physics/*.cpp Engine/TileSet/*.cpp -o prog -W -Wall -pedantic -ansi -std=gnu++11 $(INCLUDE) -lz -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer -lSDL2_gfx -lSDL2_ttf
+	g++ *cpp $(LIBS_CFILES) $(LIBS_CXXFILES) baonstates/*.cpp Engine/*.cpp Engine/Geometry/*.cpp Engine/Physics/*.cpp Engine/TileSet/*.cpp -o prog -W -Wall -pedantic -ansi -std=gnu++11 $(INCLUDE) -lz -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer -lSDL2_gfx -lSDL2_ttf
 
 clean: 
 	rm prog

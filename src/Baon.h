@@ -35,6 +35,7 @@ public:
 	void SetBody(Body body);
 	void SetBodyX(Body body);
 	void SetBodyY(Body body);
+	BaonStateManager* GetState();
 
 	void Run(bool flipped);
 	void Walk(bool flipped);
@@ -45,8 +46,10 @@ public:
 	void Punch();
 	void Kick();
 
+
 	int fallUpdateCount;
 
+	bool isDamage;
 
 private:
 	static int WALK_SPEED;

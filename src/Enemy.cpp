@@ -14,9 +14,10 @@
 #include "Engine/Physics/Body.h"
 
 #include "EnemyStatePatrolling.h"
- #include "EnemyStateFollow.h"
+#include "EnemyStateFollow.h"
 
 #include <stdio.h>
+#include <iostream>
 
 #define ADD_STATE_EMPLACE(enemyStates, StateEnemy) this->enemyStatesMap.emplace(enemyStates, new StateEnemy(this))
 #define ADD_STATE_INSERT(enemyStates, StateEnemy) this->enemyStatesMap.insert(std::make_pair<enemyStates, StateEnemy*>(enemyStates, new StateEnemy(this)));
@@ -24,10 +25,10 @@
 
 Enemy::Enemy():
 	WALK_SPEED_E(50),
-	RUN_SPEED_E(50),
+	RUN_SPEED_E(130),
 	DOUBLECLICK_TIME(0.2)
 	{
-	FILE *fp = fopen("data/baon-data.txt", "r");
+	FILE *fp = fopen("data/inimigo-data.txt", "r");
 	fscanf(fp, "%d", &numEst);
 
 	int val;
@@ -41,7 +42,7 @@ Enemy::Enemy():
 
     InitializeStates();
     currentState = enemyStatesMap.at(PATROLLING);
-	sp = new Sprite("img/baon.png", 1, 0.1);
+	sp = new Sprite("img/Inimigo.png", 1, 0.1);
 	runStates = NONE;
 
 	sp->SetFrameHeight(spriteData[0]);
@@ -51,14 +52,15 @@ Enemy::Enemy():
 	box.SetY(ENEMY_MAP_GROUND);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
-	sp->SetScaleX(2);
-	sp->SetScaleY(2);
+	sp->SetScaleX(3);
+	sp->SetScaleY(3);
 
 	b = new Body("enemy", box.GetX(), box.GetY());
 	b->SetSpeedLimit(1000);
 
 	flipped = false;
 	fallUpdateCount = 0;
+	isDead = false;
 
 	this->currentState->enter();
 
@@ -66,27 +68,27 @@ Enemy::Enemy():
 
 void Enemy::Update(float dt) {
 
-	currentState->update(dt);
-
-	t->Update(dt);
-	//Physic::GetInstance()->UpdatePhysic(b, dt);
-
-	sp->Update(dt);
+	if(!isDead){
+		currentState->update(dt);
+		t->Update(dt);
+		Physic::GetInstance()->UpdatePhysic(b, dt);
+	}
 
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
 }
 
 void Enemy::Render() {
-	//sp->Render(box.GetX() -  box.GetW()/2 - Camera::pos.getX(), box.GetY() - box.GetH()/2 - Camera::pos.getY(), 0, flipped);
-	sp->Render(box.GetX() + Camera::pos.getX(), box.GetY() + Camera::pos.getY(), 0, flipped);
+	if(!isDead){
+		sp->Render(box.GetX() + Camera::pos.getX(), box.GetY() + Camera::pos.getY(), 0, flipped);
+	}
 }
 
 void Enemy::NotifyCollision(GameObject* other) {
 }
 
 bool Enemy::IsDead() {
-	return false;
+	return isDead;
 }
 
 bool Enemy::Is(std::string type) {
@@ -98,10 +100,6 @@ bool Enemy::Is(std::string type) {
 //--------------------------------------------------------
 
 void Enemy::Run(bool flipped) {
-	sp->SetFrameHeight(spriteData[RUN*3]);
-	sp->SetFrameWidth(spriteData[RUN*3 + 1]);
-	sp->SetFrameCount(spriteData[RUN*3 + 2]);
-	sp->SetLine(RUN, spriteData[0]);
 	if(!flipped){
 		this->flipped = false;
 		b->SetVelX(RUN_SPEED_E);
@@ -173,10 +171,27 @@ void Enemy::changeState(const enemyStates state_){
 	this->currentState->enter();
 }
 
-Sprite* Enemy::getSprite(){
+bool Enemy::IsState(const enemyStates state_){
+	if(this->currentState == this->enemyStatesMap.at(state_)){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+Sprite* Enemy::GetSprite(){
 	return sp;
 }
 
 Timer* Enemy::Time(){
 	return t;
+}
+
+Body* Enemy::GetBody(){
+	return b;
+}
+
+void Enemy::SetDead(bool isDead_){
+	isDead = isDead_;
 }
