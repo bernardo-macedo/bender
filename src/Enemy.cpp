@@ -69,7 +69,7 @@ void Enemy::Update(float dt) {
 	currentState->update(dt);
 
 	t->Update(dt);
-	Physic::GetInstance()->UpdatePhysic(b, dt);
+	//Physic::GetInstance()->UpdatePhysic(b, dt);
 
 	sp->Update(dt);
 

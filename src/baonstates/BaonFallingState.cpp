@@ -38,6 +38,7 @@ void BaonFallingState::NotifyTileCollision(Body* previousBody, float dt) {
 
 	sm->GetPreviousState()->Reset();
 	next = sm->GetPreviousState();
+	next->SetFlipped(flipped);
 	nextRequested = true;
 
 	//baon->SetBody(previousPosition);
