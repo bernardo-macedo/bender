@@ -25,6 +25,7 @@ public:
 	void Pause() ;
 	void Resume();
 	Baon* GetPlayer();
+	void ResolveCollision(Body previousBody, float dt, bool vertical);
 private:
 	Baon* baon;
 	std::vector<Enemy*> enemies;

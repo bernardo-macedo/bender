@@ -30,7 +30,7 @@ void BaonFallingState::Update(float dt) {
 	//}
 }
 
-void BaonFallingState::NotifyTileCollision() {
+void BaonFallingState::NotifyTileCollision(Body* previousBody, float dt) {
 	baon->fallUpdateCount = 2;
 	baon->GetBody()->SetVelY(0);
 	baon->GetBox().SetY(PLAYER_MAP_GROUND);
@@ -39,6 +39,12 @@ void BaonFallingState::NotifyTileCollision() {
 	sm->GetPreviousState()->Reset();
 	next = sm->GetPreviousState();
 	nextRequested = true;
+
+	//baon->SetBody(previousPosition);
+	//Update(previousDt/2);
+	//if ()
+
+
 	/*
 	if(InputManager::GetInstance().IsKeyDown(A_KEY)){
 

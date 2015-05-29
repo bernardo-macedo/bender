@@ -15,6 +15,24 @@
 
 class Collision {
 public:
+	class CollisionSide {
+	public:
+		bool left, right, top, bottom;
+
+		inline CollisionSide(bool left, bool right, bool top, bool bottom) :
+			left(left), right(right), top(top), bottom(bottom) {}
+		~CollisionSide() {}
+		inline bool HasCollided() {
+			return (this->left || this->right || this->top || this->bottom);
+		};
+		inline bool HasCollidedVertically() {
+			return (this->top || this->bottom);
+		};
+		inline bool HasCollidedHorizontally() {
+			return (this->left || this->right);
+		};
+	};
+
 	static inline bool IsColliding(Rect a, Rect b, float angleOfA, float angleOfB) {
 		Point A[] = { Point( a.GetX(), a.GetY() + a.GetH() ),
 					  Point( a.GetX() + a.GetW(), a.GetY() + a.GetH() ),
@@ -76,7 +94,5 @@ private:
 		return Point ( p.getX() * cs - p.getY() * sn, p.getX() * sn + p.getY() * cs );
 	}
 };
-
-
 
 #endif /* ENGINE_COLLISION_H_ */

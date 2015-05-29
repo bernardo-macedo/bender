@@ -10,6 +10,8 @@
 
 #include <string>
 
+class Body;
+
 class Baon;
 class BaonStateManager;
 
@@ -18,7 +20,7 @@ public:
 	virtual ~BaonState();
 
 	virtual void Update(float dt) = 0;
-	virtual void NotifyTileCollision() = 0;
+	virtual void NotifyTileCollision(Body* previousBody, float dt) = 0;
 	BaonState* Next();
 	void SetNext(BaonState* next);
 	bool NextRequested();

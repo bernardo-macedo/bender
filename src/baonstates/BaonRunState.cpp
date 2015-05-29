@@ -41,7 +41,7 @@ bool BaonRunState::Is(std::string state) {
 	return state.compare("RUN") == 0;
 }
 
-void BaonRunState::NotifyTileCollision() {
+void BaonRunState::NotifyTileCollision(Body* previousBody, float dt) {
 	baon->GetBody()->SetVelY(0);
 	baon->GetBody()->SetY(PLAYER_MAP_GROUND);
 }

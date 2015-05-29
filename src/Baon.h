@@ -27,10 +27,14 @@ public:
 	void Update(float dt);
 	void Render();
 	void NotifyCollision(GameObject* other);
-	void NotifyTileCollision();
+	void NotifyTileCollision(Body* previousBody, float dt);
 	bool IsDead();
 	bool Is(std::string type);
+	Body GetBodyValue();
 	Body* GetBody();
+	void SetBody(Body body);
+	void SetBodyX(Body body);
+	void SetBodyY(Body body);
 
 	void Run(bool flipped);
 	void Walk(bool flipped);

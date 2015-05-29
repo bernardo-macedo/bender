@@ -18,7 +18,7 @@ class BaonPunchState : public BaonState{
 public:
 	BaonPunchState(bool flipped);
 	void Update(float dt);
-	void NotifyTileCollision();
+	void NotifyTileCollision(Body* previousBody, float dt);
 	bool Is(std::string state);
 private:
 	int count;

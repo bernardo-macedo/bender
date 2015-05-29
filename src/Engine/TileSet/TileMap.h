@@ -37,7 +37,7 @@ public:
 	int GetWidth ();
 	int GetHeight ();
 	int GetDepth ();
-	bool CheckCollisions(Rect rect);
+	Collision::CollisionSide CheckCollisions(Rect rect);
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

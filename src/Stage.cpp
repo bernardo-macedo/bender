@@ -32,10 +32,11 @@ void Stage::Update(float dt) {
 		quitRequested = true;
 	}
 
-	if (tileMap->CheckCollisions(baon->GetBox())) {
-		baon->NotifyTileCollision();
-	}
-
+	Body previousBody = baon->GetBodyValue();
+	std::cout << "PreviousBody antes de Update: x = " << previousBody.GetX() << " y = " << previousBody.GetY() << std::endl;
+	//previousBody.SetX(baon->GetBox().GetX());
+	//previousBody.SetY(baon->GetBox().GetY());
+	//std::cout << "PreviousBody antes de Update 2: x = " << previousBody.GetX() << " y = " << previousBody.GetY() << std::endl;
 	baon->Update(dt);
 
 	for(auto enemy : enemies){
@@ -44,6 +45,15 @@ void Stage::Update(float dt) {
 
 	if (baon == NULL) {
 		Camera::Unfollow();
+	} else {
+		Collision::CollisionSide collisionSide = tileMap->CheckCollisions(baon->GetBox());
+		if (collisionSide.bottom || collisionSide.top) {
+			ResolveCollision(previousBody, dt, true);
+			//baon->NotifyTileCollision(previousBody, dt);
+		}
+		if (collisionSide.left || collisionSide.right) {
+			ResolveCollision(previousBody, dt, false);
+		}
 	}
 
 }
@@ -73,4 +83,33 @@ void Stage::Resume() {
 
 Baon* Stage::GetPlayer(){
 	return baon;
+}
+
+void Stage::ResolveCollision(Body previousBody, float dt, bool vertical) {
+	float step;
+
+	if (vertical) {
+		baon->SetBodyX(previousBody);
+	} else {
+		baon->SetBodyY(previousBody);
+	}
+	dt = dt/2;
+	for (int i = 2; i < 5; i++) {
+		baon->Update(dt);
+		step = (1 << i);	// 2^i
+		Collision::CollisionSide collisionSide = tileMap->CheckCollisions(baon->GetBox());
+		if (collisionSide.HasCollided()) {
+			if (collisionSide.HasCollidedHorizontally()) {
+				baon->SetBodyX(previousBody);
+			}
+			if (collisionSide.HasCollidedVertically()) {
+				baon->SetBodyY(previousBody);
+			}
+			baon->SetPos(previousBody.GetX(), previousBody.GetY());
+			dt -= dt/step;
+		} else {
+			previousBody = baon->GetBodyValue();
+			dt += dt/step;
+		}
+	}
 }

@@ -16,7 +16,7 @@ class BaonRunState : public BaonState{
 public:
 	BaonRunState(bool flipped);
 	void Update(float dt);
-	void NotifyTileCollision();
+	void NotifyTileCollision(Body* previousBody, float dt);
 	bool Is(std::string state);
 };
 

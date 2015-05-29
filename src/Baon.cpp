@@ -207,7 +207,47 @@ Body* Baon::GetBody() {
 	return b;
 }
 
-void Baon::NotifyTileCollision() {
+Body Baon::GetBodyValue() {
+	return *b;
+}
+
+void Baon::SetBody(Body body) {
+	b->SetAccelX(body.GetAccelX());
+	b->SetAccelY(body.GetAccelY());
+	b->SetAngularAccel(body.GetAngularAccel());
+	b->SetAngularVel(body.GetAngularVel());
+	b->SetResistance(body.GetResistance());
+	b->SetRotation(body.GetRotation());
+	b->SetSpeedLimit(body.GetSpeedLimit());
+	b->SetVelX(body.GetVelX());
+	b->SetVelY(body.GetVelY());
+	b->SetX(body.GetX());
+	b->SetY(body.GetY());
+}
+
+void Baon::SetBodyX(Body body) {
+	b->SetAccelX(body.GetAccelX());
+	b->SetAngularAccel(body.GetAngularAccel());
+	b->SetAngularVel(body.GetAngularVel());
+	b->SetResistance(body.GetResistance());
+	b->SetRotation(body.GetRotation());
+	b->SetSpeedLimit(body.GetSpeedLimit());
+	b->SetVelX(body.GetVelX());
+	b->SetX(body.GetX());
+}
+
+void Baon::SetBodyY(Body body) {
+	b->SetAccelY(body.GetAccelY());
+	b->SetAngularAccel(body.GetAngularAccel());
+	b->SetAngularVel(body.GetAngularVel());
+	b->SetResistance(body.GetResistance());
+	b->SetRotation(body.GetRotation());
+	b->SetSpeedLimit(body.GetSpeedLimit());
+	b->SetVelY(body.GetVelY());
+	b->SetY(body.GetY());
+}
+
+void Baon::NotifyTileCollision(Body* previousBody, float dt) {
 	//std::cout << "Notificou colisao!" << std::endl;
-	stateManager->GetCurrentState()->NotifyTileCollision();
+	stateManager->GetCurrentState()->NotifyTileCollision(previousBody, dt);
 }

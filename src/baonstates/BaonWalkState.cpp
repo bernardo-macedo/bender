@@ -54,7 +54,7 @@ bool BaonWalkState::Is(std::string state) {
 	return state.compare("WALK") == 0;
 }
 
-void BaonWalkState::NotifyTileCollision() {
+void BaonWalkState::NotifyTileCollision(Body* previousBody, float dt) {
 	std::cout << "passou3" << std::endl;
 	baon->GetBody()->SetVelY(0);
 	baon->GetBody()->SetY(PLAYER_MAP_GROUND);

@@ -91,23 +91,51 @@ int TileMap::GetDepth() {
 	return mapDepth;
 }
 
-bool TileMap::CheckCollisions(Rect rect) {
+Collision::CollisionSide TileMap::CheckCollisions(Rect rect) {
+	bool collidedLeft = false;
+	bool collidedRight = false;
+	bool collidedTop = false;
+	bool collidedBottom = false;
 	Rect scaledRect;
+
 	scaledRect.SetX(rect.GetX());
 	scaledRect.SetY(rect.GetY());
 	scaledRect.SetW(rect.GetW() * mapScale);
 	scaledRect.SetH(rect.GetH() * mapScale);
+
 	// pega tiles do layer de colisao
 	std::vector<Rect> tilesToCheck = GetTilesSurroundingRect(scaledRect);
 	// checa colisao com os tiles ao redor dele
 	for (unsigned int i = 0; i < tilesToCheck.size(); i++) {
 		Rect tile = tilesToCheck[i];
 		if (Collision::IsColliding(tilesToCheck[i], scaledRect, 0, 0)) {
-			// se houve colisao, notifica o player para reposiciona-lo
-			return true;
+			// se houve colisao, verifica se foi no eixo x, no eixo y ou em ambos
+			// Minkowski sum
+			float wy = (rect.GetW() + tile.GetW()) * (rect.GetCenter().getY() - tile.GetCenter().getY());
+			float hx = (rect.GetH() + tile.GetH()) * (rect.GetCenter().getX() - tile.GetCenter().getX());
+
+			if (wy > hx) {
+			    if (wy > -hx) {
+			        /* top */
+			    	collidedTop = true;
+			    } else {
+			        /* left */
+			    	collidedLeft = true;
+			    }
+			} else {
+			    if (wy > -hx) {
+			        /* right */
+			    	collidedRight = true;
+			    } else {
+			        /* bottom */
+			    	collidedBottom = true;
+			    }
+			}
+			//return true;
 		}
 	}
-	return false;
+	//return false;
+	return Collision::CollisionSide(collidedLeft, collidedRight, collidedTop, collidedBottom);
 
 
 

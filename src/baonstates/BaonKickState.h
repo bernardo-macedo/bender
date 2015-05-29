@@ -19,7 +19,7 @@ public:
 	BaonKickState(bool flipped);
 
 	void Update(float dt);
-	void NotifyTileCollision();
+	void NotifyTileCollision(Body* previousBody, float dt);
 	bool Is(std::string state);
 private:
 	Timer* t;

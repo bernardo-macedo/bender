@@ -61,7 +61,7 @@ bool BaonStandState::Is(std::string name) {
 	return name.compare("STAND") == 0;
 }
 
-void BaonStandState::NotifyTileCollision() {
+void BaonStandState::NotifyTileCollision(Body* previousBody, float dt) {
 	baon->GetBody()->SetVelY(0);
 	baon->GetBody()->SetY(PLAYER_MAP_GROUND);
 }
