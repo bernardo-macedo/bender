@@ -20,6 +20,14 @@ void GameObject::SetPos(int x, int y) {
 	box.SetY(y);
 }
 
+void GameObject::SetPosX(int x) {
+	box.SetX(x);
+}
+
+void GameObject::SetPosY(int y) {
+	box.SetY(y);
+}
+
 int GameObject::GetID() {
 	return id;
 }

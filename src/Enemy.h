@@ -16,7 +16,7 @@
 #include "Engine/Timer.h"
 #include "StateEnemy.h"
 #include <map>
-#define ENEMY_MAP_GROUND 500
+#define ENEMY_MAP_GROUND 450
 
 class StateEnemy;
 

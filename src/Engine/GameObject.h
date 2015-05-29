@@ -27,6 +27,8 @@ public:
 
 	Rect GetBox();
 	void SetPos(int x, int y);
+	void SetPosX(int x);
+	void SetPosY(int y);
 	int GetID();
 
 	float rotation;

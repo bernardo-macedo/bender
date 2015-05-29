@@ -47,6 +47,7 @@ float Body::GetVelX(){
 }
 
 void Body::SetVelX(float velX) {
+	std::cout << "Setou velX = " << velX << std::endl;
 	this->velX = velX;
 }
 

@@ -33,17 +33,12 @@ void BaonFallingState::Update(float dt) {
 void BaonFallingState::NotifyTileCollision(Body* previousBody, float dt) {
 	baon->fallUpdateCount = 2;
 	baon->GetBody()->SetVelY(0);
-	baon->GetBox().SetY(PLAYER_MAP_GROUND);
-	//baon->GetBody()->removeForce("gravity");
+	//baon->GetBox().SetY(PLAYER_MAP_GROUND);
 
 	sm->GetPreviousState()->Reset();
 	next = sm->GetPreviousState();
 	next->SetFlipped(flipped);
 	nextRequested = true;
-
-	//baon->SetBody(previousPosition);
-	//Update(previousDt/2);
-	//if ()
 
 
 	/*
