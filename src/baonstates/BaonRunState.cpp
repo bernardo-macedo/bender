@@ -16,6 +16,7 @@ BaonRunState::BaonRunState(bool flipped){
 	executed = false;
 	this->flipped = flipped;
 	nextRequested = false;
+	id = "RUN";
 }
 void BaonRunState::Update(float dt) {
 	if(!executed){
@@ -26,18 +27,21 @@ void BaonRunState::Update(float dt) {
 	if(!InputManager::GetInstance().IsKeyDown(A_KEY)){
 		if(flipped){
 			nextRequested = true;
-			next = new BaonStandState(flipped);
+			next = "STAND";
+			nextFlipped = true;
 		}
 	}
 	if(!InputManager::GetInstance().IsKeyDown(D_KEY)){
 		if(!flipped){
-			next = new BaonStandState(flipped);
+			next = "STAND";
+			nextFlipped = false;
 			nextRequested = true;
 		}
 	}
 	if(InputManager::GetInstance().KeyPress(W_KEY)){
 		nextRequested = true;
-		next = new BaonJumpState(flipped);
+		next = "JUMP";
+		nextFlipped = flipped;
 	}
 }
 
@@ -46,6 +50,4 @@ bool BaonRunState::Is(std::string state) {
 }
 
 void BaonRunState::NotifyTileCollision(Body* previousBody, float dt) {
-	baon->GetBody()->SetVelY(0);
-	baon->GetBody()->SetY(PLAYER_MAP_GROUND);
 }

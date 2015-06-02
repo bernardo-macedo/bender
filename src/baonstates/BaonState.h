@@ -10,6 +10,8 @@
 
 #include <string>
 
+#include "../Engine/Timer.h"
+
 class Body;
 
 class Baon;
@@ -21,8 +23,8 @@ public:
 
 	virtual void Update(float dt) = 0;
 	virtual void NotifyTileCollision(Body* previousBody, float dt) = 0;
-	BaonState* Next();
-	void SetNext(BaonState* next);
+	std::string Next();
+	void SetNext(std::string next);
 	bool NextRequested();
 	bool PopRequested();
 	void SetPopRequested(bool popRequested);
@@ -33,13 +35,16 @@ public:
 	void SetFlipped(bool flipped);
 	void SetExecuted(bool executed);
 	void Reset();
+	bool GetNextFlipped();
+	std::string GetID();
 
 	virtual bool Is(std::string state) = 0;
 protected:
 	Baon* baon;
 	BaonStateManager* sm;
-	BaonState *next;
-	bool nextRequested, popRequested, flipped, executed;
+	std::string next, id;
+	bool nextRequested, popRequested, flipped, executed, nextFlipped;
+	Timer *t;
 };
 
 #endif /* BAONSTATE_H_ */

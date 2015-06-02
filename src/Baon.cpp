@@ -136,7 +136,6 @@ void Baon::Run(bool flipped) {
 }
 
 void Baon::Walk(bool flipped) {
-	std::cout << "chamou Walk" << std::endl;
 	sp->SetFrameHeight(spriteData[WALK*3]);
 	sp->SetFrameWidth(spriteData[WALK*3 + 1]);
 	sp->SetFrameCount(spriteData[WALK*3 + 2]);
@@ -155,7 +154,6 @@ void Baon::Walk(bool flipped) {
 }
 
 void Baon::Stand(bool flipped) {
-	std::cout << "chamou Stand" << std::endl;
 	sp->SetFrameHeight(spriteData[STAND*3]);
 	sp->SetFrameWidth(spriteData[STAND*3 + 1]);
 	sp->SetFrameCount(1);
@@ -165,7 +163,6 @@ void Baon::Stand(bool flipped) {
 }
 
 void Baon::Jump(bool flipped) {
-	std::cout << "Chamou Jump!" << std::endl;
 	sp->SetFrameHeight(spriteData[JUMP*3]);
 	sp->SetFrameWidth(spriteData[JUMP*3 + 1]);
 	sp->SetFrameCount(spriteData[JUMP*3 + 2]);
@@ -173,8 +170,6 @@ void Baon::Jump(bool flipped) {
 
 	//b->SetAccelY(10000);
 	b->SetVelY(-500);
-	b->removeForce("gravity");
-	//b->ApplyForce(new Force("gravity", 0, 900));
 }
 void Baon::Fall() {
 	if(fallUpdateCount < 5){
@@ -184,7 +179,6 @@ void Baon::Fall() {
 }
 
 void Baon::Punch(){
-	std::cout << "chamou punch" << std::endl;
 	sp->SetFrameHeight(spriteData[6*3]);
 	sp->SetFrameWidth(spriteData[6*3 + 1]);
 	sp->SetFrameCount(spriteData[6*3 + 2]);
@@ -193,7 +187,6 @@ void Baon::Punch(){
 }
 
 void Baon::Kick(){
-	std::cout << "chamou kick" << std::endl;
 	sp->SetFrameHeight(spriteData[7*3]);
 	sp->SetFrameWidth(spriteData[7*3 + 1]);
 	sp->SetFrameCount(spriteData[7*3 + 2]);
@@ -201,7 +194,6 @@ void Baon::Kick(){
 	b->SetVelX(0);
 }
 void Baon::MidAir(){
-	std::cout << "chamou midAir" << std::endl;
 	if (b->GetForce("gravity") == NULL) {
 		b->ApplyForce(new Force("gravity", 0, 1200));
 	}

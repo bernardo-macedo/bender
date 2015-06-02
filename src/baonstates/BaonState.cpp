@@ -1,6 +1,6 @@
 #include "BaonState.h"
 
-BaonState* BaonState::Next(){
+std::string BaonState::Next(){
 	return next;
 }
 BaonState::~BaonState(){
@@ -25,7 +25,7 @@ bool BaonState::IsFlipped(){
 	return flipped;
 }
 
-void BaonState::SetNext(BaonState* next){
+void BaonState::SetNext(std::string next){
 	this->next = next;
 }
 
@@ -40,6 +40,9 @@ void BaonState::SetExecuted(bool executed) {
 void BaonState::Reset() {
 	executed = false;
 	nextRequested = false;
+	if(t != NULL){
+		t->Restart();
+	}
 }
 
 void BaonState::SetBaon(Baon* baon) {
@@ -48,4 +51,12 @@ void BaonState::SetBaon(Baon* baon) {
 
 void BaonState::SetStateManager(BaonStateManager* sm) {
 	this->sm = sm;
+}
+
+bool BaonState::GetNextFlipped() {
+	return nextFlipped;
+}
+
+std::string BaonState::GetID() {
+	return id;
 }

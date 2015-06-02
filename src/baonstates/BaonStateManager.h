@@ -8,6 +8,7 @@
 #ifndef BAONSTATEMANAGER_H_
 #define BAONSTATEMANAGER_H_
 
+#include <unordered_map>
 class BaonState;
 class Timer;
 
@@ -27,6 +28,7 @@ private:
 	bool flipped;
 	Timer* t;
 	int runTest;
+	std::unordered_map<std::string, BaonState*> estados;
 };
 
 #endif /* BAONSTATEMANAGER_H_ */

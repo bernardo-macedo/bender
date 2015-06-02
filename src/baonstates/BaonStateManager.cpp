@@ -9,13 +9,38 @@
 
 #include "../Engine/InputManager.h"
 #include "../Engine/Timer.h"
+#include "BaonFallingState.h"
+#include "BaonJumpState.h"
+#include "BaonKickState.h"
+#include "BaonPunchState.h"
 #include "BaonRunState.h"
 #include "BaonStandState.h"
+#include "BaonWalkState.h"
 
 BaonStateManager::BaonStateManager(Baon* baon) {
-	currentState = new BaonStandState(false);
-	currentState->SetBaon(baon);
-	currentState->SetStateManager(this);
+	estados.emplace("STAND", new BaonStandState(false));
+	estados["STAND"]->SetBaon(baon);
+	estados["STAND"]->SetStateManager(this);
+	estados.emplace("WALK", new BaonWalkState(false));
+	estados["WALK"]->SetBaon(baon);
+	estados["WALK"]->SetStateManager(this);
+	estados.emplace("KICK", new BaonKickState(false));
+	estados["KICK"]->SetBaon(baon);
+	estados["KICK"]->SetStateManager(this);
+	estados.emplace("PUNCH", new BaonPunchState(false));
+	estados["PUNCH"]->SetBaon(baon);
+	estados["PUNCH"]->SetStateManager(this);
+	estados.emplace("JUMP", new BaonJumpState(false));
+	estados["JUMP"]->SetBaon(baon);
+	estados["JUMP"]->SetStateManager(this);
+	estados.emplace("RUN", new BaonRunState(false));
+	estados["RUN"]->SetBaon(baon);
+	estados["RUN"]->SetStateManager(this);
+	estados.emplace("FALLING", new BaonFallingState(false));
+	estados["FALLING"]->SetBaon(baon);
+	estados["FALLING"]->SetStateManager(this);
+
+	currentState = estados["STAND"];
 	this->baon = baon;
 
 	previousState = currentState;
@@ -34,13 +59,17 @@ void BaonStateManager::Update(float dt) {
 		t->Update(dt);
 		if(InputManager::GetInstance().KeyPress(D_KEY)){
 			if(currentState->Is("STAND") && t->Get() < 0.2){
-				currentState = new BaonRunState(false);
+				currentState = estados["RUN"];
+				currentState->SetFlipped(false);
+				currentState->Reset();
 			}
 		}
 		else{
 			if(InputManager::GetInstance().KeyPress(A_KEY)){
 				if(currentState->Is("STAND") && t->Get() < 0.2){
-					currentState = new BaonRunState(true);
+					currentState = estados["RUN"];
+					currentState->SetFlipped(true);
+					currentState->Reset();
 				}
 			}
 		}
@@ -64,9 +93,9 @@ void BaonStateManager::Update(float dt) {
 		if(!currentState->Is("JUMPING")){
 			previousState = currentState;
 		}
-		currentState = currentState->Next();
-		currentState->SetBaon(baon);
-		currentState->SetStateManager(this);
+		estados[currentState->Next()]->SetFlipped(currentState->GetNextFlipped());
+		currentState = estados[currentState->Next()];
+		currentState->Reset();
 		executed = false;
 	}
 }
