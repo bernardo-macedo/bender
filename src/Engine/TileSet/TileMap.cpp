@@ -12,8 +12,11 @@
 #include <TmxMap.h>
 #include <TmxTileLayer.h>
 #include <TmxTileset.h>
+#include <algorithm>
 #include <cmath>
+#include <map>
 #include <string>
+#include <utility>
 
 #include "../Game.h"
 
@@ -48,7 +51,6 @@ void TileMap::Load(std::string file) {
 	int index;
 	for (int i = 0; i < mapDepth; i++) {
 		const Tmx::TileLayer* layer = map.GetTileLayer(i);
-		std::cout << "i = " << i << " layer name = " << layer->GetName() << std::endl;
 		for (int k = 0; k < mapHeight; k++) {
 			for (int j = 0; j < mapWidth; j++) {
 				index = layer->GetTileGid(j, k);
@@ -56,7 +58,6 @@ void TileMap::Load(std::string file) {
 			}
 		}
 	}
-
 }
 
 void TileMap::SetTileSet(TileSet* tileSet) {
@@ -91,12 +92,10 @@ int TileMap::GetDepth() {
 	return mapDepth;
 }
 
-Collision::CollisionSide TileMap::CheckCollisions(Rect rect) {
-	bool collidedLeft = false;
-	bool collidedRight = false;
-	bool collidedTop = false;
-	bool collidedBottom = false;
+bool TileMap::CheckCollisions(Rect rect) {
 	Rect scaledRect;
+	bool hasCollided = false;
+
 
 	scaledRect.SetX(rect.GetX());
 	scaledRect.SetY(rect.GetY());
@@ -104,46 +103,69 @@ Collision::CollisionSide TileMap::CheckCollisions(Rect rect) {
 	scaledRect.SetH(rect.GetH() * mapScale);
 
 	// pega tiles do layer de colisao
-	std::vector<Rect> tilesToCheck = GetTilesSurroundingRect(scaledRect);
+	std::vector<std::pair<int, Rect>> tilesToCheck = GetTilesSurroundingRect(scaledRect);
 	// checa colisao com os tiles ao redor dele
 	for (unsigned int i = 0; i < tilesToCheck.size(); i++) {
-		Rect tile = tilesToCheck[i];
-		if (Collision::IsColliding(tilesToCheck[i], scaledRect, 0, 0)) {
-			// se houve colisao, verifica se foi no eixo x, no eixo y ou em ambos
-			// Minkowski sum
-			float wy = (rect.GetW() + tile.GetW()) * (rect.GetCenter().getY() - tile.GetCenter().getY());
-			float hx = (rect.GetH() + tile.GetH()) * (rect.GetCenter().getX() - tile.GetCenter().getX());
-
-			if (wy > hx) {
-			    if (wy > -hx) {
-			        /* top */
-			    	collidedTop = true;
-			    } else {
-			        /* left */
-			    	collidedLeft = true;
-			    }
-			} else {
-			    if (wy > -hx) {
-			        /* right */
-			    	collidedRight = true;
-			    } else {
-			        /* bottom */
-			    	collidedBottom = true;
-			    }
-			}
-			//return true;
+		int tileIndex = tilesToCheck[i].first;
+		Rect tile = tilesToCheck[i].second;
+		if (Collision::IsColliding(tile, scaledRect, 0, 0)) {
+			hasCollided = true;
+			float diffx = scaledRect.GetX() - tile.GetX();
+			float diffy = scaledRect.GetY() - tile.GetY();
+			float distanceToPlayer =  sqrt((diffx * diffx) + (diffy * diffy));
+			tileCollisions.insert(std::make_pair(distanceToPlayer, Tile(tileIndex, tile)));
 		}
 	}
-	//return false;
-	return Collision::CollisionSide(collidedLeft, collidedRight, collidedTop, collidedBottom);
-
-
-
-
+	return hasCollided;
 }
 
-std::vector<Rect> TileMap::GetTilesSurroundingRect(Rect rect) {
-	std::vector<Rect> tiles;
+void TileMap::ResolveTileCollisions(Baon* baon) {
+	Rect scaledRect = baon->GetBox();
+
+	scaledRect.SetW(scaledRect.GetW() * mapScale);
+	scaledRect.SetH(scaledRect.GetH() * mapScale);
+
+	std::multimap<float, Tile>::iterator it;
+	for(it = tileCollisions.begin(); it != tileCollisions.end(); ++it) {
+		Tile tile = it->second;
+		Point overlap = scaledRect.Intersection(tile.GetBox());
+
+		if (fabs(overlap.getY()) > fabs(overlap.getX())) {
+			overlap.setY(0);
+
+			if (overlap.getX() > 0 && scaledRect.GetX() + scaledRect.GetW() > tile.GetBox().GetX()) {
+				// colidiu com a borda direita do player
+				std::cout << "colidiu com borda direita do player" << std::endl;
+				baon->GetBody()->SetVelX(0);
+				scaledRect.SetX(scaledRect.GetX() + 1);
+			} else if (overlap.getX() < 0 && scaledRect.GetX() < tile.GetBox().GetX() + tile.GetBox().GetW()) {
+				// colidiu com a borda esquerda do player
+				std::cout << "colidiu com borda esquerda do player" << std::endl;
+				baon->GetBody()->SetVelX(0);
+				scaledRect.SetX(scaledRect.GetX() - 1);
+			}
+
+		} else {
+			overlap.setX(0);
+
+			float distY = scaledRect.GetY() - tile.GetBox().GetY();
+			std::cout << "distY = " << distY << std::endl;
+			if (distY < 0 && fabs(distY) > (4 * scaledRect.GetH()/5) && tile.GetIndex() >= 64 && tile.GetIndex() <= 68) {
+				std::cout << "no chao. tileIndex = " << tile.GetIndex() << std::endl;
+				baon->GetBody()->SetVelY(0);
+				scaledRect.SetY(tile.GetBox().GetY() - scaledRect.GetH());
+			}
+
+		}
+		std::cout << "overlap = (" << overlap.getX() << ", " << overlap.getY() << ")" << std::endl;
+		baon->GetBody()->SetX(scaledRect.GetX());
+		baon->GetBody()->SetY(scaledRect.GetY());
+	}
+	tileCollisions.clear();
+}
+
+std::vector<std::pair<int, Rect>> TileMap::GetTilesSurroundingRect(Rect rect) {
+	std::vector<std::pair<int, Rect>> tiles;
 	int centerX, centerY;
 
 	// pega centro do player em coordenadas matriciais
@@ -172,7 +194,7 @@ std::vector<Rect> TileMap::GetTilesSurroundingRect(Rect rect) {
 				tileRect.SetW(tileSet->GetTileWidth() * mapScale);
 				tileRect.SetH(tileSet->GetTileHeight() * mapScale);
 				// Adiciona Rect na lista de retorno
-				tiles.push_back(tileRect);
+				tiles.push_back(std::make_pair(tileIndex, tileRect));
 			}
 		}
 	}

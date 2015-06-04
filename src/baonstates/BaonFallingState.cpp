@@ -31,6 +31,9 @@ void BaonFallingState::Update(float dt) {
 }
 
 void BaonFallingState::NotifyTileCollision(Body* previousBody, float dt) {
+
+	std::cout << "notificou colisao no falling" << std::endl;
+
 	baon->fallUpdateCount = 2;
 	baon->GetBody()->SetVelY(0);
 	//baon->GetBox().SetY(PLAYER_MAP_GROUND);

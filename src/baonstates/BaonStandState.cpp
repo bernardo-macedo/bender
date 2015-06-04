@@ -32,7 +32,6 @@ void BaonStandState::Update(float dt) {
 		nextRequested = true;
 		next = new BaonWalkState(false);
 		flipped = false;
-		std::cout << "passou" << std::endl;
 	}
 	if(InputManager::GetInstance().IsKeyDown(A_KEY)){
 		nextRequested = true;
@@ -62,6 +61,4 @@ bool BaonStandState::Is(std::string name) {
 }
 
 void BaonStandState::NotifyTileCollision(Body* previousBody, float dt) {
-	baon->GetBody()->SetVelY(0);
-	baon->GetBody()->SetY(PLAYER_MAP_GROUND);
 }

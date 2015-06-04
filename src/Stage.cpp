@@ -33,15 +33,7 @@ void Stage::Update(float dt) {
 		quitRequested = true;
 	}
 
-	Body previousBody = baon->GetBodyValue();
-	//previousBody.SetX(baon->GetBox().GetX());
-	//previousBody.SetY(baon->GetBox().GetY());
-	//std::cout << "PreviousBody antes de Update 2: x = " << previousBody.GetX() << " y = " << previousBody.GetY() << std::endl;
 	baon->Update(dt);
-
-	if (baon->GetBody()->GetForce("gravity") != NULL) {
-		//std::cout << "existe gravidade atuando" << std::endl;
-	}
 
 	for(auto enemy : enemies){
 		enemy->Update(dt);
@@ -52,13 +44,12 @@ void Stage::Update(float dt) {
 	if (baon == NULL) {
 		Camera::Unfollow();
 	} else {
-		Collision::CollisionSide collisionSide = tileMap->CheckCollisions(baon->GetBox());
-		if (collisionSide.HasCollidedVertically()) {
-			ResolveCollision(previousBody, dt, true);
-			baon->NotifyTileCollision(&previousBody, dt);
-		}
-		if (collisionSide.HasCollidedHorizontally()) {
-			ResolveCollision(previousBody, dt, false);
+
+		if (tileMap->CheckCollisions(baon->GetBox())) {
+			std::cout << "baon pos antes = (" << baon->GetBox().GetX() << ", " << baon->GetBox().GetY() << std::endl;
+			tileMap->ResolveTileCollisions(baon);
+			std::cout << "baon pos depois = (" << baon->GetBox().GetX() << ", " << baon->GetBox().GetY() << std::endl;
+			baon->NotifyTileCollision(NULL, dt);
 		}
 	}
 
@@ -89,50 +80,4 @@ void Stage::Resume() {
 
 Baon* Stage::GetPlayer(){
 	return baon;
-}
-
-void Stage::ResolveCollision(Body previousBody, float dt, bool vertical) {
-	float step;
-
-	if (vertical) {
-		// ignora colisao vertical se estiver indo pra cima
-		if (baon->GetBody()->GetVelY() < 0) {
-			return;
-		}
-		baon->SetBodyY(previousBody);
-	} else {
-		baon->SetBodyX(previousBody);
-	}
-	dt = dt/2;
-	for (int i = 2; i < 3; i++) {
-		baon->Update(dt);
-		step = (1 << i);	// 2^i
-		Collision::CollisionSide collisionSide = tileMap->CheckCollisions(baon->GetBox());
-		if (collisionSide.HasCollided()) {
-			if (collisionSide.HasCollidedHorizontally() && !vertical) {
-				baon->SetBodyX(previousBody);
-				baon->SetPosX(previousBody.GetX());
-			}
-			if (collisionSide.HasCollidedVertically() && vertical) {
-				baon->SetBodyY(previousBody);
-				baon->SetPosY(previousBody.GetY());
-			}
-
-			dt -= dt/step;
-		} else {
-			/*
-			if (vertical) {
-				baon->GetBody()->SetAccelY(0);
-				baon->GetBody()->SetVelY(0);
-			} else {
-				baon->GetBody()->SetAccelX(0);
-				std::cout << "Chamou SetVelX em ResolveCollision" << std::endl;
-				baon->GetBody()->SetVelX(0);
-			}
-			*/
-			previousBody = baon->GetBodyValue();
-			dt += dt/step;
-		}
-	}
-
 }

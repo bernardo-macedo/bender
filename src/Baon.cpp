@@ -44,7 +44,7 @@ Baon::Baon() {
 	sp->SetFrameWidth(spriteData[1]);
 
 	box.SetX(Game::SCREEN_WIDTH/2);
-	box.SetY(425);
+	box.SetY(200);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
 	sp->SetScaleX(3);
@@ -120,7 +120,6 @@ bool Baon::Is(std::string type) {
 //--------------------------------------------------------
 //--------------------------------------------------------
 void Baon::Run(bool flipped) {
-	std::cout << "chamou Run" << std::endl;
 	sp->SetFrameHeight(spriteData[RUN*3]);
 	sp->SetFrameWidth(spriteData[RUN*3 + 1]);
 	sp->SetFrameCount(spriteData[RUN*3 + 2]);
@@ -136,7 +135,6 @@ void Baon::Run(bool flipped) {
 }
 
 void Baon::Walk(bool flipped) {
-	std::cout << "chamou Walk" << std::endl;
 	sp->SetFrameHeight(spriteData[WALK*3]);
 	sp->SetFrameWidth(spriteData[WALK*3 + 1]);
 	sp->SetFrameCount(spriteData[WALK*3 + 2]);
@@ -155,7 +153,6 @@ void Baon::Walk(bool flipped) {
 }
 
 void Baon::Stand(bool flipped) {
-	std::cout << "chamou Stand" << std::endl;
 	sp->SetFrameHeight(spriteData[STAND*3]);
 	sp->SetFrameWidth(spriteData[STAND*3 + 1]);
 	sp->SetFrameCount(1);
@@ -165,7 +162,6 @@ void Baon::Stand(bool flipped) {
 }
 
 void Baon::Jump(bool flipped) {
-	std::cout << "Chamou Jump!" << std::endl;
 	sp->SetFrameHeight(spriteData[JUMP*3]);
 	sp->SetFrameWidth(spriteData[JUMP*3 + 1]);
 	sp->SetFrameCount(spriteData[JUMP*3 + 2]);
@@ -184,7 +180,6 @@ void Baon::Fall() {
 }
 
 void Baon::Punch(){
-	std::cout << "chamou punch" << std::endl;
 	sp->SetFrameHeight(spriteData[6*3]);
 	sp->SetFrameWidth(spriteData[6*3 + 1]);
 	sp->SetFrameCount(spriteData[6*3 + 2]);
@@ -193,7 +188,6 @@ void Baon::Punch(){
 }
 
 void Baon::Kick(){
-	std::cout << "chamou kick" << std::endl;
 	sp->SetFrameHeight(spriteData[7*3]);
 	sp->SetFrameWidth(spriteData[7*3 + 1]);
 	sp->SetFrameCount(spriteData[7*3 + 2]);
@@ -201,7 +195,6 @@ void Baon::Kick(){
 	b->SetVelX(0);
 }
 void Baon::MidAir(){
-	std::cout << "chamou midAir" << std::endl;
 	if (b->GetForce("gravity") == NULL) {
 		b->ApplyForce(new Force("gravity", 0, 1200));
 	}
@@ -244,7 +237,6 @@ Body Baon::GetBodyValue() {
 }
 
 void Baon::SetBody(Body body) {
-	std::cout << "chamou SetBody" << std::endl;
 	b->SetAccelX(body.GetAccelX());
 	b->SetAccelY(body.GetAccelY());
 	b->SetAngularAccel(body.GetAngularAccel());
@@ -255,29 +247,6 @@ void Baon::SetBody(Body body) {
 	b->SetVelX(body.GetVelX());
 	b->SetVelY(body.GetVelY());
 	b->SetX(body.GetX());
-	b->SetY(body.GetY());
-}
-
-void Baon::SetBodyX(Body body) {
-	std::cout << "chamou SetBodyX" << std::endl;
-	b->SetAccelX(body.GetAccelX());
-	b->SetAngularAccel(body.GetAngularAccel());
-	b->SetAngularVel(body.GetAngularVel());
-	b->SetResistance(body.GetResistance());
-	b->SetRotation(body.GetRotation());
-	b->SetSpeedLimit(body.GetSpeedLimit());
-	b->SetVelX(body.GetVelX());
-	b->SetX(body.GetX());
-}
-
-void Baon::SetBodyY(Body body) {
-	b->SetAccelY(body.GetAccelY());
-	b->SetAngularAccel(body.GetAngularAccel());
-	b->SetAngularVel(body.GetAngularVel());
-	b->SetResistance(body.GetResistance());
-	b->SetRotation(body.GetRotation());
-	b->SetSpeedLimit(body.GetSpeedLimit());
-	b->SetVelY(body.GetVelY());
 	b->SetY(body.GetY());
 }
 

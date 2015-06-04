@@ -55,3 +55,24 @@ bool Rect::IsInside(float x, float y) {
 Point Rect::GetCenter() {
 	return Point(x + w/2, y + h/2);
 }
+
+Point Rect::Intersection(Rect other) {
+	float minDistanceX = this->w / 2 + other.w / 2;
+	float minDistanceY = this->h / 2 + other.h / 2;
+
+	float distanceX = this->x - other.GetX();
+	float distanceY = this->y - other.GetY();
+
+	if (fabs(distanceX) > minDistanceX || fabs(distanceY) > minDistanceY) {
+		return Point(0, 0);
+	}
+
+	distanceX =
+			distanceX > 0 ?
+					minDistanceX - distanceX : -minDistanceX - distanceX;
+	distanceY =
+			distanceY > 0 ?
+					minDistanceY - distanceY : -minDistanceY - distanceY;
+
+	return Point(distanceX, distanceY);
+}

@@ -112,6 +112,9 @@ void Game::CalculaDeltaTime() {
 	dt = SDL_GetTicks() - frameStart;
 	frameStart = SDL_GetTicks();
 	dt = dt/1000;
+	if (dt > 0.2) {
+		dt = 0.2;
+	}
 }
 
 float Game::GetDeltaTime() {

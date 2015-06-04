@@ -35,8 +35,6 @@ void BaonPunchState::Update(float dt) {
 }
 
 void BaonPunchState::NotifyTileCollision(Body* previousBody, float dt) {
-	baon->GetBody()->SetVelY(0);
-	baon->GetBox().SetY(PLAYER_MAP_GROUND);
 }
 
 bool BaonPunchState::Is(std::string state) {

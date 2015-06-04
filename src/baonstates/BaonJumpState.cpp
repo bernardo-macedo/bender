@@ -27,7 +27,6 @@ void BaonJumpState::Update(float dt) {
 	else{
 		baon->MidAir();
 		if(baon->GetBody()->GetVelY() >= 0){
-			std::cout << "Vai chamar falling state" << std::endl;
 			executed = false;
 			nextRequested = true;
 			next = new BaonFallingState(flipped);

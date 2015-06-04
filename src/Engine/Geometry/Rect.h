@@ -8,6 +8,7 @@
 #ifndef ENGINE_GEOMETRY_RECT_H_
 #define ENGINE_GEOMETRY_RECT_H_
 #include "Point.h"
+#include <math.h>
 
 class Rect {
 private:
@@ -28,6 +29,7 @@ public:
 	Point GetCenter();
 
 	bool IsInside(float mouseX, float mouseY);
+	Point Intersection(Rect other);
 
 };
 

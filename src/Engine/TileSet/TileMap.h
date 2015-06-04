@@ -10,10 +10,13 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 #include "TileSet.h"
 #include "../Geometry/Rect.h"
+#include "../Geometry/Point.h"
 #include "../../Baon.h"
 #include "../Collision.h"
+#include "Tile.h"
 
 class TileMap {
 private:
@@ -24,9 +27,11 @@ private:
 	int mapDepth ;
 	int collisionLayerIndex ;
 	int mapScale ;
+	std::multimap<float, Tile> tileCollisions;
 
 	void GetTileMatrixIndexesAtPos(float x, float y, int* i, int* j);
-	std::vector<Rect> GetTilesSurroundingRect(Rect rect);
+	//std::vector<Rect> GetTilesSurroundingRect(Rect rect);
+	std::vector<std::pair<int, Rect>> GetTilesSurroundingRect(Rect rect);
 
 public:
 	TileMap (std::string file, int collisionLayerIndex, int mapScale = 1);
@@ -37,7 +42,9 @@ public:
 	int GetWidth ();
 	int GetHeight ();
 	int GetDepth ();
-	Collision::CollisionSide CheckCollisions(Rect rect);
+	//Collision::CollisionSide CheckCollisions(Rect rect);
+	bool CheckCollisions(Rect rect);
+	void ResolveTileCollisions(Baon* baon);
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

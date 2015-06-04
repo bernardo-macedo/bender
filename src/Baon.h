@@ -33,8 +33,6 @@ public:
 	Body GetBodyValue();
 	Body* GetBody();
 	void SetBody(Body body);
-	void SetBodyX(Body body);
-	void SetBodyY(Body body);
 	BaonStateManager* GetState();
 
 	void Run(bool flipped);
