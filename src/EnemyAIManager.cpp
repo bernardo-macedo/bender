@@ -42,7 +42,7 @@ void EnemyAIManager::update(const float dt){
 		enemyRect.SetH(50);
 		
 		if(Collision::IsColliding(baonRect,enemyRect,0,0)){
-			std::cout<<"morreu\n";
+			//std::cout<<"morreu\n";
 			enemy->SetDead(true);
 		}
 	}

@@ -20,6 +20,7 @@ BaonFallingState::BaonFallingState(bool flipped) {
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
+	id = "FALLING";
 }
 
 void BaonFallingState::Update(float dt) {
@@ -39,8 +40,8 @@ void BaonFallingState::NotifyTileCollision(Body* previousBody, float dt) {
 	//baon->GetBox().SetY(PLAYER_MAP_GROUND);
 
 	sm->GetPreviousState()->Reset();
-	next = sm->GetPreviousState();
-	next->SetFlipped(flipped);
+	next = sm->GetPreviousState()->GetID();
+	nextFlipped = flipped;
 	nextRequested = true;
 
 

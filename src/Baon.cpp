@@ -169,8 +169,6 @@ void Baon::Jump(bool flipped) {
 
 	//b->SetAccelY(10000);
 	b->SetVelY(-500);
-	b->removeForce("gravity");
-	//b->ApplyForce(new Force("gravity", 0, 900));
 }
 void Baon::Fall() {
 	if(fallUpdateCount < 5){

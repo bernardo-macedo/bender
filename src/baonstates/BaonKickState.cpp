@@ -17,6 +17,7 @@ BaonKickState::BaonKickState(bool flipped) {
 	t->Restart();
 	nextRequested = false;
 	executed = false;
+	id = "KICK";
 }
 
 void BaonKickState::Update(float dt) {
@@ -28,7 +29,8 @@ void BaonKickState::Update(float dt) {
 	if(t->Get() >= 4*0.1){
 		nextRequested = true;
 		sm->GetPreviousState()->Reset();
-		next = sm->GetPreviousState();
+		next = sm->GetPreviousState()->GetID();
+		nextFlipped = flipped;
 	}
 	else{
 		t->Update(dt);

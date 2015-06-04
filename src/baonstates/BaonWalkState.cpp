@@ -20,6 +20,7 @@ BaonWalkState::BaonWalkState(bool fliped) {
 	this->flipped = fliped;
 	popRequested = false;
 	nextRequested = false;
+	id = "WALK";
 }
 
 void BaonWalkState::Update(float dt){
@@ -31,27 +32,31 @@ void BaonWalkState::Update(float dt){
 	if(!InputManager::GetInstance().IsKeyDown(A_KEY)){
 		if(flipped){
 			nextRequested = true;
-			next = new BaonStandState(flipped);
+			next = "STAND";
+			nextFlipped = flipped;
 		}
 	}
 	if(!InputManager::GetInstance().IsKeyDown(D_KEY)){
 		if(!flipped){
-			next = new BaonStandState(flipped);
+			next = "STAND";
+			nextFlipped = flipped;
 			nextRequested = true;
 		}
 	}
 	if(InputManager::GetInstance().KeyPress(W_KEY)){
 		nextRequested = true;
-		next = new BaonJumpState(flipped);
+		next = "JUMP";
+		nextFlipped = flipped;
 	}
 	if(InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
 		nextRequested = true;
-		next = new BaonPunchState(flipped);
+		next = "PUNCH";
+		nextFlipped = flipped;
 	}
 	if(InputManager::GetInstance().KeyPress(RIGHT_ARROW_KEY)){
 		nextRequested = true;
-		next = new BaonKickState(flipped);
-	}
+		next = "KICK";
+		nextFlipped = flipped;	}
 }
 
 bool BaonWalkState::Is(std::string state) {

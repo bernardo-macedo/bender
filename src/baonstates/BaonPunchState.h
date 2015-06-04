@@ -20,9 +20,6 @@ public:
 	void Update(float dt);
 	void NotifyTileCollision(Body* previousBody, float dt);
 	bool Is(std::string state);
-private:
-	int count;
-	Timer* t;
 };
 
 #endif /* BAONSTATES_BAONPUNCHSTATE_H_ */

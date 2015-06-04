@@ -13,10 +13,10 @@
 
 BaonPunchState::BaonPunchState(bool flipped) {
 	this->flipped = flipped;
-	count = 0;
 	nextRequested = false;
 	executed = false;
 	t = new Timer();
+	id = "PUNCH";
 }
 
 void BaonPunchState::Update(float dt) {
@@ -27,7 +27,7 @@ void BaonPunchState::Update(float dt) {
 	if(t->Get() >= 5*0.1){
 		nextRequested = true;
 		sm->GetPreviousState()->Reset();
-		next = sm->GetPreviousState();
+		next = sm->GetPreviousState()->GetID();
 	}
 	else{
 		t->Update(dt);

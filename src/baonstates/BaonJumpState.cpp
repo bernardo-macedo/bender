@@ -17,6 +17,7 @@ BaonJumpState::BaonJumpState(bool flipped) {
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
+	id = "JUMP";
 }
 
 void BaonJumpState::Update(float dt) {
@@ -29,7 +30,8 @@ void BaonJumpState::Update(float dt) {
 		if(baon->GetBody()->GetVelY() >= 0){
 			executed = false;
 			nextRequested = true;
-			next = new BaonFallingState(flipped);
+			next = "FALLING";
+			nextFlipped = flipped;
 		}
 	}
 }
