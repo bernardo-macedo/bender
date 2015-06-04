@@ -19,6 +19,7 @@ class BaonStateManager;
 
 class BaonState {
 public:
+	BaonState();
 	virtual ~BaonState();
 
 	virtual void Update(float dt) = 0;

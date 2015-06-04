@@ -3,6 +3,11 @@
 std::string BaonState::Next(){
 	return next;
 }
+
+BaonState::BaonState() {
+	t = NULL;
+}
+
 BaonState::~BaonState(){
 }
 bool BaonState::NextRequested(){
