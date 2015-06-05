@@ -13,7 +13,14 @@ EnemyAIManager::~EnemyAIManager(){
 
 void EnemyAIManager::update(const float dt){
 	if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 50){
-		//enemy->changeState(Enemy::enemyStates::FOLLOW);
+		if(!enemy->IsState(Enemy::enemyStates::PUNCH)){
+			enemy->changeState(Enemy::enemyStates::PUNCH);
+		}
+	}
+	if(enemy->IsState(Enemy::enemyStates::PUNCH)){
+		if(enemy->StateEnd()){
+			enemy->changeState(Enemy::enemyStates::PATROLLING);
+		}
 	}
 	if(enemy->IsState(Enemy::enemyStates::FOLLOW)){
 		int baonX = baon->GetBody()->GetX();

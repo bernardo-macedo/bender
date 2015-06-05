@@ -45,6 +45,7 @@ public:
 	bool IsOpen();
 	void SetScaleX(float scale);
 	void SetScaleY(float scale);
+	int GetCurrentFrame();
 
 	bool Update(float dt);
 	void SetFrame(int frame);

@@ -22,7 +22,7 @@ class StateEnemy;
 
 class Enemy : public GameObject {
 public:
-	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW};
+	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW, PUNCH};
 	enum runController {NONE, PRERUNR, PRERUNL};
 	Enemy();
 
@@ -42,6 +42,7 @@ public:
 
 	void changeState(const enemyStates state_);
 	bool IsState(const enemyStates state_);
+	bool StateEnd();
 
 	Timer* Time();
 

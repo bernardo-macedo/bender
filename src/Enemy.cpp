@@ -13,6 +13,7 @@
 #include "Engine/Physics/Force.h"
 #include "Engine/Physics/Body.h"
 
+#include "EnemyStatePunch.h"
 #include "EnemyStatePatrolling.h"
 #include "EnemyStateFollow.h"
 
@@ -163,6 +164,7 @@ void Enemy::InitializeStates(){
 	// Initialize all the states in Enemy here.
 	ADD_STATE_EMPLACE(PATROLLING,   EnemyStatePatrolling);
 	ADD_STATE_EMPLACE(FOLLOW,   	EnemyStateFollow);
+	ADD_STATE_EMPLACE(PUNCH,        EnemyStatePunch);
 }
 
 void Enemy::changeState(const enemyStates state_){
@@ -194,4 +196,8 @@ Body* Enemy::GetBody(){
 
 void Enemy::SetDead(bool isDead_){
 	isDead = isDead_;
+}
+
+bool Enemy::StateEnd() {
+	return currentState->AskEnd();
 }

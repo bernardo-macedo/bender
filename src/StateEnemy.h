@@ -41,7 +41,12 @@ class StateEnemy {
 		*/
 		virtual void update(const float dt_) = 0;
 
+		bool AskEnd();
+
 		Enemy* enemy; /**< Reference to the enemy. */
+
+	protected:
+		bool askEnd;
 
 };
 

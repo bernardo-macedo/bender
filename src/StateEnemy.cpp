@@ -9,3 +9,7 @@ StateEnemy::StateEnemy(Enemy* const enemy_) :
 StateEnemy::~StateEnemy(){
 	this->enemy = nullptr;
 }
+
+bool StateEnemy::AskEnd() {
+	return askEnd;
+}

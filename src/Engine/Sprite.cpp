@@ -149,3 +149,7 @@ void Sprite::SetLine(int line, int lineSize) {
 	SetClip(0,line*lineSize , this->frameWidth, frameHeight);
 	currentFrame = 1;
 }
+
+int Sprite::GetCurrentFrame() {
+	return currentFrame;
+}

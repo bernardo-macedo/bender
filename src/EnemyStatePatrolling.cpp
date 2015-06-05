@@ -7,9 +7,9 @@ void EnemyStatePatrolling::enter(){
 	patrollMaxDistance = patrollDistance + 50;
 
 	enemy->GetSprite()->SetFrameHeight(50);
-	enemy->GetSprite()->SetFrameWidth(49);
+	enemy->GetSprite()->SetFrameWidth(36);
 	enemy->GetSprite()->SetFrameCount(6);
-	enemy->GetSprite()->SetLine(0, 50);
+	enemy->GetSprite()->SetLine(1, 50);
 	isLeft = false;
 }
 
