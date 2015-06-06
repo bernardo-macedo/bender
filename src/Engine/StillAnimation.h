@@ -20,6 +20,7 @@ private:
 	Sprite* sp;
 public:
 	StillAnimation(float x, float y, float rotation, Sprite* sprite, float imeLimit, bool ends);
+	~StillAnimation();
 	void Update(float dt);
 	bool IsDead();
 

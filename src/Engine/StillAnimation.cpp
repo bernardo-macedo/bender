@@ -24,6 +24,10 @@ StillAnimation::StillAnimation(float x, float y, float rotation, Sprite* sprite,
 	this->timeLimit = timeLimit;
 }
 
+StillAnimation::~StillAnimation() {
+	delete endTimer;
+}
+
 void StillAnimation::Update(float dt) {
 	endTimer->Update(dt);
 	sp->Update(dt);

@@ -18,7 +18,7 @@
 
 class Monumento : public GameObject {
 public:
-	Monumento(int posX);
+	Monumento(int posX, int scale);
 	virtual ~Monumento();
 
 	virtual void Update(float dt);

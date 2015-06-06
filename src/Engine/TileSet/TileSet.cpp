@@ -8,14 +8,15 @@
 #include "TileSet.h"
 #include <iostream>
 
-TileSet::TileSet(int tileWidth, int tileHeight, std::string file) {
+TileSet::TileSet(int tileWidth, int tileHeight, std::string file, int tileSetScale) {
 	this->tileWidth = tileWidth;
 	this->tileHeight = tileHeight;
+	this->tileSetScale = tileSetScale;
 	tileSet = new Sprite(file);
-	tileSet->SetScaleX(TILESET_SCALE);
-	tileSet->SetScaleY(TILESET_SCALE);
-	this->columns = tileSet->GetWidth()/(this->tileWidth*TILESET_SCALE);
-	this->rows = tileSet->GetHeight()/(this->tileHeight*TILESET_SCALE);
+	tileSet->SetScaleX(tileSetScale);
+	tileSet->SetScaleY(tileSetScale);
+	this->columns = tileSet->GetWidth()/(this->tileWidth*tileSetScale);
+	this->rows = tileSet->GetHeight()/(this->tileHeight*tileSetScale);
 }
 
 void TileSet::Render(int index, float x, float y) {
@@ -26,9 +27,9 @@ void TileSet::Render(int index, float x, float y) {
 	else{
 		xt = ((index-1) % columns);
 		yt = ((index-1) / columns);
-		tileSet->SetClip(xt*tileWidth, yt*tileHeight, tileWidth, tileHeight);
+		tileSet->SetClip(xt * tileWidth, yt * tileHeight, tileWidth, tileHeight);
 		if(index > 0){
-			tileSet->Render(x*TILESET_SCALE, y*TILESET_SCALE);
+			tileSet->Render(x * tileSetScale, y * tileSetScale);
 		}
 	}
 }

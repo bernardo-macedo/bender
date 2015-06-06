@@ -32,7 +32,10 @@ void Camera::Unfollow() {
 
 void Camera::Update(float dt) {
 	if(focus != NULL){
-		pos.setX(-focus->GetBox().GetX() + Game::SCREEN_WIDTH/2);
+		float newPos = -focus->GetBox().GetX() + Game::SCREEN_WIDTH/2;
+		if (newPos < 0) {
+			pos.setX(newPos);
+		}
 		//pos.setY(-focus->GetBox().GetY() + Game::SCREEN_HEIGHT/2);
 	}
 }

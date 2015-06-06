@@ -24,7 +24,7 @@
 #define ADD_STATE_INSERT(enemyStates, StateEnemy) this->enemyStatesMap.insert(std::make_pair<enemyStates, StateEnemy*>(enemyStates, new StateEnemy(this)));
 
 
-Enemy::Enemy():
+Enemy::Enemy(int enemyScale):
 	WALK_SPEED_E(50),
 	RUN_SPEED_E(130),
 	DOUBLECLICK_TIME(0.2)
@@ -38,6 +38,7 @@ Enemy::Enemy():
 		spriteData.push_back(val);
 	}
 	fclose(fp);
+	scale = enemyScale;
 	t = new Timer();
     //----------------------------------------
 
@@ -53,10 +54,12 @@ Enemy::Enemy():
 	box.SetY(ENEMY_MAP_GROUND);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
-	sp->SetScaleX(3);
-	sp->SetScaleY(3);
+	sp->SetScaleX(scale);
+	sp->SetScaleY(scale);
 
 	b = new Body("enemy", box.GetX(), box.GetY());
+
+	b->ApplyForce(new Force("gravity", 0, 900));
 	b->SetSpeedLimit(1000);
 
 	flipped = false;
@@ -160,6 +163,18 @@ void Enemy::Jump(bool flipped) {
 
 }
 
+void Enemy::NotifyTileCollision() {
+	// TODO
+}
+
+Enemy::~Enemy() {
+	for(std::map<enemyStates, StateEnemy*>::iterator itr = enemyStatesMap.begin(); itr != enemyStatesMap.end(); itr++){
+		delete itr->second;
+	}
+	delete sp;
+	delete currentState;
+}
+
 void Enemy::InitializeStates(){
 	// Initialize all the states in Enemy here.
 	ADD_STATE_EMPLACE(PATROLLING,   EnemyStatePatrolling);
@@ -188,10 +203,6 @@ Sprite* Enemy::GetSprite(){
 
 Timer* Enemy::Time(){
 	return t;
-}
-
-Body* Enemy::GetBody(){
-	return b;
 }
 
 void Enemy::SetDead(bool isDead_){

@@ -9,31 +9,33 @@
 #define ENEMY_H_
 
 #include <vector>
-
+#include <map>
 #include "Engine/GameObject.h"
 #include "Engine/Sprite.h"
 #include "Engine/Physics/Body.h"
 #include "Engine/Timer.h"
 #include "StateEnemy.h"
-#include <map>
+#include "Being.h"
+
 #define ENEMY_MAP_GROUND 430
 
 class StateEnemy;
 
-class Enemy : public GameObject {
+class Enemy : public Being {
 public:
 	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW, PUNCH};
 	enum runController {NONE, PRERUNR, PRERUNL};
-	Enemy();
+	Enemy(int enemyScale);
+	virtual ~Enemy();
 
 	void Update(float dt);
 	void Render();
 	void NotifyCollision(GameObject* other);
+	void NotifyTileCollision();
 	bool IsDead();
 	bool Is(std::string type);
 
 	Sprite* GetSprite();
-	Body* GetBody();
 
 	void Run(bool flipped);
 	void Walk(bool flipped);
@@ -60,7 +62,6 @@ private:
 	std::vector<int> spriteData;
 	int numEst;
 	bool flipped;
-	Body *b;
 	Timer *t;
 	bool isDead;
 	int fallUpdateCount;

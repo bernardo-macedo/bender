@@ -8,6 +8,7 @@
 #ifndef STAGE_H_
 #define STAGE_H_
 
+#include <memory>
 #include "Engine/State.h"
 #include "Engine/TileSet/TileMap.h"
 #include "Engine/Game.h"
@@ -15,10 +16,12 @@
 #include "Enemy.h"
 #include "Monumento.h"
 #include "EnemyAIManager.h" 
+#include "Being.h"
 
 class Stage : public State{
 public:
 	Stage();
+	virtual ~Stage();
 
 	void Update(float dt);
 	void Render();
@@ -28,8 +31,8 @@ public:
 	Baon* GetPlayer();
 private:
 	Baon* baon;
-	std::vector<Enemy*> enemies;
-	std::vector<Monumento*> monuments;
+	std::vector<std::unique_ptr<Enemy>> enemies;
+	std::vector<std::unique_ptr<Monumento>> monuments;
 	Sprite *sp;
 	TileMap* tileMap;
 	EnemyAIManager *enemyAI;

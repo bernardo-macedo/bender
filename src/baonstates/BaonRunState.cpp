@@ -49,5 +49,5 @@ bool BaonRunState::Is(std::string state) {
 	return state.compare("RUN") == 0;
 }
 
-void BaonRunState::NotifyTileCollision(Body* previousBody, float dt) {
+void BaonRunState::NotifyTileCollision() {
 }

@@ -9,30 +9,29 @@
 #define BAON_H_
 
 #include <vector>
-
+#include <memory>
 #include "Engine/GameObject.h"
 #include "Engine/Sprite.h"
 #include "Engine/Physics/Body.h"
 #include "Engine/Timer.h"
+#include "Being.h"
 
 #define PLAYER_MAP_GROUND 425
 
 class BaonStateManager;
-class Baon : public GameObject {
+class Baon : public Being {
 public:
 	enum baonStates {STAND, WALK, JUMP, RUN, FALLING};
 	enum runController {NONE, PRERUNR, PRERUNL};
-	Baon();
+	Baon(int playerScale);
+	virtual ~Baon();
 
 	void Update(float dt);
 	void Render();
 	void NotifyCollision(GameObject* other);
-	void NotifyTileCollision(Body* previousBody, float dt);
+	void NotifyTileCollision();
 	bool IsDead();
 	bool Is(std::string type);
-	Body GetBodyValue();
-	Body* GetBody();
-	void SetBody(Body body);
 	BaonStateManager* GetState();
 
 	void Run(bool flipped);
@@ -61,7 +60,6 @@ private:
 	std::vector<int> spriteData;
 	int numEst;
 	bool flipped;
-	Body *b;
 	Timer *t;
 	BaonStateManager *stateManager;
 };

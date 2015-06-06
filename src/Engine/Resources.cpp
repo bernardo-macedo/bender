@@ -72,15 +72,24 @@ Mix_Chunk* Resources::GetSound(std::string file) {
 }
 
 void Resources::ClearSounds() {
-	Resources::soundTable.clear();
+	for (auto& x: soundTable) {
+		Mix_FreeChunk(x.second);
+	}
+	soundTable.erase(soundTable.begin(), soundTable.end());
 }
 
 void Resources::ClearImages() {
-	Resources::imageTable.clear();
+	for (auto& x: imageTable) {
+		SDL_DestroyTexture(x.second);
+	}
+	imageTable.erase(imageTable.begin(), imageTable.end());
 }
 
 void Resources::ClearMusic() {
-	Resources::musicTable.clear();
+	for (auto& x: musicTable) {
+		Mix_FreeMusic(x.second);
+	}
+	musicTable.erase(musicTable.begin(), musicTable.end());
 }
 
 TTF_Font* Resources::GetFont(std::string file, int fontSize) {
@@ -103,6 +112,9 @@ TTF_Font* Resources::GetFont(std::string file, int fontSize) {
 }
 
 void Resources::ClearFonts() {
-	Resources::fontTable.clear();
+	for (auto& x: fontTable) {
+		TTF_CloseFont(x.second);
+	}
+	fontTable.erase(fontTable.begin(), fontTable.end());
 
 }

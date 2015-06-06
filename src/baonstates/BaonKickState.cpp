@@ -37,7 +37,7 @@ void BaonKickState::Update(float dt) {
 	}
 }
 
-void BaonKickState::NotifyTileCollision(Body* previousBody, float dt) {
+void BaonKickState::NotifyTileCollision() {
 }
 
 bool BaonKickState::Is(std::string state) {

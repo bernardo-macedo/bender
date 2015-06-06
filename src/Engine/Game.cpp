@@ -43,12 +43,34 @@ Game::Game(string title, int width, int height) {
 }
 
 Game::~Game() {
+
+	if (storedState != NULL) {
+		delete storedState;
+	}
+
+	if (physic != NULL) {
+		delete physic;
+	}
+
 	while(!stateStack.empty()){
 		stateStack.pop();
 	}
-	IMG_Quit();
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+
+	if (instance != NULL) {
+		instance = NULL;
+
+		IMG_Quit();
+		Mix_CloseAudio();
+		Mix_Quit();
+		TTF_Quit();
+		SDL_DestroyRenderer(renderer);
+		SDL_DestroyWindow(window);
+		SDL_Quit();
+		Resources::ClearImages();
+		Resources::ClearSounds();
+		Resources::ClearMusic();
+		Resources::ClearFonts();
+	}
 }
 
 void Game::init() {
@@ -103,7 +125,6 @@ void Game::Run() {
 		}
 		SDL_Delay(15);
 	}
-	Resources::ClearImages();
 	Mix_CloseAudio();
 	TTF_Quit();
 }
@@ -112,8 +133,8 @@ void Game::CalculaDeltaTime() {
 	dt = SDL_GetTicks() - frameStart;
 	frameStart = SDL_GetTicks();
 	dt = dt/1000;
-	if (dt > 0.2) {
-		dt = 0.2;
+	if (dt > 0.1) {
+		dt = 0.1;
 	}
 }
 

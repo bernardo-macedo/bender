@@ -7,17 +7,19 @@
 
 #include "Monumento.h"
 
-Monumento::Monumento(int posX) {
+Monumento::Monumento(int posX, int scale) {
 	sp = new Sprite("img/monumento.png");
 
 	box.SetX(posX);
 	box.SetY(MONUMENT_MAP_GROUND);
 	box.SetH(sp->GetHeight());
 	box.SetW(sp->GetWidth());
+	sp->SetScaleX(scale);
+	sp->SetScaleY(scale);
 }
 
 Monumento::~Monumento() {
-	//delete sp; ?
+	delete sp;
 }
 
 void Monumento::Update(float dt) {

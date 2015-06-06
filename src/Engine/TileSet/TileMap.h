@@ -9,6 +9,7 @@
 #define ENGINE_TILESET_TILEMAP_H_
 
 #include <iostream>
+#include <memory>
 #include <vector>
 #include <map>
 #include "TileSet.h"
@@ -43,8 +44,8 @@ public:
 	int GetHeight ();
 	int GetDepth ();
 	//Collision::CollisionSide CheckCollisions(Rect rect);
-	bool CheckCollisions(Rect rect);
-	void ResolveTileCollisions(Baon* baon);
+	bool CheckCollisions(Being* being);
+	void ResolveTileCollisions(Being* being);
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

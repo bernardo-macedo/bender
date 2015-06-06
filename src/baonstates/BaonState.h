@@ -23,7 +23,7 @@ public:
 	virtual ~BaonState();
 
 	virtual void Update(float dt) = 0;
-	virtual void NotifyTileCollision(Body* previousBody, float dt) = 0;
+	virtual void NotifyTileCollision() = 0;
 	std::string Next();
 	void SetNext(std::string next);
 	bool NextRequested();

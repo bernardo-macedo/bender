@@ -20,9 +20,10 @@ private:
 	int columns;
 	int tileWidth;
 	int tileHeight;
+	int tileSetScale;
 public:
 	TileSet();
-	TileSet (int tileWidth,	int tileHeight, std::string file);
+	TileSet (int tileWidth,	int tileHeight, std::string file, int tileSetScale);
 	void Render (int index, float x, float y);
 	int GetTileWidth ();
 	int GetTileHeight();

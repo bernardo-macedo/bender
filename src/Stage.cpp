@@ -12,18 +12,26 @@
 #include <iostream>
 
 Stage::Stage() {
+	int scale = 4;
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);
-	baon = new Baon();
-	enemies.push_back(new Enemy());
-	enemyAI = new EnemyAIManager(baon, enemies[0]);
-	monuments.push_back(new Monumento(1744));
-	monuments.push_back(new Monumento(5456));
+	baon = new Baon(scale);
+	enemies.emplace_back(new Enemy(scale));
+	enemyAI = new EnemyAIManager(baon, enemies[0].get());
+	monuments.emplace_back(new Monumento(1744, scale));
+	monuments.emplace_back(new Monumento(5456, scale));
 	sp = new Sprite("img/blackback.png");
-	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx", 5, 3);
+	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx", 5, scale);
 	sp->SetScaleX(2);
 	sp->SetScaleY(2);
 	Camera::Follow(baon);
+}
+
+Stage::~Stage() {
+	delete baon;
+	delete enemyAI;
+	delete sp;
+	delete tileMap;
 }
 
 void Stage::Update(float dt) {
@@ -35,8 +43,15 @@ void Stage::Update(float dt) {
 
 	baon->Update(dt);
 
-	for(auto enemy : enemies){
-		enemy->Update(dt);
+	for (unsigned int i = 0; i < enemies.size(); i++) {
+		enemies[i]->Update(dt);
+
+		if (!enemies[i]->IsDead()) {
+			if (tileMap->CheckCollisions(enemies[i].get())) {
+				tileMap->ResolveTileCollisions(enemies[i].get());
+				enemies[i]->NotifyTileCollision();
+			}
+		}
 	}
 
 	enemyAI->update(dt);
@@ -45,11 +60,9 @@ void Stage::Update(float dt) {
 		Camera::Unfollow();
 	} else {
 
-		if (tileMap->CheckCollisions(baon->GetBox())) {
-			std::cout << "baon pos antes = (" << baon->GetBox().GetX() << ", " << baon->GetBox().GetY() << std::endl;
+		if (tileMap->CheckCollisions(baon)) {
 			tileMap->ResolveTileCollisions(baon);
-			std::cout << "baon pos depois = (" << baon->GetBox().GetX() << ", " << baon->GetBox().GetY() << std::endl;
-			baon->NotifyTileCollision(NULL, dt);
+			baon->NotifyTileCollision();
 		}
 	}
 
@@ -61,15 +74,15 @@ void Stage::Render() {
 		tileMap->Render(i, 0, Camera::pos.getX(), Camera::pos.getY());
 	}
 
-	for(auto enemy : enemies){
-		enemy->Render();
-	}
-
-	for(auto monument : monuments) {
-		monument->Render();
+	for (unsigned int i = 0; i < monuments.size(); i++) {
+		monuments[i]->Render();
 	}
 
 	baon->Render();
+
+	for (unsigned int i = 0; i < enemies.size(); i++) {
+		enemies[i]->Render();
+	}
 }
 
 void Stage::Pause() {

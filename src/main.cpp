@@ -7,7 +7,7 @@
 using namespace std;
 int main (int argc, char** argv) {
 	try{
-		Game *gm = new Game("30%", 1024, 720);
+		Game *gm = new Game("30%", 1400, 960);
 		gm->Push(new Stage());
 		gm->Run();
 	}catch(int e){

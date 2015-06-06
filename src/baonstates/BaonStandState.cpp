@@ -62,5 +62,5 @@ bool BaonStandState::Is(std::string name) {
 	return name.compare("STAND") == 0;
 }
 
-void BaonStandState::NotifyTileCollision(Body* previousBody, float dt) {
+void BaonStandState::NotifyTileCollision() {
 }

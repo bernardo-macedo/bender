@@ -24,7 +24,8 @@ int Baon::WALK_SPEED = 150;
 int Baon::RUN_SPEED  = 400;
 float Baon::DOUBLECLICK_TIME = 0.2;
 
-Baon::Baon() {
+Baon::Baon(int playerScale){
+
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);
 
@@ -33,6 +34,8 @@ Baon::Baon() {
 		fscanf(fp, "%d", &val);
 		spriteData.push_back(val);
 	}
+
+	scale = playerScale;
 	t = new Timer();
 	stateManager = new BaonStateManager(this);
     //----------------------------------------
@@ -47,8 +50,8 @@ Baon::Baon() {
 	box.SetY(200);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
-	sp->SetScaleX(3);
-	sp->SetScaleY(3);
+	sp->SetScaleX(playerScale);
+	sp->SetScaleY(playerScale);
 
 	b = new Body("baon", box.GetX(), box.GetY());
 
@@ -69,11 +72,11 @@ void Baon::Update(float dt) {
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
 
-	if(box.GetX() <= 512 || box.GetX() >= 17485){
-		Camera::Unfollow();
-	} else if(box.GetX() > 512){
-		Camera::Follow(this);
-	}
+	//if(box.GetX() <= 512 || box.GetX() >= 17485){
+	//	Camera::Unfollow();
+	//} else if(box.GetX() > 512){
+	//	Camera::Follow(this);
+	//}
 
 	if(stateManager->GetCurrentState()->Is("PUNCHING") || 
 	stateManager->GetCurrentState()->Is("KICKING")){
@@ -185,6 +188,12 @@ void Baon::Punch(){
 	b->SetVelX(0);
 }
 
+Baon::~Baon() {
+	delete sp;
+	delete t;
+	delete stateManager;
+}
+
 void Baon::Kick(){
 	sp->SetFrameHeight(spriteData[7*3]);
 	sp->SetFrameWidth(spriteData[7*3 + 1]);
@@ -230,31 +239,8 @@ void Baon::MidAir(){
 	}
 }
 
-Body Baon::GetBodyValue() {
-	return *b;
-}
-
-void Baon::SetBody(Body body) {
-	b->SetAccelX(body.GetAccelX());
-	b->SetAccelY(body.GetAccelY());
-	b->SetAngularAccel(body.GetAngularAccel());
-	b->SetAngularVel(body.GetAngularVel());
-	b->SetResistance(body.GetResistance());
-	b->SetRotation(body.GetRotation());
-	b->SetSpeedLimit(body.GetSpeedLimit());
-	b->SetVelX(body.GetVelX());
-	b->SetVelY(body.GetVelY());
-	b->SetX(body.GetX());
-	b->SetY(body.GetY());
-}
-
-void Baon::NotifyTileCollision(Body* previousBody, float dt) {
-	//std::cout << "Notificou colisao!" << std::endl;
-	stateManager->GetCurrentState()->NotifyTileCollision(previousBody, dt);
-}
-
-Body* Baon::GetBody(){
-	return b;
+void Baon::NotifyTileCollision() {
+	stateManager->GetCurrentState()->NotifyTileCollision();
 }
 
 BaonStateManager* Baon::GetState(){

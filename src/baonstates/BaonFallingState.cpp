@@ -26,55 +26,13 @@ BaonFallingState::BaonFallingState(bool flipped) {
 void BaonFallingState::Update(float dt) {
 	baon->MidAir();
 	baon->Fall();
-	//if(baon->GetBox().GetY() >= PLAYER_MAP_GROUND) {
-
-	//}
 }
 
-void BaonFallingState::NotifyTileCollision(Body* previousBody, float dt) {
-
-	std::cout << "notificou colisao no falling" << std::endl;
-
-	baon->fallUpdateCount = 2;
-	baon->GetBody()->SetVelY(0);
-	//baon->GetBox().SetY(PLAYER_MAP_GROUND);
-
+void BaonFallingState::NotifyTileCollision() {
 	sm->GetPreviousState()->Reset();
 	next = sm->GetPreviousState()->GetID();
 	nextFlipped = flipped;
 	nextRequested = true;
-
-
-	/*
-	if(InputManager::GetInstance().IsKeyDown(A_KEY)){
-
-		if(sm->GetPreviousState()->Is("WALK") || sm->GetPreviousState()->Is("STAND")){
-			next = new BaonWalkState(true);
-			nextRequested = true;
-		}
-		else{
-			next = new BaonRunState(true);
-			nextRequested = true;
-		}
-
-	}
-	else{
-		if(InputManager::GetInstance().IsKeyDown(D_KEY)){
-			if(sm->GetPreviousState()->Is("WALK") || sm->GetPreviousState()->Is("STAND")){
-				next = new BaonWalkState(false);
-				nextRequested = true;
-			}
-			else{
-				next = new BaonRunState(false);
-				nextRequested = true;
-			}
-		}
-		else{
-			next = new BaonStandState(flipped);
-			nextRequested = true;
-		}
-	}
-	*/
 }
 
 bool BaonFallingState::Is(std::string state) {
