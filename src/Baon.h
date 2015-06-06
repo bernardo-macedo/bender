@@ -23,7 +23,7 @@ class Baon : public Being {
 public:
 	enum baonStates {STAND, WALK, JUMP, RUN, FALLING};
 	enum runController {NONE, PRERUNR, PRERUNL};
-	Baon(int playerScale);
+	Baon(int playerScale, float mapMax);
 	virtual ~Baon();
 
 	void Update(float dt);
@@ -43,6 +43,11 @@ public:
 	void Punch();
 	void Kick();
 
+	// Cheats
+	void SetSuperJump(bool superJump);
+	void SetSuperSpeed(bool superSpeed);
+	bool GetSuperJump();
+	bool GetSuperSpeed();
 
 	int fallUpdateCount;
 
@@ -51,7 +56,12 @@ public:
 private:
 	static int WALK_SPEED;
 	static int RUN_SPEED;
+	static int JUMP_SPEED;
 	static float DOUBLECLICK_TIME;
+
+	// Cheats
+	bool superJump;
+	bool superSpeed;
 
 	Sprite *sp;
 	baonStates state;
@@ -62,6 +72,10 @@ private:
 	bool flipped;
 	Timer *t;
 	BaonStateManager *stateManager;
+	float limitX;
+	float cameraLimitX;
+
+	void LoadSpriteData();
 };
 
 #endif /* BAON_H_ */

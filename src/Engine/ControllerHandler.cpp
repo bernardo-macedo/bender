@@ -13,7 +13,7 @@ ControllerHandler::ControllerHandler() :
  	}
 
 	if(this->gameController == nullptr){
-		cout << "Unable to find a controller, defaulting to keyboard.";
+		cout << "Unable to find a controller, defaulting to keyboard." << std::endl;
     }
 
     this->controllStates.fill(false);

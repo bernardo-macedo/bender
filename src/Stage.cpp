@@ -13,17 +13,21 @@
 
 Stage::Stage() {
 	int scale = 4;
-	Camera::pos.setX(0);
-	Camera::pos.setY(0);
-	baon = new Baon(scale);
+
+	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx", 5, scale);
+
+	baon = new Baon(scale, tileMap->GetMapMax());
 	enemies.emplace_back(new Enemy(scale));
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());
 	monuments.emplace_back(new Monumento(1744, scale));
 	monuments.emplace_back(new Monumento(5456, scale));
+
 	sp = new Sprite("img/blackback.png");
-	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx", 5, scale);
 	sp->SetScaleX(2);
 	sp->SetScaleY(2);
+
+	Camera::pos.setX(0);
+	Camera::pos.setY(0);
 	Camera::Follow(baon);
 }
 

@@ -36,6 +36,5 @@ void Camera::Update(float dt) {
 		if (newPos < 0) {
 			pos.setX(newPos);
 		}
-		//pos.setY(-focus->GetBox().GetY() + Game::SCREEN_HEIGHT/2);
 	}
 }

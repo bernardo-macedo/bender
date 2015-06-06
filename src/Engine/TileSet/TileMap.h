@@ -31,7 +31,6 @@ private:
 	std::multimap<float, Tile> tileCollisions;
 
 	void GetTileMatrixIndexesAtPos(float x, float y, int* i, int* j);
-	//std::vector<Rect> GetTilesSurroundingRect(Rect rect);
 	std::vector<std::pair<int, Rect>> GetTilesSurroundingRect(Rect rect);
 
 public:
@@ -43,9 +42,11 @@ public:
 	int GetWidth ();
 	int GetHeight ();
 	int GetDepth ();
-	//Collision::CollisionSide CheckCollisions(Rect rect);
+	float GetMapMax();
+
 	bool CheckCollisions(Being* being);
 	void ResolveTileCollisions(Being* being);
+
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

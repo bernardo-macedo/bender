@@ -16,6 +16,8 @@
 #define S_KEY SDLK_s
 #define A_KEY SDLK_a
 #define D_KEY SDLK_d
+#define O_KEY SDLK_o
+#define P_KEY SDLK_p
 #define ESCAPE_KEY SDLK_ESCAPE
 #define SPACE_KEY SDLK_SPACE
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT

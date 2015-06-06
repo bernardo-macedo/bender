@@ -22,44 +22,58 @@
 
 int Baon::WALK_SPEED = 150;
 int Baon::RUN_SPEED  = 400;
+int Baon::JUMP_SPEED = -500;
 float Baon::DOUBLECLICK_TIME = 0.2;
 
-Baon::Baon(int playerScale){
-
-	FILE *fp = fopen("data/baon-data.txt", "r");
-	fscanf(fp, "%d", &numEst);
-
-	int val;
-	while(!feof(fp)){
-		fscanf(fp, "%d", &val);
-		spriteData.push_back(val);
-	}
+Baon::Baon(int playerScale, float mapMax) {
+	LoadSpriteData();
 
 	scale = playerScale;
+	flipped = false;
+	fallUpdateCount = 2;
+	isDamage = false;
+
+	// Cheats
+	superJump = false;
+	superSpeed = false;
+
 	t = new Timer();
 	stateManager = new BaonStateManager(this);
-    //----------------------------------------
-	//state = STAND;
-	sp = new Sprite("img/baon.png", 1, 0.1);
 	runStates = NONE;
 
+	sp = new Sprite("img/baon.png", 1, 0.1);
 	sp->SetFrameHeight(spriteData[0]);
 	sp->SetFrameWidth(spriteData[1]);
+	sp->SetScaleX(playerScale);
+	sp->SetScaleY(playerScale);
 
 	box.SetX(Game::SCREEN_WIDTH/2);
 	box.SetY(200);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
-	sp->SetScaleX(playerScale);
-	sp->SetScaleY(playerScale);
+
+	limitX = mapMax - (box.GetW() * scale);
+	cameraLimitX = mapMax - Game::SCREEN_WIDTH/2;
 
 	b = new Body("baon", box.GetX(), box.GetY());
-
 	b->ApplyForce(new Force("gravity", 0, 900));
 
-	flipped = false;
-	fallUpdateCount = 2;
-	isDamage = false;
+}
+
+Baon::~Baon() {
+	delete sp;
+	delete t;
+	delete stateManager;
+}
+
+void Baon::LoadSpriteData() {
+	FILE *fp = fopen("data/baon-data.txt", "r");
+	fscanf(fp, "%d", &numEst);
+	int val;
+	while(!feof(fp)){
+		fscanf(fp, "%d", &val);
+		spriteData.push_back(val);
+	}
 }
 
 void Baon::Update(float dt) {
@@ -72,14 +86,14 @@ void Baon::Update(float dt) {
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
 
-	//if(box.GetX() <= 512 || box.GetX() >= 17485){
-	//	Camera::Unfollow();
-	//} else if(box.GetX() > 512){
-	//	Camera::Follow(this);
-	//}
+	if(box.GetX() <= Game::SCREEN_WIDTH/2 || box.GetX() >= cameraLimitX){
+		Camera::Unfollow();
+	} else if(box.GetX() > Game::SCREEN_WIDTH/2){
+		Camera::Follow(this);
+	}
 
 	if(stateManager->GetCurrentState()->Is("PUNCHING") || 
-	stateManager->GetCurrentState()->Is("KICKING")){
+	   stateManager->GetCurrentState()->Is("KICKING")){
 		isDamage = true;
 	}
 
@@ -92,11 +106,19 @@ void Baon::Update(float dt) {
 	}
 
 	// Impede o player a sair do mapa pela direita
-	if (box.GetX() > 17485) {
-		box.SetX(17485);
+	if (box.GetX() > limitX) {
+		box.SetX(limitX );
 		b->SetAccelX(0);
 		b->SetVelX(0);
-		b->SetX(17485);
+		b->SetX(limitX);
+	}
+
+	// Cheats
+	if (InputManager::GetInstance().KeyPress(O_KEY)) {
+		SetSuperJump(!superJump);
+	}
+	if (InputManager::GetInstance().KeyPress(P_KEY)) {
+		SetSuperSpeed(!superSpeed);
 	}
 }
 
@@ -108,6 +130,7 @@ void Baon::NotifyCollision(GameObject* other) {
 }
 
 bool Baon::IsDead() {
+	// TODO: hitpoints
 	return false;
 }
 
@@ -129,11 +152,20 @@ void Baon::Run(bool flipped) {
 	sp->SetLine(RUN, spriteData[0]);
 	if(!flipped){
 		this->flipped = false;
-		b->SetVelX(RUN_SPEED);
+		if (superSpeed) {
+			b->SetVelX(4 * RUN_SPEED);
+		} else {
+			b->SetVelX(RUN_SPEED);
+		}
 	}
 	else{
 		this->flipped = true;
-		b->SetVelX(-RUN_SPEED);
+		if (superSpeed) {
+			b->SetVelX(4 * -RUN_SPEED);
+		} else {
+			b->SetVelX(-RUN_SPEED);
+		}
+
 	}
 }
 
@@ -170,8 +202,11 @@ void Baon::Jump(bool flipped) {
 	sp->SetFrameCount(spriteData[JUMP*3 + 2]);
 	sp->SetLine(JUMP, spriteData[0]);
 
-	//b->SetAccelY(10000);
-	b->SetVelY(-500);
+	if (superJump) {
+		b->SetVelY(4 * JUMP_SPEED);
+	} else {
+		b->SetVelY(JUMP_SPEED);
+	}
 }
 void Baon::Fall() {
 	if(fallUpdateCount < 5){
@@ -186,12 +221,6 @@ void Baon::Punch(){
 	sp->SetFrameCount(spriteData[6*3 + 2]);
 	sp->SetLine(6, spriteData[0]);
 	b->SetVelX(0);
-}
-
-Baon::~Baon() {
-	delete sp;
-	delete t;
-	delete stateManager;
 }
 
 void Baon::Kick(){
@@ -245,4 +274,21 @@ void Baon::NotifyTileCollision() {
 
 BaonStateManager* Baon::GetState(){
 	return stateManager;
+}
+
+// Cheats
+void Baon::SetSuperJump(bool superJump) {
+	this->superJump = superJump;
+}
+
+void Baon::SetSuperSpeed(bool superSpeed) {
+	this->superSpeed = superSpeed;
+}
+
+bool Baon::GetSuperJump() {
+	return superJump;
+}
+
+bool Baon::GetSuperSpeed() {
+	return superSpeed;
 }

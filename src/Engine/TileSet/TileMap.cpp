@@ -117,6 +117,7 @@ bool TileMap::CheckCollisions(Being* being) {
 }
 
 void TileMap::ResolveTileCollisions(Being* being) {
+	float intersectionX;
 	Rect scaledRect = being->GetBox();
 
 	scaledRect.SetW(scaledRect.GetW() * being->GetScale());
@@ -133,11 +134,11 @@ void TileMap::ResolveTileCollisions(Being* being) {
 			being->GetBody()->SetVelX(0);
 			if (overlap.getX() > 0) {
 				// colidiu com a borda esquerda do player
-				float intersectionX = (tile.GetBox().GetX() + tile.GetBox().GetW()) - scaledRect.GetX();
+				intersectionX = (tile.GetBox().GetX() + tile.GetBox().GetW()) - scaledRect.GetX();
 				scaledRect.SetX(scaledRect.GetX() + intersectionX + 1);
 			} else if (overlap.getX() < 0) {
 				// colidiu com a borda direita do player
-				float intersectionX = (scaledRect.GetX() + scaledRect.GetW()) - tile.GetBox().GetX();
+				intersectionX = (scaledRect.GetX() + scaledRect.GetW()) - tile.GetBox().GetX();
 				scaledRect.SetX(scaledRect.GetX() - intersectionX - 1);
 			}
 
@@ -199,4 +200,8 @@ std::vector<std::pair<int, Rect>> TileMap::GetTilesSurroundingRect(Rect rect) {
 void TileMap::GetTileMatrixIndexesAtPos(float x, float y, int* i, int* j) {
 	*i = (int) x/(tileSet->GetTileWidth() * mapScale);
 	*j = (int) y/(tileSet->GetTileHeight() * mapScale);
+}
+
+float TileMap::GetMapMax() {
+	return (tileSet->GetTileWidth() * mapScale) * (mapWidth);
 }
