@@ -31,9 +31,13 @@ void BaonKickState::Update(float dt) {
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
 		nextFlipped = flipped;
+		baon->isDamage = false;
 	}
 	else{
 		t->Update(dt);
+		if(baon->GetSprite()->GetCurrentFrame() > 3){
+			baon->isDamage = true;
+		}
 	}
 }
 

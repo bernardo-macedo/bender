@@ -9,6 +9,7 @@
 #define BAONSTATEMANAGER_H_
 
 #include <unordered_map>
+#include "../Enemy.h"
 class BaonState;
 class Timer;
 
@@ -21,6 +22,7 @@ public:
 	void Update(float dt);
 	BaonState* GetCurrentState();
 	BaonState* GetPreviousState();
+	Enemy* enemy;
 private:
 	BaonState* currentState, *previousState;
 	Baon* baon;

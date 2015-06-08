@@ -20,15 +20,18 @@
 #include "Engine/Physics/Force.h"
 #include "Engine/Physics/Physic.h"
 
-int Baon::WALK_SPEED = 150;
-int Baon::RUN_SPEED  = 400;
-int Baon::JUMP_SPEED = -500;
+int Baon::WALK_SPEED = 50;
+int Baon::RUN_SPEED  = 133;
+int Baon::JUMP_SPEED = -166;
 float Baon::DOUBLECLICK_TIME = 0.2;
 
 Baon::Baon(int playerScale, float mapMax) {
 	LoadSpriteData();
 
 	scale = playerScale;
+	Baon::WALK_SPEED = Baon::WALK_SPEED*scale;
+	Baon::JUMP_SPEED = Baon::JUMP_SPEED*scale;
+	Baon::RUN_SPEED = Baon::RUN_SPEED*scale;
 	flipped = false;
 	fallUpdateCount = 2;
 	isDamage = false;
@@ -66,6 +69,10 @@ Baon::~Baon() {
 	delete stateManager;
 }
 
+Sprite* Baon::GetSprite() {
+	return sp;
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);
@@ -90,11 +97,6 @@ void Baon::Update(float dt) {
 		Camera::Unfollow();
 	} else if(box.GetX() > Game::SCREEN_WIDTH/2){
 		Camera::Follow(this);
-	}
-
-	if(stateManager->GetCurrentState()->Is("PUNCHING") || 
-	   stateManager->GetCurrentState()->Is("KICKING")){
-		isDamage = true;
 	}
 
 	// Impede o player a sair do mapa pela esquerda
@@ -203,7 +205,7 @@ void Baon::Jump(bool flipped) {
 	sp->SetLine(JUMP, spriteData[0]);
 
 	if (superJump) {
-		b->SetVelY(4 * JUMP_SPEED);
+		b->SetVelY(4 * JUMP_SPEED );
 	} else {
 		b->SetVelY(JUMP_SPEED);
 	}

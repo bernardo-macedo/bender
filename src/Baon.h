@@ -49,6 +49,8 @@ public:
 	bool GetSuperJump();
 	bool GetSuperSpeed();
 
+	Sprite* GetSprite();
+
 	int fallUpdateCount;
 
 	bool isDamage;

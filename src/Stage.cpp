@@ -12,7 +12,7 @@
 #include <iostream>
 
 Stage::Stage() {
-	int scale = 4;
+	int scale = 2;
 
 	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx", 5, scale);
 

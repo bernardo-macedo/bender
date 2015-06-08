@@ -28,7 +28,12 @@ void EnemyStatePunch::exit() {
 void EnemyStatePunch::update(const float dt_) {
 	enemy->GetSprite()->Update(dt_);
 
+	if(enemy->GetSprite()->GetCurrentFrame() > 3){
+		enemy->isDamage = true;
+	}
+
 	if(enemy->GetSprite()->GetCurrentFrame() >= 5){
+		enemy->isDamage = false;
 		askEnd = true;
 	}
 }

@@ -17,7 +17,7 @@
 #include "StateEnemy.h"
 #include "Being.h"
 
-#define ENEMY_MAP_GROUND 430
+#define ENEMY_MAP_GROUND 143
 
 class StateEnemy;
 
@@ -45,7 +45,7 @@ public:
 	void changeState(const enemyStates state_);
 	bool IsState(const enemyStates state_);
 	bool StateEnd();
-
+	bool isDamage;
 	Timer* Time();
 
 	void SetDead(bool isDead_);

@@ -50,8 +50,8 @@ Enemy::Enemy(int enemyScale):
 	sp->SetFrameHeight(spriteData[0]);
 	sp->SetFrameWidth(spriteData[1]);
 
-	box.SetX(Game::SCREEN_WIDTH/2 + 100);
-	box.SetY(ENEMY_MAP_GROUND);
+	box.SetX(Game::SCREEN_WIDTH/2 + 33*scale);
+	box.SetY(ENEMY_MAP_GROUND*scale);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
 	sp->SetScaleX(scale);
@@ -65,6 +65,7 @@ Enemy::Enemy(int enemyScale):
 	flipped = false;
 	fallUpdateCount = 0;
 	isDead = false;
+	isDamage = false;
 
 	this->currentState->enter();
 

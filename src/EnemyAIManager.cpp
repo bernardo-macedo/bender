@@ -40,13 +40,13 @@ void EnemyAIManager::update(const float dt){
 
 		baonRect.SetX(baon->GetBody()->GetX());
 		baonRect.SetY(baon->GetBody()->GetY());
-		baonRect.SetW(30);
-		baonRect.SetH(50);
+		baonRect.SetW(30*baon->GetScale());
+		baonRect.SetH(50*baon->GetScale());
 
 		enemyRect.SetX(enemy->GetBody()->GetX());
 		enemyRect.SetY(enemy->GetBody()->GetY());
-		enemyRect.SetW(30);
-		enemyRect.SetH(50);
+		enemyRect.SetW(30*enemy->GetScale());
+		enemyRect.SetH(50*enemy->GetScale());
 		
 		if(Collision::IsColliding(baonRect,enemyRect,0,0)){
 			//std::cout<<"morreu\n";

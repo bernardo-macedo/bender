@@ -28,9 +28,13 @@ void BaonPunchState::Update(float dt) {
 		nextRequested = true;
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
+		baon->isDamage = false;
 	}
 	else{
 		t->Update(dt);
+		if(baon->GetSprite()->GetCurrentFrame() > 3){
+			baon->isDamage = true;
+		}
 	}
 }
 
