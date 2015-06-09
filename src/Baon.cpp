@@ -21,7 +21,7 @@
 #include "Engine/Physics/Physic.h"
 
 int Baon::WALK_SPEED = 50;
-int Baon::RUN_SPEED  = 133;
+int Baon::RUN_SPEED  = 160;
 int Baon::JUMP_SPEED = -166;
 float Baon::DOUBLECLICK_TIME = 0.2;
 
@@ -60,6 +60,7 @@ Baon::Baon(int playerScale, float mapMax) {
 
 	b = new Body("baon", box.GetX(), box.GetY());
 	b->ApplyForce(new Force("gravity", 0, 900));
+	isDead = false;
 
 }
 
@@ -71,6 +72,10 @@ Baon::~Baon() {
 
 Sprite* Baon::GetSprite() {
 	return sp;
+}
+
+void Baon::TakeDamage() {
+	isDead = true;
 }
 
 void Baon::LoadSpriteData() {
@@ -133,7 +138,7 @@ void Baon::NotifyCollision(GameObject* other) {
 
 bool Baon::IsDead() {
 	// TODO: hitpoints
-	return false;
+	return isDead;
 }
 
 bool Baon::Is(std::string type) {

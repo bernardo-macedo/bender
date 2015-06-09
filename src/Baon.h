@@ -42,6 +42,7 @@ public:
 	void MidAir();
 	void Punch();
 	void Kick();
+	void TakeDamage();
 
 	// Cheats
 	void SetSuperJump(bool superJump);
@@ -64,6 +65,7 @@ private:
 	// Cheats
 	bool superJump;
 	bool superSpeed;
+	bool isDead;
 
 	Sprite *sp;
 	baonStates state;

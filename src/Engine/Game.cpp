@@ -99,6 +99,7 @@ void Game::Run() {
 	}
 	else{
 		stateStack.emplace(storedState);
+		GetCurrentState()->Resume();
 		storedState = NULL;
 	}
 	while(!stateStack.empty() && !GetCurrentState()->QuitRequested()){

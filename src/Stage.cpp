@@ -29,6 +29,8 @@ Stage::Stage() {
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);
 	Camera::Follow(baon);
+
+	music = new Music("audio/floresta.mp3");
 }
 
 Stage::~Stage() {
@@ -45,8 +47,6 @@ void Stage::Update(float dt) {
 		quitRequested = true;
 	}
 
-	baon->Update(dt);
-
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Update(dt);
 
@@ -54,6 +54,11 @@ void Stage::Update(float dt) {
 			if (tileMap->CheckCollisions(enemies[i].get())) {
 				tileMap->ResolveTileCollisions(enemies[i].get());
 				enemies[i]->NotifyTileCollision();
+			}
+			if(baon != NULL && Collision::IsColliding(baon->GetBox(), enemies[i]->GetBox(), 0, 0)){
+				if(enemies[i]->isDamage){
+					baon->TakeDamage();
+				}
 			}
 		}
 	}
@@ -63,10 +68,13 @@ void Stage::Update(float dt) {
 	if (baon == NULL) {
 		Camera::Unfollow();
 	} else {
-
+		baon->Update(dt);
 		if (tileMap->CheckCollisions(baon)) {
 			tileMap->ResolveTileCollisions(baon);
 			baon->NotifyTileCollision();
+		}
+		if(baon->IsDead()){
+			baon = NULL;
 		}
 	}
 
@@ -82,7 +90,9 @@ void Stage::Render() {
 		monuments[i]->Render();
 	}
 
-	baon->Render();
+	if(baon != NULL){
+		baon->Render();
+	}
 
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Render();
@@ -93,6 +103,7 @@ void Stage::Pause() {
 }
 
 void Stage::Resume() {
+	music->Play(5);
 }
 
 Baon* Stage::GetPlayer(){

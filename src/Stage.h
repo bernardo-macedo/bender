@@ -17,6 +17,7 @@
 #include "Monumento.h"
 #include "EnemyAIManager.h" 
 #include "Being.h"
+#include "Engine/Music.h"
 
 class Stage : public State{
 public:
@@ -36,6 +37,7 @@ private:
 	Sprite *sp;
 	TileMap* tileMap;
 	EnemyAIManager *enemyAI;
+	Music *music;
 };
 
 #endif /* STAGE_H_ */
