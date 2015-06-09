@@ -56,6 +56,11 @@ void BaonStandState::Update(float dt) {
 		next = "KICK";
 		nextFlipped = flipped;
 	}
+	if(baon->isTakingDamage()){
+		nextRequested = true;
+		next = "TAKEHIT";
+		nextFlipped = flipped;
+	}
 }
 
 bool BaonStandState::Is(std::string name) {

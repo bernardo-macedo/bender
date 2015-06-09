@@ -30,13 +30,14 @@ public:
 	void Pause() ;
 	void Resume();
 	Baon* GetPlayer();
+	void CollisionEnemies(int i);
 private:
 	Baon* baon;
 	std::vector<std::unique_ptr<Enemy>> enemies;
 	std::vector<std::unique_ptr<Monumento>> monuments;
 	Sprite *sp;
 	TileMap* tileMap;
-	EnemyAIManager *enemyAI;
+	EnemyAIManager *enemyAI, *enemyAI2, *enemyAI3;
 	Music *music;
 };
 

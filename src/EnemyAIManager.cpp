@@ -36,7 +36,7 @@ void EnemyAIManager::update(const float dt){
 			enemy->Run(true);	
 		}
 	}
-	if(baon->isDamage){
+	if(!baon->IsDead() && baon->isDamage){
 		
 		Rect baonRect, enemyRect;
 
@@ -50,8 +50,7 @@ void EnemyAIManager::update(const float dt){
 		enemyRect.SetW(30*enemy->GetScale());
 		enemyRect.SetH(50*enemy->GetScale());
 		
-		if(Collision::IsColliding(baonRect,enemyRect,0,0)){
-			//std::cout<<"morreu\n";
+		if(Collision::IsColliding(baonRect, enemyRect, 0, 0)){
 			enemy->SetDead(true);
 		}
 	}

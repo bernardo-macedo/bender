@@ -15,6 +15,7 @@
 #include "Engine/Physics/Body.h"
 #include "Engine/Timer.h"
 #include "Being.h"
+#include "Engine/Sound.h"
 
 #define PLAYER_MAP_GROUND 425
 
@@ -42,7 +43,9 @@ public:
 	void MidAir();
 	void Punch();
 	void Kick();
-	void TakeDamage();
+	void TakeDamage(bool damage);
+	bool isTakingDamage();
+	void TakeHit(bool flipped);
 
 	// Cheats
 	void SetSuperJump(bool superJump);
@@ -55,6 +58,7 @@ public:
 	int fallUpdateCount;
 
 	bool isDamage;
+	Sound *jump, *land, *step1, *step2;
 
 private:
 	static int WALK_SPEED;
@@ -66,6 +70,7 @@ private:
 	bool superJump;
 	bool superSpeed;
 	bool isDead;
+	bool takingDamage;
 
 	Sprite *sp;
 	baonStates state;
@@ -78,7 +83,7 @@ private:
 	BaonStateManager *stateManager;
 	float limitX;
 	float cameraLimitX;
-
+	int hp;
 	void LoadSpriteData();
 };
 

@@ -33,6 +33,8 @@ void BaonFallingState::NotifyTileCollision() {
 	next = sm->GetPreviousState()->GetID();
 	nextFlipped = flipped;
 	nextRequested = true;
+	baon->land->Play(0);
+	baon->TakeDamage(false);
 }
 
 bool BaonFallingState::Is(std::string state) {

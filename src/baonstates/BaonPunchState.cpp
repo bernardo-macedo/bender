@@ -24,11 +24,13 @@ void BaonPunchState::Update(float dt) {
 		baon->Punch();
 		executed = true;
 	}
-	if(t->Get() >= 5*0.1){
+	if(t->Get() >= 5*0.06){
 		nextRequested = true;
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
 		baon->isDamage = false;
+		nextFlipped = flipped;
+		baon->GetSprite()->SetFrameTime(0.1);
 	}
 	else{
 		t->Update(dt);

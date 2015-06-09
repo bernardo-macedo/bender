@@ -22,7 +22,7 @@
 
 int Baon::WALK_SPEED = 50;
 int Baon::RUN_SPEED  = 160;
-int Baon::JUMP_SPEED = -166;
+int Baon::JUMP_SPEED = -230;
 float Baon::DOUBLECLICK_TIME = 0.2;
 
 Baon::Baon(int playerScale, float mapMax) {
@@ -62,6 +62,11 @@ Baon::Baon(int playerScale, float mapMax) {
 	b->ApplyForce(new Force("gravity", 0, 900));
 	isDead = false;
 
+	land = new Sound("audio/sfx_char_landGrass.wav");
+	jump = new Sound("audio/sfx_char_jumpGrass.wav");
+	step1 = new Sound("audio/sfx_char_stepGrass1.wav");
+	step2 = new Sound("audio/sfx_char_stepGrass2.wav");
+	hp = 30;
 }
 
 Baon::~Baon() {
@@ -72,10 +77,6 @@ Baon::~Baon() {
 
 Sprite* Baon::GetSprite() {
 	return sp;
-}
-
-void Baon::TakeDamage() {
-	isDead = true;
 }
 
 void Baon::LoadSpriteData() {
@@ -91,7 +92,8 @@ void Baon::LoadSpriteData() {
 void Baon::Update(float dt) {
 	stateManager->Update(dt);
 	if(!stateManager->GetCurrentState()->Is("JUMPING")
-			&& !stateManager->GetCurrentState()->Is("FALLING")){
+			&& !stateManager->GetCurrentState()->Is("FALLING")
+			&& !stateManager->GetCurrentState()->Is("TAKEHIT")){
 		sp->Update(dt);
 	}
 	Physic::GetInstance()->UpdatePhysic(b, dt);
@@ -138,7 +140,7 @@ void Baon::NotifyCollision(GameObject* other) {
 
 bool Baon::IsDead() {
 	// TODO: hitpoints
-	return isDead;
+	return hp <= 0;
 }
 
 bool Baon::Is(std::string type) {
@@ -172,7 +174,6 @@ void Baon::Run(bool flipped) {
 		} else {
 			b->SetVelX(-RUN_SPEED);
 		}
-
 	}
 }
 
@@ -201,6 +202,7 @@ void Baon::Stand(bool flipped) {
 	sp->SetLine(STAND, spriteData[0]);
 	b->SetVelX(0);
 	b->SetAccelX(0);
+	step1->Stop();
 }
 
 void Baon::Jump(bool flipped) {
@@ -214,6 +216,8 @@ void Baon::Jump(bool flipped) {
 	} else {
 		b->SetVelY(JUMP_SPEED);
 	}
+	step1->Stop();
+	jump->Play(0);
 }
 void Baon::Fall() {
 	if(fallUpdateCount < 5){
@@ -223,6 +227,7 @@ void Baon::Fall() {
 }
 
 void Baon::Punch(){
+	sp->SetFrameTime(0.06);
 	sp->SetFrameHeight(spriteData[6*3]);
 	sp->SetFrameWidth(spriteData[6*3 + 1]);
 	sp->SetFrameCount(spriteData[6*3 + 2]);
@@ -231,12 +236,39 @@ void Baon::Punch(){
 }
 
 void Baon::Kick(){
+	sp->SetFrameTime(0.06);
 	sp->SetFrameHeight(spriteData[7*3]);
 	sp->SetFrameWidth(spriteData[7*3 + 1]);
 	sp->SetFrameCount(spriteData[7*3 + 2]);
 	sp->SetLine(7, spriteData[0]);
 	b->SetVelX(0);
 }
+
+void Baon::TakeDamage(bool damage) {
+	takingDamage = damage;
+}
+
+bool Baon::isTakingDamage() {
+	return takingDamage;
+}
+
+
+void Baon::TakeHit(bool flipped){
+	hp -= 5;
+	sp->SetFrameHeight(spriteData[13*3]);
+	sp->SetFrameWidth(spriteData[13*3 + 1]);
+	sp->SetFrameCount(spriteData[13*3 + 2]);
+	sp->SetLine(13, spriteData[0]);
+	if(flipped){
+		GetBody()->SetVelX(2000);
+		GetBody()->ApplyForce(new Force("resistance", -10000, 0));
+	}
+	else{
+		GetBody()->SetVelX(-2000);
+		GetBody()->ApplyForce(new Force("resistance", 10000, 0));
+	}
+}
+
 void Baon::MidAir(){
 	if (b->GetForce("gravity") == NULL) {
 		b->ApplyForce(new Force("gravity", 0, 1200));
@@ -299,3 +331,5 @@ bool Baon::GetSuperJump() {
 bool Baon::GetSuperSpeed() {
 	return superSpeed;
 }
+
+

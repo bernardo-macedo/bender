@@ -26,12 +26,13 @@ void BaonKickState::Update(float dt) {
 		executed = true;
 	}
 
-	if(t->Get() >= 4*0.1){
+	if(t->Get() >= 4*0.06){
 		nextRequested = true;
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
 		nextFlipped = flipped;
 		baon->isDamage = false;
+		baon->GetSprite()->SetFrameTime(0.1);
 	}
 	else{
 		t->Update(dt);

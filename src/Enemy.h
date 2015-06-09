@@ -25,7 +25,7 @@ class Enemy : public Being {
 public:
 	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW, PUNCH};
 	enum runController {NONE, PRERUNR, PRERUNL};
-	Enemy(int enemyScale);
+	Enemy(int enemyScale, int x);
 	virtual ~Enemy();
 
 	void Update(float dt);

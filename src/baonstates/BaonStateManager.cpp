@@ -16,6 +16,7 @@
 #include "BaonRunState.h"
 #include "BaonStandState.h"
 #include "BaonWalkState.h"
+#include "BaonTakeHitState.h"
 
 BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("STAND", new BaonStandState(false));
@@ -37,6 +38,9 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados["RUN"]->SetBaon(baon);
 	estados["RUN"]->SetStateManager(this);
 	estados.emplace("FALLING", new BaonFallingState(false));
+	estados["FALLING"]->SetBaon(baon);
+	estados["FALLING"]->SetStateManager(this);
+	estados.emplace("TAKEHIT", new BaonTakeHitState(false));
 	estados["FALLING"]->SetBaon(baon);
 	estados["FALLING"]->SetStateManager(this);
 

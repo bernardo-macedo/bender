@@ -16,9 +16,11 @@ BaonRunState::BaonRunState(bool flipped){
 	executed = false;
 	this->flipped = flipped;
 	nextRequested = false;
+	t = new Timer();
 	id = "RUN";
 }
 void BaonRunState::Update(float dt) {
+	t->Update(dt);
 	if(!executed){
 		baon->Run(flipped);
 		executed = true;
@@ -41,6 +43,15 @@ void BaonRunState::Update(float dt) {
 	if(InputManager::GetInstance().KeyPress(W_KEY)){
 		nextRequested = true;
 		next = "JUMP";
+		nextFlipped = flipped;
+	}
+	if(t->Get() >= 0.4){
+		baon->step2->Play(0);
+		t->Restart();
+	}
+	if(baon->isTakingDamage()){
+		nextRequested = true;
+		next = "TAKEHIT";
 		nextFlipped = flipped;
 	}
 }

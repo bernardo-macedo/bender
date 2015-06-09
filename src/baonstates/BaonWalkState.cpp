@@ -21,9 +21,11 @@ BaonWalkState::BaonWalkState(bool fliped) {
 	popRequested = false;
 	nextRequested = false;
 	id = "WALK";
+	t = new Timer();
 }
 
 void BaonWalkState::Update(float dt){
+	t->Update(dt);
 	if(!executed){
 		baon->Walk(flipped);
 		executed = true;
@@ -56,7 +58,18 @@ void BaonWalkState::Update(float dt){
 	if(InputManager::GetInstance().KeyPress(RIGHT_ARROW_KEY)){
 		nextRequested = true;
 		next = "KICK";
-		nextFlipped = flipped;	}
+		nextFlipped = flipped;
+	}
+	if(t->Get() >= 0.3){
+		baon->step1->Play(0);
+		t->Restart();
+	}
+	if(baon->isTakingDamage()){
+		nextRequested = true;
+		next = "TAKEHIT";
+		nextFlipped = flipped;
+	}
+
 }
 
 bool BaonWalkState::Is(std::string state) {

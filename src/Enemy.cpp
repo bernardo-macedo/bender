@@ -24,7 +24,7 @@
 #define ADD_STATE_INSERT(enemyStates, StateEnemy) this->enemyStatesMap.insert(std::make_pair<enemyStates, StateEnemy*>(enemyStates, new StateEnemy(this)));
 
 
-Enemy::Enemy(int enemyScale):
+Enemy::Enemy(int enemyScale, int x):
 	WALK_SPEED_E(50),
 	RUN_SPEED_E(130),
 	DOUBLECLICK_TIME(0.2)
@@ -50,7 +50,7 @@ Enemy::Enemy(int enemyScale):
 	sp->SetFrameHeight(spriteData[0]);
 	sp->SetFrameWidth(spriteData[1]);
 
-	box.SetX(Game::SCREEN_WIDTH/2 + 33*scale);
+	box.SetX(x + 33*scale);
 	box.SetY(ENEMY_MAP_GROUND*scale);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
