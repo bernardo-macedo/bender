@@ -17,6 +17,10 @@
 #include "BaonStandState.h"
 #include "BaonWalkState.h"
 #include "BaonTakeHitState.h"
+#include "BaonBendState.h"
+
+#include <iostream>
+
 
 BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("STAND", new BaonStandState(false));
@@ -41,8 +45,11 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados["FALLING"]->SetBaon(baon);
 	estados["FALLING"]->SetStateManager(this);
 	estados.emplace("TAKEHIT", new BaonTakeHitState(false));
-	estados["FALLING"]->SetBaon(baon);
-	estados["FALLING"]->SetStateManager(this);
+	estados["TAKEHIT"]->SetBaon(baon);
+	estados["TAKEHIT"]->SetStateManager(this);
+	estados.emplace("BEND", new BaonBendState(false));
+	estados["BEND"]->SetBaon(baon);
+	estados["BEND"]->SetStateManager(this);
 
 	currentState = estados["STAND"];
 	this->baon = baon;
@@ -91,6 +98,12 @@ void BaonStateManager::Update(float dt) {
 		}
 	}
 
+	if(InputManager::GetInstance().KeyPress(F_KEY)){
+		currentState = estados["BEND"];
+		currentState->SetFlipped(false);
+		currentState->Reset();
+	}
+
 	currentState->Update(dt);
 
 	if(currentState->NextRequested()){
@@ -102,6 +115,8 @@ void BaonStateManager::Update(float dt) {
 		currentState->Reset();
 		executed = false;
 	}
+
+	std::cout << currentState->GetID() << std::endl; 
 }
 
 BaonState* BaonStateManager::GetCurrentState(){

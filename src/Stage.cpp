@@ -34,7 +34,7 @@ Stage::Stage() {
 	Camera::pos.setY(0);
 	Camera::Follow(baon);
 
-	music = new Music("audio/floresta.mp3");
+	//music = new Music("audio/floresta.mp3");
 }
 
 Stage::~Stage() {
@@ -45,6 +45,10 @@ Stage::~Stage() {
 }
 
 void Stage::Update(float dt) {
+
+	if(baon->GetBendMode()){
+		dt = dt/5;
+	}
 	Camera::Update(dt);
 	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)
 			|| InputManager::GetInstance().QuitRequested()){
@@ -107,7 +111,7 @@ void Stage::Pause() {
 }
 
 void Stage::Resume() {
-	music->Play(5);
+	//music->Play(5);
 }
 
 Baon* Stage::GetPlayer(){

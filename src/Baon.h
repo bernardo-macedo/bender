@@ -52,6 +52,8 @@ public:
 	void SetSuperSpeed(bool superSpeed);
 	bool GetSuperJump();
 	bool GetSuperSpeed();
+	bool GetBendMode();
+	void SetBendMode(bool bendMode_);
 
 	Sprite* GetSprite();
 
@@ -72,6 +74,7 @@ private:
 	bool isDead;
 	bool takingDamage;
 
+	Sprite *spBending;
 	Sprite *sp;
 	baonStates state;
 	baonStates beforeJump;
@@ -84,6 +87,8 @@ private:
 	float limitX;
 	float cameraLimitX;
 	int hp;
+	bool bendMode;
+
 	void LoadSpriteData();
 };
 

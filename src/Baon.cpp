@@ -35,6 +35,7 @@ Baon::Baon(int playerScale, float mapMax) {
 	flipped = false;
 	fallUpdateCount = 2;
 	isDamage = false;
+	bendMode = false;
 
 	// Cheats
 	superJump = false;
@@ -90,6 +91,7 @@ void Baon::LoadSpriteData() {
 }
 
 void Baon::Update(float dt) {
+	this->bendMode = false;
 	stateManager->Update(dt);
 	if(!stateManager->GetCurrentState()->Is("JUMPING")
 			&& !stateManager->GetCurrentState()->Is("FALLING")
@@ -332,4 +334,10 @@ bool Baon::GetSuperSpeed() {
 	return superSpeed;
 }
 
+bool Baon::GetBendMode() {
+	return bendMode;
+}
 
+void Baon::SetBendMode(bool bendMode_) {
+	this->bendMode = bendMode_;
+}
