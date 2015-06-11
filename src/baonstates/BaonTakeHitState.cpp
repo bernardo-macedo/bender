@@ -26,14 +26,14 @@ void BaonTakeHitState::Update(float dt) {
 		executed = true;
 	}
 
-	if((flipped && baon->GetBody()->GetVelX() <= 0)
-			|| (!flipped && baon->GetBody()->GetVelX() >= 0)){
+	if((!baon->IsCollisionFromRight() && baon->GetBody()->GetVelX() <= 0)
+			|| (baon->IsCollisionFromRight() && baon->GetBody()->GetVelX() >= 0)){
 		baon->GetBody()->SetVelX(0);
 		baon->GetBody()->removeForce("resistance");
 		nextRequested = true;
 		next = "STAND";
 		nextFlipped = flipped;
-		baon->TakeDamage(false);
+		baon->TakeDamage(false, false);
 	}
 }
 

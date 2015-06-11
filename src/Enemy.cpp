@@ -66,9 +66,12 @@ Enemy::Enemy(int enemyScale, int x):
 	fallUpdateCount = 0;
 	isDead = false;
 	isDamage = false;
+	isTakingDamage = false;
+
+	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
+	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
 
 	this->currentState->enter();
-
 }
 
 void Enemy::Update(float dt) {
@@ -174,6 +177,11 @@ Enemy::~Enemy() {
 	}
 	delete sp;
 	delete currentState;
+}
+
+void Enemy::TakeDamage(bool damage) {
+	SetDead(true);
+	punchhit->Play(0);
 }
 
 void Enemy::InitializeStates(){

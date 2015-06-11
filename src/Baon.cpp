@@ -67,6 +67,8 @@ Baon::Baon(int playerScale, float mapMax) {
 	jump = new Sound("audio/sfx_char_jumpGrass.wav");
 	step1 = new Sound("audio/sfx_char_stepGrass1.wav");
 	step2 = new Sound("audio/sfx_char_stepGrass2.wav");
+	kicks = new Sound("audio/sfx_char_kick_swing1.wav");
+	punchs = new Sound("audio/sfx_char_punch_swing1.wav");
 	hp = 30;
 }
 
@@ -78,6 +80,10 @@ Baon::~Baon() {
 
 Sprite* Baon::GetSprite() {
 	return sp;
+}
+
+bool Baon::IsCollisionFromRight() {
+	return damageDirectionRight;
 }
 
 void Baon::LoadSpriteData() {
@@ -235,6 +241,7 @@ void Baon::Punch(){
 	sp->SetFrameCount(spriteData[6*3 + 2]);
 	sp->SetLine(6, spriteData[0]);
 	b->SetVelX(0);
+	punchs->Play(0);
 }
 
 void Baon::Kick(){
@@ -244,10 +251,12 @@ void Baon::Kick(){
 	sp->SetFrameCount(spriteData[7*3 + 2]);
 	sp->SetLine(7, spriteData[0]);
 	b->SetVelX(0);
+	kicks->Play(0);
 }
 
-void Baon::TakeDamage(bool damage) {
+void Baon::TakeDamage(bool damage, bool isFromRight) {
 	takingDamage = damage;
+	damageDirectionRight = isFromRight;
 }
 
 bool Baon::isTakingDamage() {
@@ -261,13 +270,13 @@ void Baon::TakeHit(bool flipped){
 	sp->SetFrameWidth(spriteData[13*3 + 1]);
 	sp->SetFrameCount(spriteData[13*3 + 2]);
 	sp->SetLine(13, spriteData[0]);
-	if(flipped){
-		GetBody()->SetVelX(2000);
-		GetBody()->ApplyForce(new Force("resistance", -10000, 0));
+	if(!damageDirectionRight){
+		GetBody()->SetVelX(scale*1000);
+		GetBody()->ApplyForce(new Force("resistance", -5000*scale, 0));
 	}
 	else{
-		GetBody()->SetVelX(-2000);
-		GetBody()->ApplyForce(new Force("resistance", 10000, 0));
+		GetBody()->SetVelX(-1000*scale);
+		GetBody()->ApplyForce(new Force("resistance", 5000*scale, 0));
 	}
 }
 

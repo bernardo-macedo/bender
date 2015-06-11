@@ -16,6 +16,7 @@
 #include "Engine/Timer.h"
 #include "StateEnemy.h"
 #include "Being.h"
+#include "Engine/Sound.h"
 
 #define ENEMY_MAP_GROUND 143
 
@@ -47,6 +48,7 @@ public:
 	bool StateEnd();
 	bool isDamage;
 	Timer* Time();
+	void TakeDamage(bool damage);
 
 	void SetDead(bool isDead_);
 
@@ -65,6 +67,9 @@ private:
 	Timer *t;
 	bool isDead;
 	int fallUpdateCount;
+	bool isTakingDamage;
+
+	Sound *kickhit, *punchhit;
 	void InitializeStates();
 
 };
