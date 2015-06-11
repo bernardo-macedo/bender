@@ -17,7 +17,7 @@ Stage::Stage() {
 	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx", 5, scale);
 
 	baon = new Baon(scale, tileMap->GetMapMax());
-	enemies.emplace_back(new Enemy(scale, 50));
+	enemies.emplace_back(new Enemy(scale, 100));
 	enemies.emplace_back(new Enemy(scale, 500));
 	enemies.emplace_back(new Enemy(scale, 900));
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());
@@ -63,9 +63,6 @@ void Stage::Update(float dt) {
 				tileMap->ResolveTileCollisions(enemies[i].get());
 				enemies[i]->NotifyTileCollision();
 			}
-			if(baon != NULL){
-				CollisionEnemies(i);
-			}
 		}
 	}
 
@@ -73,16 +70,13 @@ void Stage::Update(float dt) {
 	enemyAI2->update(dt);
 	enemyAI3->update(dt);
 
-	if (baon == NULL) {
+	if (baon->IsDead()) {
 		Camera::Unfollow();
 	} else {
 		baon->Update(dt);
 		if (tileMap->CheckCollisions(baon)) {
 			tileMap->ResolveTileCollisions(baon);
 			baon->NotifyTileCollision();
-		}
-		if(baon->IsDead()){
-			baon = NULL;
 		}
 	}
 
@@ -98,7 +92,7 @@ void Stage::Render() {
 		monuments[i]->Render();
 	}
 
-	if(baon != NULL){
+	if(!baon->IsDead()){
 		baon->Render();
 	}
 
@@ -116,22 +110,4 @@ void Stage::Resume() {
 
 Baon* Stage::GetPlayer(){
 	return baon;
-}
-
-void Stage::CollisionEnemies(int i) {
-	Rect a, b;
-	a.SetH(baon->GetBox().GetH()*baon->GetScale());
-	a.SetW(baon->GetBox().GetW()*baon->GetScale());
-	a.SetX(baon->GetBox().GetX());
-	a.SetY(baon->GetBox().GetY());
-
-	b.SetH(enemies[i]->GetBox().GetH()*enemies[i]->GetScale());
-	b.SetW(enemies[i]->GetBox().GetW()*enemies[i]->GetScale());
-	b.SetX(enemies[i]->GetBox().GetX());
-	b.SetY(enemies[i]->GetBox().GetY());
-	if(Collision::IsColliding(a, b, 0, 0)){
-		if(enemies[i]->isDamage){
-			baon->TakeDamage(true);
-		}
-	}
 }
