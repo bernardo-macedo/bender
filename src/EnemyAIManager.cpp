@@ -36,8 +36,8 @@ void EnemyAIManager::update(const float dt){
 			enemy->Run(true);	
 		}
 	}
-	if(!baon->IsDead() && baon->isDamage){
-		
+	if(!baon->IsDead()){
+
 		Rect baonRect, enemyRect;
 
 		baonRect.SetX(baon->GetBody()->GetX());
@@ -49,9 +49,23 @@ void EnemyAIManager::update(const float dt){
 		enemyRect.SetY(enemy->GetBody()->GetY());
 		enemyRect.SetW(30*enemy->GetScale());
 		enemyRect.SetH(50*enemy->GetScale());
-		
+
 		if(Collision::IsColliding(baonRect, enemyRect, 0, 0)){
-			enemy->SetDead(true);
+			bool right;
+			if(enemyRect.GetX() > baonRect.GetX()){
+				right = true;
+			}else{
+				right = false;
+			}
+
+			if(!enemy->IsDead() && !baon->IsDead()){
+				if(baon->isDamage){
+					enemy->TakeDamage(true);
+				}
+				if(!baon->isTakingDamage() && enemy->isDamage){
+					baon->TakeDamage(true, right);
+				}
+			}
 		}
 	}
 }

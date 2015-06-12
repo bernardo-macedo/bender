@@ -43,9 +43,10 @@ public:
 	void MidAir();
 	void Punch();
 	void Kick();
-	void TakeDamage(bool damage);
+	void TakeDamage(bool damage, bool isFromRight);
 	bool isTakingDamage();
 	void TakeHit(bool flipped);
+	bool IsCollisionFromRight();
 
 	// Cheats
 	void SetSuperJump(bool superJump);
@@ -60,7 +61,7 @@ public:
 	int fallUpdateCount;
 
 	bool isDamage;
-	Sound *jump, *land, *step1, *step2;
+	Sound *jump, *land, *step1, *step2, *kicks, *punchs;
 
 private:
 	static int WALK_SPEED;
@@ -88,6 +89,7 @@ private:
 	float cameraLimitX;
 	int hp;
 	bool bendMode;
+	bool damageDirectionRight;
 
 	void LoadSpriteData();
 };

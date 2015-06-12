@@ -116,7 +116,7 @@ void BaonStateManager::Update(float dt) {
 		executed = false;
 	}
 
-	std::cout << currentState->GetID() << std::endl; 
+	//std::cout << currentState->GetID() << std::endl;
 }
 
 BaonState* BaonStateManager::GetCurrentState(){
