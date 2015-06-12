@@ -35,7 +35,7 @@ bool State::QuitRequested() {
 }
 
 GameObject* State::FindByID(int id) {
-	for(int i = 0; i < objectArray.size(); i++) {
+	for(unsigned int i = 0; i < objectArray.size(); i++) {
 		if(objectArray[i]->GetID() == id){
 			return objectArray[i].get();
 		}

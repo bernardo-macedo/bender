@@ -14,7 +14,7 @@
 #include "Engine/Sprite.h"
 #include "Engine/Camera.h"
 
-#define MONUMENT_MAP_GROUND 512
+#define MONUMENT_MAP_GROUND 8
 
 class Monumento : public GameObject {
 public:

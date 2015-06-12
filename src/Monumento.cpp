@@ -10,8 +10,8 @@
 Monumento::Monumento(int posX, int scale) {
 	sp = new Sprite("img/monumento.png");
 
-	box.SetX(posX);
-	box.SetY(MONUMENT_MAP_GROUND);
+	box.SetX(posX * 16 * scale);
+	box.SetY(MONUMENT_MAP_GROUND * 16 * scale);
 	box.SetH(sp->GetHeight());
 	box.SetW(sp->GetWidth());
 	sp->SetScaleX(scale);

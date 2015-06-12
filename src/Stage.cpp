@@ -23,8 +23,8 @@ Stage::Stage() {
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());
 	enemyAI2 = new EnemyAIManager(baon, enemies[1].get());
 	enemyAI3 = new EnemyAIManager(baon, enemies[2].get());
-	monuments.emplace_back(new Monumento(1744, scale));
-	monuments.emplace_back(new Monumento(5456, scale));
+	monuments.emplace_back(new Monumento(102, scale));
+	monuments.emplace_back(new Monumento(262, scale));
 
 	sp = new Sprite("img/blackback.png");
 	sp->SetScaleX(2);
@@ -34,7 +34,8 @@ Stage::Stage() {
 	Camera::pos.setY(0);
 	Camera::Follow(baon);
 
-	//music = new Music("audio/floresta.mp3");
+	music = new Music("audio/floresta.mp3");
+	music->Play(Music::ALWAYS);
 }
 
 Stage::~Stage() {
