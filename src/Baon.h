@@ -16,6 +16,7 @@
 #include "Engine/Timer.h"
 #include "Being.h"
 #include "Engine/Sound.h"
+#include "Lifebar.h"
 
 #define PLAYER_MAP_GROUND 425
 
@@ -90,6 +91,7 @@ private:
 	int hp;
 	bool bendMode;
 	bool damageDirectionRight;
+	Lifebar *lifebar;
 
 	void LoadSpriteData();
 };

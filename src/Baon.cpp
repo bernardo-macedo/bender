@@ -70,9 +70,12 @@ Baon::Baon(int playerScale, float mapMax) {
 	kicks = new Sound("audio/sfx_char_kick_swing1.wav");
 	punchs = new Sound("audio/sfx_char_punch_swing1.wav");
 	hp = 30;
+
+	lifebar = new Lifebar(15 * scale, 215 * scale, scale, hp);
 }
 
 Baon::~Baon() {
+	delete lifebar;
 	delete sp;
 	delete t;
 	delete stateManager;
@@ -141,6 +144,7 @@ void Baon::Update(float dt) {
 
 void Baon::Render() {
 	sp->Render(box.GetX() + Camera::pos.getX(), box.GetY() + Camera::pos.getY(), 0, stateManager->GetCurrentState()->IsFlipped());
+	lifebar->Render(hp);
 }
 
 void Baon::NotifyCollision(GameObject* other) {
