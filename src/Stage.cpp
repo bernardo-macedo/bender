@@ -81,6 +81,10 @@ void Stage::Update(float dt) {
 		}
 	}
 
+	for (unsigned int i = 0; i < objectArray.size(); i++) {
+		objectArray[i]->Update(dt);
+	}
+
 }
 
 void Stage::Render() {
@@ -99,6 +103,10 @@ void Stage::Render() {
 
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Render();
+	}
+
+	for (unsigned int i = 0; i < objectArray.size(); i++) {
+		objectArray[i]->Render();
 	}
 }
 

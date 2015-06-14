@@ -11,7 +11,7 @@
 #include <string>
 
 #include "BaonState.h"
-
+#include "../PedraBasico.h"
 class Timer;
 
 class BaonPunchState : public BaonState{
@@ -20,6 +20,8 @@ public:
 	void Update(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
+private:
+	PedraBasico *pedra;
 };
 
 #endif /* BAONSTATES_BAONPUNCHSTATE_H_ */
