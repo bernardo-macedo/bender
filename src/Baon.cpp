@@ -239,7 +239,6 @@ void Baon::Fall() {
 }
 
 void Baon::Punch(){
-	sp->SetFrameTime(0.06);
 	sp->SetFrameHeight(spriteData[6*3]);
 	sp->SetFrameWidth(spriteData[6*3 + 1]);
 	sp->SetFrameCount(spriteData[6*3 + 2]);
