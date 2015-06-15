@@ -18,6 +18,7 @@
 #include "EnemyAIManager.h" 
 #include "Being.h"
 #include "Engine/Music.h"
+#include "Scroll.h"
 
 class Stage : public State{
 public:

@@ -10,10 +10,12 @@
 
 Sound::Sound() {
 	sound = NULL;
+	channel = -1;
 }
 
 Sound::Sound(std::string file) {
 	Open(file);
+	channel = -1;
 }
 
 void Sound::Play(int times) {
@@ -21,7 +23,9 @@ void Sound::Play(int times) {
 }
 
 void Sound::Stop() {
-	Mix_HaltChannel(channel);
+	if (channel != -1) {
+		Mix_HaltChannel(channel);
+	}
 }
 
 void Sound::Open(std::string file) {

@@ -25,6 +25,7 @@ Stage::Stage() {
 	enemyAI3 = new EnemyAIManager(baon, enemies[2].get());
 	monuments.emplace_back(new Monumento(102, scale));
 	monuments.emplace_back(new Monumento(262, scale));
+	AddObject(new Scroll(scale, 1));
 
 	sp = new Sprite("img/blackback.png");
 	sp->SetScaleX(2);
@@ -67,6 +68,8 @@ void Stage::Update(float dt) {
 		}
 	}
 
+	UpdateArray(dt);
+
 	enemyAI->update(dt);
 	enemyAI2->update(dt);
 	enemyAI3->update(dt);
@@ -100,6 +103,8 @@ void Stage::Render() {
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Render();
 	}
+
+	RenderArray();
 }
 
 void Stage::Pause() {

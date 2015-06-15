@@ -13,9 +13,18 @@ State::State() {
 }
 
 void State::UpdateArray(float dt) {
+	for (int i = 0; i < objectArray.size(); i++) {
+		objectArray[i].get()->Update(dt);
+		if (objectArray[i].get()->IsDead()) {
+			objectArray.erase(objectArray.begin() + i);
+		}
+	}
 }
 
 void State::RenderArray() {
+	for (int i = 0; i < objectArray.size(); i++) {
+		objectArray[i].get()->Render();
+	}
 }
 
 State::~State() {
