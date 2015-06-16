@@ -22,8 +22,14 @@ BaonPunchState::BaonPunchState(bool flipped) {
 
 void BaonPunchState::Update(float dt) {
 	if(!executed){
-		pedra = new PedraBasico(baon->GetBox().GetX() + 30*baon->GetScale(),
-					baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
+		if(!flipped){
+			pedra = new PedraBasico(baon->GetBox().GetX() + 30*baon->GetScale(),
+						baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
+		}
+		else{
+			pedra = new PedraBasico(baon->GetBox().GetX() - 30*baon->GetScale(),
+						baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
+		}
 		pedra->GetSprite()->SetFrameHeight(25);
 		pedra->GetSprite()->SetFrameWidth(35);
 		pedra->GetSprite()->SetLine(2, 23);
@@ -33,7 +39,12 @@ void BaonPunchState::Update(float dt) {
 		executed = true;
 	}
 	if(t->Get() >= 5*0.1){
-		pedra->GetBody()->SetVelX(1000);
+		if(!flipped){
+			pedra->GetBody()->SetVelX(1000);
+		}
+		else{
+			pedra->GetBody()->SetVelX(-1000);
+		}
 		nextRequested = true;
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
