@@ -92,6 +92,7 @@ void Stage::Update(float dt) {
 
 	if (baon->IsDead()) {
 		Camera::Unfollow();
+		popRequested = true;
 	} else {
 		baon->Update(dt);
 		if (tileMap->CheckCollisions(baon)) {

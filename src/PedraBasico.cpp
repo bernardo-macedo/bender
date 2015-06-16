@@ -49,9 +49,11 @@ void PedraBasico::Render() {
 }
 
 void PedraBasico::NotifyCollision(GameObject* other) {
+	std::cout << "teste" << std::endl;
 }
 
 void PedraBasico::NotifyTileCollision() {
+
 }
 
 bool PedraBasico::Is(std::string type) {

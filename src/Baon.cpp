@@ -133,6 +133,10 @@ void Baon::Update(float dt) {
 		b->SetX(limitX);
 	}
 
+	if(box.GetY() > Game::SCREEN_HEIGHT){
+		isDead = true;
+	}
+
 	// Cheats
 	if (InputManager::GetInstance().KeyPress(O_KEY)) {
 		SetSuperJump(!superJump);
@@ -152,7 +156,7 @@ void Baon::NotifyCollision(GameObject* other) {
 
 bool Baon::IsDead() {
 	// TODO: hitpoints
-	return hp <= 0;
+	return hp <= 0 || isDead;
 }
 
 bool Baon::Is(std::string type) {
