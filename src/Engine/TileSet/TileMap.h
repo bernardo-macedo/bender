@@ -12,6 +12,8 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <sstream>
+#include <fstream>
 #include "TileSet.h"
 #include "../Geometry/Rect.h"
 #include "../Geometry/Point.h"
@@ -27,11 +29,15 @@ private:
 	int mapHeight ;
 	int mapDepth ;
 	int collisionLayerIndex ;
+	int extraCollisionLayerIndex ;
 	int mapScale ;
 	std::multimap<float, Tile> tileCollisions;
+	std::multimap<float, Tile> extraTileCollisions;
+	std::vector<int> groundTileIndexes;
 
 	void GetTileMatrixIndexesAtPos(float x, float y, int* i, int* j);
-	std::vector<std::pair<int, Rect>> GetTilesSurroundingRect(Rect rect);
+	std::vector<std::pair<int, Rect>> GetTilesSurroundingRect(Rect rect, int layerIndex);
+	void LoadMapGrounds(std::string file);
 
 public:
 	TileMap (std::string file, int collisionLayerIndex, int mapScale = 1);
@@ -46,7 +52,7 @@ public:
 
 	bool CheckCollisions(Being* being);
 	void ResolveTileCollisions(Being* being);
-
+	void SetExtraCollisionLayer(int layer);
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

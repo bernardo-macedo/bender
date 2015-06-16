@@ -2,13 +2,13 @@
 #include "Engine/SDL_Wrapper.h"
 #include "Engine/Game.h"
 #include "Engine/TileSet/TileMap.h"
-#include "TitleState.h"
+#include "StageTwo.h"
 
 using namespace std;
 int main (int argc, char** argv) {
 	try{
 		Game *gm = new Game("30%", 700, 480);
-		gm->Push(new TitleState());
+		gm->Push(new StageTwo());
 		gm->Run();
 	}catch(int e){
 		switch(e){
