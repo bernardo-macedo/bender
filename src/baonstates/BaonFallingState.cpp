@@ -14,6 +14,7 @@
 #include "BaonStandState.h"
 #include "BaonStateManager.h"
 #include "BaonWalkState.h"
+#include <iostream>
 
 // TODO: receber Baon no construtor
 BaonFallingState::BaonFallingState(bool flipped) {
@@ -29,12 +30,16 @@ void BaonFallingState::Update(float dt) {
 }
 
 void BaonFallingState::NotifyTileCollision() {
-	sm->GetPreviousState()->Reset();
-	next = sm->GetPreviousState()->GetID();
-	nextFlipped = flipped;
-	nextRequested = true;
-	baon->land->Play(0);
-	baon->TakeDamage(false, false);
+	if (baon->GetBody()->GetVelY() >= 0) {
+		std::cout << "executou notifycollision" << std::endl;
+		std::cout << "accelY = " << baon->GetBody()->GetAccelY() << std::endl;
+		sm->GetPreviousState()->Reset();
+		next = sm->GetPreviousState()->GetID();
+		nextFlipped = flipped;
+		nextRequested = true;
+		baon->land->Play(0);
+		baon->TakeDamage(false, false);
+	}
 }
 
 bool BaonFallingState::Is(std::string state) {

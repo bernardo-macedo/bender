@@ -18,7 +18,7 @@ Stage::Stage() {
 	music = new Music("audio/floresta.mp3");
 	music->Play(Music::ALWAYS);
 
-	tileMap = new TileMap("map/Tiles Floresta - Bender.tmx", 5, scale);
+	tileMap = new TileMap("floresta.tmx", 5, scale);
 
 	baon = new Baon(scale, tileMap->GetMapMax());
 
@@ -72,7 +72,7 @@ void Stage::Update(float dt) {
 		if (!enemies[i]->IsDead()) {
 			if (tileMap->CheckCollisions(enemies[i].get())) {
 				tileMap->ResolveTileCollisions(enemies[i].get());
-				enemies[i]->NotifyTileCollision();
+				//enemies[i]->NotifyTileCollision();
 			}
 		}
 	}
@@ -97,7 +97,7 @@ void Stage::Update(float dt) {
 		baon->Update(dt);
 		if (tileMap->CheckCollisions(baon)) {
 			tileMap->ResolveTileCollisions(baon);
-			baon->NotifyTileCollision();
+			//baon->NotifyTileCollision();
 		}
 	}
 	for(unsigned i = 0; i < objectArray.size(); i++){
