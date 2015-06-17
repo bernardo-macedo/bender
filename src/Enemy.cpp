@@ -93,6 +93,9 @@ void Enemy::Render() {
 }
 
 void Enemy::NotifyCollision(GameObject* other) {
+	if(other->Is("basico")){
+		isTakingDamage = true;
+	}
 }
 
 bool Enemy::IsDead() {
@@ -182,6 +185,10 @@ Enemy::~Enemy() {
 void Enemy::TakeDamage(bool damage) {
 	SetDead(true);
 	punchhit->Play(0);
+}
+
+bool Enemy::IsTakingDamage() {
+	return isTakingDamage;
 }
 
 void Enemy::InitializeStates(){

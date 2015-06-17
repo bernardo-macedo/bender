@@ -39,11 +39,13 @@ void BaonPunchState::Update(float dt) {
 		executed = true;
 	}
 	if(t->Get() >= 5*0.1){
-		if(!flipped){
-			pedra->GetBody()->SetVelX(1000);
-		}
-		else{
-			pedra->GetBody()->SetVelX(-1000);
+		if(pedra != NULL){
+			if(!flipped){
+				pedra->GetBody()->SetVelX(1000);
+			}
+			else{
+				pedra->GetBody()->SetVelX(-1000);
+			}
 		}
 		nextRequested = true;
 		sm->GetPreviousState()->Reset();
@@ -53,7 +55,9 @@ void BaonPunchState::Update(float dt) {
 	}
 	else{
 		t->Update(dt);
-		pedra->GetSprite()->Update(dt);
+		if(pedra != NULL){
+			pedra->GetSprite()->Update(dt);
+		}
 		if(baon->GetSprite()->GetCurrentFrame() > 3){
 			baon->isDamage = true;
 		}

@@ -36,6 +36,10 @@ void EnemyAIManager::update(const float dt){
 			enemy->Run(true);	
 		}
 	}
+
+	if(!enemy->IsDead() && enemy->IsTakingDamage()){
+		enemy->TakeDamage(true);
+	}
 	if(!baon->IsDead()){
 
 		Rect baonRect, enemyRect;
