@@ -228,7 +228,7 @@ void Baon::Jump(bool flipped) {
 	sp->SetLine(JUMP, spriteData[0]);
 
 	if (superJump) {
-		b->SetVelY(4 * JUMP_SPEED );
+		b->SetVelY(2 * JUMP_SPEED );
 	} else {
 		b->SetVelY(JUMP_SPEED);
 	}
