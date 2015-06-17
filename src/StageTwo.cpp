@@ -18,8 +18,8 @@ StageTwo::StageTwo() {
 
 	baon = new Baon(scale, tileMap->GetMapMax());
 
-	AddObject(new Scroll(scale, 1));
-	AddObject(new Hud(scale, 1));
+	AddObject(new Scroll(scale, 2));
+	AddObject(new Hud(scale, 2));
 
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);

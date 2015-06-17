@@ -18,11 +18,12 @@ Hud::Hud(int scale, int phase) {
 
 	switch(phase) {
 	case 3:
-		// adicione aqui os itens da fase 3 e deixe cair no case abaixo
+		hudItems.push_back(CoolDown(box.GetX() + (33 * scale), box.GetY(), scale));
 	case 2:
-		// adicione aqui os itens da fase 2 e deixe cair no case abaixo
+		hudItems.push_back(CoolDown(box.GetX() + (14 * scale), box.GetY() + (25 * scale), scale));
+		hudItems.push_back(CoolDown(box.GetX() + (33 * scale), box.GetY() + (25 * scale), scale));
 	case 1:
-		hudItems.push_back(CoolDown(box.GetX() + 0, box.GetY() + (12 * scale), scale));
+		hudItems.push_back(CoolDown(box.GetX(), box.GetY() + (12 * scale), scale));
 		hudItems.push_back(CoolDown(box.GetX() + (47 * scale), box.GetY() + (12 * scale), scale));
 		hudItems.push_back(CoolDown(box.GetX() + (14 * scale), box.GetY() + 0, scale));
 		break;
