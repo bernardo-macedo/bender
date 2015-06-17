@@ -50,6 +50,7 @@ public:
 	Timer* Time();
 	void TakeDamage(bool damage);
 
+	bool IsTakingDamage();
 	void SetDead(bool isDead_);
 
 private:

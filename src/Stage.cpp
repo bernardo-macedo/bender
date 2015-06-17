@@ -100,6 +100,17 @@ void Stage::Update(float dt) {
 			baon->NotifyTileCollision();
 		}
 	}
+	for(unsigned i = 0; i < objectArray.size(); i++){
+		if(objectArray[i]->Is("basico")){
+			for(unsigned j = 0; j < enemies.size(); j++){
+				if(Collision::IsColliding(objectArray[i]->GetBox(), enemies[j]->GetBox(), 0, 0)){
+					enemies[j]->NotifyCollision(objectArray[i].get());
+					objectArray.erase(objectArray.begin() + i);
+					break;
+				}
+			}
+		}
+	}
 
 }
 
