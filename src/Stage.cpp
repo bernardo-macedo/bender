@@ -26,8 +26,6 @@ Stage::Stage() {
 	enemies.emplace_back(new Enemy(scale, 500));
 	enemies.emplace_back(new Enemy(scale, 900));
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());
-	enemyAI2 = new EnemyAIManager(baon, enemies[1].get());
-	enemyAI3 = new EnemyAIManager(baon, enemies[2].get());
 
 	monuments.emplace_back(new Monumento(102, scale));
 	monuments.emplace_back(new Monumento(262, scale));
@@ -49,8 +47,6 @@ Stage::Stage() {
 Stage::~Stage() {
 	delete baon;
 	delete enemyAI;
-	delete enemyAI2;
-	delete enemyAI3;
 	delete sp;
 	delete tileMap;
 }
@@ -67,13 +63,17 @@ void Stage::Update(float dt) {
 	}
 
 	for (unsigned int i = 0; i < enemies.size(); i++) {
-		enemies[i]->Update(dt);
+		if (!enemies[i]->IsRemovable()) {
+			enemies[i]->Update(dt);
+			enemyAI->SetEnemy(enemies[i].get());
+			enemyAI->update(dt);
 
-		if (!enemies[i]->IsDead()) {
 			if (tileMap->CheckCollisions(enemies[i].get())) {
 				tileMap->ResolveTileCollisions(enemies[i].get());
-				//enemies[i]->NotifyTileCollision();
 			}
+		}
+		else{
+			enemies.erase(enemies.begin() + i);
 		}
 	}
 
@@ -85,10 +85,6 @@ void Stage::Update(float dt) {
 			monuments.erase(monuments.begin() + i);
 		}
 	}
-
-	enemyAI->update(dt);
-	enemyAI2->update(dt);
-	enemyAI3->update(dt);
 
 	if (baon->IsDead()) {
 		Camera::Unfollow();

@@ -7,8 +7,6 @@
 
 #include "PedraBasico.h"
 
-#include <iostream>
-
 #include "Engine/Camera.h"
 #include "Engine/Geometry/Point.h"
 #include "Engine/Physics/Body.h"
@@ -60,4 +58,8 @@ bool PedraBasico::Is(std::string type) {
 
 Sprite* PedraBasico::GetSprite() {
 	return sp;
+}
+
+bool PedraBasico::IsFinnished() {
+	return sp->GetCurrentFrame() >= 7;
 }

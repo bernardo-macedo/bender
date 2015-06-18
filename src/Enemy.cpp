@@ -76,11 +76,14 @@ Enemy::Enemy(int enemyScale, int x):
 
 void Enemy::Update(float dt) {
 
-	if(!isDead){
+	if(!isDead) {
 		currentState->update(dt);
 		t->Update(dt);
 		Physic::GetInstance()->UpdatePhysic(b, dt);
+	} else {
+		isRemovable = true;
 	}
+
 
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
@@ -175,11 +178,13 @@ void Enemy::NotifyTileCollision() {
 }
 
 Enemy::~Enemy() {
+	/*
 	for(std::map<enemyStates, StateEnemy*>::iterator itr = enemyStatesMap.begin(); itr != enemyStatesMap.end(); itr++){
 		delete itr->second;
 	}
 	delete sp;
 	delete currentState;
+	*/
 }
 
 void Enemy::TakeDamage(bool damage) {
@@ -189,6 +194,10 @@ void Enemy::TakeDamage(bool damage) {
 
 bool Enemy::IsTakingDamage() {
 	return isTakingDamage;
+}
+
+bool Enemy::IsRemovable() {
+	return isRemovable;
 }
 
 void Enemy::InitializeStates(){

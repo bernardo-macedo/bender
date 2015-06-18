@@ -28,6 +28,7 @@ public:
 	void NotifyTileCollision();
 	bool Is(std::string type);
 	Sprite* GetSprite();
+	bool IsFinnished();
 };
 
 #endif /* PEDRABASICO_H_ */

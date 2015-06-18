@@ -74,7 +74,6 @@ void TileMap::LoadMapGrounds(std::string file) {
 	    } else if (mapName == file) {
 	    	int groundTileIndex;
 	    	while (iss >> groundTileIndex) {
-				std::cout << "groundIndex = " << groundTileIndex << std::endl;
 				groundTileIndexes.push_back(groundTileIndex);
 			}
 	    	break;

@@ -52,6 +52,7 @@ public:
 
 	bool IsTakingDamage();
 	void SetDead(bool isDead_);
+	bool IsRemovable();
 
 private:
 	int WALK_SPEED_E;
@@ -67,6 +68,7 @@ private:
 	bool flipped;
 	Timer *t;
 	bool isDead;
+	bool isRemovable;
 	int fallUpdateCount;
 	bool isTakingDamage;
 

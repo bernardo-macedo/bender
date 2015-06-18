@@ -39,7 +39,7 @@ private:
 	std::vector<std::unique_ptr<Monumento>> monuments;
 	Sprite *sp;
 	TileMap* tileMap;
-	EnemyAIManager *enemyAI, *enemyAI2, *enemyAI3;
+	EnemyAIManager *enemyAI;
 	Music *music;
 };
 

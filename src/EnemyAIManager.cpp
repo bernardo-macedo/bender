@@ -73,3 +73,7 @@ void EnemyAIManager::update(const float dt){
 		}
 	}
 }
+
+void EnemyAIManager::SetEnemy(Enemy* enemy) {
+	this->enemy = enemy;
+}

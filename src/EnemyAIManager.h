@@ -12,6 +12,8 @@ class EnemyAIManager{
 		~EnemyAIManager();
 		void update(const float dt);
 
+		void SetEnemy(Enemy* enemy);
+
 	private:
 
 		Enemy* enemy;

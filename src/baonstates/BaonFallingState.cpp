@@ -31,8 +31,6 @@ void BaonFallingState::Update(float dt) {
 
 void BaonFallingState::NotifyTileCollision() {
 	if (baon->GetBody()->GetVelY() >= 0) {
-		std::cout << "executou notifycollision" << std::endl;
-		std::cout << "accelY = " << baon->GetBody()->GetAccelY() << std::endl;
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
 		nextFlipped = flipped;
