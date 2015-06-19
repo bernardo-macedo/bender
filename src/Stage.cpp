@@ -63,6 +63,7 @@ void Stage::Update(float dt) {
 	}
 
 	for (unsigned int i = 0; i < enemies.size(); i++) {
+		enemies[i]->SetCloseToBaon(false);
 		if (!enemies[i]->IsRemovable()) {
 			enemies[i]->Update(dt);
 			enemyAI->SetEnemy(enemies[i].get());

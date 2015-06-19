@@ -18,12 +18,27 @@ void EnemyAIManager::update(const float dt){
 				enemy->changeState(Enemy::enemyStates::PUNCH);
 			}
 		}
+
 		if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 75*baon->GetScale()){
 			baon->SetCloseToEnemy(true);
-			std::cout << "close " << std::endl;
+		}
+
+		if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) > 100*baon->GetScale()
+				&& abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 170*baon->GetScale()){
+			if(((enemy->GetBody()->GetX() < baon->GetBody()->GetX()) && (!enemy->GetFlipped()))
+				|| ((enemy->GetBody()->GetX() > baon->GetBody()->GetX()) && (enemy->GetFlipped()))){
+				if(!enemy->IsState(Enemy::enemyStates::BEND)){
+					enemy->changeState(Enemy::enemyStates::BEND);
+				}
+			}
 		}
 	}
 	if(enemy->IsState(Enemy::enemyStates::PUNCH)){
+		if(enemy->StateEnd()){
+			enemy->changeState(Enemy::enemyStates::PATROLLING);
+		}
+	}
+	if(enemy->IsState(Enemy::enemyStates::BEND)){
 		if(enemy->StateEnd()){
 			enemy->changeState(Enemy::enemyStates::PATROLLING);
 		}

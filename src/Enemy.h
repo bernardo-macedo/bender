@@ -24,7 +24,7 @@ class StateEnemy;
 
 class Enemy : public Being {
 public:
-	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW, PUNCH};
+	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW, PUNCH, BEND};
 	enum runController {NONE, PRERUNR, PRERUNL};
 	Enemy(int enemyScale, int x);
 	virtual ~Enemy();
@@ -35,6 +35,7 @@ public:
 	void NotifyTileCollision();
 	bool IsDead();
 	bool Is(std::string type);
+	bool GetFlipped();
 
 	Sprite* GetSprite();
 
@@ -53,6 +54,8 @@ public:
 	bool IsTakingDamage();
 	void SetDead(bool isDead_);
 	bool IsRemovable();
+	bool IsCloseToBaon();
+	void SetCloseToBaon(bool close);
 
 private:
 	int WALK_SPEED_E;
@@ -71,6 +74,7 @@ private:
 	bool isRemovable;
 	int fallUpdateCount;
 	bool isTakingDamage;
+	bool closeToBaon;
 
 	Sound *kickhit, *punchhit;
 	void InitializeStates();

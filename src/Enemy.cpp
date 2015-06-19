@@ -6,19 +6,19 @@
  */
 
 #include "Enemy.h"
-#include "Engine/Camera.h"
-#include "Engine/Game.h"
-#include "Engine/InputManager.h"
-#include "Engine/Physics/Physic.h"
-#include "Engine/Physics/Force.h"
-#include "Engine/Physics/Body.h"
-
-#include "EnemyStatePunch.h"
-#include "EnemyStatePatrolling.h"
-#include "EnemyStateFollow.h"
 
 #include <stdio.h>
-#include <iostream>
+#include <cwchar>
+#include <string>
+
+#include "EnemyStateBend.h"
+#include "EnemyStateFollow.h"
+#include "EnemyStatePatrolling.h"
+#include "EnemyStatePunch.h"
+#include "Engine/Camera.h"
+#include "Engine/Geometry/Point.h"
+#include "Engine/Physics/Force.h"
+#include "Engine/Physics/Physic.h"
 
 #define ADD_STATE_EMPLACE(enemyStates, StateEnemy) this->enemyStatesMap.emplace(enemyStates, new StateEnemy(this))
 #define ADD_STATE_INSERT(enemyStates, StateEnemy) this->enemyStatesMap.insert(std::make_pair<enemyStates, StateEnemy*>(enemyStates, new StateEnemy(this)));
@@ -67,6 +67,7 @@ Enemy::Enemy(int enemyScale, int x):
 	isDead = false;
 	isDamage = false;
 	isTakingDamage = false;
+	closeToBaon = false;
 
 	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
 	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
@@ -200,11 +201,24 @@ bool Enemy::IsRemovable() {
 	return isRemovable;
 }
 
+bool Enemy::IsCloseToBaon() {
+	return closeToBaon;
+}
+
+void Enemy::SetCloseToBaon(bool close) {
+	closeToBaon = close;
+}
+
+bool Enemy::GetFlipped() {
+	return flipped;
+}
+
 void Enemy::InitializeStates(){
 	// Initialize all the states in Enemy here.
 	ADD_STATE_EMPLACE(PATROLLING,   EnemyStatePatrolling);
 	ADD_STATE_EMPLACE(FOLLOW,   	EnemyStateFollow);
 	ADD_STATE_EMPLACE(PUNCH,        EnemyStatePunch);
+	ADD_STATE_EMPLACE(BEND, 		EnemyStateBend);
 }
 
 void Enemy::changeState(const enemyStates state_){
