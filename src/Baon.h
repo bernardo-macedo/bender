@@ -56,6 +56,8 @@ public:
 	bool GetSuperSpeed();
 	bool GetBendMode();
 	void SetBendMode(bool bendMode_);
+	bool IsCloseToEnemy();
+	void SetCloseToEnemy(bool isClose);
 
 	Sprite* GetSprite();
 
@@ -73,8 +75,10 @@ private:
 	// Cheats
 	bool superJump;
 	bool superSpeed;
+
 	bool isDead;
 	bool takingDamage;
+	bool closeToEnemy;
 
 	Sprite *spBending;
 	Sprite *sp;

@@ -52,7 +52,7 @@ Stage::~Stage() {
 }
 
 void Stage::Update(float dt) {
-
+	baon->SetCloseToEnemy(false);
 	if(baon->GetBendMode()){
 		dt = dt/5;
 	}

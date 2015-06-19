@@ -13,10 +13,14 @@ EnemyAIManager::~EnemyAIManager(){
 
 void EnemyAIManager::update(const float dt){
 	if(!baon->IsDead()){
-		if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 50){
+		if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 25*baon->GetScale()){
 			if(!enemy->IsState(Enemy::enemyStates::PUNCH)){
 				enemy->changeState(Enemy::enemyStates::PUNCH);
 			}
+		}
+		if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 75*baon->GetScale()){
+			baon->SetCloseToEnemy(true);
+			std::cout << "close " << std::endl;
 		}
 	}
 	if(enemy->IsState(Enemy::enemyStates::PUNCH)){

@@ -35,6 +35,7 @@ Baon::Baon(int playerScale, float mapMax) {
 	flipped = false;
 	fallUpdateCount = 2;
 	isDamage = false;
+	closeToEnemy = false;
 	bendMode = false;
 
 	// Cheats
@@ -87,6 +88,14 @@ Sprite* Baon::GetSprite() {
 
 bool Baon::IsCollisionFromRight() {
 	return damageDirectionRight;
+}
+
+bool Baon::IsCloseToEnemy() {
+	return closeToEnemy;
+}
+
+void Baon::SetCloseToEnemy(bool isClose) {
+	closeToEnemy = isClose;
 }
 
 void Baon::LoadSpriteData() {

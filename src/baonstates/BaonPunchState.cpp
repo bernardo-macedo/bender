@@ -18,35 +18,45 @@ BaonPunchState::BaonPunchState(bool flipped) {
 	executed = false;
 	t = new Timer();
 	id = "PUNCH";
+	soltouPedra = false;
 }
 
 void BaonPunchState::Update(float dt) {
 	if(!executed){
-		if(!flipped){
-			pedra = new PedraBasico(baon->GetBox().GetX() + 30*baon->GetScale(),
-						baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
+		if(!baon->IsCloseToEnemy()){
+			soltouPedra = true;
+			if(!flipped){
+				pedra = new PedraBasico(baon->GetBox().GetX() + 30*baon->GetScale(),
+							baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
+			}
+			else{
+				pedra = new PedraBasico(baon->GetBox().GetX() - 30*baon->GetScale(),
+							baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
+			}
+			pedra->GetSprite()->SetFrameHeight(25);
+			pedra->GetSprite()->SetFrameWidth(35);
+			pedra->GetSprite()->SetLine(2, 23);
+			pedra->GetSprite()->SetFrameTime(0.04);
+			Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 		}
 		else{
-			pedra = new PedraBasico(baon->GetBox().GetX() - 30*baon->GetScale(),
-						baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
+			baon->GetSprite()->SetFrameTime(0.06);
 		}
-		pedra->GetSprite()->SetFrameHeight(25);
-		pedra->GetSprite()->SetFrameWidth(35);
-		pedra->GetSprite()->SetLine(2, 23);
-		pedra->GetSprite()->SetFrameTime(0.04);
-		Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 		baon->Punch();
 		executed = true;
 	}
+
 	if(baon->GetSprite()->GetCurrentFrame() >= 5){
-		if(pedra != NULL){
-			if(!flipped){
-				pedra->GetBody()->SetVelX(1000);
-				pedra->GetBody()->SetVelY(0);
-			}
-			else{
-				pedra->GetBody()->SetVelX(-1000);
-				pedra->GetBody()->SetVelY(0);
+		if(soltouPedra){
+			if(pedra != NULL){
+				if(!flipped){
+					pedra->GetBody()->SetVelX(1000);
+					pedra->GetBody()->SetVelY(0);
+				}
+				else{
+					pedra->GetBody()->SetVelX(-1000);
+					pedra->GetBody()->SetVelY(0);
+				}
 			}
 		}
 		nextRequested = true;
@@ -54,14 +64,19 @@ void BaonPunchState::Update(float dt) {
 		next = sm->GetPreviousState()->GetID();
 		baon->isDamage = false;
 		nextFlipped = flipped;
+
+		soltouPedra = false;
+		baon->GetSprite()->SetFrameTime(0.1);
 	}
 	else{
 		t->Update(dt);
-		if(pedra != NULL && !pedra->IsFinnished()){
-			pedra->GetSprite()->Update(dt);
-		}
-		else{
-			pedra->GetBody()->SetVelY(-300);
+		if(soltouPedra){
+			if(pedra != NULL && !pedra->IsFinnished()){
+				pedra->GetSprite()->Update(dt);
+			}
+			else{
+				pedra->GetBody()->SetVelY(-300);
+			}
 		}
 		if(baon->GetSprite()->GetCurrentFrame() > 3){
 			baon->isDamage = true;

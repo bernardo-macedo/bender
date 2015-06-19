@@ -22,6 +22,7 @@ public:
 	bool Is(std::string state);
 private:
 	PedraBasico *pedra;
+	bool soltouPedra;
 };
 
 #endif /* BAONSTATES_BAONPUNCHSTATE_H_ */
