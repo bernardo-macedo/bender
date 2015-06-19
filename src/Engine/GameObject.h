@@ -30,6 +30,7 @@ public:
 	void SetPosX(int x);
 	void SetPosY(int y);
 	int GetID();
+	void SetID(int i);
 
 	float rotation;
 };

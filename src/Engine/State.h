@@ -9,10 +9,8 @@
 #define ENGINE_STATE_H_
 
 #include <vector>
-#include <memory>
-#include <iostream>
 
-#include "GameObject.h"
+#include "../Being.h"
 
 class State {
 protected:

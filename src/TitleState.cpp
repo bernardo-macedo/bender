@@ -8,7 +8,9 @@
 #include "TitleState.h"
 
 TitleState::TitleState() {
-	bg.Open("img/title.jpg");
+	bg.SetScaleX(2);
+	bg.SetScaleY(2);
+	bg.Open("img/title.png");
 	SDL_Color color;
 	color.r = color.g = color.b = 225;
 	color.a = 255;

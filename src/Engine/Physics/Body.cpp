@@ -21,6 +21,7 @@ Body::Body(std::string id, float x, float y){
 	this->x = x;
 	this->y = y;
 	speedLimit = -1;
+	this->id = id;
 }
 Body::~Body() {
 	// TODO Auto-generated destructor stub
@@ -140,4 +141,12 @@ void Body::SetSpeedLimit(float sl) {
 
 float Body::GetSpeedLimit() {
 	return speedLimit;
+}
+
+void Body::SetId(std::string id) {
+	this->id = id;
+}
+
+std::string Body::GetId() {
+	return id;
 }

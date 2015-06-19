@@ -7,6 +7,14 @@
 
 #include "State.h"
 
+#include <stddef.h>
+
+#include "../PedraBasico.h"
+#include "Camera.h"
+#include "Game.h"
+#include "Geometry/Point.h"
+#include "Physics/Body.h"
+
 State::State() {
 	quitRequested = false;
 	popRequested = false;
@@ -14,9 +22,18 @@ State::State() {
 
 void State::UpdateArray(float dt) {
 	for (unsigned int i = 0; i < objectArray.size(); i++) {
-		objectArray[i].get()->Update(dt);
+		objectArray[i]->Update(dt);
 		if (objectArray[i].get()->IsDead()) {
 			objectArray.erase(objectArray.begin() + i);
+		}
+		else{
+			if(objectArray[i]->GetID() == 100){
+				PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
+				if(pedra->GetBody()->GetX() > Game::SCREEN_WIDTH - Camera::pos.getX()
+						|| pedra->GetBody()->GetX() < 0  - Camera::pos.getX()){
+					objectArray.erase(objectArray.begin() + i);
+				}
+			}
 		}
 	}
 }

@@ -32,6 +32,10 @@ int GameObject::GetID() {
 	return id;
 }
 
+void GameObject::SetID(int i){
+	this->id = i;
+}
+
 int GameObject::GetAngle(){
 	return rotation;
 }

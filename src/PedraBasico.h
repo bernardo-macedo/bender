@@ -17,6 +17,8 @@ class PedraBasico : public Being{
 private:
 	Sprite* sp;
 	bool collided;
+	bool goingLeft;
+	int limitX;
 public:
 	PedraBasico(int x, int y, int scale);
 	virtual ~PedraBasico();
@@ -29,6 +31,10 @@ public:
 	bool Is(std::string type);
 	Sprite* GetSprite();
 	bool IsFinnished();
+	bool IsGoingLeft();
+	void SetGoingLeft(bool left);
+	void SetLimitX(int limit);
+	bool GetLimitX();
 };
 
 #endif /* PEDRABASICO_H_ */

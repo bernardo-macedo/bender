@@ -33,10 +33,12 @@ void EnemyStateBend::enter() {
 	if(!enemy->GetFlipped()){
 		pedra = new PedraBasico(enemy->GetBox().GetX() + 30*enemy->GetScale(),
 				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale());
+		pedra->SetID(0);
 	}
 	else{
 		pedra = new PedraBasico(enemy->GetBox().GetX() - 30*enemy->GetScale(),
 				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale());
+		pedra->SetID(0);
 	}
 
 	pedra->GetSprite()->SetFrameHeight(25);
@@ -44,6 +46,7 @@ void EnemyStateBend::enter() {
 	pedra->GetSprite()->SetLine(2, 23);
 	pedra->GetSprite()->SetFrameTime(0.04);
 	Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+
 	askEnd = false;
 }
 
@@ -56,11 +59,14 @@ void EnemyStateBend::update(const float dt_) {
 		if(!enemy->GetFlipped()){
 			pedra->GetBody()->SetVelX(1000);
 			pedra->GetBody()->SetVelY(0);
+			pedra->SetGoingLeft(false);
 		}
 		else{
 			pedra->GetBody()->SetVelX(-1000);
 			pedra->GetBody()->SetVelY(0);
+			pedra->SetGoingLeft(true);
 		}
+		enemy->SetCoolDown(1);
 		askEnd = true;
 	}
 	else{

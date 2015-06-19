@@ -56,6 +56,8 @@ public:
 	bool IsRemovable();
 	bool IsCloseToBaon();
 	void SetCloseToBaon(bool close);
+	float GetCoolDown();
+	void SetCoolDown(float coolDown);
 
 private:
 	int WALK_SPEED_E;
@@ -75,6 +77,7 @@ private:
 	int fallUpdateCount;
 	bool isTakingDamage;
 	bool closeToBaon;
+	float bendCoolDown;
 
 	Sound *kickhit, *punchhit;
 	void InitializeStates();

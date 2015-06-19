@@ -63,3 +63,19 @@ Sprite* PedraBasico::GetSprite() {
 bool PedraBasico::IsFinnished() {
 	return sp->GetCurrentFrame() >= 7;
 }
+
+bool PedraBasico::IsGoingLeft() {
+	return goingLeft;
+}
+
+void PedraBasico::SetGoingLeft(bool left) {
+	this->goingLeft = left;
+}
+
+void PedraBasico::SetLimitX(int limit) {
+	limitX = limit;
+}
+
+bool PedraBasico::GetLimitX() {
+	return limitX;
+}

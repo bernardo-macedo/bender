@@ -68,6 +68,7 @@ Enemy::Enemy(int enemyScale, int x):
 	isDamage = false;
 	isTakingDamage = false;
 	closeToBaon = false;
+	bendCoolDown = 0;
 
 	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
 	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
@@ -76,6 +77,7 @@ Enemy::Enemy(int enemyScale, int x):
 }
 
 void Enemy::Update(float dt) {
+	bendCoolDown -= dt;
 
 	if(!isDead) {
 		currentState->update(dt);
@@ -211,6 +213,14 @@ void Enemy::SetCloseToBaon(bool close) {
 
 bool Enemy::GetFlipped() {
 	return flipped;
+}
+
+float Enemy::GetCoolDown() {
+	return bendCoolDown;
+}
+
+void Enemy::SetCoolDown(float coolDown) {
+	this->bendCoolDown = coolDown;
 }
 
 void Enemy::InitializeStates(){

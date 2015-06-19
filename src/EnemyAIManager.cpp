@@ -27,7 +27,7 @@ void EnemyAIManager::update(const float dt){
 				&& abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 170*baon->GetScale()){
 			if(((enemy->GetBody()->GetX() < baon->GetBody()->GetX()) && (!enemy->GetFlipped()))
 				|| ((enemy->GetBody()->GetX() > baon->GetBody()->GetX()) && (enemy->GetFlipped()))){
-				if(!enemy->IsState(Enemy::enemyStates::BEND)){
+				if(!enemy->IsState(Enemy::enemyStates::BEND) && (enemy->GetCoolDown() <= 0)){
 					enemy->changeState(Enemy::enemyStates::BEND);
 				}
 			}

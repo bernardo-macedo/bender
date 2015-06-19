@@ -18,6 +18,7 @@ private:
 	float accelX, accelY;
 	float resistance;
 	float speedLimit;
+	std::string id;
 
 	float rotation, angularVel, angularAccel;
 	std::list<Force*> forces;
@@ -47,6 +48,8 @@ public:
 	void SetResistance(float r);
 	void SetSpeedLimit(float sl);
 	float GetSpeedLimit();
+	void SetId(std::string id);
+	std::string GetId();
 
 	std::list<Force*> GetForces();
 	void ApplyForce(Force* f);
