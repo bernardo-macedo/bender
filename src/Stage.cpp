@@ -105,6 +105,11 @@ void Stage::Update(float dt) {
 					objectArray.erase(objectArray.begin() + i);
 					break;
 				}
+				if(Collision::IsColliding(objectArray[i]->GetBox(), baon->GetBox(), 0, 0)){
+					baon->NotifyCollision(objectArray[i].get());
+					objectArray.erase(objectArray.begin() + i);
+					break;
+				}
 			}
 		}
 	}

@@ -99,7 +99,7 @@ void Enemy::Render() {
 }
 
 void Enemy::NotifyCollision(GameObject* other) {
-	if(other->Is("basico")){
+	if(other->GetID() == 100){
 		isTakingDamage = true;
 	}
 }

@@ -24,6 +24,7 @@ PedraBasico::PedraBasico(int x, int y, int scale) {
 	box.SetY(y);
 	box.SetW(21*scale);
 	box.SetH(20*scale);
+	thrown = false;
 }
 
 PedraBasico::~PedraBasico() {
@@ -78,4 +79,12 @@ void PedraBasico::SetLimitX(int limit) {
 
 bool PedraBasico::GetLimitX() {
 	return limitX;
+}
+
+bool PedraBasico::Isthrown() {
+	return thrown;
+}
+
+void PedraBasico::SetThrown(bool thrown) {
+	this->thrown = thrown;
 }

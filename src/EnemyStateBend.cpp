@@ -74,6 +74,7 @@ void EnemyStateBend::update(const float dt_) {
 			pedra->GetSprite()->Update(dt_);
 		}
 		else{
+			pedra->SetThrown(true);
 			pedra->GetBody()->SetVelY(-300);
 		}
 	}

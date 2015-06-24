@@ -29,9 +29,11 @@ void State::UpdateArray(float dt) {
 		else{
 			if(objectArray[i]->GetID() == 100 || objectArray[i]->GetID() == 101){
 				PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
-				if(pedra->GetBody()->GetX() > Game::SCREEN_WIDTH - Camera::pos.getX()
-						|| pedra->GetBody()->GetX() < 0  - Camera::pos.getX()){
-					objectArray.erase(objectArray.begin() + i);
+				if(pedra->Isthrown()){
+					if(pedra->GetBody()->GetX() > Game::SCREEN_WIDTH - Camera::pos.getX()
+							|| pedra->GetBody()->GetX() < 0  - Camera::pos.getX()){
+						objectArray.erase(objectArray.begin() + i);
+					}
 				}
 			}
 		}

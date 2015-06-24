@@ -148,10 +148,10 @@ void Baon::Update(float dt) {
 
 	// Cheats
 	if (InputManager::GetInstance().KeyPress(O_KEY)) {
-		SetSuperJump(!superJump);
+		SetSuperJump(false);
 	}
 	if (InputManager::GetInstance().KeyPress(P_KEY)) {
-		SetSuperSpeed(!superSpeed);
+		SetSuperSpeed(false);
 	}
 }
 
@@ -161,6 +161,15 @@ void Baon::Render() {
 }
 
 void Baon::NotifyCollision(GameObject* other) {
+	if(other->GetID() == 101){
+		takingDamage = true;
+		if(other->GetBox().GetX() > box.GetX()){
+			damageDirectionRight = true;
+		}
+		else{
+			damageDirectionRight = false;
+		}
+	}
 }
 
 bool Baon::IsDead() {
