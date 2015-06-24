@@ -25,7 +25,7 @@ Stage::Stage() {
 
 	baon = new Baon(scale, tileMap->GetMapMax());
 
-	enemies.emplace_back(new Enemy(scale, 100));
+	//enemies.emplace_back(new Enemy(scale, 100));
 	enemies.emplace_back(new Enemy(scale, 500));
 	enemies.emplace_back(new Enemy(scale, 900));
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());

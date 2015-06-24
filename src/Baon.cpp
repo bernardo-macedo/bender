@@ -20,18 +20,18 @@
 #include "Engine/Physics/Force.h"
 #include "Engine/Physics/Physic.h"
 
-int Baon::WALK_SPEED = 50;
-int Baon::RUN_SPEED  = 160;
-int Baon::JUMP_SPEED = -230;
+int Baon::WALK_SPEED = 0;
+int Baon::RUN_SPEED  = 0;
+int Baon::JUMP_SPEED = 0;
 float Baon::DOUBLECLICK_TIME = 0.2;
 
 Baon::Baon(int playerScale, float mapMax) {
 	LoadSpriteData();
 
 	scale = playerScale;
-	Baon::WALK_SPEED = Baon::WALK_SPEED*scale;
-	Baon::JUMP_SPEED = Baon::JUMP_SPEED*scale;
-	Baon::RUN_SPEED = Baon::RUN_SPEED*scale;
+	Baon::WALK_SPEED = 50*scale;
+	Baon::JUMP_SPEED = -230*scale;
+	Baon::RUN_SPEED = 160*scale;
 	flipped = false;
 	fallUpdateCount = 2;
 	isDamage = false;

@@ -67,7 +67,7 @@ void EnemyStateBend::update(const float dt_) {
 			pedra->SetGoingLeft(true);
 		}
 		pedra->SetThrown(true);
-		enemy->SetCoolDown(1);
+		enemy->SetCoolDown(2);
 		askEnd = true;
 	}
 	else{
