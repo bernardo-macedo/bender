@@ -27,7 +27,7 @@ void State::UpdateArray(float dt) {
 			objectArray.erase(objectArray.begin() + i);
 		}
 		else{
-			if(objectArray[i]->GetID() == 100){
+			if(objectArray[i]->GetID() == 100 || objectArray[i]->GetID() == 101){
 				PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
 				if(pedra->GetBody()->GetX() > Game::SCREEN_WIDTH - Camera::pos.getX()
 						|| pedra->GetBody()->GetX() < 0  - Camera::pos.getX()){

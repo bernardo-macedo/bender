@@ -33,12 +33,12 @@ void EnemyStateBend::enter() {
 	if(!enemy->GetFlipped()){
 		pedra = new PedraBasico(enemy->GetBox().GetX() + 30*enemy->GetScale(),
 				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale());
-		pedra->SetID(0);
+		pedra->SetID(101);
 	}
 	else{
 		pedra = new PedraBasico(enemy->GetBox().GetX() - 30*enemy->GetScale(),
 				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale());
-		pedra->SetID(0);
+		pedra->SetID(101);
 	}
 
 	pedra->GetSprite()->SetFrameHeight(25);
