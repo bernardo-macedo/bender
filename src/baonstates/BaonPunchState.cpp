@@ -61,6 +61,7 @@ void BaonPunchState::Update(float dt) {
 					pedra->GetBody()->SetVelY(0);
 					pedra->SetGoingLeft(true);
 				}
+				pedra->SetThrown(true);
 			}
 		}
 		nextRequested = true;

@@ -66,16 +66,18 @@ void EnemyStateBend::update(const float dt_) {
 			pedra->GetBody()->SetVelY(0);
 			pedra->SetGoingLeft(true);
 		}
+		pedra->SetThrown(true);
 		enemy->SetCoolDown(1);
 		askEnd = true;
 	}
 	else{
-		if(!pedra->IsFinnished()){
-			pedra->GetSprite()->Update(dt_);
-		}
-		else{
-			pedra->SetThrown(true);
-			pedra->GetBody()->SetVelY(-300);
+		if(pedra != NULL){
+			if(!pedra->IsFinnished()){
+				pedra->GetSprite()->Update(dt_);
+			}
+			else{
+				pedra->GetBody()->SetVelY(-300);
+			}
 		}
 	}
 }
