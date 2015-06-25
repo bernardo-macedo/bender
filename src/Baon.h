@@ -17,6 +17,7 @@
 #include "Being.h"
 #include "Engine/Sound.h"
 #include "Lifebar.h"
+#include "BendHUD.h"
 
 #define PLAYER_MAP_GROUND 425
 
@@ -62,6 +63,7 @@ public:
 	Sprite* GetSprite();
 
 	int fallUpdateCount;
+	BendHUD* bendHUD;
 
 	bool isDamage;
 	Sound *jump, *land, *step1, *step2, *kicks, *punchs;

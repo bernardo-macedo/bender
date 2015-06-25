@@ -11,6 +11,7 @@
 #include <string>
 
 #include "BaonState.h"
+#include "../BendHUD.h"
 
 class BaonBendState : public BaonState{
 public:
@@ -18,6 +19,10 @@ public:
 	void Update(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
+private:
+	int bendKey[4];
+	BendHUD* bendHUD;
+	unsigned int countBend;
 };
 
 #endif /* BAONBENDSTATE_H_ */

@@ -64,6 +64,8 @@ Baon::Baon(int playerScale, float mapMax) {
 	b->ApplyForce(new Force("gravity", 0, 900));
 	isDead = false;
 
+	bendHUD = new BendHUD(scale);
+
 	land = new Sound("audio/sfx_char_landGrass.wav");
 	jump = new Sound("audio/sfx_char_jumpGrass.wav");
 	step1 = new Sound("audio/sfx_char_stepGrass1.wav");
@@ -119,6 +121,9 @@ void Baon::Update(float dt) {
 	Physic::GetInstance()->UpdatePhysic(b, dt);
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
+	
+	bendHUD->SetPosX(box.GetX() - (int)(bendHUD->GetBox().GetW()/2) - box.GetW());
+	bendHUD->SetPosY(box.GetY() - (int)(bendHUD->GetBox().GetH()/2));
 
 	if(box.GetX() <= Game::SCREEN_WIDTH/2 || box.GetX() >= cameraLimitX){
 		Camera::Unfollow();

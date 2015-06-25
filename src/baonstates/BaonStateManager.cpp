@@ -18,6 +18,7 @@
 #include "BaonWalkState.h"
 #include "BaonTakeHitState.h"
 #include "BaonBendState.h"
+#include "BaonAttack1State.h"
 
 #include <iostream>
 
@@ -50,6 +51,9 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("BEND", new BaonBendState(false));
 	estados["BEND"]->SetBaon(baon);
 	estados["BEND"]->SetStateManager(this);
+	estados.emplace("ATTACK1", new BaonAttack1State(false));
+	estados["ATTACK1"]->SetBaon(baon);
+	estados["ATTACK1"]->SetStateManager(this);
 
 	currentState = estados["STAND"];
 	this->baon = baon;

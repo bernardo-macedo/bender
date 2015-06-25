@@ -18,7 +18,7 @@ Stage::Stage() {
 
 	int scale = 2;
 
-	music = new Music("audio/floresta.mp3");
+	music = new Music("audio/floresta.ogg");
 	music->Play(Music::ALWAYS);
 
 	tileMap = new TileMap("floresta.tmx", 5, scale);
@@ -100,6 +100,11 @@ void Stage::Update(float dt) {
 			//baon->NotifyTileCollision();
 		}
 	}
+
+	if(!baon->bendHUD->IsDead()){
+		baon->bendHUD->Update(dt);
+	}
+
 	for(unsigned i = 0; i < objectArray.size(); i++){
 		if(objectArray[i]->Is("basico")){
 			PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
@@ -133,6 +138,10 @@ void Stage::Render() {
 
 	if(!baon->IsDead()){
 		baon->Render();
+	}
+
+	if(!baon->bendHUD->IsDead()){
+		baon->bendHUD->Render();
 	}
 
 	for (unsigned int i = 0; i < enemies.size(); i++) {
