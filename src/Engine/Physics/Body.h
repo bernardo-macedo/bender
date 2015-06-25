@@ -54,6 +54,7 @@ public:
 	std::list<Force*> GetForces();
 	void ApplyForce(Force* f);
 	void removeForce(std::string id);
+	void clearForces();
 	Force* GetForce(std::string id);
 };
 

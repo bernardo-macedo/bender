@@ -58,6 +58,7 @@ public:
 	void SetCloseToBaon(bool close);
 	float GetCoolDown();
 	void SetCoolDown(float coolDown);
+	int GetSpawnX();
 
 private:
 	int WALK_SPEED_E;
@@ -78,6 +79,7 @@ private:
 	bool isTakingDamage;
 	bool closeToBaon;
 	float bendCoolDown;
+	int spawnX;
 
 	Sound *kickhit, *punchhit;
 	void InitializeStates();
