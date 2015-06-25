@@ -28,6 +28,7 @@ private:
 	void CalculaDeltaTime();
 	void init();
 public:
+	static int SCALE;
 	static int SCREEN_WIDTH;
 	static int SCREEN_HEIGHT;
 

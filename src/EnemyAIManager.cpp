@@ -23,26 +23,27 @@ void EnemyAIManager::update(const float dt){
 			baon->SetCloseToEnemy(true);
 		}
 
-		if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) > 100*baon->GetScale()
-				&& abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 170*baon->GetScale()){
+		if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) > 70*baon->GetScale()
+				&& abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 140*baon->GetScale()){
 			if(((enemy->GetBody()->GetX() < baon->GetBody()->GetX()) && (!enemy->GetFlipped()))
 				|| ((enemy->GetBody()->GetX() > baon->GetBody()->GetX()) && (enemy->GetFlipped()))){
-				if(!enemy->IsState(Enemy::enemyStates::BEND) && (enemy->GetCoolDown() <= 0)){
+				if(!enemy->IsState(Enemy::enemyStates::BEND)
+					&& !enemy->IsState(Enemy::enemyStates::TAKINGHIT)
+					&& (enemy->GetCoolDown() <= 0)){
+
 					enemy->changeState(Enemy::enemyStates::BEND);
 				}
 			}
 		}
 	}
-	if(enemy->IsState(Enemy::enemyStates::PUNCH)){
+	if(enemy->IsState(Enemy::enemyStates::PUNCH)
+			|| enemy->IsState(Enemy::enemyStates::BEND)
+			|| enemy->IsState(Enemy::enemyStates::TAKINGHIT)){
 		if(enemy->StateEnd()){
 			enemy->changeState(Enemy::enemyStates::PATROLLING);
 		}
 	}
-	if(enemy->IsState(Enemy::enemyStates::BEND)){
-		if(enemy->StateEnd()){
-			enemy->changeState(Enemy::enemyStates::PATROLLING);
-		}
-	}
+
 	if(enemy->IsState(Enemy::enemyStates::FOLLOW)){
 		int baonX = baon->GetBody()->GetX();
 		int enemyX = enemy->GetBody()->GetX();
@@ -57,7 +58,13 @@ void EnemyAIManager::update(const float dt){
 	}
 
 	if(!enemy->IsDead() && enemy->IsTakingDamage()){
-		enemy->TakeDamage(true);
+		if(!enemy->IsState(Enemy::enemyStates::TAKINGHIT)){
+			enemy->TakeDamage(true);
+			enemy->changeState(Enemy::enemyStates::TAKINGHIT);
+		}
+		else{
+			enemy->SetTakingDamage(false);
+		}
 	}
 	if(!baon->IsDead()){
 
@@ -83,7 +90,7 @@ void EnemyAIManager::update(const float dt){
 
 			if(!enemy->IsDead() && !baon->IsDead()){
 				if(baon->isDamage){
-					enemy->TakeDamage(true);
+					enemy->SetTakingDamage(true);
 				}
 				if(!baon->isTakingDamage() && enemy->isDamage){
 					baon->TakeDamage(true, right);

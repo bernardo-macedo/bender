@@ -15,6 +15,7 @@
 #include "EnemyStateFollow.h"
 #include "EnemyStatePatrolling.h"
 #include "EnemyStatePunch.h"
+#include "EnemyStateTakeDamage.h"
 #include "Engine/Camera.h"
 #include "Engine/Geometry/Point.h"
 #include "Engine/Physics/Force.h"
@@ -73,6 +74,7 @@ Enemy::Enemy(int enemyScale, int x):
 
 	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
 	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
+	hp = 2;
 
 	this->currentState->enter();
 }
@@ -101,6 +103,12 @@ void Enemy::Render() {
 
 void Enemy::NotifyCollision(GameObject* other) {
 	if(other->GetID() == 100){
+		if(other->GetBox().GetX() > box.GetX()){
+			collisionFromRight = false;
+		}
+		if(other->GetBox().GetX() > box.GetX()){
+			collisionFromRight = true;
+		}
 		isTakingDamage = true;
 	}
 }
@@ -192,7 +200,10 @@ Enemy::~Enemy() {
 }
 
 void Enemy::TakeDamage(bool damage) {
-	SetDead(true);
+	hp--;
+	if(hp <= 0){
+		isDead = true;
+	}
 	punchhit->Play(0);
 }
 
@@ -228,12 +239,21 @@ int Enemy::GetSpawnX() {
 	return spawnX;
 }
 
+bool Enemy::IsCollisionFromRight() {
+	return collisionFromRight;
+}
+
+void Enemy::SetTakingDamage(bool damage) {
+	isTakingDamage = damage;
+}
+
 void Enemy::InitializeStates(){
 	// Initialize all the states in Enemy here.
 	ADD_STATE_EMPLACE(PATROLLING,   EnemyStatePatrolling);
 	ADD_STATE_EMPLACE(FOLLOW,   	EnemyStateFollow);
 	ADD_STATE_EMPLACE(PUNCH,        EnemyStatePunch);
 	ADD_STATE_EMPLACE(BEND, 		EnemyStateBend);
+	ADD_STATE_EMPLACE(TAKINGHIT, 		EnemyStateTakeDamage);
 }
 
 void Enemy::changeState(const enemyStates state_){
