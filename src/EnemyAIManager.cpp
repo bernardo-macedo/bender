@@ -14,7 +14,8 @@ EnemyAIManager::~EnemyAIManager(){
 void EnemyAIManager::update(const float dt){
 	if(!baon->IsDead()){
 		if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 25*baon->GetScale()){
-			if(!enemy->IsState(Enemy::enemyStates::PUNCH)){
+			if(!enemy->IsState(Enemy::enemyStates::PUNCH)
+				&& !enemy->IsState(Enemy::enemyStates::TAKINGHIT)){
 				enemy->changeState(Enemy::enemyStates::PUNCH);
 			}
 		}
