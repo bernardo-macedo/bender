@@ -3,7 +3,7 @@
 #include <iostream>
 
 void EnemyStatePatrolling::enter(){
-	patrollDistance = enemy->GetBody()->GetX();
+	patrollDistance = enemy->GetSpawnX();
 	patrollMaxDistance = patrollDistance + 50;
 
 	enemy->GetSprite()->SetFrameHeight(50);

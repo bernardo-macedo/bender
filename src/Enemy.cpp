@@ -56,6 +56,7 @@ Enemy::Enemy(int enemyScale, int x):
 	box.SetW(sp->GetFrameWidth());
 	sp->SetScaleX(scale);
 	sp->SetScaleY(scale);
+	spawnX = x;
 
 	b = new Body("enemy", box.GetX(), box.GetY());
 
@@ -221,6 +222,10 @@ float Enemy::GetCoolDown() {
 
 void Enemy::SetCoolDown(float coolDown) {
 	this->bendCoolDown = coolDown;
+}
+
+int Enemy::GetSpawnX() {
+	return spawnX;
 }
 
 void Enemy::InitializeStates(){
