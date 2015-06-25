@@ -7,7 +7,7 @@
 
 #include "BaonStateManager.h"
 
-#include <begin_code.h>
+#include "../Engine/SDL_Wrapper.h" 
 
 #include "../Baon.h"
 #include "../Engine/InputManager.h"
@@ -21,7 +21,12 @@
 #include "BaonRunState.h"
 #include "BaonStandState.h"
 #include "BaonTakeHitState.h"
+#include "BaonBendState.h"
+#include "BaonAttack1State.h"
 #include "BaonWalkState.h"
+
+#include <iostream>
+
 
 
 BaonStateManager::BaonStateManager(Baon* baon) {
@@ -55,6 +60,11 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("DYING", new BaonDyingState(false));
 	estados["DYING"]->SetBaon(baon);
 	estados["DYING"]->SetStateManager(this);
+	estados.emplace("ATTACK1", new BaonAttack1State(false));
+	estados["ATTACK1"]->SetBaon(baon);
+	estados["ATTACK1"]->SetStateManager(this);
+
+
 
 	currentState = estados["STAND"];
 	this->baon = baon;

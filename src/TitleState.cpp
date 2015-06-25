@@ -10,8 +10,10 @@
 TitleState::TitleState() {
 	bg.SetScaleX(2);
 	bg.SetScaleY(2);
+
 	bg.Open("img/title.png");
 	menu = new MenuPrincipal(2);
+
 }
 
 TitleState::~TitleState() {
