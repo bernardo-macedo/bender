@@ -52,6 +52,7 @@ public:
 	bool isTakingDamage();
 	void TakeHit(bool flipped);
 	bool IsCollisionFromRight();
+	bool GetLevelWon();
 
 	// Cheats
 	void SetSuperJump(bool superJump);
@@ -85,6 +86,7 @@ private:
 	bool dying;
 	bool takingDamage;
 	bool closeToEnemy;
+	bool levelWon;
 
 	Sprite *spBending;
 	Sprite *sp;

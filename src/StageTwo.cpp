@@ -38,10 +38,9 @@ StageTwo::~StageTwo() {
 
 void StageTwo::Update(float dt) {
 	Camera::Update(dt);
-	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)
-			|| InputManager::GetInstance().QuitRequested()){
-		quitRequested = true;
-	}
+
+	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
+	quitRequested = InputManager::GetInstance().QuitRequested();
 
 	UpdateArray(dt);
 
@@ -69,7 +68,13 @@ void StageTwo::Render() {
 }
 
 void StageTwo::Pause() {
+	if (music != NULL) {
+		music->Stop();
+	}
 }
 
 void StageTwo::Resume() {
+	if (music != NULL) {
+		music->Play(Music::ALWAYS);
+	}
 }

@@ -76,6 +76,7 @@ Baon::Baon(int playerScale, float mapMax) {
 	hp = 30;
 
 	lifebar = new Lifebar(15 * scale, 215 * scale, scale, hp);
+	levelWon = false;
 }
 
 Baon::~Baon() {
@@ -113,6 +114,10 @@ void Baon::SetDead(bool dead) {
 	this->isDead = dead;
 }
 
+bool Baon::GetLevelWon() {
+	return levelWon;
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);
@@ -141,6 +146,9 @@ void Baon::Update(float dt) {
 
 	if(box.GetX() <= Game::SCREEN_WIDTH/2 || box.GetX() >= cameraLimitX){
 		Camera::Unfollow();
+		if (box.GetX() >= cameraLimitX) {
+			levelWon = true;
+		}
 	} else if(box.GetX() > Game::SCREEN_WIDTH/2){
 		Camera::Follow(this);
 	}

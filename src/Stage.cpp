@@ -33,8 +33,6 @@ Stage::Stage() {
 	monuments.emplace_back(new Monumento(102, scale));
 	monuments.emplace_back(new Monumento(262, scale));
 
-	//AddObject(new Monumento(102, scale));
-	//AddObject(new Monumento(262, scale));
 	AddObject(new Scroll(scale, 1));
 	AddObject(new Hud(scale, 1));
 
@@ -48,6 +46,11 @@ Stage::Stage() {
 }
 
 Stage::~Stage() {
+	if (music != NULL) {
+		music->Stop();
+	}
+
+	delete music;
 	delete baon;
 	delete enemyAI;
 	delete sp;
@@ -55,15 +58,21 @@ Stage::~Stage() {
 }
 
 void Stage::Update(float dt) {
+
+	if (baon->GetLevelWon()) {
+		Game::GetInstance()->Push(new StageTwo());
+		popRequested = true;
+		return;
+	}
+
 	baon->SetCloseToEnemy(false);
 	if(baon->GetBendMode()){
 		dt = dt/5;
 	}
 	Camera::Update(dt);
-	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)
-			|| InputManager::GetInstance().QuitRequested()){
-		quitRequested = true;
-	}
+
+	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
+	quitRequested = InputManager::GetInstance().QuitRequested();
 
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 		enemies[i]->SetCloseToBaon(false);
@@ -152,10 +161,15 @@ void Stage::Render() {
 }
 
 void Stage::Pause() {
+	if (music != NULL) {
+		music->Stop();
+	}
 }
 
 void Stage::Resume() {
-	//music->Play(5);
+	if (music != NULL) {
+		music->Play(Music::ALWAYS);
+	}
 }
 
 Baon* Stage::GetPlayer(){

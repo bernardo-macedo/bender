@@ -56,6 +56,5 @@ void MenuPrincipal::LoadSpriteData() {
 	while(!feof(fp)){
 		fscanf(fp, "%d", &val);
 		spriteData.push_back(val);
-		std::cout << "val = " << val << std::endl;
 	}
 }

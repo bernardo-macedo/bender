@@ -13,16 +13,25 @@ TitleState::TitleState() {
 
 	bg.Open("img/title.png");
 	menu = new MenuPrincipal(2);
+	music = new Music("audio/title.ogg");
+	music->Play(Music::ALWAYS);
 
 }
 
 TitleState::~TitleState() {
+	if (music != NULL) {
+		music->Stop();
+	}
+
 	delete menu;
+	delete music;
 }
 
 void TitleState::Update(float dt) {
 
 	menu->Update(dt);
+
+	quitRequested = InputManager::GetInstance().QuitRequested();
 
 	if (InputManager::GetInstance().KeyPress(ENTER_KEY)) {
 		switch (menu->GetSelectedButton()) {
@@ -45,7 +54,11 @@ void TitleState::Render() {
 }
 
 void TitleState::Pause() {
+
 }
 
 void TitleState::Resume() {
+	if (music != NULL) {
+		music->Play(Music::ALWAYS);
+	}
 }

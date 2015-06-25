@@ -11,6 +11,7 @@
 #include "Engine/State.h"
 #include "Engine/Sprite.h"
 #include "Engine/InputManager.h"
+#include "Engine/Music.h"
 #include "Stage.h"
 #include "Engine/Game.h"
 #include "Engine/Text.h"
@@ -19,6 +20,7 @@
 class TitleState : public State {
 private:
 	Sprite bg;
+	Music* music;
 	MenuPrincipal* menu;
 
 public:

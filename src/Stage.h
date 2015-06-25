@@ -20,6 +20,7 @@
 #include "Engine/Music.h"
 #include "Scroll.h"
 #include "Hud.h"
+#include "StageTwo.h"
 
 class Stage : public State{
 public:
