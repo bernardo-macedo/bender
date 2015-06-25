@@ -11,29 +11,35 @@ TitleState::TitleState() {
 	bg.SetScaleX(2);
 	bg.SetScaleY(2);
 	bg.Open("img/title.png");
-	SDL_Color color;
-	color.r = color.g = color.b = 225;
-	color.a = 255;
-	text = new Text("font/Call me maybe.ttf", 60, Text::SOLID,
-			"Press space", color, Game::SCREEN_WIDTH/2 - 150, Game::SCREEN_HEIGHT/2 - 80);
+	menu = new MenuPrincipal(2);
 }
 
 TitleState::~TitleState() {
-	delete text;
+	delete menu;
 }
 
 void TitleState::Update(float dt) {
-	if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
-		Game::GetInstance()->Push(new Stage());
-	}
 
-	this->quitRequested = InputManager::GetInstance().QuitRequested()
-				|| InputManager::GetInstance().KeyPress(ESCAPE_KEY);
+	menu->Update(dt);
+
+	if (InputManager::GetInstance().KeyPress(ENTER_KEY)) {
+		switch (menu->GetSelectedButton()) {
+		case 0:
+			Game::GetInstance()->Push(new Stage());
+			break;
+		case 3:
+			this->quitRequested = true;
+			break;
+		default:
+			break;
+		}
+
+	}
 }
 
 void TitleState::Render() {
 	bg.Render(0,0);
-	text->Render();
+	menu->Render();
 }
 
 void TitleState::Pause() {

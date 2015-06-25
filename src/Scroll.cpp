@@ -17,7 +17,7 @@ Scroll::Scroll(int scale, int phase) :
 
 	sp->SetFrame(1);
 
-	box.SetX(250 * scale);
+	box.SetX(210 * scale);
 	box.SetY(96 * scale);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());

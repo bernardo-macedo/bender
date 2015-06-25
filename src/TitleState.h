@@ -14,11 +14,12 @@
 #include "Stage.h"
 #include "Engine/Game.h"
 #include "Engine/Text.h"
+#include "MenuPrincipal.h"
 
 class TitleState : public State {
 private:
 	Sprite bg;
-	Text* text;
+	MenuPrincipal* menu;
 
 public:
 	TitleState();
