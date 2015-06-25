@@ -63,6 +63,7 @@ Baon::Baon(int playerScale, float mapMax) {
 	b = new Body("baon", box.GetX(), box.GetY());
 	b->ApplyForce(new Force("gravity", 0, 900));
 	isDead = false;
+	dying = false;
 
 	land = new Sound("audio/sfx_char_landGrass.wav");
 	jump = new Sound("audio/sfx_char_jumpGrass.wav");
@@ -98,6 +99,18 @@ void Baon::SetCloseToEnemy(bool isClose) {
 	closeToEnemy = isClose;
 }
 
+bool Baon::IsDying() {
+	return dying;
+}
+
+void Baon::SetDying(bool dying) {
+	this->dying = dying;
+}
+
+void Baon::SetDead(bool dead) {
+	this->isDead = dead;
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);
@@ -113,7 +126,8 @@ void Baon::Update(float dt) {
 	stateManager->Update(dt);
 	if(!stateManager->GetCurrentState()->Is("JUMPING")
 			&& !stateManager->GetCurrentState()->Is("FALLING")
-			&& !stateManager->GetCurrentState()->Is("TAKEHIT")){
+			&& !stateManager->GetCurrentState()->Is("TAKEHIT")
+			&& !stateManager->GetCurrentState()->Is("DYING")){
 		sp->Update(dt);
 	}
 	Physic::GetInstance()->UpdatePhysic(b, dt);
@@ -142,8 +156,8 @@ void Baon::Update(float dt) {
 		b->SetX(limitX);
 	}
 
-	if(box.GetY() > Game::SCREEN_HEIGHT){
-		isDead = true;
+	if(hp <= 0 || box.GetY() > Game::SCREEN_HEIGHT){
+		dying = true;
 	}
 
 	// Cheats
@@ -174,7 +188,7 @@ void Baon::NotifyCollision(GameObject* other) {
 
 bool Baon::IsDead() {
 	// TODO: hitpoints
-	return hp <= 0 || isDead;
+	return isDead;
 }
 
 bool Baon::Is(std::string type) {

@@ -7,19 +7,21 @@
 
 #include "BaonStateManager.h"
 
+#include <begin_code.h>
+
+#include "../Baon.h"
 #include "../Engine/InputManager.h"
 #include "../Engine/Timer.h"
+#include "BaonBendState.h"
+#include "BaonDyingState.h"
 #include "BaonFallingState.h"
 #include "BaonJumpState.h"
 #include "BaonKickState.h"
 #include "BaonPunchState.h"
 #include "BaonRunState.h"
 #include "BaonStandState.h"
-#include "BaonWalkState.h"
 #include "BaonTakeHitState.h"
-#include "BaonBendState.h"
-
-#include <iostream>
+#include "BaonWalkState.h"
 
 
 BaonStateManager::BaonStateManager(Baon* baon) {
@@ -50,6 +52,9 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("BEND", new BaonBendState(false));
 	estados["BEND"]->SetBaon(baon);
 	estados["BEND"]->SetStateManager(this);
+	estados.emplace("DYING", new BaonDyingState(false));
+	estados["DYING"]->SetBaon(baon);
+	estados["DYING"]->SetStateManager(this);
 
 	currentState = estados["STAND"];
 	this->baon = baon;
@@ -114,6 +119,15 @@ void BaonStateManager::Update(float dt) {
 		currentState = estados[currentState->Next()];
 		currentState->Reset();
 		executed = false;
+	}
+
+	if(baon->IsDying()){
+		if(!currentState->Is("DYING")){
+			estados["DYING"]->SetFlipped(currentState->IsFlipped());
+			currentState = estados["DYING"];
+			currentState->Reset();
+			executed = false;
+		}
 	}
 
 	//std::cout << currentState->GetID() << std::endl;

@@ -33,7 +33,10 @@ public:
 	void NotifyCollision(GameObject* other);
 	void NotifyTileCollision();
 	bool IsDead();
+	void SetDead(bool dead);
 	bool Is(std::string type);
+	bool IsDying();
+	void SetDying(bool dying);
 	BaonStateManager* GetState();
 
 	void Run(bool flipped);
@@ -77,6 +80,7 @@ private:
 	bool superSpeed;
 
 	bool isDead;
+	bool dying;
 	bool takingDamage;
 	bool closeToEnemy;
 
