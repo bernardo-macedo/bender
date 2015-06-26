@@ -12,6 +12,7 @@
 #include "Engine/State.h"
 #include "Engine/TileSet/TileMap.h"
 #include "Engine/Game.h"
+#include "Engine/Timer.h"
 #include "Baon.h"
 #include "Enemy.h"
 #include "Monumento.h"
@@ -42,6 +43,7 @@ private:
 	TileMap* tileMap;
 	EnemyAIManager *enemyAI;
 	Music *music;
+	Timer* levelUpTimer;
 };
 
 #endif /* STAGE_H_ */

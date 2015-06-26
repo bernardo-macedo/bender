@@ -23,6 +23,8 @@ Stage::Stage() {
 
 	tileMap = new TileMap("floresta.tmx", 5, scale);
 
+	levelUpTimer = new Timer();
+
 	baon = new Baon(scale, tileMap->GetMapMax());
 
 	//enemies.emplace_back(new Enemy(scale, 100));
@@ -55,16 +57,10 @@ Stage::~Stage() {
 	delete enemyAI;
 	delete sp;
 	delete tileMap;
+	delete levelUpTimer;
 }
 
 void Stage::Update(float dt) {
-
-	if (baon->GetLevelWon()) {
-		Game::GetInstance()->Push(new StageTwo());
-		popRequested = true;
-		return;
-	}
-
 	baon->SetCloseToEnemy(false);
 	if(baon->GetBendMode()){
 		dt = dt/5;
@@ -103,11 +99,23 @@ void Stage::Update(float dt) {
 		Camera::Unfollow();
 		popRequested = true;
 	} else {
+		// Resolve levelUp
+		if (baon->GetLevelWon()) {
+			levelUpTimer->Update(dt);
+
+			if (levelUpTimer->Get() > 5) {
+				Game::GetInstance()->Push(new StageTwo());
+				popRequested = true;
+				return;
+			}
+		}
+
 		baon->Update(dt);
 		if (tileMap->CheckCollisions(baon)) {
 			tileMap->ResolveTileCollisions(baon);
-			//baon->NotifyTileCollision();
 		}
+
+
 	}
 
 	if(!baon->bendHUD->IsDead()){
