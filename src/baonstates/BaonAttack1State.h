@@ -21,7 +21,7 @@ public:
 	bool Is(std::string state);
 private:
 	PedraBasico* pedra;
-	bool justJumped;
+	bool justJumped, canExecute;
 };
 
 #endif /* BAONATTACK1STATE_H_ */
