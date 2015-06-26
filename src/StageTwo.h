@@ -16,6 +16,9 @@
 #include "Scroll.h"
 #include "Hud.h"
 #include "Engine/Text.h"
+#include "Enemy.h"
+#include "EnemyAIManager.h"
+
 class StageTwo : public State {
 public:
 	StageTwo();
@@ -33,6 +36,9 @@ private:
 	Music *music;
 	Timer* levelUpTimer;
 	Text* levelUpText;
+
+	std::vector<std::unique_ptr<Enemy>> enemies;
+	EnemyAIManager *enemyAI;
 };
 
 #endif /* STAGETWO_H_ */

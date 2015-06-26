@@ -18,10 +18,15 @@ SwordEnemyPatrolling::~SwordEnemyPatrolling() {
 }
 
 void SwordEnemyPatrolling::enter() {
+	enemy->GetSprite()->SetFrameWidth(50);
+	enemy->GetSprite()->SetFrameHeight(50);
+	enemy->GetSprite()->SetFrameCount(6);
+	enemy->GetSprite()->SetLine(1, 50);
 }
 
 void SwordEnemyPatrolling::exit() {
 }
 
 void SwordEnemyPatrolling::update(const float dt_) {
+	enemy->GetSprite()->Update(dt_);
 }

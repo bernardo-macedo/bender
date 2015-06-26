@@ -35,6 +35,7 @@ public:
 	void NotifyTileCollision();
 	bool Is(std::string type);
 	bool GetFlipped();
+	Sprite* GetSprite();
 
 	void ChangeState(const enemyStates state_);
 	bool IsState(const enemyStates state_);

@@ -7,6 +7,11 @@
 
 #include "Stage.h"
 
+#include <stddef.h>
+#include <SDL_pixels.h>
+
+#include "BendHUD.h"
+#include "enemystates/SwordEnemy.h"
 #include "Engine/Camera.h"
 #include "Engine/Collision.h"
 #include "Engine/Geometry/Point.h"
@@ -30,6 +35,11 @@ Stage::Stage() {
 	//enemies.emplace_back(new Enemy(scale, 100));
 	enemies.emplace_back(new Enemy(scale, 900));
 	enemies.emplace_back(new Enemy(scale, 4000));
+	enemies.emplace_back(new Enemy(scale, 8000));
+	enemies.emplace_back(new Enemy(scale, 8300));
+	enemies.emplace_back(new Enemy(scale, 8600));
+
+	//enemies.emplace_back(new SwordEnemy(scale, 50));
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());
 
 	monuments.emplace_back(new Monumento(102, scale));

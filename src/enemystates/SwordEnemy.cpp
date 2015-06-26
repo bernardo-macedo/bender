@@ -20,7 +20,6 @@
 
 SwordEnemy::SwordEnemy(int enemyScale, int x) : WALK_SPEED_E(50) {
 	LoadSpriteData();
-
 	scale = enemyScale;
 	flipped = false;
 
@@ -42,9 +41,11 @@ SwordEnemy::SwordEnemy(int enemyScale, int x) : WALK_SPEED_E(50) {
 	hp = 2;
 
 	InitializeStates();
+
+	t = new Timer();
+
 	currentState = enemyStatesMap.at(PATROLLING);
 	this->currentState->enter();
-
 }
 
 SwordEnemy::~SwordEnemy() {
@@ -170,6 +171,10 @@ bool SwordEnemy::IsState(const enemyStates state_) {
 
 bool SwordEnemy::StateEnd() {
 	return currentState->AskEnd();
+}
+
+Sprite* SwordEnemy::GetSprite() {
+	return sp;
 }
 
 void SwordEnemy::InitializeStates() {

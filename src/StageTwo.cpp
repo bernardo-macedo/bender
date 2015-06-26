@@ -11,9 +11,11 @@
 #include <SDL_pixels.h>
 
 #include "Baon.h"
+#include "Engine/Collision.h"
 #include "Engine/Game.h"
 #include "Engine/Geometry/Point.h"
 #include "Engine/Timer.h"
+#include "PedraBasico.h"
 
 StageTwo::StageTwo() {
 	int scale = 2;
@@ -34,6 +36,14 @@ StageTwo::StageTwo() {
 	Camera::Follow(baon);
 
 	levelUpTimer = new Timer();
+
+	enemies.emplace_back(new Enemy(scale, 900));
+	enemies.emplace_back(new Enemy(scale, 4000));
+	enemies.emplace_back(new Enemy(scale, 8000));
+	enemies.emplace_back(new Enemy(scale, 8300));
+	enemies.emplace_back(new Enemy(scale, 8600));
+
+	enemyAI = new EnemyAIManager(baon, enemies[0].get());
 }
 
 StageTwo::~StageTwo() {
@@ -47,10 +57,30 @@ StageTwo::~StageTwo() {
 }
 
 void StageTwo::Update(float dt) {
+	baon->SetCloseToEnemy(false);
+	if(baon->GetBendMode()){
+		dt = dt/5;
+	}
 	Camera::Update(dt);
 
 	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
 	quitRequested = InputManager::GetInstance().QuitRequested();
+
+	for (unsigned int i = 0; i < enemies.size(); i++) {
+		enemies[i]->SetCloseToBaon(false);
+		if (!enemies[i]->IsRemovable()) {
+			enemies[i]->Update(dt);
+			enemyAI->SetEnemy(enemies[i].get());
+			enemyAI->update(dt);
+
+			if (tileMap->CheckCollisions(enemies[i].get())) {
+				tileMap->ResolveTileCollisions(enemies[i].get());
+			}
+		}
+		else{
+			enemies.erase(enemies.begin() + i);
+		}
+	}
 
 	UpdateArray(dt);
 
@@ -80,7 +110,25 @@ void StageTwo::Update(float dt) {
 			tileMap->ResolveTileCollisions(baon);
 			//baon->NotifyTileCollision();
 		}
-
+	}
+	for(unsigned i = 0; i < objectArray.size(); i++){
+		if(objectArray[i]->Is("basico")){
+			PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
+			if(pedra->Isthrown()){
+				for(unsigned j = 0; j < enemies.size(); j++){
+					if(Collision::IsColliding(objectArray[i]->GetBox(), enemies[j]->GetBox(), 0, 0)){
+						enemies[j]->NotifyCollision(objectArray[i].get());
+						objectArray.erase(objectArray.begin() + i);
+						break;
+					}
+					if(Collision::IsColliding(objectArray[i]->GetBox(), baon->GetBox(), 0, 0)){
+						baon->NotifyCollision(objectArray[i].get());
+						objectArray.erase(objectArray.begin() + i);
+						break;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -97,6 +145,10 @@ void StageTwo::Render() {
 
 	if (levelUpText != NULL) {
 		levelUpText->Render();
+	}
+
+	for (unsigned int i = 0; i < enemies.size(); i++) {
+		enemies[i]->Render();
 	}
 }
 
