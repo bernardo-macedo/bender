@@ -45,6 +45,8 @@ Stage::Stage() {
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);
 	Camera::Follow(baon);
+
+	levelUpText = NULL;
 }
 
 Stage::~Stage() {
@@ -58,6 +60,7 @@ Stage::~Stage() {
 	delete sp;
 	delete tileMap;
 	delete levelUpTimer;
+	delete levelUpText;
 }
 
 void Stage::Update(float dt) {
@@ -103,10 +106,17 @@ void Stage::Update(float dt) {
 		if (baon->GetLevelWon()) {
 			levelUpTimer->Update(dt);
 
-			if (levelUpTimer->Get() > 5) {
-				Game::GetInstance()->Push(new StageTwo());
-				popRequested = true;
-				return;
+			if (levelUpTimer->Get() > 1) {
+			    SDL_Color color;
+			    color.r = color.g = color.b = 225;
+			    color.a = 255;
+			    levelUpText = new Text("font/Call me maybe.ttf", 40, Text::SOLID,
+			            "YOU WIN! Press space", color, Game::SCREEN_WIDTH/2 - 150, Game::SCREEN_HEIGHT/2 - 40);
+			    if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
+			    	Game::GetInstance()->Push(new StageTwo());
+			    	popRequested = true;
+			    }
+			    return;
 			}
 		}
 
@@ -166,6 +176,10 @@ void Stage::Render() {
 	}
 
 	RenderArray();
+
+	if (levelUpText != NULL) {
+		levelUpText->Render();
+	}
 }
 
 void Stage::Pause() {

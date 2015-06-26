@@ -13,6 +13,7 @@
 #include "Engine/TileSet/TileMap.h"
 #include "Engine/Game.h"
 #include "Engine/Timer.h"
+#include "Engine/Text.h"
 #include "Baon.h"
 #include "Enemy.h"
 #include "Monumento.h"
@@ -44,6 +45,7 @@ private:
 	EnemyAIManager *enemyAI;
 	Music *music;
 	Timer* levelUpTimer;
+	Text* levelUpText;
 };
 
 #endif /* STAGE_H_ */

@@ -84,11 +84,6 @@ void BaonStateManager::Update(float dt) {
 	if(runTest == 1){
 		t->Update(dt);
 
-		if (baon->GetLevelWon()) {
-			currentState = estados["STAND"];
-			currentState->Reset();
-		}
-
 		if(InputManager::GetInstance().KeyPress(D_KEY)){
 			if(currentState->Is("STAND") && t->Get() < 0.2){
 				currentState = estados["RUN"];
