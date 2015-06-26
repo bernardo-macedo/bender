@@ -44,6 +44,7 @@ StageTwo::StageTwo() {
 	enemies.emplace_back(new Enemy(scale, 8600));
 
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());
+	levelUpText = NULL;
 }
 
 StageTwo::~StageTwo() {
