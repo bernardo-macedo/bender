@@ -11,6 +11,7 @@
 #include <string>
 
 #include "BaonState.h"
+#include "../PedraBasico.h"
 
 class BaonAttack1State : public BaonState{
 public:
@@ -18,6 +19,9 @@ public:
 	void Update(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
+private:
+	PedraBasico* pedra;
+	bool justJumped;
 };
 
 #endif /* BAONATTACK1STATE_H_ */

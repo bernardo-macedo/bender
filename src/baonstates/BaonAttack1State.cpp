@@ -8,32 +8,51 @@
 #include "BaonAttack1State.h"
 
 #include "../Baon.h"
-#include "../Engine/InputManager.h"
-#include "../Engine/Physics/Body.h"
-#include "BaonRunState.h"
-#include "BaonStandState.h"
-#include "BaonStateManager.h"
-#include "BaonWalkState.h"
-
-#include <iostream>
-
+#include "../Engine/Game.h"
 // TODO: receber Baon no construtor
 BaonAttack1State::BaonAttack1State(bool flipped) {
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
 	id = "ATTACK1";
+	justJumped = true;
 }
 
 void BaonAttack1State::Update(float dt) {
-	std::cout << "atack1" << std::endl;
-	executed = true;
-	nextRequested = true;
-	next = "STAND";
-	nextFlipped = flipped;
+	if(!executed){
+		pedra = new PedraBasico(baon->GetBox().GetX(),
+				baon->GetBox().GetY() + baon->GetBox().GetH(),
+				2);
+		pedra->GetSprite()->SetFrameWidth(35);
+		pedra->GetSprite()->SetFrameHeight(50);
+		pedra->GetSprite()->SetFrameCount(3);
+		pedra->GetSprite()->SetLine(0, 50);
+		Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+		baon->Jump(flipped);
+		baon->GetBody()->SetVelY(-600);
+		executed = true;
+		justJumped = true;
+	}
+	else{
+		if(pedra->GetSprite()->GetCurrentFrame() < 3){
+			std::cout << pedra->GetSprite()->GetCurrentFrame() << std::endl;
+			pedra->GetSprite()->Update(dt);
+		}
+		else{
+			pedra->SetDead(true);
+			justJumped = false;
+		}
+		baon->MidAir();
+	}
 }
 
 void BaonAttack1State::NotifyTileCollision() {
+	if(executed && !justJumped){
+		nextRequested = true;
+		next = "STAND";
+		nextFlipped = flipped;
+		justJumped = true;
+	}
 }
 
 bool BaonAttack1State::Is(std::string state) {

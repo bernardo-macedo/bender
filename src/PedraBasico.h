@@ -20,6 +20,7 @@ private:
 	bool goingLeft;
 	int limitX;
 	bool thrown;
+	bool dead;
 public:
 	PedraBasico(int x, int y, int scale);
 	virtual ~PedraBasico();
@@ -38,6 +39,7 @@ public:
 	bool GetLimitX();
 	bool Isthrown();
 	void SetThrown(bool thrown);
+	void SetDead(bool dead);
 };
 
 #endif /* PEDRABASICO_H_ */
