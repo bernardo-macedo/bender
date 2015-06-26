@@ -25,6 +25,7 @@ PedraBasico::PedraBasico(int x, int y, int scale) {
 	box.SetW(21*scale);
 	box.SetH(20*scale);
 	thrown = false;
+	dead = false;
 }
 
 PedraBasico::~PedraBasico() {
@@ -40,7 +41,7 @@ void PedraBasico::Update(float dt) {
 }
 
 bool PedraBasico::IsDead() {
-	return collided;
+	return collided || dead;
 }
 
 void PedraBasico::Render() {
@@ -87,4 +88,8 @@ bool PedraBasico::Isthrown() {
 
 void PedraBasico::SetThrown(bool thrown) {
 	this->thrown = thrown;
+}
+
+void PedraBasico::SetDead(bool dead) {
+	this->dead = dead;
 }
