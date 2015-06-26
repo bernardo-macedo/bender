@@ -31,7 +31,7 @@ Baon::Baon(int playerScale, float mapMax) {
 	scale = playerScale;
 	Baon::WALK_SPEED = 50*scale;
 	Baon::JUMP_SPEED = -230*scale;
-	Baon::RUN_SPEED = 5*160*scale;
+	Baon::RUN_SPEED = 160*scale;
 	flipped = false;
 	fallUpdateCount = 2;
 	isDamage = false;
