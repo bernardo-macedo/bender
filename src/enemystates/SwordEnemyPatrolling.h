@@ -23,7 +23,7 @@ class SwordEnemyPatrolling : public StateSwordEnemy {
 		/**
 		* The destructor.
 		*/
-		virtual ~SwordEnemyPatrolling(){}
+		virtual ~SwordEnemyPatrolling();
 
 		/**
 		* @see StateEnemy::enter

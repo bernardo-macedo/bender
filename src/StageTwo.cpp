@@ -7,6 +7,14 @@
 
 #include "StageTwo.h"
 
+#include <stddef.h>
+#include <SDL_pixels.h>
+
+#include "Baon.h"
+#include "Engine/Game.h"
+#include "Engine/Geometry/Point.h"
+#include "Engine/Timer.h"
+
 StageTwo::StageTwo() {
 	int scale = 2;
 
@@ -24,6 +32,8 @@ StageTwo::StageTwo() {
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);
 	Camera::Follow(baon);
+
+	levelUpTimer = new Timer();
 }
 
 StageTwo::~StageTwo() {
@@ -46,12 +56,31 @@ void StageTwo::Update(float dt) {
 
 	if (baon->IsDead()) {
 		Camera::Unfollow();
+		popRequested = true;
 	} else {
+		// Resolve levelUp
+		if (baon->GetLevelWon()) {
+			levelUpTimer->Update(dt);
+
+			if (levelUpTimer->Get() > 1) {
+				SDL_Color color;
+				color.r = color.g = color.b = 225;
+				color.a = 255;
+				levelUpText = new Text("font/Call me maybe.ttf", 40, Text::SOLID,
+						"YOU WIN! Press space", color, Game::SCREEN_WIDTH/2 - 150, Game::SCREEN_HEIGHT/2 - 40);
+				if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
+					popRequested = true;
+				}
+				return;
+			}
+		}
+
 		baon->Update(dt);
 		if (tileMap->CheckCollisions(baon)) {
 			tileMap->ResolveTileCollisions(baon);
 			//baon->NotifyTileCollision();
 		}
+
 	}
 }
 
@@ -65,6 +94,10 @@ void StageTwo::Render() {
 	}
 
 	RenderArray();
+
+	if (levelUpText != NULL) {
+		levelUpText->Render();
+	}
 }
 
 void StageTwo::Pause() {

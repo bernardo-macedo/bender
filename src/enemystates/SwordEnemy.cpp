@@ -7,6 +7,14 @@
 
 #include "SwordEnemy.h"
 
+#include <stdio.h>
+#include <cwchar>
+
+#include "../Engine/Geometry/Point.h"
+#include "../Engine/Physics/Body.h"
+#include "../Engine/Physics/Force.h"
+#include "SwordEnemyPatrolling.h"
+
 #define ADD_STATE_EMPLACE(enemyStates, StateEnemy) this->enemyStatesMap.emplace(enemyStates, new StateEnemy(this))
 #define ADD_STATE_INSERT(enemyStates, StateEnemy) this->enemyStatesMap.insert(std::make_pair<enemyStates, StateEnemy*>(enemyStates, new StateEnemy(this)));
 

@@ -15,7 +15,7 @@
 #include "Engine/Camera.h"
 #include "Scroll.h"
 #include "Hud.h"
-
+#include "Engine/Text.h"
 class StageTwo : public State {
 public:
 	StageTwo();
@@ -31,6 +31,8 @@ private:
 	Baon* baon;
 	TileMap* tileMap;
 	Music *music;
+	Timer* levelUpTimer;
+	Text* levelUpText;
 };
 
 #endif /* STAGETWO_H_ */

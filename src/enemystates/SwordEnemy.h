@@ -33,7 +33,6 @@ public:
 	void Render();
 	void NotifyCollision(GameObject* other);
 	void NotifyTileCollision();
-	bool IsDead();
 	bool Is(std::string type);
 	bool GetFlipped();
 
