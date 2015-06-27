@@ -38,7 +38,7 @@ void BaonPunchState::Update(float dt) {
 			pedra->GetSprite()->SetFrameHeight(25);
 			pedra->GetSprite()->SetFrameWidth(35);
 			pedra->GetSprite()->SetLine(2, 23);
-			pedra->GetSprite()->SetFrameTime(0.04);
+			pedra->GetSprite()->SetFrameTime(0.02);
 			Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 		}
 		else{
@@ -48,7 +48,7 @@ void BaonPunchState::Update(float dt) {
 		executed = true;
 	}
 
-	if(baon->GetSprite()->GetCurrentFrame() >= 5){
+	if(baon->GetSprite()->GetCurrentFrame() == 5){
 		if(soltouPedra){
 			if(pedra != NULL){
 				if(!flipped){
@@ -80,11 +80,13 @@ void BaonPunchState::Update(float dt) {
 				pedra->GetSprite()->Update(dt);
 			}
 			else{
-				pedra->GetBody()->SetVelY(-300);
+				pedra->GetBody()->SetVelY(-200);
 			}
 		}
-		if(baon->GetSprite()->GetCurrentFrame() > 3){
-			baon->isDamage = true;
+		else{
+			if(baon->GetSprite()->GetCurrentFrame() > 3){
+				baon->isDamage = true;
+			}
 		}
 	}
 }

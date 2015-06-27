@@ -15,7 +15,8 @@ void EnemyAIManager::update(const float dt){
 	if(!baon->IsDead()){
 		if(abs(enemy->GetBody()->GetX() - baon->GetBody()->GetX()) < 25*baon->GetScale()){
 			if(!enemy->IsState(Enemy::enemyStates::PUNCH)
-				&& !enemy->IsState(Enemy::enemyStates::TAKINGHIT)){
+				&& !enemy->IsState(Enemy::enemyStates::TAKINGHIT)
+				&& !enemy->IsState(Enemy::enemyStates::DYING)){
 				enemy->changeState(Enemy::enemyStates::PUNCH);
 			}
 		}
@@ -30,8 +31,8 @@ void EnemyAIManager::update(const float dt){
 				|| ((enemy->GetBody()->GetX() > baon->GetBody()->GetX()) && (enemy->GetFlipped()))){
 				if(!enemy->IsState(Enemy::enemyStates::BEND)
 					&& !enemy->IsState(Enemy::enemyStates::TAKINGHIT)
+					&& !enemy->IsState(Enemy::enemyStates::DYING)
 					&& (enemy->GetCoolDown() <= 0)){
-
 					enemy->changeState(Enemy::enemyStates::BEND);
 				}
 			}
@@ -58,7 +59,7 @@ void EnemyAIManager::update(const float dt){
 		}
 	}
 
-	if(!enemy->IsDead() && enemy->IsTakingDamage()){
+	if(!enemy->IsDead() && enemy->IsTakingDamage() && !enemy->IsDying()){
 		if(!enemy->IsState(Enemy::enemyStates::TAKINGHIT)){
 			enemy->TakeDamage(true);
 			enemy->changeState(Enemy::enemyStates::TAKINGHIT);
@@ -67,8 +68,14 @@ void EnemyAIManager::update(const float dt){
 			enemy->SetTakingDamage(false);
 		}
 	}
-	if(!baon->IsDead()){
 
+	if(!enemy->IsDead() && enemy->IsDying()){
+		if(!enemy->IsState(Enemy::enemyStates::DYING)){
+			enemy->changeState(Enemy::enemyStates::DYING);
+		}
+	}
+
+	if(!baon->IsDead()){
 		Rect baonRect, enemyRect;
 
 		baonRect.SetX(baon->GetBody()->GetX());

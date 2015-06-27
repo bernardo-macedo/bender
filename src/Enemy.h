@@ -24,7 +24,7 @@ class StateEnemy;
 
 class Enemy : public Being {
 public:
-	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW, PUNCH, BEND, TAKINGHIT};
+	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW, PUNCH, BEND, TAKINGHIT, DYING};
 	enum runController {NONE, PRERUNR, PRERUNL};
 	Enemy(int enemyScale, int x);
 	virtual ~Enemy();
@@ -61,6 +61,9 @@ public:
 	void SetCoolDown(float coolDown);
 	int GetSpawnX();
 	bool IsCollisionFromRight();
+	bool IsDying();
+	void SetDying(bool dying);
+	int GetHP();
 
 private:
 	int WALK_SPEED_E;
@@ -75,7 +78,7 @@ private:
 	int numEst;
 	bool flipped;
 	Timer *t;
-	bool isDead;
+	bool isDead, isDying;
 	bool isRemovable;
 	int fallUpdateCount;
 	bool isTakingDamage;

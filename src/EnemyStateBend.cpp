@@ -51,6 +51,9 @@ void EnemyStateBend::enter() {
 }
 
 void EnemyStateBend::exit() {
+	if(!pedra->Isthrown()){
+		pedra->SetDead(true);
+	}
 }
 
 void EnemyStateBend::update(const float dt_) {

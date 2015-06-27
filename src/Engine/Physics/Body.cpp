@@ -118,10 +118,7 @@ void Body::removeForce(std::string id) {
 }
 
 void Body::clearForces() {
-	for(std::list<Force*>::iterator i = forces.begin(); i != forces.end(); i++){
-		Force* f = (Force*)*i;
-		forces.remove(f);
-	}
+	forces.clear();
 }
 
 float Body::GetResistance() {
