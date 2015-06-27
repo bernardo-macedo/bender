@@ -12,6 +12,7 @@
 #include <string>
 
 #include "EnemyStateBend.h"
+#include "EnemyStateDying.h"
 #include "EnemyStateFollow.h"
 #include "EnemyStatePatrolling.h"
 #include "EnemyStatePunch.h"
@@ -67,6 +68,7 @@ Enemy::Enemy(int enemyScale, int x):
 	flipped = false;
 	fallUpdateCount = 0;
 	isDead = false;
+	isDying  = false;
 	isDamage = false;
 	isTakingDamage = false;
 	closeToBaon = false;
@@ -186,24 +188,18 @@ void Enemy::Jump(bool flipped) {
 }
 
 void Enemy::NotifyTileCollision() {
-	// TODO
 }
 
 Enemy::~Enemy() {
-	/*
 	for(std::map<enemyStates, StateEnemy*>::iterator itr = enemyStatesMap.begin(); itr != enemyStatesMap.end(); itr++){
 		delete itr->second;
 	}
 	delete sp;
 	delete currentState;
-	*/
 }
 
 void Enemy::TakeDamage(bool damage) {
 	hp--;
-	if(hp <= 0){
-		isDead = true;
-	}
 	punchhit->Play(0);
 }
 
@@ -247,6 +243,18 @@ void Enemy::SetTakingDamage(bool damage) {
 	isTakingDamage = damage;
 }
 
+bool Enemy::IsDying() {
+	return isDying;
+}
+
+void Enemy::SetDying(bool dying) {
+	this->isDying = dying;
+}
+
+int Enemy::GetHP() {
+	return hp;
+}
+
 void Enemy::InitializeStates(){
 	// Initialize all the states in Enemy here.
 	ADD_STATE_EMPLACE(PATROLLING,   EnemyStatePatrolling);
@@ -254,6 +262,7 @@ void Enemy::InitializeStates(){
 	ADD_STATE_EMPLACE(PUNCH,        EnemyStatePunch);
 	ADD_STATE_EMPLACE(BEND, 		EnemyStateBend);
 	ADD_STATE_EMPLACE(TAKINGHIT, 		EnemyStateTakeDamage);
+	ADD_STATE_EMPLACE(DYING, 		EnemyStateDying);
 }
 
 void Enemy::changeState(const enemyStates state_){

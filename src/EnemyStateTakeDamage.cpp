@@ -40,6 +40,9 @@ void EnemyStateTakeDamage::exit() {
 	enemy->GetBody()->clearForces();
 	enemy->SetTakingDamage(false);
 	enemy->GetSprite()->SetFrameTime(0.1);
+	if(enemy->GetHP() <= 0){
+		enemy->SetDying(true);
+	}
 }
 
 void EnemyStateTakeDamage::update(const float dt_) {

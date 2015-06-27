@@ -45,7 +45,6 @@ void BaonAttack1State::Update(float dt) {
 	}
 	else{
 		if(pedra->GetSprite()->GetCurrentFrame() < 3){
-			std::cout << pedra->GetSprite()->GetCurrentFrame() << std::endl;
 			pedra->GetSprite()->Update(dt);
 		}
 		else{
