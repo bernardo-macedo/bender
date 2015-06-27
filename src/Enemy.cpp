@@ -191,9 +191,9 @@ void Enemy::NotifyTileCollision() {
 }
 
 Enemy::~Enemy() {
-	for(std::map<enemyStates, StateEnemy*>::iterator itr = enemyStatesMap.begin(); itr != enemyStatesMap.end(); itr++){
+	/*for(std::map<enemyStates, StateEnemy*>::iterator itr = enemyStatesMap.begin(); itr != enemyStatesMap.end(); itr++){
 		delete itr->second;
-	}
+	}*/
 	delete sp;
 	delete currentState;
 }
