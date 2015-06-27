@@ -44,13 +44,18 @@ void BaonAttack1State::Update(float dt) {
 		}
 	}
 	else{
-		if(pedra->GetSprite()->GetCurrentFrame() < 3){
-			pedra->GetSprite()->Update(dt);
-		}
-		else{
-			pedra->SetDead(true);
-			justJumped = false;
-			canExecute = false;
+		if(pedra != NULL){
+			if(!pedra->IsDead()){
+				if(pedra->GetSprite()->GetCurrentFrame() < 3){
+					pedra->GetSprite()->Update(dt);
+				}
+				else{
+					pedra->SetDead(true);
+					pedra = NULL;
+					justJumped = false;
+					canExecute = false;
+				}
+			}
 		}
 		baon->MidAir();
 	}
