@@ -28,6 +28,10 @@ TileMap::TileMap(std::string file, int collisionLayerIndex, int mapScale) {
 	LoadMapGrounds(file);
 }
 
+TileMap::~TileMap() {
+	delete tileSet;
+}
+
 void TileMap::Load(std::string file) {
 	Tmx::Map map;
 
@@ -169,8 +173,7 @@ void TileMap::ResolveTileCollisions(Being* being) {
 		Tile tile = it->second;
 		Point overlap = scaledRect.Intersection(tile.GetBox());
 
-		if (fabs(overlap.getY()) < fabs(overlap.getX())) {
-
+		if (fabs(overlap.getY()) > fabs(overlap.getX())) {
 			being->GetBody()->SetVelX(0);
 			if (overlap.getX() > 0) {
 				// colidiu com a borda esquerda do player
@@ -182,11 +185,12 @@ void TileMap::ResolveTileCollisions(Being* being) {
 				intersectionX = (scaledRect.GetX() + scaledRect.GetW()) - tile.GetBox().GetX();
 				scaledRect.SetX(scaledRect.GetX() - intersectionX - 1);
 				being->NotifyTileCollision();
+				std::cout << "depois y = " << being->GetBox().GetY() << std::endl;
 			}
 
 		} else {
 			float distY = scaledRect.GetY() - tile.GetBox().GetY();
-			//
+
 			if (distY < 0 && fabs(distY) > (4 * scaledRect.GetH()/5)
 					&& std::find(groundTileIndexes.begin(), groundTileIndexes.end(), tile.GetIndex()) != groundTileIndexes.end()) {
 				being->GetBody()->SetVelY(0);
