@@ -8,7 +8,9 @@
 #include "Monumento.h"
 
 Monumento::Monumento(int posX, int scale) {
-	sp = new Sprite("img/monumento.png");
+	used = false;
+
+	sp = new Sprite("img/monumento.png", 2);
 
 	box.SetX(posX * 16 * scale);
 	box.SetY(MONUMENT_MAP_GROUND * 16 * scale);
@@ -16,6 +18,7 @@ Monumento::Monumento(int posX, int scale) {
 	box.SetW(sp->GetWidth());
 	sp->SetScaleX(scale);
 	sp->SetScaleY(scale);
+	sp->SetFrame(1);
 }
 
 Monumento::~Monumento() {
@@ -35,7 +38,12 @@ void Monumento::Render() {
 }
 
 void Monumento::NotifyCollision(GameObject* other) {
-	// TOOD
+	if (!used && other->Is("Baon")) {
+		sp->SetFrame(2);
+		Baon* baon = (Baon*) other;
+		baon->RestoreLife();
+		used = true;
+	}
 }
 
 bool Monumento::Is(std::string type) {

@@ -105,6 +105,8 @@ void Stage::Update(float dt) {
 		monuments[i]->Update(dt);
 		if (monuments[i]->IsDead()) {
 			monuments.erase(monuments.begin() + i);
+		} else if (Collision::IsColliding(monuments[i]->GetBox(), baon->GetBox(), 0 , 0)) {
+			monuments[i]->NotifyCollision(baon);
 		}
 	}
 

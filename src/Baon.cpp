@@ -24,6 +24,7 @@ int Baon::WALK_SPEED = 0;
 int Baon::RUN_SPEED  = 0;
 int Baon::JUMP_SPEED = 0;
 float Baon::DOUBLECLICK_TIME = 0.2;
+int Baon::MAX_HP = 30;
 
 Baon::Baon(int playerScale, float mapMax) {
 	LoadSpriteData();
@@ -73,9 +74,9 @@ Baon::Baon(int playerScale, float mapMax) {
 	step2 = new Sound("audio/sfx_char_stepGrass2.wav");
 	kicks = new Sound("audio/sfx_char_kick_swing1.wav");
 	punchs = new Sound("audio/sfx_char_punch_swing1.wav");
-	hp = 30;
+	hp = MAX_HP;
 
-	lifebar = new Lifebar(15 * scale, 215 * scale, scale, hp);
+	lifebar = new Lifebar(15 * scale, 215 * scale, scale, MAX_HP);
 	levelWon = false;
 }
 
@@ -116,6 +117,10 @@ void Baon::SetDead(bool dead) {
 
 bool Baon::GetLevelWon() {
 	return levelWon;
+}
+
+void Baon::RestoreLife() {
+	hp = MAX_HP;
 }
 
 void Baon::LoadSpriteData() {
@@ -200,7 +205,6 @@ void Baon::NotifyCollision(GameObject* other) {
 }
 
 bool Baon::IsDead() {
-	// TODO: hitpoints
 	return isDead;
 }
 

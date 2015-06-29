@@ -185,13 +185,13 @@ void TileMap::ResolveTileCollisions(Being* being) {
 				intersectionX = (scaledRect.GetX() + scaledRect.GetW()) - tile.GetBox().GetX();
 				scaledRect.SetX(scaledRect.GetX() - intersectionX - 1);
 				being->NotifyTileCollision();
-				std::cout << "depois y = " << being->GetBox().GetY() << std::endl;
 			}
 
 		} else {
 			float distY = scaledRect.GetY() - tile.GetBox().GetY();
 
-			if (distY < 0 && fabs(distY) > (4 * scaledRect.GetH()/5)
+			if (distY < 0
+					&& fabs(distY) > (4 * scaledRect.GetH()/5)
 					&& std::find(groundTileIndexes.begin(), groundTileIndexes.end(), tile.GetIndex()) != groundTileIndexes.end()) {
 				being->GetBody()->SetVelY(0);
 				scaledRect.SetY(tile.GetBox().GetY() - scaledRect.GetH());
