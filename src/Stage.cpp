@@ -132,7 +132,9 @@ void Stage::Update(float dt) {
 			}
 		}
 
+
 		baon->Update(dt);
+
 		if (tileMap->CheckCollisions(baon)) {
 			tileMap->ResolveTileCollisions(baon);
 		}

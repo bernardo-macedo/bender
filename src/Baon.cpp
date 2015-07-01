@@ -83,6 +83,7 @@ Baon::Baon(int playerScale, float mapMax, int posX) {
 
 	lifebar = new Lifebar(15 * scale, 215 * scale, scale, MAX_HP);
 	levelWon = false;
+	isFalling = false;
 }
 
 Baon::~Baon() {
@@ -128,6 +129,10 @@ void Baon::RestoreLife() {
 	hp = MAX_HP;
 }
 
+bool Baon::IsFalling() {
+	return isFalling;
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);
@@ -140,6 +145,7 @@ void Baon::LoadSpriteData() {
 
 void Baon::Update(float dt) {
 	this->bendMode = false;
+
 	stateManager->Update(dt);
 	if(!stateManager->GetCurrentState()->Is("JUMPING")
 			&& !stateManager->GetCurrentState()->Is("FALLING")
@@ -148,7 +154,13 @@ void Baon::Update(float dt) {
 			&& !stateManager->GetCurrentState()->Is("FASTPUNCH")){
 		sp->Update(dt);
 	}
+
+	float previousY = b->GetY();
 	Physic::GetInstance()->UpdatePhysic(b, dt);
+	float updatedY = b->GetY();
+
+	isFalling = (updatedY - previousY > 0.5);
+
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
 	
@@ -191,6 +203,7 @@ void Baon::Update(float dt) {
 	if (InputManager::GetInstance().KeyPress(P_KEY)) {
 		SetSuperSpeed(false);
 	}
+
 }
 
 void Baon::Render() {
