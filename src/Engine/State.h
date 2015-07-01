@@ -19,10 +19,11 @@ protected:
 
 	bool popRequested;
 	bool quitRequested;
+	int initialPositionX;
 
 	std::vector<std::unique_ptr<GameObject>> objectArray;
 public:
-	State();
+	State(int posX = -1);
 	virtual ~State();
 
 	virtual void Update(float dt) = 0;

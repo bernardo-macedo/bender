@@ -9,6 +9,7 @@
 #define ENGINE_GAME_H_
 
 #include "State.h"
+#include "Checkpoint.h"
 #include "Physics/Physic.h"
 #include "SDL_Wrapper.h"
 #include <stack>
@@ -22,6 +23,7 @@ private:
 	int frameStart;
 	float dt;
 	Physic *physic;
+	Checkpoint *checkpoint;
 
 	std::stack<std::unique_ptr<State>> stateStack;
 
@@ -41,6 +43,8 @@ public:
 	static Game* GetInstance();
 	float GetDeltaTime();
 	void Push(State* state);
+	void SetCheckpoint(Checkpoint* checkpoint);
+	Checkpoint* GetCheckpoint();
 };
 
 #endif /* ENGINE_GAME_H_ */

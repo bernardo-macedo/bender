@@ -26,7 +26,7 @@ int Baon::JUMP_SPEED = 0;
 float Baon::DOUBLECLICK_TIME = 0.2;
 int Baon::MAX_HP = 30;
 
-Baon::Baon(int playerScale, float mapMax) {
+Baon::Baon(int playerScale, float mapMax, int posX) {
 	LoadSpriteData();
 
 	scale = playerScale;
@@ -38,6 +38,7 @@ Baon::Baon(int playerScale, float mapMax) {
 	isDamage = false;
 	closeToEnemy = false;
 	bendMode = false;
+	takingDamage = false;
 
 	// Cheats
 	superJump = false;
@@ -53,7 +54,11 @@ Baon::Baon(int playerScale, float mapMax) {
 	sp->SetScaleX(playerScale);
 	sp->SetScaleY(playerScale);
 
-	box.SetX(Game::SCREEN_WIDTH/2);
+	if (posX != -1) {
+		box.SetX(posX);
+	} else {
+		box.SetX(Game::SCREEN_WIDTH/2);
+	}
 	box.SetY(200);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());

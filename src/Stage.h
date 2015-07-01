@@ -26,7 +26,7 @@
 
 class Stage : public State{
 public:
-	Stage();
+	Stage(int posX = -1);
 	virtual ~Stage();
 
 	void Update(float dt);

@@ -36,7 +36,22 @@ void TitleState::Update(float dt) {
 	if (InputManager::GetInstance().KeyPress(ENTER_KEY)) {
 		switch (menu->GetSelectedButton()) {
 		case 0:
+			Game::GetInstance()->SetCheckpoint(NULL);
 			Game::GetInstance()->Push(new Stage());
+			break;
+		case 1:
+		{
+			Checkpoint *lastCheckpoint = Game::GetInstance()->GetCheckpoint();
+			if (lastCheckpoint != NULL) {
+				if (lastCheckpoint->GetLevel() == 1) {
+					Game::GetInstance()->Push(new Stage(lastCheckpoint->GetPositionX()));
+				} else if (lastCheckpoint->GetLevel() == 2) {
+					Game::GetInstance()->Push(new StageTwo(lastCheckpoint->GetPositionX()));
+				} else if (lastCheckpoint->GetLevel() == 3) {
+					// StageThree()..
+				}
+			}
+		}
 			break;
 		case 3:
 			this->quitRequested = true;

@@ -15,7 +15,7 @@
 #include "Geometry/Point.h"
 #include "Physics/Body.h"
 
-State::State() {
+State::State(int posX) : initialPositionX(posX) {
 	quitRequested = false;
 	popRequested = false;
 }

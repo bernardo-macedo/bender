@@ -40,6 +40,7 @@ Game::Game(string title, int width, int height) {
 	storedState = NULL;
 
 	frameStart = SDL_GetTicks();
+	checkpoint = NULL;
 }
 
 Game::~Game() {
@@ -145,4 +146,12 @@ float Game::GetDeltaTime() {
 
 void Game::Push(State* state){
 	storedState = state;
+}
+
+Checkpoint* Game::GetCheckpoint() {
+	return checkpoint;
+}
+
+void Game::SetCheckpoint(Checkpoint* checkpoint) {
+	this->checkpoint = checkpoint;
 }

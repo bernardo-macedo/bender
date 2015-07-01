@@ -10,6 +10,8 @@
 
 #include <string>
 
+#include "Engine/Game.h"
+#include "Engine/Checkpoint.h"
 #include "Engine/GameObject.h"
 #include "Engine/Sprite.h"
 #include "Engine/Camera.h"
@@ -19,7 +21,7 @@
 
 class Monumento : public GameObject {
 public:
-	Monumento(int posX, int scale);
+	Monumento(int posX, int scale, int level);
 	virtual ~Monumento();
 
 	virtual void Update(float dt);
@@ -30,6 +32,7 @@ public:
 private:
 	Sprite *sp;
 	bool used;
+	int level;
 };
 
 #endif /* MONUMENTO_H_ */

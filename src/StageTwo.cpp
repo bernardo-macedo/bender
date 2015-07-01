@@ -17,8 +17,10 @@
 #include "Engine/Timer.h"
 #include "PedraBasico.h"
 
-StageTwo::StageTwo() {
+StageTwo::StageTwo(int posX) : State(posX) {
 	int scale = 2;
+
+	Game::GetInstance()->SetCheckpoint(new Checkpoint(2, -1));
 
 	music = new Music("audio/pantano.ogg");
 	music->Play(Music::ALWAYS);
@@ -26,10 +28,13 @@ StageTwo::StageTwo() {
 	tileMap = new TileMap("pantano.tmx", 0, scale);
 	tileMap->SetExtraCollisionLayer(10);
 
-	baon = new Baon(scale, tileMap->GetMapMax());
+	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
 
 	AddObject(new Scroll(scale, 2));
 	AddObject(new Hud(scale, 2));
+
+	monuments.emplace_back(new Monumento(90, scale, 2));
+	monuments.emplace_back(new Monumento(215, scale, 2));
 
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);
@@ -83,6 +88,15 @@ void StageTwo::Update(float dt) {
 		}
 	}
 
+	for (unsigned int i = 0; i < monuments.size(); i++) {
+		monuments[i]->Update(dt);
+		if (monuments[i]->IsDead()) {
+			monuments.erase(monuments.begin() + i);
+		} else if (Collision::IsColliding(monuments[i]->GetBox(), baon->GetBox(), 0 , 0)) {
+			monuments[i]->NotifyCollision(baon);
+		}
+	}
+
 	UpdateArray(dt);
 
 	if (baon->IsDead()) {
@@ -100,6 +114,9 @@ void StageTwo::Update(float dt) {
 				levelUpText = new Text("font/Call me maybe.ttf", 40, Text::SOLID,
 						"YOU WIN! Press space", color, Game::SCREEN_WIDTH/2 - 150, Game::SCREEN_HEIGHT/2 - 40);
 				if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
+					// TODO: Remover isso quando existir fase 3!
+					Game::GetInstance()->SetCheckpoint(NULL);
+
 					popRequested = true;
 				}
 				return;
@@ -136,6 +153,10 @@ void StageTwo::Update(float dt) {
 void StageTwo::Render() {
 	for (int i = 0; i < tileMap->GetDepth(); i++) {
 		tileMap->Render(i, 0, Camera::pos.getX(), Camera::pos.getY());
+	}
+
+	for (unsigned int i = 0; i < monuments.size(); i++) {
+		monuments[i]->Render();
 	}
 
 	if(!baon->IsDead()){

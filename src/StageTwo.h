@@ -13,15 +13,16 @@
 #include "Engine/Music.h"
 #include "Engine/InputManager.h"
 #include "Engine/Camera.h"
+#include "Engine/Text.h"
 #include "Scroll.h"
 #include "Hud.h"
-#include "Engine/Text.h"
+#include "Monumento.h"
 #include "Enemy.h"
 #include "EnemyAIManager.h"
 
 class StageTwo : public State {
 public:
-	StageTwo();
+	StageTwo(int posX = -1);
 	virtual ~StageTwo();
 
 	void Update(float dt);
@@ -38,6 +39,7 @@ private:
 	Text* levelUpText;
 
 	std::vector<std::unique_ptr<Enemy>> enemies;
+	std::vector<std::unique_ptr<Monumento>> monuments;
 	EnemyAIManager *enemyAI;
 };
 

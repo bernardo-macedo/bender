@@ -7,7 +7,7 @@
 
 #include "Monumento.h"
 
-Monumento::Monumento(int posX, int scale) {
+Monumento::Monumento(int posX, int scale, int level) : level(level) {
 	used = false;
 
 	sp = new Sprite("img/monumento.png", 2);
@@ -39,6 +39,7 @@ void Monumento::Render() {
 
 void Monumento::NotifyCollision(GameObject* other) {
 	if (!used && other->Is("Baon")) {
+		Game::GetInstance()->SetCheckpoint(new Checkpoint(level, box.GetCenter().getX()));
 		sp->SetFrame(2);
 		Baon* baon = (Baon*) other;
 		baon->RestoreLife();

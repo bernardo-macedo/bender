@@ -26,7 +26,7 @@ class Baon : public Being {
 public:
 	enum baonStates {STAND, WALK, JUMP, RUN, FALLING};
 	enum runController {NONE, PRERUNR, PRERUNL};
-	Baon(int playerScale, float mapMax);
+	Baon(int playerScale, float mapMax, int posX);
 	virtual ~Baon();
 
 	void Update(float dt);

@@ -19,7 +19,7 @@
 #include "Engine/Sprite.h"
 #include "PedraBasico.h"
 
-Stage::Stage() {
+Stage::Stage(int posX) : State(posX) {
 
 	int scale = 2;
 
@@ -30,7 +30,7 @@ Stage::Stage() {
 
 	levelUpTimer = new Timer();
 
-	baon = new Baon(scale, tileMap->GetMapMax());
+	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
 
 	//enemies.emplace_back(new Enemy(scale, 100));
 	enemies.emplace_back(new Enemy(scale, 900));
@@ -42,8 +42,8 @@ Stage::Stage() {
 	//enemies.emplace_back(new SwordEnemy(scale, 50));
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());
 
-	monuments.emplace_back(new Monumento(102, scale));
-	monuments.emplace_back(new Monumento(262, scale));
+	monuments.emplace_back(new Monumento(102, scale, 1));
+	monuments.emplace_back(new Monumento(262, scale, 1));
 
 	AddObject(new Scroll(scale, 1));
 	AddObject(new Hud(scale, 1));
