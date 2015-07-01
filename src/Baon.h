@@ -59,10 +59,12 @@ public:
 	void SetSuperSpeed(bool superSpeed);
 	bool GetSuperJump();
 	bool GetSuperSpeed();
+
 	bool GetBendMode();
 	void SetBendMode(bool bendMode_);
 	bool IsCloseToEnemy();
 	void SetCloseToEnemy(bool isClose);
+	void RestoreLife();
 
 	Sprite* GetSprite();
 
@@ -77,6 +79,7 @@ private:
 	static int RUN_SPEED;
 	static int JUMP_SPEED;
 	static float DOUBLECLICK_TIME;
+	static int MAX_HP;
 
 	// Cheats
 	bool superJump;
