@@ -144,7 +144,8 @@ void Baon::Update(float dt) {
 	if(!stateManager->GetCurrentState()->Is("JUMPING")
 			&& !stateManager->GetCurrentState()->Is("FALLING")
 			&& !stateManager->GetCurrentState()->Is("TAKEHIT")
-			&& !stateManager->GetCurrentState()->Is("DYING")){
+			&& !stateManager->GetCurrentState()->Is("DYING")
+			&& !stateManager->GetCurrentState()->Is("FASTPUNCH")){
 		sp->Update(dt);
 	}
 	Physic::GetInstance()->UpdatePhysic(b, dt);

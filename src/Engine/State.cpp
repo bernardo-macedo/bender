@@ -15,6 +15,9 @@
 #include "Geometry/Point.h"
 #include "Physics/Body.h"
 
+#define PEDRA_BAON = 100
+#define PEDRA_INIMIGO = 101
+
 State::State(int posX) : initialPositionX(posX) {
 	quitRequested = false;
 	popRequested = false;
