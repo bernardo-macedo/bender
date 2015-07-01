@@ -41,6 +41,7 @@ private:
 
 public:
 	TileMap (std::string file, int collisionLayerIndex, int mapScale = 1);
+	virtual ~TileMap();
 	void Load (std::string file);
 	void SetTileSet (TileSet* tileSet);
 	int& At (int x, int y, int z = 0);
