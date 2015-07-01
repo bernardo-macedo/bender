@@ -145,7 +145,7 @@ void Stage::Update(float dt) {
 	}
 
 	for(unsigned i = 0; i < objectArray.size(); i++){
-		if(objectArray[i]->Is("basico")){
+		if(objectArray[i]->GetID() == 100){
 			PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
 			if(pedra->Isthrown()){
 				for(unsigned j = 0; j < enemies.size(); j++){
@@ -154,6 +154,13 @@ void Stage::Update(float dt) {
 						objectArray.erase(objectArray.begin() + i);
 						break;
 					}
+				}
+			}
+		}
+		if(objectArray[i]->GetID() == 101){
+			PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
+			if(pedra->Isthrown()){
+				for(unsigned j = 0; j < enemies.size(); j++){
 					if(Collision::IsColliding(objectArray[i]->GetBox(), baon->GetBox(), 0, 0)){
 						baon->NotifyCollision(objectArray[i].get());
 						objectArray.erase(objectArray.begin() + i);

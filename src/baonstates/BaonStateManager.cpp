@@ -7,7 +7,7 @@
 
 #include "BaonStateManager.h"
 
-#include "../Engine/SDL_Wrapper.h" 
+#include "../Engine/SDL_Wrapper.h"
 
 #include "../Baon.h"
 #include "../Engine/InputManager.h"
@@ -24,6 +24,7 @@
 #include "BaonBendState.h"
 #include "BaonAttack1State.h"
 #include "BaonWalkState.h"
+#include "BaonFastPunch.h"
 
 #include <iostream>
 
@@ -63,6 +64,9 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("ATTACK1", new BaonAttack1State(false));
 	estados["ATTACK1"]->SetBaon(baon);
 	estados["ATTACK1"]->SetStateManager(this);
+	estados.emplace("FASTPUNCH", new BaonFastPunch(false));
+	estados["FASTPUNCH"]->SetBaon(baon);
+	estados["FASTPUNCH"]->SetStateManager(this);
 
 
 

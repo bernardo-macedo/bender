@@ -45,6 +45,11 @@ void BaonRunState::Update(float dt) {
 		next = "JUMP";
 		nextFlipped = flipped;
 	}
+	if(InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
+		nextRequested = true;
+		next = "FASTPUNCH";
+		nextFlipped = flipped;
+	}
 	if(t->Get() >= 0.4){
 		baon->step2->Play(0);
 		t->Restart();
