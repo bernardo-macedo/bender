@@ -5,12 +5,12 @@
  *      Author: Pedro2
  */
 
-#include "EnemyStateTakeDamage.h"
+#include "BenderEnemyStateTakeDamage.h"
 
-#include "Enemy.h"
-#include "Engine/Physics/Body.h"
-#include "Engine/Physics/Force.h"
-#include "Engine/Sprite.h"
+#include "../../Enemy.h"
+#include "../Engine/Physics/Body.h"
+#include "../Engine/Physics/Force.h"
+#include "../Engine/Sprite.h"
 
 EnemyStateTakeDamage::EnemyStateTakeDamage(Enemy* const enemy_) :
 	StateEnemy(enemy_)

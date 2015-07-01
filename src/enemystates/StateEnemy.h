@@ -1,7 +1,7 @@
 #ifndef INCLUDE_STATEENEMY_H
 #define INCLUDE_STATEENEMY_H
 
-#include "Enemy.h"
+#include "../../Enemy.h"
 
 class Enemy;
 

@@ -5,11 +5,11 @@
  *      Author: Pedro2
  */
 
-#ifndef ENEMYSTATEDYING_H_
-#define ENEMYSTATEDYING_H_
+#ifndef ENEMYSTATES_BENDERENEMYSTATEDYING_H_
+#define ENEMYSTATES_BENDERENEMYSTATEDYING_H_
 
 #include "StateEnemy.h"
-#include "Engine/Timer.h"
+#include "../Engine/Timer.h"
 
 class EnemyStateDying : public StateEnemy{
 public:
@@ -22,4 +22,4 @@ private:
 	Timer* t;
 };
 
-#endif /* ENEMYSTATEDYING_H_ */
+#endif /* ENEMYSTATES_BENDERENEMYSTATEDYING_H_ */

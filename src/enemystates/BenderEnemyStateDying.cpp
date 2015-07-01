@@ -5,7 +5,7 @@
  *      Author: Pedro2
  */
 
-#include "EnemyStateDying.h"
+#include "BenderEnemyStateDying.h"
 
 EnemyStateDying::EnemyStateDying(Enemy* const enemy_) : StateEnemy(enemy_)
 {

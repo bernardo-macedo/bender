@@ -14,9 +14,14 @@
 #include "Engine/Sprite.h"
 #include "Engine/Physics/Body.h"
 #include "Engine/Timer.h"
-#include "StateEnemy.h"
-#include "Being.h"
 #include "Engine/Sound.h"
+#include "Engine/Camera.h"
+#include "Engine/Geometry/Point.h"
+#include "Engine/Physics/Force.h"
+#include "Engine/Physics/Physic.h"
+#include "enemystates/StateEnemy.h"
+#include "Being.h"
+
 
 #define ENEMY_MAP_GROUND 143
 

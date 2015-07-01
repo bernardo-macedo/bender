@@ -11,16 +11,12 @@
 #include <cwchar>
 #include <string>
 
-#include "EnemyStateBend.h"
-#include "EnemyStateDying.h"
-#include "EnemyStateFollow.h"
-#include "EnemyStatePatrolling.h"
-#include "EnemyStatePunch.h"
-#include "EnemyStateTakeDamage.h"
-#include "Engine/Camera.h"
-#include "Engine/Geometry/Point.h"
-#include "Engine/Physics/Force.h"
-#include "Engine/Physics/Physic.h"
+#include "enemystates/BenderEnemyStateBend.h"
+#include "enemystates/BenderEnemyStateDying.h"
+#include "enemystates/BenderEnemyStateFollow.h"
+#include "enemystates/BenderEnemyStatePatrolling.h"
+#include "enemystates/BenderEnemyStatePunch.h"
+#include "enemystates/BenderEnemyStateTakeDamage.h"
 
 #define ADD_STATE_EMPLACE(enemyStates, StateEnemy) this->enemyStatesMap.emplace(enemyStates, new StateEnemy(this))
 #define ADD_STATE_INSERT(enemyStates, StateEnemy) this->enemyStatesMap.insert(std::make_pair<enemyStates, StateEnemy*>(enemyStates, new StateEnemy(this)));
@@ -272,12 +268,7 @@ void Enemy::changeState(const enemyStates state_){
 }
 
 bool Enemy::IsState(const enemyStates state_){
-	if(this->currentState == this->enemyStatesMap.at(state_)){
-		return true;
-	}
-	else{
-		return false;
-	}
+	return (this->currentState == this->enemyStatesMap.at(state_));
 }
 
 Sprite* Enemy::GetSprite(){

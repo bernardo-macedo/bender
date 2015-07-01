@@ -5,8 +5,8 @@
  *      Author: Pedro2
  */
 
-#ifndef ENEMYSTATETAKEDAMAGE_H_
-#define ENEMYSTATETAKEDAMAGE_H_
+#ifndef ENEMYSTATES_BENDERENEMYSTATETAKEDAMAGE_H_
+#define ENEMYSTATES_BENDERENEMYSTATETAKEDAMAGE_H_
 
 #include "StateEnemy.h"
 
@@ -19,4 +19,4 @@ public:
 	void update(const float dt_);
 };
 
-#endif /* ENEMYSTATETAKEDAMAGE_H_ */
+#endif /* ENEMYSTATES_BENDERENEMYSTATETAKEDAMAGE_H_ */

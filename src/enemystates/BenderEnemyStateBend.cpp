@@ -5,12 +5,12 @@
  *      Author: Pedro2
  */
 
-#include "EnemyStateBend.h"
+#include "BenderEnemyStateBend.h"
 
-#include "Enemy.h"
-#include "Engine/Game.h"
-#include "Engine/Sprite.h"
-#include "Engine/State.h"
+#include "../../Enemy.h"
+#include "../Engine/Game.h"
+#include "../Engine/Sprite.h"
+#include "../Engine/State.h"
 
 EnemyStateBend::EnemyStateBend(Enemy* const enemy_)  :
 StateEnemy(enemy_)

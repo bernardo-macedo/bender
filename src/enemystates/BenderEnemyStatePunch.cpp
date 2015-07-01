@@ -5,7 +5,7 @@
  *      Author: Pedro2
  */
 
-#include "EnemyStatePunch.h"
+#include "BenderEnemyStatePunch.h"
 
 EnemyStatePunch::EnemyStatePunch(Enemy* const enemy_) :
 	StateEnemy(enemy_)

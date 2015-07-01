@@ -5,10 +5,10 @@
  *      Author: Pedro2
  */
 
-#ifndef ENEMYSTATEBEND_H_
-#define ENEMYSTATEBEND_H_
+#ifndef ENEMYSTATES_BENDERENEMYSTATEBEND_H_
+#define ENEMYSTATES_BENDERENEMYSTATEBEND_H_
 
-#include "PedraBasico.h"
+#include "../PedraBasico.h"
 #include "StateEnemy.h"
 
 class EnemyStateBend : public StateEnemy{
@@ -22,4 +22,4 @@ private:
 	PedraBasico *pedra;
 };
 
-#endif /* ENEMYSTATEBEND_H_ */
+#endif /* ENEMYSTATES_BENDERENEMYSTATEBEND_H_ */
