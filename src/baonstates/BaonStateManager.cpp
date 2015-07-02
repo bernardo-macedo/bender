@@ -126,11 +126,7 @@ void BaonStateManager::Update(float dt) {
 
 
 	if (baon->IsFalling() && !currentState->Is("FALLING") && !currentState->Is("ATTACK1")) {
-		std::cout << "falling em estado diferente de falling" << std::endl;
-		baon->GetSprite()->SetFrameHeight(50);
-		baon->GetSprite()->SetFrameWidth(30);
-		baon->GetSprite()->SetFrameCount(4);
-		baon->GetSprite()->SetLine(2, 50);
+		previousState = currentState;
 		estados["FALLING"]->SetFlipped(currentState->IsFlipped());
 		currentState = estados["FALLING"];
 		currentState->Reset();

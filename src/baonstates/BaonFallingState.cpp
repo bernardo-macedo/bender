@@ -25,12 +25,21 @@ BaonFallingState::BaonFallingState(bool flipped) {
 }
 
 void BaonFallingState::Update(float dt) {
-	baon->MidAir();
-	baon->Fall();
+	if (baon->IsFalling()) {
+		baon->MidAir();
+		baon->Fall();
+	} else {
+		sm->GetPreviousState()->Reset();
+		next = sm->GetPreviousState()->GetID();
+		nextFlipped = flipped;
+		nextRequested = true;
+		baon->land->Play(0);
+		baon->TakeDamage(false, false);
+	}
 }
 
 void BaonFallingState::NotifyTileCollision() {
-	if (baon->GetBody()->GetVelY() >= 0) {
+	if (!baon->IsFalling()) {
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
 		nextFlipped = flipped;

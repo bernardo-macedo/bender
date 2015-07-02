@@ -290,10 +290,7 @@ void Baon::Stand(bool flipped) {
 }
 
 void Baon::Jump(bool flipped) {
-	sp->SetFrameHeight(spriteData[JUMP*3]);
-	sp->SetFrameWidth(spriteData[JUMP*3 + 1]);
-	sp->SetFrameCount(spriteData[JUMP*3 + 2]);
-	sp->SetLine(JUMP, spriteData[0]);
+
 
 	if (superJump) {
 		b->SetVelY(2 * JUMP_SPEED );
@@ -356,6 +353,11 @@ void Baon::TakeHit(bool flipped){
 }
 
 void Baon::MidAir(){
+	sp->SetFrameHeight(spriteData[JUMP*3]);
+	sp->SetFrameWidth(spriteData[JUMP*3 + 1]);
+	sp->SetFrameCount(spriteData[JUMP*3 + 2]);
+	sp->SetLine(JUMP, spriteData[0]);
+
 	if (b->GetForce("gravity") == NULL) {
 		b->ApplyForce(new Force("gravity", 0, 1200));
 	}
