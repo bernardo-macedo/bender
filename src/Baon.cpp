@@ -133,6 +133,10 @@ bool Baon::IsFalling() {
 	return isFalling;
 }
 
+bool Baon::IsFlipped() {
+	return flipped;
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);

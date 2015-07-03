@@ -54,6 +54,7 @@ public:
 	bool IsCollisionFromRight();
 	bool GetLevelWon();
 	bool IsFalling();
+	bool IsFlipped();
 
 	// Cheats
 	void SetSuperJump(bool superJump);
