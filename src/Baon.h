@@ -55,6 +55,7 @@ public:
 	bool GetLevelWon();
 	bool IsFalling();
 	bool IsFlipped();
+	void SetJumpFrame();
 
 	// Cheats
 	void SetSuperJump(bool superJump);

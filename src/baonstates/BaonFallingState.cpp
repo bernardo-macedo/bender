@@ -22,31 +22,28 @@ BaonFallingState::BaonFallingState(bool flipped) {
 	popRequested = false;
 	nextRequested = false;
 	id = "FALLING";
+	executed = false;
 }
 
 void BaonFallingState::Update(float dt) {
-	if (baon->IsFalling()) {
+	if (!executed && baon->IsFalling()) {
+		baon->SetJumpFrame();
 		baon->MidAir();
 		baon->Fall();
-	} else {
-		sm->GetPreviousState()->Reset();
-		next = sm->GetPreviousState()->GetID();
-		nextFlipped = flipped;
-		nextRequested = true;
-		baon->land->Play(0);
-		baon->TakeDamage(false, false);
 	}
 }
 
 void BaonFallingState::NotifyTileCollision() {
-	if (!baon->IsFalling()) {
+	if (!baon->IsFalling() && !executed) {
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
 		nextFlipped = flipped;
 		nextRequested = true;
 		baon->land->Play(0);
 		baon->TakeDamage(false, false);
+		executed = true;
 	}
+
 }
 
 bool BaonFallingState::Is(std::string state) {

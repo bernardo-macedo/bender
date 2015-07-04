@@ -124,15 +124,6 @@ void BaonStateManager::Update(float dt) {
 		currentState->Reset();
 	}
 
-
-	if (baon->IsFalling() && !currentState->Is("FALLING") && !currentState->Is("ATTACK1")) {
-		previousState = currentState;
-		estados["FALLING"]->SetFlipped(currentState->IsFlipped());
-		currentState = estados["FALLING"];
-		currentState->Reset();
-		executed = false;
-	}
-
 	currentState->Update(dt);
 
 	if(currentState->NextRequested()){
@@ -152,6 +143,12 @@ void BaonStateManager::Update(float dt) {
 			currentState->Reset();
 			executed = false;
 		}
+	} else if (baon->IsFalling() && !currentState->Is("FALLING") && !currentState->Is("ATTACK1")) {
+		previousState = currentState;
+		estados["FALLING"]->SetFlipped(currentState->IsFlipped());
+		currentState = estados["FALLING"];
+		currentState->Reset();
+		executed = false;
 	}
 
 }

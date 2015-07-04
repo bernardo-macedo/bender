@@ -137,6 +137,13 @@ bool Baon::IsFlipped() {
 	return flipped;
 }
 
+void Baon::SetJumpFrame() {
+	sp->SetFrameHeight(spriteData[JUMP*3]);
+	sp->SetFrameWidth(spriteData[JUMP*3 + 1]);
+	sp->SetFrameCount(spriteData[JUMP*3 + 2]);
+	sp->SetLine(JUMP, spriteData[0]);
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);
@@ -163,7 +170,7 @@ void Baon::Update(float dt) {
 	Physic::GetInstance()->UpdatePhysic(b, dt);
 	float updatedY = b->GetY();
 
-	isFalling = (updatedY - previousY > 0.5);
+	isFalling = (updatedY - previousY > 1);
 
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
@@ -196,7 +203,7 @@ void Baon::Update(float dt) {
 		b->SetX(limitX);
 	}
 
-	if(hp <= 0 || box.GetY() > Game::SCREEN_HEIGHT){
+	if(hp <= 0 || box.GetY() > Game::SCREEN_HEIGHT) {
 		dying = true;
 	}
 
@@ -295,7 +302,6 @@ void Baon::Stand(bool flipped) {
 
 void Baon::Jump(bool flipped) {
 
-
 	if (superJump) {
 		b->SetVelY(2 * JUMP_SPEED );
 	} else {
@@ -357,10 +363,6 @@ void Baon::TakeHit(bool flipped){
 }
 
 void Baon::MidAir(){
-	sp->SetFrameHeight(spriteData[JUMP*3]);
-	sp->SetFrameWidth(spriteData[JUMP*3 + 1]);
-	sp->SetFrameCount(spriteData[JUMP*3 + 2]);
-	sp->SetLine(JUMP, spriteData[0]);
 
 	if (b->GetForce("gravity") == NULL) {
 		b->ApplyForce(new Force("gravity", 0, 1200));

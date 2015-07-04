@@ -23,6 +23,7 @@ BaonJumpState::BaonJumpState(bool flipped) {
 void BaonJumpState::Update(float dt) {
 	if(!executed){
 		baon->Jump(flipped);
+		baon->SetJumpFrame();
 		executed = true;
 	}
 	else{

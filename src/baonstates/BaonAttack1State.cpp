@@ -31,6 +31,7 @@ void BaonAttack1State::Update(float dt) {
 			pedra->GetSprite()->SetLine(0, 50);
 			Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 			baon->Jump(flipped);
+			baon->SetJumpFrame();
 			baon->GetBody()->SetVelY(-700);
 			executed = true;
 			justJumped = true;
