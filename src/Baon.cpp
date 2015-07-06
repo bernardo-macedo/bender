@@ -239,7 +239,7 @@ bool Baon::IsDead() {
 }
 
 bool Baon::Is(std::string type) {
-	return type.compare("Baon") == 0;
+	return Being::Is(type) || type.compare("Baon") == 0;
 }
 
 //--------------------------------------------------------

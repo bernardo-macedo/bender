@@ -60,12 +60,13 @@ Point Rect::Intersection(Rect other) {
 	float minDistanceX = this->w / 2 + other.w / 2;
 	float minDistanceY = this->h / 2 + other.h / 2;
 
-	float distanceX = this->x - other.GetX();
-	float distanceY = this->y - other.GetY();
+	float distanceX = this->GetCenter().getX() - other.GetCenter().getX();
+	float distanceY = this->GetCenter().getY() - other.GetCenter().getY();
 
 	if (fabs(distanceX) > minDistanceX || fabs(distanceY) > minDistanceY) {
 		return Point(0, 0);
 	}
+
 
 	distanceX =
 			distanceX > 0 ?

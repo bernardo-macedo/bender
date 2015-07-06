@@ -23,29 +23,14 @@
 #include "Scroll.h"
 #include "Hud.h"
 #include "StageTwo.h"
+#include "AbstractStage.h"
 
-class Stage : public State{
+class Stage : public AbstractStage {
 public:
 	Stage(int posX = -1);
 	virtual ~Stage();
 
-	void Update(float dt);
-	void Render();
-
-	void Pause() ;
-	void Resume();
-	Baon* GetPlayer();
-	void CollisionEnemies(int i);
-private:
-	Baon* baon;
-	std::vector<std::unique_ptr<Enemy>> enemies;
-	std::vector<std::unique_ptr<Monumento>> monuments;
-	Sprite *sp;
-	TileMap* tileMap;
-	EnemyAIManager *enemyAI;
-	Music *music;
-	Timer* levelUpTimer;
-	Text* levelUpText;
+	bool OnLevelWon(float dt);
 };
 
 #endif /* STAGE_H_ */

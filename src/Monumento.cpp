@@ -7,13 +7,13 @@
 
 #include "Monumento.h"
 
-Monumento::Monumento(int posX, int scale, int level) : level(level) {
+Monumento::Monumento(int posX, int posY, int scale, int level) : level(level) {
 	used = false;
 
 	sp = new Sprite("img/monumento.png", 2);
 
 	box.SetX(posX * 16 * scale);
-	box.SetY(MONUMENT_MAP_GROUND * 16 * scale);
+	box.SetY(posY * 16 * scale);
 	box.SetH(sp->GetHeight());
 	box.SetW(sp->GetWidth());
 	sp->SetScaleX(scale);

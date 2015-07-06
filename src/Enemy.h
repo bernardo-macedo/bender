@@ -23,7 +23,7 @@
 #include "Being.h"
 
 
-#define ENEMY_MAP_GROUND 143
+#define ENEMY_MAP_GROUND 50
 
 class StateEnemy;
 

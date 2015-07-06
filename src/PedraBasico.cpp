@@ -52,10 +52,13 @@ void PedraBasico::NotifyCollision(GameObject* other) {
 }
 
 void PedraBasico::NotifyTileCollision() {
+	// TODO: devia chamar collided true, mas da uns bugs
+	// o ideal seria corrigir antes da entrega..but..
+	//collided = true;
 }
 
 bool PedraBasico::Is(std::string type) {
-	return type.compare("basico") == 0;
+	return Being::Is(type) || type.compare("basico") == 0;
 }
 
 Sprite* PedraBasico::GetSprite() {

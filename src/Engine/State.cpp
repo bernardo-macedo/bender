@@ -26,7 +26,15 @@ State::State(int posX) : initialPositionX(posX) {
 void State::UpdateArray(float dt) {
 	for (unsigned int i = 0; i < objectArray.size(); i++) {
 		objectArray[i]->Update(dt);
-		if (objectArray[i].get()->IsDead()) {
+		/*
+		if (objectArray[i]->Is("Being")) {
+			Being* being = (Being*) objectArray[i].get();
+			if (tileMap->CheckCollisions(being)) {
+				tileMap->ResolveTileCollisions(being);
+			}
+		}
+		*/
+		if (objectArray[i]->IsDead()) {
 			objectArray.erase(objectArray.begin() + i);
 		}
 		else{

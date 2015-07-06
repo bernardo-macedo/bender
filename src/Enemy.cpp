@@ -116,7 +116,7 @@ bool Enemy::IsDead() {
 }
 
 bool Enemy::Is(std::string type) {
-	return type.compare("Enemy") == 0;
+	return Being::Is(type) || type.compare("Enemy") == 0;
 }
 
 //--------------------------------------------------------

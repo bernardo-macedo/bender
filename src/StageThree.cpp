@@ -1,31 +1,30 @@
 /*
- * StageTwo.cpp
+ * StateThree.cpp
  *
- *  Created on: Jun 15, 2015
+ *  Created on: Jul 4, 2015
  *      Author: -Bernardo
  */
 
-#include "StageTwo.h"
+#include "StageThree.h"
 
-StageTwo::StageTwo(int posX) : AbstractStage(posX) {
+StageThree::StageThree(int posX) : AbstractStage(posX) {
 	int scale = 2;
-	int level = 2;
+	int level = 3;
 
 	Game::GetInstance()->SetCheckpoint(new Checkpoint(level, -1));
 
-	music = new Music("audio/pantano.ogg");
+	music = new Music("audio/deserto.ogg");
 	music->Play(Music::ALWAYS);
 
-	tileMap = new TileMap("pantano.tmx", 0, scale);
-	tileMap->SetExtraCollisionLayer(10);
+	tileMap = new TileMap("deserto.tmx", 6, scale);
 
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
 
-	AddObject(new Scroll(scale, 2));
-	AddObject(new Hud(scale, 2));
+	AddObject(new Scroll(scale, level));
+	AddObject(new Hud(scale, level));
 
-	monuments.emplace_back(new Monumento(90, 8, scale, level));
-	monuments.emplace_back(new Monumento(215, 8, scale, level));
+	monuments.emplace_back(new Monumento(90, 9, scale, level));
+	monuments.emplace_back(new Monumento(205, 8, scale, level));
 
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);
@@ -33,30 +32,29 @@ StageTwo::StageTwo(int posX) : AbstractStage(posX) {
 
 	levelUpTimer = new Timer();
 
-	enemies.emplace_back(new Enemy(scale, 900));
-	enemies.emplace_back(new Enemy(scale, 4000));
+	enemies.emplace_back(new Enemy(scale, 450));
+	enemies.emplace_back(new Enemy(scale, 3800));
 	enemies.emplace_back(new Enemy(scale, 8000));
-	enemies.emplace_back(new Enemy(scale, 8300));
 	enemies.emplace_back(new Enemy(scale, 8600));
+	enemies.emplace_back(new Enemy(scale, 9500));
 
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());
 	levelUpText = NULL;
 }
 
-StageTwo::~StageTwo() {
-}
+StageThree::~StageThree() {}
 
-bool StageTwo::OnLevelWon(float dt) {
+bool StageThree::OnLevelWon(float dt) {
 	levelUpTimer->Update(dt);
 
 	if (levelUpTimer->Get() > 1) {
 		SDL_Color color;
-		color.r = color.g = color.b = 225;
+		color.r = color.g = color.b = 125;
 		color.a = 255;
 		levelUpText = new Text("font/Call me maybe.ttf", 40, Text::SOLID,
 				"YOU WIN! Press space", color, Game::SCREEN_WIDTH/2 - 150, Game::SCREEN_HEIGHT/2 - 40);
 		if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
-			Game::GetInstance()->Push(new StageThree());
+			Game::GetInstance()->SetCheckpoint(NULL);
 			popRequested = true;
 		}
 		return true;

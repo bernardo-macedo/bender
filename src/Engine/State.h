@@ -11,17 +11,19 @@
 #include <vector>
 
 #include "../Being.h"
+#include "TileSet/TileMap.h"
 
 class State {
 protected:
-	void UpdateArray(float dt);
-	void RenderArray();
-
+	TileMap* tileMap;
+	std::vector<std::unique_ptr<GameObject>> objectArray;
 	bool popRequested;
 	bool quitRequested;
 	int initialPositionX;
 
-	std::vector<std::unique_ptr<GameObject>> objectArray;
+	void UpdateArray(float dt);
+	void RenderArray();
+
 public:
 	State(int posX = -1);
 	virtual ~State();

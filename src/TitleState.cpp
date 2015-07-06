@@ -48,7 +48,7 @@ void TitleState::Update(float dt) {
 				} else if (lastCheckpoint->GetLevel() == 2) {
 					Game::GetInstance()->Push(new StageTwo(lastCheckpoint->GetPositionX()));
 				} else if (lastCheckpoint->GetLevel() == 3) {
-					// StageThree()..
+					Game::GetInstance()->Push(new StageThree(lastCheckpoint->GetPositionX()));
 				}
 			}
 		}

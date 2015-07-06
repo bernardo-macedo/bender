@@ -1,12 +1,12 @@
 /*
- * StageTwo.h
+ * StateThree.h
  *
- *  Created on: Jun 15, 2015
+ *  Created on: Jul 4, 2015
  *      Author: -Bernardo
  */
 
-#ifndef STAGETWO_H_
-#define STAGETWO_H_
+#ifndef STAGETHREE_H_
+#define STAGETHREE_H_
 
 #include "Engine/State.h"
 #include "Engine/TileSet/TileMap.h"
@@ -20,15 +20,14 @@
 #include "Monumento.h"
 #include "Enemy.h"
 #include "EnemyAIManager.h"
-#include "StageThree.h"
 
-class StageTwo : public AbstractStage {
+class StageThree : public AbstractStage {
 public:
-	StageTwo(int posX = -1);
-	virtual ~StageTwo();
+	StageThree(int posX = -1);
+	virtual ~StageThree();
 
 	bool OnLevelWon(float dt);
 
 };
 
-#endif /* STAGETWO_H_ */
+#endif /* STAGETHREE_H_ */

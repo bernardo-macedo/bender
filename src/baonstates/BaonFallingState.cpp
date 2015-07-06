@@ -16,7 +16,6 @@
 #include "BaonWalkState.h"
 #include <iostream>
 
-// TODO: receber Baon no construtor
 BaonFallingState::BaonFallingState(bool flipped) {
 	this->flipped = flipped;
 	popRequested = false;
