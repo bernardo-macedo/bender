@@ -209,7 +209,7 @@ void TileMap::ResolveTileCollisions(Being* being) {
 		Tile tile = it->second;
 		Point overlap = scaledRect.Intersection(tile.GetBox());
 
-		if (fabs(overlap.getY()) >= fabs(overlap.getX())) {
+		if (fabs(overlap.getY()) <= fabs(overlap.getX())) {
 
 			float distY = scaledRect.GetY() - tile.GetBox().GetY();
 			// tileIndex = 5 eh um erro do mapa
