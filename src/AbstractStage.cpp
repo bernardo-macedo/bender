@@ -123,6 +123,10 @@ void AbstractStage::Render() {
 		baon->Render();
 	}
 
+	if(!baon->bendHUD->IsDead()){
+		baon->bendHUD->Render();
+	}
+
 	RenderArray();
 
 	if (levelUpText != NULL) {
