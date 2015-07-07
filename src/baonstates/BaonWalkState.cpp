@@ -16,7 +16,7 @@
 #include "BaonPunchState.h"
 #include "BaonStandState.h"
 
-BaonWalkState::BaonWalkState(bool fliped) {
+BaonWalkState::BaonWalkState(bool fliped) : BaonState(){
 	this->flipped = fliped;
 	popRequested = false;
 	nextRequested = false;
@@ -24,7 +24,7 @@ BaonWalkState::BaonWalkState(bool fliped) {
 	t = new Timer();
 }
 
-void BaonWalkState::Update(float dt){
+void BaonWalkState::Update_(float dt){
 	t->Update(dt);
 	if(!executed){
 		baon->Walk(flipped);

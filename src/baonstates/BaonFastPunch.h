@@ -17,7 +17,7 @@ public:
 	BaonFastPunch(bool flipped);
 	virtual ~BaonFastPunch();
 
-	void Update(float dt);
+	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
 };

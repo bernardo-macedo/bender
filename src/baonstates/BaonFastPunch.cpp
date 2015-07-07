@@ -13,7 +13,7 @@
 #include "../Engine/Physics/Body.h"
 #include "../Engine/Physics/Force.h"
 
-BaonFastPunch::BaonFastPunch(bool flipped) {
+BaonFastPunch::BaonFastPunch(bool flipped) : BaonState(){
 	executed = false;
 	nextRequested = false;
 	this->flipped = flipped;
@@ -23,7 +23,7 @@ BaonFastPunch::BaonFastPunch(bool flipped) {
 BaonFastPunch::~BaonFastPunch() {
 }
 
-void BaonFastPunch::Update(float dt) {
+void BaonFastPunch::Update_(float dt) {
 	if(!executed){
 		baon->GetSprite()->SetFrameHeight(50);
 		baon->GetSprite()->SetFrameWidth(50);

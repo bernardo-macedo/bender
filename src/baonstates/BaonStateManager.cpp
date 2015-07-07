@@ -119,15 +119,18 @@ void BaonStateManager::Update(float dt) {
 	}
 
 	if(InputManager::GetInstance().KeyPress(F_KEY)){
-		currentState = estados["BEND"];
-		currentState->SetFlipped(false);
-		currentState->Reset();
+		baon->SetBendMode(true);
+		//currentState = estados["BEND"];
+		//currentState->SetFlipped(previousState->IsFlipped());
+		//currentState->Reset();
+		//previousState = currentState;
 	}
 
 	currentState->Update(dt);
 
 	if(currentState->NextRequested()){
-		if(!currentState->Is("JUMPING")){
+		if(!currentState->Is("JUMPING")
+			&& !currentState->Is("FALLING")){
 			previousState = currentState;
 		}
 		estados[currentState->Next()]->SetFlipped(currentState->GetNextFlipped());

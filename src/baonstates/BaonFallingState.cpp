@@ -16,7 +16,7 @@
 #include "BaonWalkState.h"
 #include <iostream>
 
-BaonFallingState::BaonFallingState(bool flipped) {
+BaonFallingState::BaonFallingState(bool flipped) : BaonState(){
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
@@ -24,7 +24,7 @@ BaonFallingState::BaonFallingState(bool flipped) {
 	executed = false;
 }
 
-void BaonFallingState::Update(float dt) {
+void BaonFallingState::Update_(float dt) {
 	if (!executed && baon->IsFalling()) {
 		baon->SetJumpFrame();
 		baon->MidAir();

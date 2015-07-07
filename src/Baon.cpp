@@ -155,14 +155,13 @@ void Baon::LoadSpriteData() {
 }
 
 void Baon::Update(float dt) {
-	this->bendMode = false;
-
 	stateManager->Update(dt);
 	if(!stateManager->GetCurrentState()->Is("JUMPING")
 			&& !stateManager->GetCurrentState()->Is("FALLING")
 			&& !stateManager->GetCurrentState()->Is("TAKEHIT")
 			&& !stateManager->GetCurrentState()->Is("DYING")
-			&& !stateManager->GetCurrentState()->Is("FASTPUNCH")){
+			&& !stateManager->GetCurrentState()->Is("FASTPUNCH")
+			&& !stateManager->GetCurrentState()->Is("ATTACK1")){
 		sp->Update(dt);
 	}
 

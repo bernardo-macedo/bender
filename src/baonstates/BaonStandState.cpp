@@ -15,7 +15,7 @@
 #include "BaonWalkState.h"
 #include <iostream>
 
-BaonStandState::BaonStandState(bool flipped) {
+BaonStandState::BaonStandState(bool flipped) : BaonState(){
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
@@ -23,7 +23,7 @@ BaonStandState::BaonStandState(bool flipped) {
 	id = "STAND";
 }
 
-void BaonStandState::Update(float dt) {
+void BaonStandState::Update_(float dt) {
 	if(!executed){
 		baon->Stand(flipped);
 		executed = true;

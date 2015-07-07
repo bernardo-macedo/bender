@@ -10,7 +10,7 @@
 #include "../Baon.h"
 #include "../Engine/Game.h"
 // TODO: receber Baon no construtor
-BaonAttack1State::BaonAttack1State(bool flipped) {
+BaonAttack1State::BaonAttack1State(bool flipped) : BaonState(){
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
@@ -19,12 +19,12 @@ BaonAttack1State::BaonAttack1State(bool flipped) {
 	canExecute = false;
 }
 
-void BaonAttack1State::Update(float dt) {
+void BaonAttack1State::Update_(float dt) {
 	if(!executed){
 		if(canExecute){
 			pedra = new PedraBasico(baon->GetBox().GetX(),
-					baon->GetBox().GetY() + baon->GetBox().GetH(),
-					2);
+					baon->GetBox().GetY() + baon->GetBox().GetH() - 10*baon->GetScale(),
+					baon->GetScale());
 			pedra->GetSprite()->SetFrameWidth(35);
 			pedra->GetSprite()->SetFrameHeight(50);
 			pedra->GetSprite()->SetFrameCount(3);
@@ -57,6 +57,9 @@ void BaonAttack1State::Update(float dt) {
 					canExecute = false;
 				}
 			}
+		}
+		if(baon->GetSprite()->GetCurrentFrame() < 2){
+			baon->GetSprite()->Update(dt);
 		}
 		baon->MidAir();
 	}

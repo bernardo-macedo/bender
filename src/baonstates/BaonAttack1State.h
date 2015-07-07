@@ -16,7 +16,7 @@
 class BaonAttack1State : public BaonState{
 public:
 	BaonAttack1State(bool flipped);
-	void Update(float dt);
+	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
 private:

@@ -11,10 +11,11 @@
 #include <string>
 
 #include "../Engine/Timer.h"
+#include "../Engine/InputManager.h"
+#include "../BendHUD.h"
+#include "../Baon.h"
 
 class Body;
-
-class Baon;
 class BaonStateManager;
 
 class BaonState {
@@ -22,7 +23,8 @@ public:
 	BaonState();
 	virtual ~BaonState();
 
-	virtual void Update(float dt) = 0;
+	void Update(float dt);
+	virtual void Update_(float dt) = 0;
 	virtual void NotifyTileCollision() = 0;
 	std::string Next();
 	void SetNext(std::string next);
@@ -45,7 +47,12 @@ protected:
 	BaonStateManager* sm;
 	std::string next, id;
 	bool nextRequested, popRequested, flipped, executed, nextFlipped;
-	Timer *t;
+	Timer *t, *bendTimer;
+
+	int bendKey[4];
+	bool stateChanged;
+	BendHUD* bendHUD;
+	unsigned int countBend;
 };
 
 #endif /* BAONSTATE_H_ */

@@ -13,14 +13,14 @@
 
 #include <iostream>
 
-BaonJumpState::BaonJumpState(bool flipped) {
+BaonJumpState::BaonJumpState(bool flipped) : BaonState(){
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
 	id = "JUMP";
 }
 
-void BaonJumpState::Update(float dt) {
+void BaonJumpState::Update_(float dt) {
 	if(!executed){
 		baon->Jump(flipped);
 		baon->SetJumpFrame();

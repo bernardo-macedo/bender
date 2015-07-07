@@ -11,7 +11,7 @@
 #include "../Engine/Timer.h"
 #include "BaonStateManager.h"
 
-BaonKickState::BaonKickState(bool flipped) {
+BaonKickState::BaonKickState(bool flipped) : BaonState(){
 	this->flipped = flipped;
 	t = new Timer();
 	t->Restart();
@@ -20,7 +20,7 @@ BaonKickState::BaonKickState(bool flipped) {
 	id = "KICK";
 }
 
-void BaonKickState::Update(float dt) {
+void BaonKickState::Update_(float dt) {
 	if(!executed){
 		baon->Kick();
 		executed = true;

@@ -12,7 +12,7 @@
 #include "BaonStateManager.h"
 #include "../Engine/Game.h"
 
-BaonPunchState::BaonPunchState(bool flipped) {
+BaonPunchState::BaonPunchState(bool flipped) : BaonState(){
 	this->flipped = flipped;
 	nextRequested = false;
 	executed = false;
@@ -21,7 +21,7 @@ BaonPunchState::BaonPunchState(bool flipped) {
 	soltouPedra = false;
 }
 
-void BaonPunchState::Update(float dt) {
+void BaonPunchState::Update_(float dt) {
 	if(!executed){
 		if(!baon->IsCloseToEnemy()){
 			soltouPedra = true;

@@ -15,7 +15,7 @@
 #include <iostream>
 
 // TODO: receber Baon no construtor
-BaonBendState::BaonBendState(bool flipped) {
+BaonBendState::BaonBendState(bool flipped) : BaonState(){
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
@@ -28,7 +28,7 @@ BaonBendState::BaonBendState(bool flipped) {
 	countBend = 0;
 }
 
-void BaonBendState::Update(float dt) {
+void BaonBendState::Update_(float dt) {
 	t->Update(dt);
 	baon->SetBendMode(true);
 	baon->bendHUD->isHide = false;

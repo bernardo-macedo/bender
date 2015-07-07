@@ -12,14 +12,14 @@
 #include "BaonJumpState.h"
 #include "BaonStandState.h"
 
-BaonRunState::BaonRunState(bool flipped){
+BaonRunState::BaonRunState(bool flipped) : BaonState(){
 	executed = false;
 	this->flipped = flipped;
 	nextRequested = false;
 	t = new Timer();
 	id = "RUN";
 }
-void BaonRunState::Update(float dt) {
+void BaonRunState::Update_(float dt) {
 	t->Update(dt);
 	if(!executed){
 		baon->Run(flipped);

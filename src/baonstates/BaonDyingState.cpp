@@ -12,7 +12,7 @@
 
 float BaonDyingState::STATE_TIME = 1;
 
-BaonDyingState::BaonDyingState(bool flipped) {
+BaonDyingState::BaonDyingState(bool flipped) : BaonState(){
 	t = new Timer();
 	executed = false;
 	nextRequested = false;
@@ -23,7 +23,7 @@ BaonDyingState::~BaonDyingState() {
 	// TODO Auto-generated destructor stub
 }
 
-void BaonDyingState::Update(float dt) {
+void BaonDyingState::Update_(float dt) {
 	if(!executed){
 		baon->GetSprite()->SetFrameWidth(32);
 		baon->GetSprite()->SetFrameHeight(50);

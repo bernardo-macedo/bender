@@ -12,7 +12,7 @@
 #include "../Baon.h"
 
 
-BaonTakeHitState::BaonTakeHitState(bool flipped) {
+BaonTakeHitState::BaonTakeHitState(bool flipped) : BaonState(){
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
@@ -20,7 +20,7 @@ BaonTakeHitState::BaonTakeHitState(bool flipped) {
 	id = "TAKEHIT";
 }
 
-void BaonTakeHitState::Update(float dt) {
+void BaonTakeHitState::Update_(float dt) {
 	if(!executed){
 		baon->TakeHit(flipped);
 		executed = true;

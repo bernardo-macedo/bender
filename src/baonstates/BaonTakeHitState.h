@@ -14,7 +14,7 @@ class BaonTakeHitState : public BaonState{
 public:
 	BaonTakeHitState(bool flipped);
 
-	void Update(float dt);
+	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
 };
