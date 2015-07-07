@@ -68,6 +68,8 @@ public:
 	bool IsCloseToEnemy();
 	void SetCloseToEnemy(bool isClose);
 	void RestoreLife();
+	void SetTouchingGround(bool isTouchingGround);
+	bool GetTouchingGround();
 
 	Sprite* GetSprite();
 
@@ -94,6 +96,7 @@ private:
 	bool closeToEnemy;
 	bool levelWon;
 	bool isFalling;
+	bool isTouchingGround;
 
 	Sprite *spBending;
 	Sprite *sp;

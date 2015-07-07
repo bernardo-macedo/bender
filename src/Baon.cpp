@@ -432,3 +432,11 @@ bool Baon::GetBendMode() {
 void Baon::SetBendMode(bool bendMode_) {
 	this->bendMode = bendMode_;
 }
+
+void Baon::SetTouchingGround(bool isTouchingGround) {
+	this->isTouchingGround = isTouchingGround;
+}
+
+bool Baon::GetTouchingGround() {
+	return isTouchingGround;
+}

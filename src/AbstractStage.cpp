@@ -23,6 +23,9 @@ AbstractStage::~AbstractStage() {
 
 void AbstractStage::Update(float dt) {
 	baon->SetCloseToEnemy(false);
+
+	baon->SetTouchingGround(tileMap->IsTouchingGround(baon->GetBox(), baon->GetScale()));
+
 	if(baon->GetBendMode()){
 		dt = dt/5;
 	}
@@ -38,7 +41,7 @@ void AbstractStage::Update(float dt) {
 			enemyAI->SetEnemy(enemies[i].get());
 			enemyAI->update(dt);
 
-			if (tileMap->CheckCollisions(enemies[i].get())) {
+			if (tileMap->CheckCollisions(enemies[i]->GetBox(), enemies[i]->GetScale())) {
 				tileMap->ResolveTileCollisions(enemies[i].get());
 			}
 		}
@@ -71,7 +74,7 @@ void AbstractStage::Update(float dt) {
 		}
 
 		baon->Update(dt);
-		if (tileMap->CheckCollisions(baon)) {
+		if (tileMap->CheckCollisions(baon->GetBox(), baon->GetScale())) {
 			tileMap->ResolveTileCollisions(baon);
 		}
 	}

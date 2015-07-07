@@ -51,9 +51,10 @@ public:
 	int GetDepth ();
 	float GetMapMax();
 
-	bool CheckCollisions(Being* being);
+	bool CheckCollisions(Rect rect, int scale);
 	void ResolveTileCollisions(Being* being);
 	void SetExtraCollisionLayer(int layer);
+	bool IsTouchingGround(Rect rect, int scale);
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

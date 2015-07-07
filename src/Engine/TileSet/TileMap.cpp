@@ -117,12 +117,12 @@ int TileMap::GetDepth() {
 	return mapDepth;
 }
 
-bool TileMap::CheckCollisions(Being* being) {
-	Rect scaledRect = being->GetBox();
+bool TileMap::CheckCollisions(Rect rect, int scale) {
+	Rect scaledRect = rect;
 	bool hasCollided = false;
 
-	scaledRect.SetW(scaledRect.GetW() * being->GetScale());
-	scaledRect.SetH(scaledRect.GetH() * being->GetScale());
+	scaledRect.SetW(scaledRect.GetW() * scale);
+	scaledRect.SetH(scaledRect.GetH() * scale);
 
 	// pega tiles do layer de colisao
 	std::vector<std::pair<int, Rect>> tilesToCheck = GetTilesSurroundingRect(scaledRect, collisionLayerIndex);
@@ -155,7 +155,6 @@ bool TileMap::CheckCollisions(Being* being) {
 			}
 		}
 	}
-
 	return hasCollided;
 }
 
@@ -273,4 +272,22 @@ float TileMap::GetMapMax() {
 
 void TileMap::SetExtraCollisionLayer(int layer) {
 	this->extraCollisionLayerIndex = layer;
+}
+
+bool TileMap::IsTouchingGround(Rect rect, int scale) {
+	bool result = false;
+	std::multimap<float, Tile> previousTileCollisions = tileCollisions;
+
+	CheckCollisions(rect, scale);
+	std::multimap<float, Tile>::iterator it;
+
+	for(it = tileCollisions.begin(); it != tileCollisions.end(); ++it) {
+		Tile tile = it->second;
+		if (std::find(groundTileIndexes.begin(), groundTileIndexes.end(), tile.GetIndex()) != groundTileIndexes.end()) {
+			result = true;
+			break;
+		}
+	}
+	tileCollisions = previousTileCollisions;
+	return result;
 }
