@@ -118,12 +118,8 @@ void BaonStateManager::Update(float dt) {
 		}
 	}
 
-	if(InputManager::GetInstance().KeyPress(F_KEY)){
+	if(InputManager::GetInstance().KeyPress(F_KEY) && baon->GetTouchingGround()){
 		baon->SetBendMode(true);
-		//currentState = estados["BEND"];
-		//currentState->SetFlipped(previousState->IsFlipped());
-		//currentState->Reset();
-		//previousState = currentState;
 	}
 
 	currentState->Update(dt);
