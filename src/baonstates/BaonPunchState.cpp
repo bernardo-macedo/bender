@@ -90,7 +90,7 @@ void BaonPunchState::Update_(float dt) {
 		}
 	}
 	if(baon->isTakingDamage()){
-		if(!pedra->Isthrown()){
+		if(soltouPedra && !pedra->Isthrown()){
 			pedra->SetDead(true);
 		}
 		nextRequested = true;
