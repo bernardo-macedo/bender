@@ -89,6 +89,14 @@ void BaonPunchState::Update_(float dt) {
 			}
 		}
 	}
+	if(baon->isTakingDamage()){
+		if(!pedra->Isthrown()){
+			pedra->SetDead(true);
+		}
+		nextRequested = true;
+		next = "TAKEHIT";
+		nextFlipped = flipped;
+	}
 }
 
 void BaonPunchState::NotifyTileCollision() {
