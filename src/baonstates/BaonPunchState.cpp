@@ -25,21 +25,29 @@ void BaonPunchState::Update_(float dt) {
 	if(!executed){
 		if(!baon->IsCloseToEnemy()){
 			soltouPedra = true;
+			float pedraX;
 			if(!flipped){
-				pedra = new PedraBasico(baon->GetBox().GetX() + 30*baon->GetScale(),
-							baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
-				pedra->SetID(100);
+				pedraX = baon->GetBox().GetX() + 30*baon->GetScale();
 			}
 			else{
-				pedra = new PedraBasico(baon->GetBox().GetX() - 30*baon->GetScale(),
-							baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
-				pedra->SetID(100);
+				pedraX = baon->GetBox().GetX() - 30*baon->GetScale();
+
 			}
+			pedra = new PedraBasico(pedraX,
+						baon->GetBox().GetY() + 25*baon->GetScale(),
+						//baon->GetGroundTouchResolver()->GetGroundHeight(pedraX + 10),
+						baon->GetScale());
+			pedra->SetID(100);
 			pedra->GetSprite()->SetFrameHeight(25);
 			pedra->GetSprite()->SetFrameWidth(35);
 			pedra->GetSprite()->SetLine(2, 23);
 			pedra->GetSprite()->SetFrameTime(0.02);
-			Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+
+			//if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
+				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+			//} else {
+			//	delete pedra;
+			//}
 		}
 		else{
 			baon->GetSprite()->SetFrameTime(0.06);

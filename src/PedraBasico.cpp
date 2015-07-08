@@ -19,11 +19,13 @@ PedraBasico::PedraBasico(int x, int y, int scale) {
 	collided = false;
 	this->scale = scale;
 
-	b = new Body("basico", x, y);
 	box.SetX(x);
-	box.SetY(y);
 	box.SetW(21*scale);
 	box.SetH(20*scale);
+	box.SetY(y);
+
+	b = new Body("basico", box.GetX(), box.GetY());
+
 	thrown = false;
 	dead = false;
 }

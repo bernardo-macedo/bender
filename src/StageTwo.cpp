@@ -20,6 +20,7 @@ StageTwo::StageTwo(int posX) : AbstractStage(posX) {
 	tileMap->SetExtraCollisionLayer(10);
 
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
+	baon->SetGroundTouchResolver(tileMap);
 
 	AddObject(new Scroll(scale, 2));
 	AddObject(new Hud(scale, 2));

@@ -144,6 +144,14 @@ void Baon::SetJumpFrame() {
 	sp->SetLine(JUMP, spriteData[0]);
 }
 
+void Baon::SetGroundTouchResolver(GroundTouchResolver* resolver) {
+	this->resolver = resolver;
+}
+
+GroundTouchResolver* Baon::GetGroundTouchResolver() {
+	return resolver;
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);

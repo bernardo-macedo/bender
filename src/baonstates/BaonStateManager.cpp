@@ -118,7 +118,7 @@ void BaonStateManager::Update(float dt) {
 		}
 	}
 
-	if(InputManager::GetInstance().KeyPress(F_KEY) && baon->GetTouchingGround()){
+	if(InputManager::GetInstance().KeyPress(SPACE_KEY) && baon->GetTouchingGround()){
 		baon->SetBendMode(true);
 	}
 

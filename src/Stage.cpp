@@ -31,6 +31,7 @@ Stage::Stage(int posX) : AbstractStage(posX) {
 	levelUpTimer = new Timer();
 
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
+	baon->SetGroundTouchResolver(tileMap);
 
 	enemies.emplace_back(new Enemy(scale, 900));
 	enemies.emplace_back(new Enemy(scale, 4000));

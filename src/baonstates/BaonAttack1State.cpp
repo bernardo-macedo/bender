@@ -29,7 +29,12 @@ void BaonAttack1State::Update_(float dt) {
 			pedra->GetSprite()->SetFrameHeight(50);
 			pedra->GetSprite()->SetFrameCount(3);
 			pedra->GetSprite()->SetLine(0, 50);
-			Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+
+			//if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
+				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+			//} else {
+			//	delete pedra;
+			//}
 			baon->Jump(flipped);
 			baon->SetJumpFrame();
 			baon->GetBody()->SetVelY(-700);

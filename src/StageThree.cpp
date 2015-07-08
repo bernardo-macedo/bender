@@ -19,6 +19,7 @@ StageThree::StageThree(int posX) : AbstractStage(posX) {
 	tileMap = new TileMap("deserto.tmx", 6, scale);
 
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
+	baon->SetGroundTouchResolver(tileMap);
 
 	AddObject(new Scroll(scale, level));
 	AddObject(new Hud(scale, level));

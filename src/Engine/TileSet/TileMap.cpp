@@ -277,6 +277,7 @@ void TileMap::SetExtraCollisionLayer(int layer) {
 bool TileMap::IsTouchingGround(Rect rect, int scale) {
 	bool result = false;
 	std::multimap<float, Tile> previousTileCollisions = tileCollisions;
+	std::multimap<float, Tile> previousExtraTileCollisions = extraTileCollisions;
 
 	CheckCollisions(rect, scale);
 	std::multimap<float, Tile>::iterator it;
@@ -289,5 +290,24 @@ bool TileMap::IsTouchingGround(Rect rect, int scale) {
 		}
 	}
 	tileCollisions = previousTileCollisions;
+	extraTileCollisions = previousExtraTileCollisions;
 	return result;
+}
+
+float TileMap::GetGroundHeight(float x) {
+	float groundY;
+
+	Rect rect;
+	rect.SetX(x);
+	rect.SetW(21);
+	rect.SetH(1);
+
+	// TODO: verificar se passo de 1 pixel eh grande demais. Trocar por 0.5 caso seja.
+	for (groundY = 0; groundY < Game::SCREEN_HEIGHT; groundY++) {
+		rect.SetY(groundY);
+		if (IsTouchingGround(rect, 1)) {
+			break;
+		}
+	}
+	return groundY;
 }

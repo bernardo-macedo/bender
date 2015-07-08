@@ -77,19 +77,19 @@ void BaonState::Update(float dt) {
 	if(baon->GetBendMode()){
 		bendTimer->Update(dt);
 		baon->bendHUD->isHide = false;
-		if(InputManager::GetInstance().KeyPress(H_KEY)){
+		if(InputManager::GetInstance().KeyPress(UP_ARROW_KEY)){
 			bendKey[countBend] = 0;
 			countBend++;
 		}
-		if(InputManager::GetInstance().KeyPress(J_KEY)){
+		if(InputManager::GetInstance().KeyPress(RIGHT_ARROW_KEY)){
 			bendKey[countBend] = 1;
 			countBend++;
 		}
-		if(InputManager::GetInstance().KeyPress(K_KEY)){
+		if(InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)){
 			bendKey[countBend] = 2;
 			countBend++;
 		}
-		if(InputManager::GetInstance().KeyPress(L_KEY)){
+		if(InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
 			bendKey[countBend] = 3;
 			countBend++;
 		}
@@ -106,7 +106,7 @@ void BaonState::Update(float dt) {
 				bendKey[i] = -1;
 			}
 		}
-		if(InputManager::GetInstance().KeyRelease(F_KEY) || bendTimer->Get() > 3 ||countBend >= 3){
+		if(InputManager::GetInstance().KeyRelease(SPACE_KEY) || bendTimer->Get() > 3 ||countBend >= 3){
 			countBend = 0;
 			stateChanged = true;
 			baon->SetBendMode(false);
