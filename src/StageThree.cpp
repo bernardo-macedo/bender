@@ -7,9 +7,7 @@
 
 #include "StageThree.h"
 
-StageThree::StageThree(int posX) : AbstractStage(posX) {
-	int scale = 2;
-	int level = 3;
+StageThree::StageThree(int posX) : AbstractStage(2, 3, posX) {
 
 	Game::GetInstance()->SetCheckpoint(new Checkpoint(level, -1));
 
@@ -22,7 +20,6 @@ StageThree::StageThree(int posX) : AbstractStage(posX) {
 	baon->SetGroundTouchResolver(tileMap);
 
 	AddObject(new Scroll(scale, level));
-	AddObject(new Hud(scale, level));
 
 	monuments.emplace_back(new Monumento(90, 9, scale, level));
 	monuments.emplace_back(new Monumento(205, 8, scale, level));

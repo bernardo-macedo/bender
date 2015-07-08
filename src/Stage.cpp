@@ -19,9 +19,7 @@
 #include "Engine/Sprite.h"
 #include "PedraBasico.h"
 
-Stage::Stage(int posX) : AbstractStage(posX) {
-	int scale = 2;
-	int level = 1;
+Stage::Stage(int posX) : AbstractStage(2, 1, posX) {
 
 	music = new Music("audio/floresta.ogg");
 	music->Play(Music::ALWAYS);
@@ -46,7 +44,6 @@ Stage::Stage(int posX) : AbstractStage(posX) {
 	monuments.emplace_back(new Monumento(262, 8, scale, level));
 
 	AddObject(new Scroll(scale, level));
-	AddObject(new Hud(scale, level));
 
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);

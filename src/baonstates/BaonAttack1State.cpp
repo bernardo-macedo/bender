@@ -21,7 +21,8 @@ BaonAttack1State::BaonAttack1State(bool flipped) : BaonState(){
 
 void BaonAttack1State::Update_(float dt) {
 	if(!executed){
-		if(canExecute){
+		if(canExecute && !Hud::GetInstance()->IsBuffering(Hud::ONE)){
+
 			pedra = new PedraBasico(baon->GetBox().GetX(),
 					baon->GetBox().GetY() + baon->GetBox().GetH() - 10*baon->GetScale(),
 					baon->GetScale());
@@ -40,6 +41,8 @@ void BaonAttack1State::Update_(float dt) {
 			baon->GetBody()->SetVelY(-700);
 			executed = true;
 			justJumped = true;
+
+			Hud::GetInstance()->SetBuffering(Hud::ONE);
 		}
 		else{
 			nextRequested = true;

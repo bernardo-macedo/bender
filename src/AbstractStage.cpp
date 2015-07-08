@@ -7,7 +7,11 @@
 
 #include "AbstractStage.h"
 
-AbstractStage::AbstractStage(int posX) : State(posX) {}
+AbstractStage::AbstractStage(int scale, int level, int posX) : State(posX) {
+	this->scale = scale;
+	this->level = level;
+	hud = Hud::GetInstance(scale, level);
+}
 
 AbstractStage::~AbstractStage() {
 	if (music != NULL) {
@@ -19,9 +23,13 @@ AbstractStage::~AbstractStage() {
 	delete tileMap;
 	delete levelUpText;
 	delete levelUpTimer;
+	delete hud;
 }
 
 void AbstractStage::Update(float dt) {
+
+	hud->Update(dt);
+
 	baon->SetCloseToEnemy(false);
 
 	baon->SetTouchingGround(tileMap->IsTouchingGround(baon->GetBox(), baon->GetScale()));
@@ -129,6 +137,8 @@ void AbstractStage::Render() {
 	if(!baon->bendHUD->IsDead()){
 		baon->bendHUD->Render();
 	}
+
+	hud->Render();
 
 	RenderArray();
 

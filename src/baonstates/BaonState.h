@@ -53,6 +53,11 @@ protected:
 	bool stateChanged;
 	BendHUD* bendHUD;
 	unsigned int countBend;
+
+private:
+	enum Arrows {UP, RIGHT, DOWN, LEFT};
+
+	void VerifyAttackOne();
 };
 
 #endif /* BAONSTATE_H_ */

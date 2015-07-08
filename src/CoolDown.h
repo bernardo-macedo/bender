@@ -14,16 +14,22 @@
 
 class CoolDown {
 public:
-	CoolDown(float x, float y, int scale);
+	CoolDown(float x, float y, int scale, bool enabled);
 	virtual ~CoolDown();
 
 	void Update(float dt);
 	void Render();
+
+	void SetEnabled(bool enabled);
+	bool HasCompleted();
+	void Restart();
 private:
 	Timer t;
 	Sprite sp;
 	Point pos;
 	int currentFrame;
+	bool enabled;
+	bool completed;
 };
 
 #endif /* COOLDOWN_H_ */

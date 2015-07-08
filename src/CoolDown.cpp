@@ -7,12 +7,14 @@
 
 #include "CoolDown.h"
 
-CoolDown::CoolDown(float x, float y, int scale) : currentFrame(1) {
+CoolDown::CoolDown(float x, float y, int scale, bool enabled) : currentFrame(1) {
 	pos = Point(x,y);
 
 	sp = Sprite("img/cooldown.png", 14);
 	sp.SetScaleX(scale);
 	sp.SetScaleY(scale);
+
+	SetEnabled(enabled);
 }
 
 CoolDown::~CoolDown() {
@@ -20,15 +22,38 @@ CoolDown::~CoolDown() {
 }
 
 void CoolDown::Update(float dt) {
-	t.Update(dt);
+	if (enabled) {
+		t.Update(dt);
 
-	if (t.Get() > 0.5) {
-		currentFrame = currentFrame >= 14 ? 1 : currentFrame + 1;
-		sp.SetFrame(currentFrame);
-		t.Restart();
+		if (t.Get() > 0.5) {
+			currentFrame++;
+			sp.SetFrame(currentFrame);
+			t.Restart();
+			if (currentFrame >= 14) {
+				completed = true;
+				currentFrame = 1;
+			}
+		}
 	}
 }
 
 void CoolDown::Render() {
 	sp.Render(pos.getX(), pos.getY(), 0);
+}
+
+void CoolDown::SetEnabled(bool enabled) {
+	this->enabled = enabled;
+	if (enabled) {
+		sp.SetFrame(14);
+	} else {
+		sp.SetFrame(1);
+	}
+}
+
+bool CoolDown::HasCompleted() {
+	return completed;
+}
+
+void CoolDown::Restart() {
+	completed = false;
 }

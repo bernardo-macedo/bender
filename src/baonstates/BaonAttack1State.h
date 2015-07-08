@@ -12,6 +12,7 @@
 
 #include "BaonState.h"
 #include "../PedraBasico.h"
+#include "../Hud.h"
 
 class BaonAttack1State : public BaonState{
 public:

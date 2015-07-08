@@ -29,7 +29,7 @@
 
 class AbstractStage : public State {
 public:
-	AbstractStage(int posX = -1);
+	AbstractStage(int scale, int level, int posX = -1);
 	virtual ~AbstractStage();
 
 	void Update(float dt);
@@ -45,6 +45,9 @@ protected:
 	Music *music;
 	Timer* levelUpTimer;
 	Text* levelUpText;
+	Hud* hud;
+	int scale;
+	int level;
 
 	std::vector<std::unique_ptr<Enemy>> enemies;
 	std::vector<std::unique_ptr<Monumento>> monuments;

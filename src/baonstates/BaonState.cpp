@@ -78,34 +78,24 @@ void BaonState::Update(float dt) {
 		bendTimer->Update(dt);
 		baon->bendHUD->isHide = false;
 		if(InputManager::GetInstance().KeyPress(UP_ARROW_KEY)){
-			bendKey[countBend] = 0;
+			bendKey[countBend] = Arrows::UP;
 			countBend++;
 		}
 		if(InputManager::GetInstance().KeyPress(RIGHT_ARROW_KEY)){
-			bendKey[countBend] = 1;
+			bendKey[countBend] = Arrows::RIGHT;
 			countBend++;
 		}
 		if(InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)){
-			bendKey[countBend] = 2;
+			bendKey[countBend] = Arrows::DOWN;
 			countBend++;
 		}
 		if(InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
-			bendKey[countBend] = 3;
+			bendKey[countBend] = Arrows::LEFT;
 			countBend++;
 		}
-		if(bendKey[0] == 1 && bendKey[1] == 2 && bendKey[2] == 3){
-			stateChanged = true;
-			baon->SetBendMode(false);
-			executed = true;
-			nextRequested = true;
-			countBend = 0;
-			next = "ATTACK1";
-			nextFlipped = flipped;
-			baon->bendHUD->isHide = true;
-			for (int i = 0; i < 4; ++i){
-				bendKey[i] = -1;
-			}
-		}
+
+		VerifyAttackOne();
+
 		if(InputManager::GetInstance().KeyRelease(SPACE_KEY) || bendTimer->Get() > 3 ||countBend >= 3){
 			countBend = 0;
 			stateChanged = true;
@@ -121,4 +111,20 @@ void BaonState::Update(float dt) {
 	}
 	stateChanged = false;
 
+}
+
+void BaonState::VerifyAttackOne() {
+	if(bendKey[0] == Arrows::DOWN && bendKey[1] == Arrows::LEFT && bendKey[2] == Arrows::UP) {
+		stateChanged = true;
+		baon->SetBendMode(false);
+		executed = true;
+		nextRequested = true;
+		countBend = 0;
+		next = "ATTACK1";
+		nextFlipped = flipped;
+		baon->bendHUD->isHide = true;
+		for (int i = 0; i < 4; ++i){
+			bendKey[i] = -1;
+		}
+	}
 }

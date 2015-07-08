@@ -7,9 +7,7 @@
 
 #include "StageTwo.h"
 
-StageTwo::StageTwo(int posX) : AbstractStage(posX) {
-	int scale = 2;
-	int level = 2;
+StageTwo::StageTwo(int posX) : AbstractStage(2, 2, posX) {
 
 	Game::GetInstance()->SetCheckpoint(new Checkpoint(level, -1));
 
@@ -23,7 +21,6 @@ StageTwo::StageTwo(int posX) : AbstractStage(posX) {
 	baon->SetGroundTouchResolver(tileMap);
 
 	AddObject(new Scroll(scale, 2));
-	AddObject(new Hud(scale, 2));
 
 	monuments.emplace_back(new Monumento(90, 8, scale, level));
 	monuments.emplace_back(new Monumento(215, 8, scale, level));
@@ -42,6 +39,7 @@ StageTwo::StageTwo(int posX) : AbstractStage(posX) {
 
 	enemyAI = new EnemyAIManager(baon, enemies[0].get());
 	levelUpText = NULL;
+
 }
 
 StageTwo::~StageTwo() {
