@@ -10,7 +10,9 @@
 AbstractStage::AbstractStage(int scale, int level, int posX) : State(posX) {
 	this->scale = scale;
 	this->level = level;
-	hud = Hud::GetInstance(scale, level);
+
+	std::cout << "chamou getInstance hud" << std::endl;
+	Hud::GetInstance(scale, level);
 }
 
 AbstractStage::~AbstractStage() {
@@ -23,12 +25,11 @@ AbstractStage::~AbstractStage() {
 	delete tileMap;
 	delete levelUpText;
 	delete levelUpTimer;
-	delete hud;
 }
 
 void AbstractStage::Update(float dt) {
 
-	hud->Update(dt);
+	Hud::GetInstance()->Update(dt);
 
 	baon->SetCloseToEnemy(false);
 
@@ -138,7 +139,7 @@ void AbstractStage::Render() {
 		baon->bendHUD->Render();
 	}
 
-	hud->Render();
+	Hud::GetInstance()->Render();
 
 	RenderArray();
 

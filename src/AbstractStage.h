@@ -45,7 +45,6 @@ protected:
 	Music *music;
 	Timer* levelUpTimer;
 	Text* levelUpText;
-	Hud* hud;
 	int scale;
 	int level;
 
