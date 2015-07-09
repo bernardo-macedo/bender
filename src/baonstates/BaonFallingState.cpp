@@ -22,6 +22,7 @@ BaonFallingState::BaonFallingState(bool flipped) : BaonState(){
 	nextRequested = false;
 	id = "FALLING";
 	executed = false;
+	groundReached = false;
 }
 
 void BaonFallingState::Update_(float dt) {
@@ -29,18 +30,25 @@ void BaonFallingState::Update_(float dt) {
 		baon->SetJumpFrame();
 		baon->MidAir();
 		baon->Fall();
+		executed = true;
 	}
+
+
+	if (executed && groundReached) {
+		groundReached = false;
+	}
+
 }
 
 void BaonFallingState::NotifyTileCollision() {
-	if (!baon->IsFalling() && !executed) {
+	if (!baon->IsFalling() && !groundReached) {
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
 		nextFlipped = flipped;
 		nextRequested = true;
 		baon->land->Play(0);
 		baon->TakeDamage(false, false);
-		executed = true;
+		groundReached = true;
 	}
 
 }

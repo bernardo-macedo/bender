@@ -12,10 +12,7 @@ SwordEnemyAIManager::SwordEnemyAIManager(Baon* baon_, SwordEnemy* enemy_) {
 	this->enemy = enemy_;
 }
 
-SwordEnemyAIManager::~SwordEnemyAIManager() {
-	this->baon = nullptr;
-	this->enemy = nullptr;
-}
+SwordEnemyAIManager::~SwordEnemyAIManager() {}
 
 void SwordEnemyAIManager::update(const float dt) {
 

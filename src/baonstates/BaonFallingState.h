@@ -18,6 +18,8 @@ public:
 	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
+private:
+	bool groundReached;
 };
 
 #endif /* BAONFALLINGSTATE_H_ */

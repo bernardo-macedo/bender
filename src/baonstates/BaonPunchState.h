@@ -12,17 +12,21 @@
 
 #include "BaonState.h"
 #include "../PedraBasico.h"
+#include "../Engine/Sound.h"
 class Timer;
 
-class BaonPunchState : public BaonState{
+class BaonPunchState : public BaonState {
 public:
 	BaonPunchState(bool flipped);
+	virtual ~BaonPunchState();
 	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
 private:
 	PedraBasico *pedra;
 	bool soltouPedra;
+	Sound *throwRockSound;
+	Sound *punchSound;
 };
 
 #endif /* BAONSTATES_BAONPUNCHSTATE_H_ */

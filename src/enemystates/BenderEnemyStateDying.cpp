@@ -7,18 +7,20 @@
 
 #include "BenderEnemyStateDying.h"
 
-EnemyStateDying::EnemyStateDying(Enemy* const enemy_) : StateEnemy(enemy_)
-{
+EnemyStateDying::EnemyStateDying(Enemy* const enemy_) : StateEnemy(enemy_) {
 	t = new Timer();
+	dyingSound = new Sound("audio/sfx_enemy_fall.wav");
 }
 
 EnemyStateDying::~EnemyStateDying() {
 	delete t;
+	delete dyingSound;
 }
 
 void EnemyStateDying::enter(){
 	askEnd = false;
 	t->Restart();
+	dyingSound->Play(0);
 	enemy->GetSprite()->SetFrameWidth(33);
 	enemy->GetSprite()->SetFrameHeight(50);
 	enemy->GetSprite()->SetFrameTime(0.1);

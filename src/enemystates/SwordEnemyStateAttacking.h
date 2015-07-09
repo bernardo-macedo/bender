@@ -9,6 +9,7 @@
 #define ENEMYSTATES_SWORDENEMYSTATEATTACKING_H_
 
 #include "StateSwordEnemy.h"
+#include "../Engine/Sound.h"
 
 class SwordEnemyStateAttacking : public StateSwordEnemy {
 
@@ -22,7 +23,7 @@ class SwordEnemyStateAttacking : public StateSwordEnemy {
 		/**
 		* The destructor.
 		*/
-		virtual ~SwordEnemyStateAttacking(){}
+		virtual ~SwordEnemyStateAttacking();
 
 		/**
 		* @see StateEnemy::enter
@@ -38,6 +39,10 @@ class SwordEnemyStateAttacking : public StateSwordEnemy {
 		* @see StateEnemy::update
 		*/
 		virtual void update(const float dt_);
+
+	private:
+
+		Sound* swordSwingSound;
 };
 
 #endif /* ENEMYSTATES_SWORDENEMYSTATEATTACKING_H_ */

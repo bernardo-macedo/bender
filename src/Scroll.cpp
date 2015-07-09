@@ -22,10 +22,15 @@ Scroll::Scroll(int scale, int phase) :
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
 
+	openSound = new Sound("audio/sfx_papiroOpen.wav");
+	closeSound = new Sound("audio/sfx_papiroClose.wav");
+
 }
 
 Scroll::~Scroll() {
 	delete sp;
+	delete openSound;
+	delete closeSound;
 }
 
 void Scroll::Update(float dt) {
@@ -34,10 +39,12 @@ void Scroll::Update(float dt) {
 		if (isOpen) {
 			sp->SetFrame(1);
 			isOpen = false;
+			closeSound->Play(0);
 		} else {
 			if (phase >= 0 && phase < 4) {
 				sp->SetFrame(phase + 1);
 				isOpen = true;
+				openSound->Play(0);
 			}
 		}
 	}

@@ -14,20 +14,26 @@ MenuPrincipal::MenuPrincipal(int scale) {
 	sp = new Sprite("img/menuLabels.png", 2);
 	sp->SetScaleX(scale);
 	sp->SetScaleY(scale);
+
+	this->changeOptionSound = new Sound("audio/sfx_menuSwitch.wav");
+
 	selectedButton = 0;
 }
 
 MenuPrincipal::~MenuPrincipal() {
 	delete sp;
+	delete changeOptionSound;
 }
 
 void MenuPrincipal::Update(float dt) {
 
 	if (InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)) {
 		selectedButton = selectedButton < numButtons - 1 ? selectedButton + 1 : 0;
+		changeOptionSound->Play(0);
 	}
 	if (InputManager::GetInstance().KeyPress(UP_ARROW_KEY)) {
 		selectedButton = selectedButton == 0 ? numButtons - 1 : selectedButton - 1;
+		changeOptionSound->Play(0);
 	}
 }
 

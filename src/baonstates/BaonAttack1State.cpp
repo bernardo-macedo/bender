@@ -17,12 +17,17 @@ BaonAttack1State::BaonAttack1State(bool flipped) : BaonState(){
 	id = "ATTACK1";
 	justJumped = true;
 	canExecute = false;
+	bendJumpSound = new Sound("audio/sfx_bend_jump.wav");
+}
+
+BaonAttack1State::~BaonAttack1State() {
+	delete bendJumpSound;
 }
 
 void BaonAttack1State::Update_(float dt) {
 	if(!executed){
 		if(canExecute && !Hud::GetInstance()->IsBuffering(Hud::ONE)){
-
+			bendJumpSound->Play(0);
 			pedra = new PedraBasico(baon->GetBox().GetX(),
 					baon->GetBox().GetY() + baon->GetBox().GetH() - 10*baon->GetScale(),
 					baon->GetScale());

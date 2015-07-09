@@ -19,10 +19,13 @@ Monumento::Monumento(int posX, int posY, int scale, int level) : level(level) {
 	sp->SetScaleX(scale);
 	sp->SetScaleY(scale);
 	sp->SetFrame(1);
+
+	checkpointSound = new Sound("audio/sfx_checkpoint.wav");
 }
 
 Monumento::~Monumento() {
 	delete sp;
+	delete checkpointSound;
 }
 
 void Monumento::Update(float dt) {
@@ -39,6 +42,7 @@ void Monumento::Render() {
 
 void Monumento::NotifyCollision(GameObject* other) {
 	if (!used && other->Is("Baon")) {
+		checkpointSound->Play(0);
 		Game::GetInstance()->SetCheckpoint(new Checkpoint(level, box.GetCenter().getX()));
 		sp->SetFrame(2);
 		Baon* baon = (Baon*) other;

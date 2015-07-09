@@ -21,7 +21,7 @@ BaonRunState::BaonRunState(bool flipped) : BaonState(){
 }
 void BaonRunState::Update_(float dt) {
 	t->Update(dt);
-	if(!executed){
+	if(!executed) {
 		baon->Run(flipped);
 		executed = true;
 	}

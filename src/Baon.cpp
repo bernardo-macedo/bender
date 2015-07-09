@@ -177,7 +177,7 @@ void Baon::Update(float dt) {
 	Physic::GetInstance()->UpdatePhysic(b, dt);
 	float updatedY = b->GetY();
 
-	isFalling = (updatedY - previousY > 2);
+	isFalling = (updatedY - previousY > 4);
 
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
@@ -216,10 +216,10 @@ void Baon::Update(float dt) {
 
 	// Cheats
 	if (InputManager::GetInstance().KeyPress(O_KEY)) {
-		SetSuperJump(false);
+		SetSuperJump(!superJump);
 	}
 	if (InputManager::GetInstance().KeyPress(P_KEY)) {
-		SetSuperSpeed(false);
+		SetSuperSpeed(!superSpeed);
 	}
 
 }
@@ -264,7 +264,7 @@ void Baon::Run(bool flipped) {
 	if(!flipped){
 		this->flipped = false;
 		if (superSpeed) {
-			b->SetVelX(4 * RUN_SPEED);
+			b->SetVelX(2 * RUN_SPEED);
 		} else {
 			b->SetVelX(RUN_SPEED);
 		}
@@ -310,7 +310,7 @@ void Baon::Stand(bool flipped) {
 void Baon::Jump(bool flipped) {
 
 	if (superJump) {
-		b->SetVelY(2 * JUMP_SPEED );
+		b->SetVelY(1.5 * JUMP_SPEED );
 	} else {
 		b->SetVelY(JUMP_SPEED);
 	}

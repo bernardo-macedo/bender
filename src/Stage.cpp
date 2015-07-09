@@ -61,7 +61,12 @@ Stage::~Stage() {
 
 bool Stage::OnLevelWon(float dt) {
 	levelUpTimer->Update(dt);
+
 	if (levelUpTimer->Get() > 1) {
+		if (!levelWon) {
+			levelWonSound->Play(0);
+			levelWon = true;
+		}
 		SDL_Color color;
 		color.r = color.g = color.b = 225;
 		color.a = 255;

@@ -9,10 +9,12 @@
 
 SwordEnemyStateDying::SwordEnemyStateDying(SwordEnemy* const enemy_) : StateSwordEnemy(enemy_) {
 	t = new Timer();
+	dyingSound = new Sound("audio/sfx_enemy_fall.wav");
 }
 
 SwordEnemyStateDying::~SwordEnemyStateDying() {
 	delete t;
+	delete dyingSound;
 }
 
 void SwordEnemyStateDying::enter() {
@@ -21,6 +23,7 @@ void SwordEnemyStateDying::enter() {
 	enemy->SetDyingSprite();
 	enemy->GetBody()->SetVelX(0);
 	enemy->GetBody()->clearForces();
+	dyingSound->Play(0);
 }
 
 void SwordEnemyStateDying::exit() {}

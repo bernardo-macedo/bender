@@ -10,6 +10,7 @@
 
 #include "StateSwordEnemy.h"
 #include "../Engine/Timer.h"
+#include "../Engine/Sound.h"
 
 class SwordEnemyStateDying : public StateSwordEnemy {
 
@@ -41,8 +42,8 @@ class SwordEnemyStateDying : public StateSwordEnemy {
 		virtual void update(const float dt_);
 
 	private:
-
 		Timer* t;
+		Sound* dyingSound;
 };
 
 #endif /* ENEMYSTATES_SWORDENEMYSTATEDYING_H_ */

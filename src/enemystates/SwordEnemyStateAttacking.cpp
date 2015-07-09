@@ -7,12 +7,19 @@
 
 #include "SwordEnemyStateAttacking.h"
 
-SwordEnemyStateAttacking::SwordEnemyStateAttacking(SwordEnemy* const enemy_) : StateSwordEnemy(enemy_) {}
+SwordEnemyStateAttacking::SwordEnemyStateAttacking(SwordEnemy* const enemy_) : StateSwordEnemy(enemy_) {
+	swordSwingSound = new Sound("audio/sfx_enemy_sword_swing.wav");
+}
+
+SwordEnemyStateAttacking::~SwordEnemyStateAttacking() {
+	delete swordSwingSound;
+}
 
 void SwordEnemyStateAttacking::enter() {
 	askEnd = false;
 	enemy->GetBody()->SetVelX(0);
 	enemy->SetAttackingSprite();
+	swordSwingSound->Play(0);
 }
 
 void SwordEnemyStateAttacking::exit() {}

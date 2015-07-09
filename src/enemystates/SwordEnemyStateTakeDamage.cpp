@@ -15,12 +15,10 @@ void SwordEnemyStateTakeDamage::enter() {
 	if(enemy->IsCollisionFromRight()){
 		enemy->GetBody()->SetVelX(-100);
 		enemy->GetBody()->ApplyForce(new Force("resistance", 150, 0));
-		std::cout << "aplicou forca direita" << std::endl;
 	}
 	else{
 		enemy->GetBody()->SetVelX(100);
 		enemy->GetBody()->ApplyForce(new Force("resistance", -150, 0));
-		std::cout << "aplicou forca esquerda" << std::endl;
 	}
 }
 
@@ -37,7 +35,6 @@ void SwordEnemyStateTakeDamage::exit() {
 void SwordEnemyStateTakeDamage::update(const float dt_) {
 	if(enemy->GetSprite()->GetCurrentFrame() < 4) {
 		enemy->GetSprite()->Update(dt_);
-		std::cout << "take damage sprite = " << enemy->GetSprite()->GetCurrentFrame() << std::endl;
 	} else{
 		askEnd = true;
 	}

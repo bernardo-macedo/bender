@@ -19,6 +19,7 @@
 #include "Engine/Game.h"
 #include "Engine/Geometry/Point.h"
 #include "Engine/Timer.h"
+#include "Engine/Sound.h"
 #include "Baon.h"
 #include "PedraBasico.h"
 #include "Scroll.h"
@@ -44,10 +45,12 @@ public:
 protected:
 	Baon* baon;
 	Music *music;
+	Sound *levelWonSound;
 	Timer* levelUpTimer;
 	Text* levelUpText;
 	int scale;
 	int level;
+	bool levelWon;
 
 	std::vector<std::unique_ptr<AbstractEnemy>> enemies;
 	std::vector<std::unique_ptr<Monumento>> monuments;

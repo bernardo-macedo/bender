@@ -19,12 +19,15 @@ BaonPunchState::BaonPunchState(bool flipped) : BaonState(){
 	t = new Timer();
 	id = "PUNCH";
 	soltouPedra = false;
+	throwRockSound = new Sound("audio/sfx_throwRock.wav");
+	punchSound = new Sound("audio/sfx_char_punch_swing1.wav");
 }
 
 void BaonPunchState::Update_(float dt) {
 	if(!executed){
 		if(!baon->IsCloseToEnemy()){
 			soltouPedra = true;
+			throwRockSound->Play(0);
 			float pedraX;
 			if(!flipped){
 				pedraX = baon->GetBox().GetX() + 30*baon->GetScale();
@@ -48,8 +51,8 @@ void BaonPunchState::Update_(float dt) {
 			//} else {
 			//	delete pedra;
 			//}
-		}
-		else{
+		} else{
+			punchSound->Play(0);
 			baon->GetSprite()->SetFrameTime(0.06);
 		}
 		baon->Punch();
@@ -108,6 +111,11 @@ void BaonPunchState::Update_(float dt) {
 }
 
 void BaonPunchState::NotifyTileCollision() {
+}
+
+BaonPunchState::~BaonPunchState() {
+	delete throwRockSound;
+	delete punchSound;
 }
 
 bool BaonPunchState::Is(std::string state) {

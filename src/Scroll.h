@@ -11,6 +11,7 @@
 #include "Engine/GameObject.h"
 #include "Engine/Sprite.h"
 #include "Engine/InputManager.h"
+#include "Engine/Sound.h"
 
 class Scroll : public GameObject {
 public:
@@ -25,6 +26,7 @@ public:
 
 private:
 	Sprite* sp;
+	Sound *openSound, *closeSound;
 	int phase;
 	bool isOpen;
 };

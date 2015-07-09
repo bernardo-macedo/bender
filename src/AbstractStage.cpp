@@ -10,6 +10,8 @@
 AbstractStage::AbstractStage(int scale, int level, int posX) : State(posX) {
 	this->scale = scale;
 	this->level = level;
+	this->levelWon = false;
+	this->levelWonSound = new Sound("audio/sfx_levelWon.wav");
 
 	Hud::GetInstance(scale, level);
 }
@@ -26,6 +28,7 @@ AbstractStage::~AbstractStage() {
 	delete levelUpTimer;
 	delete enemyAI;
 	delete swordEnemyAI;
+	delete levelWonSound;
 }
 
 void AbstractStage::Update(float dt) {
@@ -171,3 +174,4 @@ void AbstractStage::Resume() {
 		music->Play(Music::ALWAYS);
 	}
 }
+
