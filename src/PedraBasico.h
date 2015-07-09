@@ -29,7 +29,7 @@ public:
 	bool IsDead();
 	void Render();
 	void NotifyCollision(GameObject* other);
-	void NotifyTileCollision();
+	void NotifyTileCollision(Collision::CollisionAxis collisionAxis);
 	bool Is(std::string type);
 	Sprite* GetSprite();
 	bool IsFinnished();

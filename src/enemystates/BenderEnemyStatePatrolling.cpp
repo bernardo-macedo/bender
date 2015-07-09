@@ -14,7 +14,7 @@ void EnemyStatePatrolling::enter(){
 }
 
 void EnemyStatePatrolling::exit(){
-	enemy->Time()->Restart();
+	enemy->GetTimer()->Restart();
 }
 
 void EnemyStatePatrolling::update(const float dt_){

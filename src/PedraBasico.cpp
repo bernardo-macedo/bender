@@ -53,7 +53,7 @@ void PedraBasico::Render() {
 void PedraBasico::NotifyCollision(GameObject* other) {
 }
 
-void PedraBasico::NotifyTileCollision() {
+void PedraBasico::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {
 	// TODO: devia chamar collided true, mas da uns bugs
 	// o ideal seria corrigir antes da entrega..but..
 	//collided = true;

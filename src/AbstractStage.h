@@ -24,8 +24,9 @@
 #include "Scroll.h"
 #include "Hud.h"
 #include "Monumento.h"
-#include "Enemy.h"
+#include "AbstractEnemy.h"
 #include "EnemyAIManager.h"
+#include "SwordEnemyAIManager.h"
 
 class AbstractStage : public State {
 public:
@@ -48,9 +49,10 @@ protected:
 	int scale;
 	int level;
 
-	std::vector<std::unique_ptr<Enemy>> enemies;
+	std::vector<std::unique_ptr<AbstractEnemy>> enemies;
 	std::vector<std::unique_ptr<Monumento>> monuments;
 	EnemyAIManager *enemyAI;
+	SwordEnemyAIManager *swordEnemyAI;
 };
 
 #endif /* ABSTRACTSTAGE_H_ */

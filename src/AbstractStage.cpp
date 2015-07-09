@@ -11,7 +11,6 @@ AbstractStage::AbstractStage(int scale, int level, int posX) : State(posX) {
 	this->scale = scale;
 	this->level = level;
 
-	std::cout << "chamou getInstance hud" << std::endl;
 	Hud::GetInstance(scale, level);
 }
 
@@ -25,6 +24,8 @@ AbstractStage::~AbstractStage() {
 	delete tileMap;
 	delete levelUpText;
 	delete levelUpTimer;
+	delete enemyAI;
+	delete swordEnemyAI;
 }
 
 void AbstractStage::Update(float dt) {
@@ -47,12 +48,19 @@ void AbstractStage::Update(float dt) {
 		enemies[i]->SetCloseToBaon(false);
 		if (!enemies[i]->IsRemovable()) {
 			enemies[i]->Update(dt);
-			enemyAI->SetEnemy(enemies[i].get());
-			enemyAI->update(dt);
 
 			if (tileMap->CheckCollisions(enemies[i]->GetBox(), enemies[i]->GetScale())) {
 				tileMap->ResolveTileCollisions(enemies[i].get());
 			}
+
+			if (enemies[i]->Is("BenderEnemy")) {
+				enemyAI->SetEnemy( (Enemy*) enemies[i].get());
+				enemyAI->update(dt);
+			} else if (enemies[i]->Is("SwordEnemy")) {
+				swordEnemyAI->SetEnemy( (SwordEnemy*) enemies[i].get());
+				swordEnemyAI->update(dt);
+			}
+
 		}
 		else{
 			enemies.erase(enemies.begin() + i);

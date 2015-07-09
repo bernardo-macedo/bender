@@ -408,7 +408,7 @@ void Baon::MidAir(){
 	}
 }
 
-void Baon::NotifyTileCollision() {
+void Baon::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {
 	stateManager->GetCurrentState()->NotifyTileCollision();
 }
 

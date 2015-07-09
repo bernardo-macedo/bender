@@ -36,7 +36,8 @@ StageThree::StageThree(int posX) : AbstractStage(2, 3, posX) {
 	enemies.emplace_back(new Enemy(scale, 8600));
 	enemies.emplace_back(new Enemy(scale, 9500));
 
-	enemyAI = new EnemyAIManager(baon, enemies[0].get());
+	Enemy* enemy = (Enemy*) enemies[0].get();
+	enemyAI = new EnemyAIManager(baon, enemy);
 	levelUpText = NULL;
 }
 
