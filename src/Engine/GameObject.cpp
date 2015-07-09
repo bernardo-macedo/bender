@@ -7,6 +7,13 @@
 
 #include "GameObject.h"
 
+const int GameObject::PEDRA_BASICO_BAON = 100;
+const int GameObject::SPIKE_STONE_BAON = 101;
+const int GameObject::PEDRA_BASICO_ENEMY = 102;
+const int GameObject::BAON = 103;
+const int GameObject::ENEMY = 104;
+const int GameObject::PEDRA_BASICO_PULO_BAON = 105;
+
 GameObject::~GameObject() {
 	// TODO Auto-generated destructor stub
 }

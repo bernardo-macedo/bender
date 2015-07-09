@@ -15,9 +15,6 @@
 #include "Geometry/Point.h"
 #include "Physics/Body.h"
 
-#define PEDRA_BAON = 100
-#define PEDRA_INIMIGO = 101
-
 State::State(int posX) : initialPositionX(posX) {
 	quitRequested = false;
 	popRequested = false;
@@ -35,16 +32,30 @@ void State::UpdateArray(float dt) {
 		}
 		*/
 		if (objectArray[i]->IsDead()) {
-			objectArray.erase(objectArray.begin() + i);
+			if(objectArray[i]->GetID() != GameObject::BAON){
+				objectArray.erase(objectArray.begin() + i);
+			}
 		}
 		else{
-			if(objectArray[i]->GetID() == 100 || objectArray[i]->GetID() == 101){
-				PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
-				if(pedra->Isthrown()){
-					if(pedra->GetBody()->GetX() > Game::SCREEN_WIDTH - Camera::pos.getX()
-							|| pedra->GetBody()->GetX() < 0  - Camera::pos.getX()){
-						objectArray.erase(objectArray.begin() + i);
+			if(objectArray[i]->GetID() == GameObject::ENEMY){
+				Enemy* enemy = (Enemy*)objectArray[i].get();
+				enemy->SetCloseToBaon(false);
+				if (!enemy->IsRemovable()) {
+					enemyAI->SetEnemy(enemy);
+					enemyAI->update(dt);
+
+					if (tileMap->CheckCollisions(enemy->GetBox(), enemy->GetScale())) {
+						tileMap->ResolveTileCollisions(enemy);
 					}
+				}
+				else{
+					objectArray.erase(objectArray.begin() + i);
+				}
+			}
+			for(unsigned int j = 0; j < objectArray.size(); j++){
+				if(Collision::IsColliding(objectArray[i]->GetBox(), objectArray[j]->GetBox(), 0, 0)){
+					objectArray[i]->NotifyCollision(objectArray[j].get());
+					objectArray[j]->NotifyCollision(objectArray[i].get());
 				}
 			}
 		}

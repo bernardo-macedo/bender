@@ -28,12 +28,12 @@ void BaonPunchState::Update_(float dt) {
 			if(!flipped){
 				pedra = new PedraBasico(baon->GetBox().GetX() + 30*baon->GetScale(),
 							baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
-				pedra->SetID(100);
+				pedra->SetID(GameObject::PEDRA_BASICO_BAON);
 			}
 			else{
 				pedra = new PedraBasico(baon->GetBox().GetX() - 30*baon->GetScale(),
 							baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
-				pedra->SetID(100);
+				pedra->SetID(GameObject::PEDRA_BASICO_BAON);
 			}
 			pedra->GetSprite()->SetFrameHeight(25);
 			pedra->GetSprite()->SetFrameWidth(35);

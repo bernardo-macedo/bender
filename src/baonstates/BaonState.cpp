@@ -106,6 +106,19 @@ void BaonState::Update(float dt) {
 				bendKey[i] = -1;
 			}
 		}
+		if(bendKey[2] == 1 && bendKey[1] == 2 && bendKey[0] == 3){
+			stateChanged = true;
+			baon->SetBendMode(false);
+			executed = true;
+			nextRequested = true;
+			countBend = 0;
+			next = "SPIKESTONE";
+			nextFlipped = flipped;
+			baon->bendHUD->isHide = true;
+			for (int i = 0; i < 4; ++i){
+				bendKey[i] = -1;
+			}
+		}
 		if(InputManager::GetInstance().KeyRelease(F_KEY) || bendTimer->Get() > 3 ||countBend >= 3){
 			countBend = 0;
 			stateChanged = true;

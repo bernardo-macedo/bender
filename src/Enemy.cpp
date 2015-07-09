@@ -44,6 +44,7 @@ Enemy::Enemy(int enemyScale, int x):
     currentState = enemyStatesMap.at(PATROLLING);
 	sp = new Sprite("img/Inimigo.png", 1, 0.1);
 	runStates = NONE;
+	SetID(GameObject::ENEMY);
 
 	sp->SetFrameHeight(spriteData[0]);
 	sp->SetFrameWidth(spriteData[1]);
@@ -100,7 +101,7 @@ void Enemy::Render() {
 }
 
 void Enemy::NotifyCollision(GameObject* other) {
-	if(other->GetID() == 100){
+	if(other->GetID() == GameObject::PEDRA_BASICO_BAON){
 		if(other->GetBox().GetX() > box.GetX()){
 			collisionFromRight = false;
 		}
@@ -108,6 +109,11 @@ void Enemy::NotifyCollision(GameObject* other) {
 			collisionFromRight = true;
 		}
 		isTakingDamage = true;
+	}
+
+	if(other->GetID() == GameObject::SPIKE_STONE_BAON){
+		b->SetX(other->GetBox().GetX() + other->GetBox().GetW() + 5);
+		changeState(Enemy::PATROLLING);
 	}
 }
 

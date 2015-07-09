@@ -12,11 +12,13 @@
 
 #include "../Being.h"
 #include "TileSet/TileMap.h"
+#include "../EnemyAIManager.h"
 
 class State {
 protected:
 	TileMap* tileMap;
 	std::vector<std::unique_ptr<GameObject>> objectArray;
+	EnemyAIManager *enemyAI;
 	bool popRequested;
 	bool quitRequested;
 	int initialPositionX;

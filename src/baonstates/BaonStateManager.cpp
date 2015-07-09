@@ -25,6 +25,7 @@
 #include "BaonAttack1State.h"
 #include "BaonWalkState.h"
 #include "BaonFastPunch.h"
+#include "BaonSpikeStoneState.h"
 
 #include <iostream>
 
@@ -67,8 +68,9 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("FASTPUNCH", new BaonFastPunch(false));
 	estados["FASTPUNCH"]->SetBaon(baon);
 	estados["FASTPUNCH"]->SetStateManager(this);
-
-
+	estados.emplace("SPIKESTONE", new BaonSpikeStoneState(false));
+	estados["SPIKESTONE"]->SetBaon(baon);
+	estados["SPIKESTONE"]->SetStateManager(this);
 
 	currentState = estados["STAND"];
 	this->baon = baon;

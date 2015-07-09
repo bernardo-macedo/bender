@@ -14,7 +14,7 @@ AbstractStage::~AbstractStage() {
 		music->Stop();
 	}
 
-	delete baon;
+	objectArray.clear();
 	delete music;
 	delete tileMap;
 	delete levelUpText;
@@ -33,22 +33,6 @@ void AbstractStage::Update(float dt) {
 
 	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
 	quitRequested = InputManager::GetInstance().QuitRequested();
-
-	for (unsigned int i = 0; i < enemies.size(); i++) {
-		enemies[i]->SetCloseToBaon(false);
-		if (!enemies[i]->IsRemovable()) {
-			enemies[i]->Update(dt);
-			enemyAI->SetEnemy(enemies[i].get());
-			enemyAI->update(dt);
-
-			if (tileMap->CheckCollisions(enemies[i]->GetBox(), enemies[i]->GetScale())) {
-				tileMap->ResolveTileCollisions(enemies[i].get());
-			}
-		}
-		else{
-			enemies.erase(enemies.begin() + i);
-		}
-	}
 
 	for (unsigned int i = 0; i < monuments.size(); i++) {
 		monuments[i]->Update(dt);
@@ -73,7 +57,6 @@ void AbstractStage::Update(float dt) {
 			}
 		}
 
-		baon->Update(dt);
 		if (tileMap->CheckCollisions(baon->GetBox(), baon->GetScale())) {
 			tileMap->ResolveTileCollisions(baon);
 		}
@@ -81,35 +64,6 @@ void AbstractStage::Update(float dt) {
 
 	if(!baon->bendHUD->IsDead()){
 		baon->bendHUD->Update(dt);
-	}
-
-	for(unsigned i = 0; i < objectArray.size(); i++) {
-		if(objectArray[i]->GetID() == 100) {
-
-					PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
-					if(pedra->Isthrown()){
-						for(unsigned j = 0; j < enemies.size(); j++){
-							if(Collision::IsColliding(objectArray[i]->GetBox(), enemies[j]->GetBox(), 0, 0)){
-								enemies[j]->NotifyCollision(objectArray[i].get());
-								objectArray.erase(objectArray.begin() + i);
-								break;
-							}
-						}
-					}
-				} else {
-					if(objectArray[i]->GetID() == 101){
-						PedraBasico *pedra = (PedraBasico*)objectArray[i].get();
-						if(pedra->Isthrown()){
-							for(unsigned j = 0; j < enemies.size(); j++){
-								if(Collision::IsColliding(objectArray[i]->GetBox(), baon->GetBox(), 0, 0)){
-									baon->NotifyCollision(objectArray[i].get());
-									objectArray.erase(objectArray.begin() + i);
-									break;
-								}
-							}
-						}
-					}
-				}
 	}
 }
 

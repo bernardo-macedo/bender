@@ -48,7 +48,6 @@ protected:
 
 	std::vector<std::unique_ptr<Enemy>> enemies;
 	std::vector<std::unique_ptr<Monumento>> monuments;
-	EnemyAIManager *enemyAI;
 };
 
 #endif /* ABSTRACTSTAGE_H_ */

@@ -7,10 +7,14 @@
 
 #include "BenderEnemyStateBend.h"
 
-#include "../../Enemy.h"
+#include <stddef.h>
+
+#include "../Enemy.h"
 #include "../Engine/Game.h"
+#include "../Engine/Physics/Body.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/State.h"
+#include "../Engine/GameObject.h"
 
 EnemyStateBend::EnemyStateBend(Enemy* const enemy_)  :
 StateEnemy(enemy_)
@@ -33,12 +37,12 @@ void EnemyStateBend::enter() {
 	if(!enemy->GetFlipped()){
 		pedra = new PedraBasico(enemy->GetBox().GetX() + 30*enemy->GetScale(),
 				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale());
-		pedra->SetID(101);
+		pedra->SetID(GameObject::PEDRA_BASICO_ENEMY);
 	}
 	else{
 		pedra = new PedraBasico(enemy->GetBox().GetX() - 30*enemy->GetScale(),
 				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale());
-		pedra->SetID(101);
+		pedra->SetID(GameObject::PEDRA_BASICO_ENEMY);
 	}
 
 	pedra->GetSprite()->SetFrameHeight(25);

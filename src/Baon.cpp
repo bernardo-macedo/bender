@@ -29,6 +29,8 @@ int Baon::MAX_HP = 30;
 Baon::Baon(int playerScale, float mapMax, int posX) {
 	LoadSpriteData();
 
+	SetID(GameObject::BAON);
+
 	scale = playerScale;
 	Baon::WALK_SPEED = 50*scale;
 	Baon::JUMP_SPEED = -230*scale;
@@ -161,7 +163,8 @@ void Baon::Update(float dt) {
 			&& !stateManager->GetCurrentState()->Is("TAKEHIT")
 			&& !stateManager->GetCurrentState()->Is("DYING")
 			&& !stateManager->GetCurrentState()->Is("FASTPUNCH")
-			&& !stateManager->GetCurrentState()->Is("ATTACK1")){
+			&& !stateManager->GetCurrentState()->Is("ATTACK1")
+			&& !stateManager->GetCurrentState()->Is("SPIKESTONE")){
 		sp->Update(dt);
 	}
 
@@ -222,7 +225,7 @@ void Baon::Render() {
 }
 
 void Baon::NotifyCollision(GameObject* other) {
-	if(other->GetID() == 101){
+	if(other->GetID() == GameObject::PEDRA_BASICO_ENEMY){
 		takingDamage = true;
 		if(other->GetBox().GetX() > box.GetX()){
 			damageDirectionRight = true;

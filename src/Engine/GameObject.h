@@ -16,6 +16,13 @@ protected:
 	Rect box;
 	int id;
 public:
+	static const int PEDRA_BASICO_BAON;
+	static const int PEDRA_BASICO_PULO_BAON;
+	static const int SPIKE_STONE_BAON;
+	static const int PEDRA_BASICO_ENEMY;
+	static const int BAON;
+	static const int ENEMY;
+
 	virtual ~GameObject();
 
 	virtual void Update(float dt) = 0;

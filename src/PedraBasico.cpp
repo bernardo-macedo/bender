@@ -8,6 +8,7 @@
 #include "PedraBasico.h"
 
 #include "Engine/Camera.h"
+#include "Engine/Game.h"
 #include "Engine/Geometry/Point.h"
 #include "Engine/Physics/Body.h"
 #include "Engine/Physics/Physic.h"
@@ -38,6 +39,13 @@ void PedraBasico::Update(float dt) {
 	box.SetY(GetBody()->GetY());
 	box.SetW(21*scale);
 	box.SetH(20*scale);
+
+	if(Isthrown()){
+		if(GetBody()->GetX() > Game::SCREEN_WIDTH - Camera::pos.getX()
+				|| GetBody()->GetX() < 0  - Camera::pos.getX()){
+			dead = true;
+		}
+	}
 }
 
 bool PedraBasico::IsDead() {
@@ -49,6 +57,14 @@ void PedraBasico::Render() {
 }
 
 void PedraBasico::NotifyCollision(GameObject* other) {
+	if(this->GetID() == GameObject::PEDRA_BASICO_BAON
+			&& other->GetID() == GameObject::ENEMY){
+		dead = true;
+	}
+	if(this->GetID() == GameObject::PEDRA_BASICO_ENEMY
+			&& other->GetID() == GameObject::BAON){
+		dead = true;
+	}
 }
 
 void PedraBasico::NotifyTileCollision() {

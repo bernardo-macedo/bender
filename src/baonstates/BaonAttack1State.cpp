@@ -25,6 +25,7 @@ void BaonAttack1State::Update_(float dt) {
 			pedra = new PedraBasico(baon->GetBox().GetX(),
 					baon->GetBox().GetY() + baon->GetBox().GetH() - 10*baon->GetScale(),
 					baon->GetScale());
+			pedra->SetID(GameObject::PEDRA_BASICO_PULO_BAON);
 			pedra->GetSprite()->SetFrameWidth(35);
 			pedra->GetSprite()->SetFrameHeight(50);
 			pedra->GetSprite()->SetFrameCount(3);

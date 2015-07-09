@@ -55,6 +55,12 @@ void BaonFastPunch::Update_(float dt) {
 			next = "STAND";
 			baon->isDamage = false;
 		}
+		if(baon->isTakingDamage()){
+			baon->GetBody()->removeForce("stopping");
+			nextRequested = true;
+			next = "TAKEHIT";
+			nextFlipped = flipped;
+		}
 	}
 }
 

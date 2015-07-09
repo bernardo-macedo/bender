@@ -31,15 +31,23 @@ Stage::Stage(int posX) : AbstractStage(posX) {
 	levelUpTimer = new Timer();
 
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
+	AddObject(baon);
 
-	enemies.emplace_back(new Enemy(scale, 900));
+	/*enemies.emplace_back(new Enemy(scale, 900));
 	enemies.emplace_back(new Enemy(scale, 4000));
 	enemies.emplace_back(new Enemy(scale, 8000));
 	enemies.emplace_back(new Enemy(scale, 8300));
-	enemies.emplace_back(new Enemy(scale, 8600));
+	enemies.emplace_back(new Enemy(scale, 8600));*/
+
+	AddObject(new Enemy(scale, 900));
+	AddObject(new Enemy(scale, 4000));
+	AddObject(new Enemy(scale, 8000));
+	AddObject(new Enemy(scale, 8300));
+	AddObject(new Enemy(scale, 8600));
 
 	//enemies.emplace_back(new SwordEnemy(scale, 50));
-	enemyAI = new EnemyAIManager(baon, enemies[0].get());
+	Enemy* e = (Enemy*)objectArray[1].get();
+	enemyAI = new EnemyAIManager(baon, e);
 
 	monuments.emplace_back(new Monumento(102, 8, scale, level));
 	monuments.emplace_back(new Monumento(262, 8, scale, level));
