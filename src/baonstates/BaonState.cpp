@@ -105,6 +105,7 @@ void BaonState::Update(float dt) {
 		ResolveAttack(matchedAttack);
 
 		if(InputManager::GetInstance().KeyRelease(SPACE_KEY) || bendTimer->Get() > 3 ||countBend >= 3){
+			baon->SetBendMode(false);
 			bendTimer->Restart();
 			countBend = 0;
 			stateChanged = true;

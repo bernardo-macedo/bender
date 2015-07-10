@@ -26,13 +26,14 @@ BaonFallingState::BaonFallingState(bool flipped) : BaonState() {
 }
 
 void BaonFallingState::Update_(float dt) {
-	if (!executed && !locallyExecuted && baon->IsFalling()) {
-		baon->SetJumpFrame();
+	if (!executed && baon->IsFalling()) {
 		baon->MidAir();
-		baon->Fall();
-		locallyExecuted = true;
+		if (!locallyExecuted) {
+			baon->SetJumpFrame();
+			baon->Fall();
+			locallyExecuted = true;
+		}
 	}
-
 }
 
 void BaonFallingState::NotifyTileCollision() {
