@@ -1,9 +1,7 @@
 #ifndef INCLUDE_STATEENEMY_H
 #define INCLUDE_STATEENEMY_H
 
-#include "../../Enemy.h"
-
-class Enemy;
+#include "../Enemy.h"
 
 /**
 * Parent class for other enemy states.

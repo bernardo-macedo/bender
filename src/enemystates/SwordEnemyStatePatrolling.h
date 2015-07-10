@@ -1,29 +1,28 @@
 /*
- * SwordEnemyPatrolling.h
+ * SwordEnemyStatePatrolling.h
  *
- *  Created on: Jun 26, 2015
+ *  Created on: Jul 8, 2015
  *      Author: -Bernardo
  */
 
-#ifndef ENEMYSTATES_SWORDENEMYPATROLLING_H_
-#define ENEMYSTATES_SWORDENEMYPATROLLING_H_
+#ifndef ENEMYSTATES_SWORDENEMYSTATEPATROLLING_H_
+#define ENEMYSTATES_SWORDENEMYSTATEPATROLLING_H_
 
-#include "SwordEnemy.h"
 #include "StateSwordEnemy.h"
 
-class SwordEnemyPatrolling : public StateSwordEnemy {
+class SwordEnemyStatePatrolling : public StateSwordEnemy {
 
 	public:
 		/**
 		* The constructor.
 		* @param enemy_ : Reference to the Enemy.
 		*/
-		SwordEnemyPatrolling(SwordEnemy* const enemy_);
+		SwordEnemyStatePatrolling(SwordEnemy* const enemy_);
 
 		/**
 		* The destructor.
 		*/
-		virtual ~SwordEnemyPatrolling();
+		virtual ~SwordEnemyStatePatrolling(){}
 
 		/**
 		* @see StateEnemy::enter
@@ -48,4 +47,4 @@ class SwordEnemyPatrolling : public StateSwordEnemy {
 
 };
 
-#endif /* ENEMYSTATES_SWORDENEMYPATROLLING_H_ */
+#endif /* ENEMYSTATES_SWORDENEMYSTATEPATROLLING_H_ */

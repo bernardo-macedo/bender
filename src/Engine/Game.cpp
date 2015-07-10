@@ -106,8 +106,8 @@ void Game::Run() {
 	while(!stateStack.empty() && !GetCurrentState()->QuitRequested()){
 		CalculaDeltaTime();
 		InputManager::GetInstance().Update();
-		GetCurrentState()->Update(GetDeltaTime());
-		GetCurrentState()->Render();
+		GetCurrentState()->UpdateArray(GetDeltaTime());
+		GetCurrentState()->RenderArray();
 		SDL_RenderPresent(renderer);
 
 		if(GetCurrentState()->PopRequested()){

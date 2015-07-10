@@ -15,23 +15,7 @@
 
 class Collision {
 public:
-	class CollisionSide {
-	public:
-		bool left, right, top, bottom;
-
-		inline CollisionSide(bool left, bool right, bool top, bool bottom) :
-			left(left), right(right), top(top), bottom(bottom) {}
-		~CollisionSide() {}
-		inline bool HasCollided() {
-			return (this->left || this->right || this->top || this->bottom);
-		};
-		inline bool HasCollidedVertically() {
-			return (this->top || this->bottom);
-		};
-		inline bool HasCollidedHorizontally() {
-			return (this->left || this->right);
-		};
-	};
+	enum CollisionAxis {AXIS_X, AXIS_Y};
 
 	static inline bool IsColliding(Rect a, Rect b, float angleOfA, float angleOfB) {
 		Point A[] = { Point( a.GetX(), a.GetY() + a.GetH() ),

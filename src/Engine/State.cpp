@@ -18,11 +18,13 @@
 State::State(int posX) : initialPositionX(posX) {
 	quitRequested = false;
 	popRequested = false;
+	slowMotion = 1;
 }
 
 void State::UpdateArray(float dt) {
+	dt = dt/slowMotion;
+	Update(dt);
 	for (unsigned int i = 0; i < objectArray.size(); i++) {
-		objectArray[i]->Update(dt);
 		/*
 		if (objectArray[i]->Is("Being")) {
 			Being* being = (Being*) objectArray[i].get();
@@ -32,26 +34,12 @@ void State::UpdateArray(float dt) {
 		}
 		*/
 		if (objectArray[i]->IsDead()) {
-			if(objectArray[i]->GetID() != GameObject::BAON){
-				objectArray.erase(objectArray.begin() + i);
-			}
+			ResolveDeadObject(objectArray[i].get());
+			objectArray.erase(objectArray.begin() + i);
 		}
 		else{
-			if(objectArray[i]->GetID() == GameObject::ENEMY){
-				Enemy* enemy = (Enemy*)objectArray[i].get();
-				enemy->SetCloseToBaon(false);
-				if (!enemy->IsRemovable()) {
-					enemyAI->SetEnemy(enemy);
-					enemyAI->update(dt);
-
-					if (tileMap->CheckCollisions(enemy->GetBox(), enemy->GetScale())) {
-						tileMap->ResolveTileCollisions(enemy);
-					}
-				}
-				else{
-					objectArray.erase(objectArray.begin() + i);
-				}
-			}
+			OnUpdate(dt, objectArray[i].get());
+			objectArray[i]->Update(dt);
 			for(unsigned int j = 0; j < objectArray.size(); j++){
 				if(Collision::IsColliding(objectArray[i]->GetBox(), objectArray[j]->GetBox(), 0, 0)){
 					objectArray[i]->NotifyCollision(objectArray[j].get());
@@ -63,6 +51,7 @@ void State::UpdateArray(float dt) {
 }
 
 void State::RenderArray() {
+	Render();
 	for (unsigned int i = 0; i < objectArray.size(); i++) {
 		objectArray[i].get()->Render();
 	}
@@ -91,4 +80,8 @@ GameObject* State::FindByID(int id) {
 		}
 	}
 	return NULL;
+}
+
+void State::SetSlowMotion(int slow) {
+	slowMotion = slow;
 }

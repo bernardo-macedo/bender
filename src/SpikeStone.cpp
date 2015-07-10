@@ -48,7 +48,7 @@ void SpikeStone::NotifyCollision(GameObject* other) {
 
 }
 
-void SpikeStone::NotifyTileCollision() {
+void SpikeStone::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {
 }
 
 bool SpikeStone::IsDead() {

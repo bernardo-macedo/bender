@@ -19,29 +19,39 @@ BaonPunchState::BaonPunchState(bool flipped) : BaonState(){
 	t = new Timer();
 	id = "PUNCH";
 	soltouPedra = false;
+	throwRockSound = new Sound("audio/sfx_throwRock.wav");
+	punchSound = new Sound("audio/sfx_char_punch_swing1.wav");
 }
 
 void BaonPunchState::Update_(float dt) {
 	if(!executed){
 		if(!baon->IsCloseToEnemy()){
 			soltouPedra = true;
+			throwRockSound->Play(0);
+			float pedraX;
 			if(!flipped){
-				pedra = new PedraBasico(baon->GetBox().GetX() + 30*baon->GetScale(),
-							baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
-				pedra->SetID(GameObject::PEDRA_BASICO_BAON);
+				pedraX = baon->GetBox().GetX() + 30*baon->GetScale();
 			}
 			else{
-				pedra = new PedraBasico(baon->GetBox().GetX() - 30*baon->GetScale(),
-							baon->GetBox().GetY() + 25*baon->GetScale(), baon->GetScale());
-				pedra->SetID(GameObject::PEDRA_BASICO_BAON);
+				pedraX = baon->GetBox().GetX() - 30*baon->GetScale();
 			}
+			pedra = new PedraBasico(pedraX,
+						baon->GetBox().GetY() + 25*baon->GetScale(),
+						//baon->GetGroundTouchResolver()->GetGroundHeight(pedraX + 10),
+						baon->GetScale());
+			pedra->SetID(GameObject::PEDRA_BASICO_BAON);
 			pedra->GetSprite()->SetFrameHeight(25);
 			pedra->GetSprite()->SetFrameWidth(35);
 			pedra->GetSprite()->SetLine(2, 23);
 			pedra->GetSprite()->SetFrameTime(0.02);
-			Game::GetInstance()->GetCurrentState()->AddObject(pedra);
-		}
-		else{
+
+			//if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
+				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+			//} else {
+			//	delete pedra;
+			//}
+		} else{
+			punchSound->Play(0);
 			baon->GetSprite()->SetFrameTime(0.06);
 		}
 		baon->Punch();
@@ -100,6 +110,11 @@ void BaonPunchState::Update_(float dt) {
 }
 
 void BaonPunchState::NotifyTileCollision() {
+}
+
+BaonPunchState::~BaonPunchState() {
+	delete throwRockSound;
+	delete punchSound;
 }
 
 bool BaonPunchState::Is(std::string state) {

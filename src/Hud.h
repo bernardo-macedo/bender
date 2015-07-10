@@ -15,7 +15,11 @@
 
 class Hud : public GameObject {
 public:
-	Hud(int scale, int phase);
+	enum HudAttack {ONE, TWO, THREE, FOUR, FIVE, SIX};
+	Hud(int scale, int level);
+
+	static Hud* GetInstance(int scale, int level);
+	static Hud* GetInstance();
 	virtual ~Hud();
 
 	void Update(float dt);
@@ -23,10 +27,19 @@ public:
 	void Render();
 	void NotifyCollision(GameObject* other);
 	bool Is(std::string type);
+	void SetBuffering(HudAttack hudAttackNumber);
+	bool IsBuffering(HudAttack hudAttackNumber);
+	void SetLevel(int level);
 
 private:
+	static Hud* instance;
 	Sprite hud;
 	std::vector<CoolDown> hudItems;
+	bool bufferingAttacks[6];
+	int level;
+	int scale;
+
+	bool IsValidAttack(HudAttack hudAttackNumber);
 };
 
 #endif /* HUD_H_ */

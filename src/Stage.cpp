@@ -11,7 +11,7 @@
 #include <SDL_pixels.h>
 
 #include "BendHUD.h"
-#include "enemystates/SwordEnemy.h"
+#include "SwordEnemy.h"
 #include "Engine/Camera.h"
 #include "Engine/Collision.h"
 #include "Engine/Geometry/Point.h"
@@ -19,7 +19,7 @@
 #include "Engine/Sprite.h"
 #include "PedraBasico.h"
 
-Stage::Stage(int posX) : AbstractStage(posX) {
+Stage::Stage(int posX) : AbstractStage(2, 1, posX) {
 	int scale = 2;
 	int level = 1;
 
@@ -31,6 +31,8 @@ Stage::Stage(int posX) : AbstractStage(posX) {
 	levelUpTimer = new Timer();
 
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
+	baon->SetGroundTouchResolver(tileMap);
+	
 	AddObject(baon);
 
 	/*enemies.emplace_back(new Enemy(scale, 900));
@@ -48,6 +50,9 @@ Stage::Stage(int posX) : AbstractStage(posX) {
 	//enemies.emplace_back(new SwordEnemy(scale, 50));
 	Enemy* e = (Enemy*)objectArray[1].get();
 	enemyAI = new EnemyAIManager(baon, e);
+	SwordEnemy* swordEnemy = new SwordEnemy(scale, 50);
+	AddObject(swordEnemy);	
+	swordEnemyAI = new SwordEnemyAIManager(baon, swordEnemy);
 
 	monuments.emplace_back(new Monumento(102, 8, scale, level));
 	monuments.emplace_back(new Monumento(262, 8, scale, level));

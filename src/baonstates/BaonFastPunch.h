@@ -11,8 +11,9 @@
 #include <iostream>
 
 #include "BaonState.h"
+#include "../Engine/Sound.h"
 
-class BaonFastPunch : public BaonState{
+class BaonFastPunch : public BaonState {
 public:
 	BaonFastPunch(bool flipped);
 	virtual ~BaonFastPunch();
@@ -20,6 +21,9 @@ public:
 	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
+
+private:
+	Sound *fastPunchSound;
 };
 
 #endif /* BAONSTATES_BAONFASTPUNCH_H_ */

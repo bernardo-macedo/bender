@@ -7,9 +7,7 @@
 
 #include "StageThree.h"
 
-StageThree::StageThree(int posX) : AbstractStage(posX) {
-	int scale = 2;
-	int level = 3;
+StageThree::StageThree(int posX) : AbstractStage(2, 3, posX) {
 
 	Game::GetInstance()->SetCheckpoint(new Checkpoint(level, -1));
 
@@ -19,9 +17,9 @@ StageThree::StageThree(int posX) : AbstractStage(posX) {
 	tileMap = new TileMap("deserto.tmx", 6, scale);
 
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
+	baon->SetGroundTouchResolver(tileMap);
 
 	AddObject(new Scroll(scale, level));
-	AddObject(new Hud(scale, level));
 
 	monuments.emplace_back(new Monumento(90, 9, scale, level));
 	monuments.emplace_back(new Monumento(205, 8, scale, level));
@@ -38,7 +36,8 @@ StageThree::StageThree(int posX) : AbstractStage(posX) {
 	enemies.emplace_back(new Enemy(scale, 8600));
 	enemies.emplace_back(new Enemy(scale, 9500));
 
-	enemyAI = new EnemyAIManager(baon, enemies[0].get());
+	Enemy* enemy = (Enemy*) enemies[0].get();
+	enemyAI = new EnemyAIManager(baon, enemy);
 	levelUpText = NULL;
 }
 
@@ -48,6 +47,10 @@ bool StageThree::OnLevelWon(float dt) {
 	levelUpTimer->Update(dt);
 
 	if (levelUpTimer->Get() > 1) {
+		if (!levelWon) {
+			levelWonSound->Play(0);
+			levelWon = true;
+		}
 		SDL_Color color;
 		color.r = color.g = color.b = 125;
 		color.a = 255;

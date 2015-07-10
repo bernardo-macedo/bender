@@ -23,7 +23,7 @@ public:
 	void Update(float dt);
 	void Render();
 	void NotifyCollision(GameObject* other);
-	void NotifyTileCollision();
+	void NotifyTileCollision(Collision::CollisionAxis collisionAxis);
 	bool IsDead();
 
 	virtual bool Is(std::string type);

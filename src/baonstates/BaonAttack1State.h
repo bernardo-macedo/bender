@@ -12,16 +12,20 @@
 
 #include "BaonState.h"
 #include "../PedraBasico.h"
+#include "../Hud.h"
+#include "../Engine/Sound.h"
 
 class BaonAttack1State : public BaonState{
 public:
 	BaonAttack1State(bool flipped);
+	virtual ~BaonAttack1State();
 	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
 private:
 	PedraBasico* pedra;
 	bool justJumped, canExecute;
+	Sound *bendJumpSound;
 };
 
 #endif /* BAONATTACK1STATE_H_ */

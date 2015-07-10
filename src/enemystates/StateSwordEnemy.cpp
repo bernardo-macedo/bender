@@ -1,16 +1,13 @@
 /*
  * StateSwordEnemy.cpp
  *
- *  Created on: Jun 26, 2015
+ *  Created on: Jul 8, 2015
  *      Author: -Bernardo
  */
 
 #include "StateSwordEnemy.h"
 
-StateSwordEnemy::StateSwordEnemy(SwordEnemy* const enemy_) :
-	enemy(enemy_), askEnd(false) {
-
-}
+StateSwordEnemy::StateSwordEnemy(SwordEnemy* const enemy_)  : enemy(enemy_) {}
 
 StateSwordEnemy::~StateSwordEnemy() {
 	this->enemy = nullptr;

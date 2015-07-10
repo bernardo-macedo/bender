@@ -7,9 +7,7 @@
 
 #include "StageTwo.h"
 
-StageTwo::StageTwo(int posX) : AbstractStage(posX) {
-	int scale = 2;
-	int level = 2;
+StageTwo::StageTwo(int posX) : AbstractStage(2, 2, posX) {
 
 	Game::GetInstance()->SetCheckpoint(new Checkpoint(level, -1));
 
@@ -20,9 +18,9 @@ StageTwo::StageTwo(int posX) : AbstractStage(posX) {
 	tileMap->SetExtraCollisionLayer(10);
 
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
+	baon->SetGroundTouchResolver(tileMap);
 
 	AddObject(new Scroll(scale, 2));
-	AddObject(new Hud(scale, 2));
 
 	monuments.emplace_back(new Monumento(90, 8, scale, level));
 	monuments.emplace_back(new Monumento(215, 8, scale, level));
@@ -39,8 +37,10 @@ StageTwo::StageTwo(int posX) : AbstractStage(posX) {
 	enemies.emplace_back(new Enemy(scale, 8300));
 	enemies.emplace_back(new Enemy(scale, 8600));
 
-	enemyAI = new EnemyAIManager(baon, enemies[0].get());
+	Enemy* enemy = (Enemy*) enemies[0].get();
+	enemyAI = new EnemyAIManager(baon, enemy);
 	levelUpText = NULL;
+
 }
 
 StageTwo::~StageTwo() {
@@ -50,6 +50,10 @@ bool StageTwo::OnLevelWon(float dt) {
 	levelUpTimer->Update(dt);
 
 	if (levelUpTimer->Get() > 1) {
+		if (!levelWon) {
+			levelWonSound->Play(0);
+			levelWon = true;
+		}
 		SDL_Color color;
 		color.r = color.g = color.b = 225;
 		color.a = 255;

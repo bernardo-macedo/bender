@@ -13,6 +13,7 @@
 #include <map>
 #include "Engine/Sprite.h"
 #include "Engine/InputManager.h"
+#include "Engine/Sound.h"
 
 class MenuPrincipal {
 public:
@@ -25,6 +26,7 @@ public:
 
 private:
 	Sprite *sp;
+	Sound *changeOptionSound;
 	std::vector<int> spriteData;
 	int numButtons;
 	int selectedButton;

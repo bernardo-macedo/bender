@@ -16,6 +16,7 @@
 #include "Engine/Timer.h"
 #include "Being.h"
 #include "Engine/Sound.h"
+#include "Engine/TileSet/GroundTouchResolver.h"
 #include "Lifebar.h"
 #include "BendHUD.h"
 
@@ -32,7 +33,7 @@ public:
 	void Update(float dt);
 	void Render();
 	void NotifyCollision(GameObject* other);
-	void NotifyTileCollision();
+	void NotifyTileCollision(Collision::CollisionAxis collisionAxis);
 	bool IsDead();
 	void SetDead(bool dead);
 	bool Is(std::string type);
@@ -71,6 +72,8 @@ public:
 	void SetTouchingGround(bool isTouchingGround);
 	bool GetTouchingGround();
 
+	void SetGroundTouchResolver(GroundTouchResolver* resolver);
+	GroundTouchResolver* GetGroundTouchResolver();
 	Sprite* GetSprite();
 
 	int fallUpdateCount;
@@ -114,6 +117,8 @@ private:
 	bool bendMode;
 	bool damageDirectionRight;
 	Lifebar *lifebar;
+
+	GroundTouchResolver* resolver;
 
 	void LoadSpriteData();
 };

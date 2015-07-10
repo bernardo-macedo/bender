@@ -16,6 +16,7 @@
 #include "Engine/Text.h"
 #include "Baon.h"
 #include "Enemy.h"
+#include "SwordEnemy.h"
 #include "Monumento.h"
 #include "EnemyAIManager.h" 
 #include "Being.h"

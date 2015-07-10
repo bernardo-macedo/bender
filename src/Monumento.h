@@ -15,6 +15,7 @@
 #include "Engine/GameObject.h"
 #include "Engine/Sprite.h"
 #include "Engine/Camera.h"
+#include "Engine/Sound.h"
 #include "Baon.h"
 
 #define MONUMENT_MAP_GROUND 8
@@ -31,6 +32,7 @@ public:
 	virtual bool Is(std::string type);
 private:
 	Sprite *sp;
+	Sound* checkpointSound;
 	bool used;
 	int level;
 };

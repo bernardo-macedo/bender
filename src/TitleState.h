@@ -30,10 +30,12 @@ public:
 	TitleState();
 	virtual ~TitleState();
 
+	void OnUpdate(float dt, GameObject* object);
 	void Update(float dt);
 	void Render();
 	void Pause();
 	void Resume();
+	void ResolveDeadObject(GameObject* object);
 };
 
 #endif /* TITLESTATE_H_ */

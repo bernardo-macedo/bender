@@ -21,7 +21,7 @@ BaonRunState::BaonRunState(bool flipped) : BaonState(){
 }
 void BaonRunState::Update_(float dt) {
 	t->Update(dt);
-	if(!executed){
+	if(!executed) {
 		baon->Run(flipped);
 		executed = true;
 	}
@@ -45,7 +45,7 @@ void BaonRunState::Update_(float dt) {
 		next = "JUMP";
 		nextFlipped = flipped;
 	}
-	if(InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
+	if(!baon->GetBendMode() && InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
 		nextRequested = true;
 		next = "FASTPUNCH";
 		nextFlipped = flipped;

@@ -18,64 +18,35 @@
 #include "enemystates/BenderEnemyStatePunch.h"
 #include "enemystates/BenderEnemyStateTakeDamage.h"
 
-#define ADD_STATE_EMPLACE(enemyStates, StateEnemy) this->enemyStatesMap.emplace(enemyStates, new StateEnemy(this))
-#define ADD_STATE_INSERT(enemyStates, StateEnemy) this->enemyStatesMap.insert(std::make_pair<enemyStates, StateEnemy*>(enemyStates, new StateEnemy(this)));
+//#define ADD_STATE_EMPLACE(enemyStates, StateEnemy) this->enemyStatesMap.emplace(enemyStates, new StateEnemy(this))
 
-
-Enemy::Enemy(int enemyScale, int x):
-	WALK_SPEED_E(50),
-	RUN_SPEED_E(130),
-	DOUBLECLICK_TIME(0.2)
-	{
-	FILE *fp = fopen("data/inimigo-data.txt", "r");
-	fscanf(fp, "%d", &numEst);
-
-	int val;
-	while(!feof(fp)){
-		fscanf(fp, "%d", &val);
-		spriteData.push_back(val);
-	}
-	fclose(fp);
-	scale = enemyScale;
-	t = new Timer();
-    //----------------------------------------
-
-    InitializeStates();
-    currentState = enemyStatesMap.at(PATROLLING);
-	sp = new Sprite("img/Inimigo.png", 1, 0.1);
-	runStates = NONE;
+Enemy::Enemy(int enemyScale, int x) : AbstractEnemy(enemyScale, x, 2, 50, 130, 0.2) {
 	SetID(GameObject::ENEMY);
-
-	sp->SetFrameHeight(spriteData[0]);
-	sp->SetFrameWidth(spriteData[1]);
-
-	box.SetX(x + 33*scale);
-	box.SetY(ENEMY_MAP_GROUND*scale);
-	box.SetH(sp->GetFrameHeight());
-	box.SetW(sp->GetFrameWidth());
-	sp->SetScaleX(scale);
-	sp->SetScaleY(scale);
-	spawnX = x;
-
-	b = new Body("enemy", box.GetX(), box.GetY());
-
-	b->ApplyForce(new Force("gravity", 0, 900));
-	b->SetSpeedLimit(1000);
-
-	flipped = false;
-	fallUpdateCount = 0;
-	isDead = false;
-	isDying  = false;
-	isDamage = false;
-	isTakingDamage = false;
-	closeToBaon = false;
-	bendCoolDown = 0;
-
-	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
-	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
-	hp = 2;
-
+	InitializeSprite();
+	InitializeStates();
+	InitializeForces();
+	Initialize();
 	this->currentState->enter();
+}
+
+Enemy::~Enemy() {
+	delete kickhit;
+	delete punchhit;
+	delete currentState;
+}
+
+void Enemy::changeState(const enemyStates state_) {
+	this->currentState->exit();
+	this->currentState = this->enemyStatesMap.at(state_);
+	this->currentState->enter();
+}
+
+bool Enemy::IsState(const enemyStates state_) {
+	return (this->currentState == this->enemyStatesMap.at(state_));
+}
+
+bool Enemy::StateEnd() {
+	return currentState->AskEnd();
 }
 
 void Enemy::Update(float dt) {
@@ -92,12 +63,6 @@ void Enemy::Update(float dt) {
 
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
-}
-
-void Enemy::Render() {
-	if(!isDead){
-		sp->Render(box.GetX() + Camera::pos.getX(), box.GetY() + Camera::pos.getY(), 0, flipped);
-	}
 }
 
 void Enemy::NotifyCollision(GameObject* other) {
@@ -117,112 +82,10 @@ void Enemy::NotifyCollision(GameObject* other) {
 	}
 }
 
-bool Enemy::IsDead() {
-	return isDead;
-}
+void Enemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {}
 
 bool Enemy::Is(std::string type) {
-	return Being::Is(type) || type.compare("Enemy") == 0;
-}
-
-//--------------------------------------------------------
-//--------------------------------------------------------
-//--------------------------------------------------------
-
-void Enemy::Run(bool flipped) {
-	if(!flipped){
-		this->flipped = false;
-		b->SetVelX(RUN_SPEED_E);
-	}
-	else{
-		this->flipped = true;
-		b->SetVelX(-RUN_SPEED_E);
-	}
-
-}
-
-void Enemy::Walk(bool flipped) {
-	sp->SetFrameHeight(spriteData[WALK*3]);
-	sp->SetFrameWidth(spriteData[WALK*3 + 1]);
-	sp->SetFrameCount(spriteData[WALK*3 + 2]);
-	sp->SetLine(WALK, spriteData[0]);
-	if(!flipped){
-		this->flipped = false;
-		b->SetVelX(WALK_SPEED_E);
-	}
-	else{
-		this->flipped = true;
-		b->SetVelX(-WALK_SPEED_E);
-	}
-	t->Restart();
-
-}
-
-void Enemy::Stand(bool flipped) {
-	sp->SetFrameHeight(spriteData[STAND*3]);
-	sp->SetFrameWidth(spriteData[STAND*3 + 1]);
-	sp->SetFrameCount(1);
-	sp->SetLine(STAND, spriteData[0]);
-	b->SetVelX(0);
-
-	runStates= NONE;
-
-	if(flipped){
-		runStates = PRERUNL;
-	}
-	else{
-		runStates = PRERUNR;
-	}
-
-	fallUpdateCount = 0;
-
-}
-
-void Enemy::Jump(bool flipped) {
-	sp->SetFrameHeight(spriteData[JUMP*3]);
-	sp->SetFrameWidth(spriteData[JUMP*3 + 1]);
-	sp->SetFrameCount(spriteData[JUMP*3 + 2]);
-	sp->SetLine(JUMP, spriteData[0]);
-
-	b->SetVelY(-500);
-	b->ApplyForce(new Force("gravity", 0, 900));
-
-}
-
-void Enemy::NotifyTileCollision() {
-}
-
-Enemy::~Enemy() {
-	/*for(std::map<enemyStates, StateEnemy*>::iterator itr = enemyStatesMap.begin(); itr != enemyStatesMap.end(); itr++){
-		delete itr->second;
-	}*/
-	delete sp;
-	delete currentState;
-}
-
-void Enemy::TakeDamage(bool damage) {
-	hp--;
-	punchhit->Play(0);
-}
-
-bool Enemy::IsTakingDamage() {
-	return isTakingDamage;
-}
-
-bool Enemy::IsRemovable() {
-	return isRemovable;
-}
-
-bool Enemy::IsCloseToBaon() {
-	return closeToBaon;
-}
-
-void Enemy::SetCloseToBaon(bool close) {
-	closeToBaon = close;
-}
-
-bool Enemy::GetFlipped() {
-	return flipped;
+	return AbstractEnemy::Is(type) || type.compare("BenderEnemy") == 0;
 }
 
 float Enemy::GetCoolDown() {
@@ -233,62 +96,88 @@ void Enemy::SetCoolDown(float coolDown) {
 	this->bendCoolDown = coolDown;
 }
 
-int Enemy::GetSpawnX() {
-	return spawnX;
-}
-
-bool Enemy::IsCollisionFromRight() {
-	return collisionFromRight;
-}
-
-void Enemy::SetTakingDamage(bool damage) {
-	isTakingDamage = damage;
-}
-
-bool Enemy::IsDying() {
-	return isDying;
-}
-
-void Enemy::SetDying(bool dying) {
-	this->isDying = dying;
-}
-
-int Enemy::GetHP() {
-	return hp;
+void Enemy::TakeDamage(bool damage) {
+	hp--;
+	punchhit->Play(0);
 }
 
 void Enemy::InitializeStates(){
 	// Initialize all the states in Enemy here.
-	ADD_STATE_EMPLACE(PATROLLING,   EnemyStatePatrolling);
-	ADD_STATE_EMPLACE(FOLLOW,   	EnemyStateFollow);
-	ADD_STATE_EMPLACE(PUNCH,        EnemyStatePunch);
-	ADD_STATE_EMPLACE(BEND, 		EnemyStateBend);
-	ADD_STATE_EMPLACE(TAKINGHIT, 		EnemyStateTakeDamage);
-	ADD_STATE_EMPLACE(DYING, 		EnemyStateDying);
+	this->enemyStatesMap.emplace(PATROLLING, new EnemyStatePatrolling(this));
+	this->enemyStatesMap.emplace(FOLLOW, new EnemyStateFollow(this));
+	this->enemyStatesMap.emplace(PUNCH, new EnemyStatePunch(this));
+	this->enemyStatesMap.emplace(BEND, new EnemyStateBend(this));
+	this->enemyStatesMap.emplace(TAKINGHIT, new EnemyStateTakeDamage(this));
+	this->enemyStatesMap.emplace(DYING, new EnemyStateDying(this));
+
+	currentState = enemyStatesMap.at(PATROLLING);
 }
 
-void Enemy::changeState(const enemyStates state_){
-	this->currentState->exit();
-	this->currentState = this->enemyStatesMap.at(state_);
-	this->currentState->enter();
+void Enemy::InitializeSprite() {
+	LoadSpriteData("data/inimigo-data.txt");
+
+	sp = new Sprite("img/Inimigo.png", 1, 0.1);
+
+	sp->SetFrameHeight(spriteData[0]);
+	sp->SetFrameWidth(spriteData[1]);
+
+	box.SetX(spawnX + 33*scale);
+	box.SetY(ENEMY_MAP_GROUND * scale);
+	box.SetH(sp->GetFrameHeight());
+	box.SetW(sp->GetFrameWidth());
+	sp->SetScaleX(scale);
+	sp->SetScaleY(scale);
 }
 
-bool Enemy::IsState(const enemyStates state_){
-	return (this->currentState == this->enemyStatesMap.at(state_));
+void Enemy::InitializeForces() {
+	b = new Body("enemy", box.GetX(), box.GetY());
+
+	b->ApplyForce(new Force("gravity", 0, 900));
+	b->SetSpeedLimit(1000);
 }
 
-Sprite* Enemy::GetSprite(){
-	return sp;
+void Enemy::Initialize() {
+	closeToBaon = false;
+	bendCoolDown = 0;
+
+	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
+	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
 }
 
-Timer* Enemy::Time(){
-	return t;
+void Enemy::SetWalkSprite() {
+	if (sp != NULL) {
+		sp->SetFrameHeight(spriteData[WALK*3]);
+		sp->SetFrameWidth(spriteData[WALK*3 + 1]);
+		sp->SetFrameCount(spriteData[WALK*3 + 2]);
+		sp->SetLine(WALK, spriteData[0]);
+	}
 }
 
-void Enemy::SetDead(bool isDead_){
-	isDead = isDead_;
+void Enemy::SetStandSprite() {
+	if (sp != NULL) {
+		sp->SetFrameHeight(spriteData[STAND*3]);
+		sp->SetFrameWidth(spriteData[STAND*3 + 1]);
+		sp->SetFrameCount(1);
+		sp->SetLine(STAND, spriteData[0]);
+	}
 }
 
-bool Enemy::StateEnd() {
-	return currentState->AskEnd();
+void Enemy::SetJumpSprite() {}
+
+void Enemy::SetTakingDamageSprite() {
+	if (sp != NULL) {
+		sp->SetFrameHeight(spriteData[TAKINGHIT*3]);
+		sp->SetFrameWidth(spriteData[TAKINGHIT*3 + 1]);
+		sp->SetFrameCount(spriteData[TAKINGHIT*3 + 2]);
+		sp->SetLine(TAKINGHIT, spriteData[0]);
+	}
+}
+
+void Enemy::SetDyingSprite() {
+	if (sp != NULL) {
+		sp->SetFrameHeight(spriteData[DYING*3]);
+		sp->SetFrameWidth(spriteData[DYING*3 + 1]);
+		sp->SetFrameCount(spriteData[DYING*3 + 2]);
+		sp->SetLine(DYING, spriteData[0]);
+	}
 }

@@ -17,11 +17,17 @@ BaonAttack1State::BaonAttack1State(bool flipped) : BaonState(){
 	id = "ATTACK1";
 	justJumped = true;
 	canExecute = false;
+	bendJumpSound = new Sound("audio/sfx_bend_jump.wav");
+}
+
+BaonAttack1State::~BaonAttack1State() {
+	delete bendJumpSound;
 }
 
 void BaonAttack1State::Update_(float dt) {
 	if(!executed){
-		if(canExecute){
+		if(canExecute && !Hud::GetInstance()->IsBuffering(Hud::ONE)){
+			bendJumpSound->Play(0);
 			pedra = new PedraBasico(baon->GetBox().GetX(),
 					baon->GetBox().GetY() + baon->GetBox().GetH() - 10*baon->GetScale(),
 					baon->GetScale());
@@ -30,12 +36,19 @@ void BaonAttack1State::Update_(float dt) {
 			pedra->GetSprite()->SetFrameHeight(50);
 			pedra->GetSprite()->SetFrameCount(3);
 			pedra->GetSprite()->SetLine(0, 50);
-			Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+
+			//if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
+				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+			//} else {
+			//	delete pedra;
+			//}
 			baon->Jump(flipped);
 			baon->SetJumpFrame();
 			baon->GetBody()->SetVelY(-700);
 			executed = true;
 			justJumped = true;
+
+			Hud::GetInstance()->SetBuffering(Hud::ONE);
 		}
 		else{
 			nextRequested = true;

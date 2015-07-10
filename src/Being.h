@@ -11,6 +11,7 @@
 #include <memory>
 #include "Engine/Physics/Body.h"
 #include "Engine/GameObject.h"
+#include "Engine/Collision.h"
 
 class Being : public GameObject {
 public:
@@ -20,7 +21,7 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void Render() = 0;
 	virtual void NotifyCollision(GameObject* other) = 0;
-	virtual void NotifyTileCollision() = 0;
+	virtual void NotifyTileCollision(Collision::CollisionAxis collisionAxis) = 0;
 	virtual bool IsDead() = 0;
 
 	virtual bool Is(std::string type);

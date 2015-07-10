@@ -7,7 +7,14 @@
 
 #include "AbstractStage.h"
 
-AbstractStage::AbstractStage(int posX) : State(posX) {}
+AbstractStage::AbstractStage(int scale, int level, int posX) : State(posX) {
+	this->scale = scale;
+	this->level = level;
+	this->levelWon = false;
+	this->levelWonSound = new Sound("audio/sfx_levelWon.wav");
+
+	Hud::GetInstance(scale, level);
+}
 
 AbstractStage::~AbstractStage() {
 	if (music != NULL) {
@@ -19,51 +26,70 @@ AbstractStage::~AbstractStage() {
 	delete tileMap;
 	delete levelUpText;
 	delete levelUpTimer;
+	delete enemyAI;
+	delete swordEnemyAI;
+	delete levelWonSound;
 }
 
-void AbstractStage::Update(float dt) {
-	baon->SetCloseToEnemy(false);
+void AbstractStage::OnUpdate(float dt, GameObject* object) {
+	if(!popRequested){
+		Hud::GetInstance()->Update(dt);
 
-	baon->SetTouchingGround(tileMap->IsTouchingGround(baon->GetBox(), baon->GetScale()));
-
-	if(baon->GetBendMode()){
-		dt = dt/5;
-	}
-	Camera::Update(dt);
-
-	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
-	quitRequested = InputManager::GetInstance().QuitRequested();
-
-	for (unsigned int i = 0; i < monuments.size(); i++) {
-		monuments[i]->Update(dt);
-		if (monuments[i]->IsDead()) {
-			monuments.erase(monuments.begin() + i);
-		} else if (Collision::IsColliding(monuments[i]->GetBox(), baon->GetBox(), 0 , 0)) {
-			monuments[i]->NotifyCollision(baon);
+		if(baon->GetBendMode()){
+			SetSlowMotion(5);
 		}
-	}
+		else{
+			SetSlowMotion(1);
+		}
 
-	UpdateArray(dt);
+		Camera::Update(dt);
 
-	if (baon->IsDead()) {
-		Camera::Unfollow();
-		popRequested = true;
-	} else {
+		popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
+		quitRequested = InputManager::GetInstance().QuitRequested();
 
-		// Resolve levelUp
-		if (baon->GetLevelWon()) {
-			if (OnLevelWon(dt)) {
-				return;
+		for (unsigned int i = 0; i < monuments.size(); i++) {
+			monuments[i]->Update(dt);
+			if (monuments[i]->IsDead()) {
+				monuments.erase(monuments.begin() + i);
+			} else if (Collision::IsColliding(monuments[i]->GetBox(), baon->GetBox(), 0 , 0)) {
+				monuments[i]->NotifyCollision(baon);
 			}
 		}
 
-		if (tileMap->CheckCollisions(baon->GetBox(), baon->GetScale())) {
-			tileMap->ResolveTileCollisions(baon);
+		if(object->GetID() == GameObject::ENEMY){
+			UpdateBenderEnemy((Enemy*)object, dt);
+		}
+
+		if(object->GetID() == GameObject::SWORD_ENEMY){
+			UpdateSwordEnemy((SwordEnemy*)object, dt);
+		}
+
+		if(object->GetID() == GameObject::BAON){
+			if (baon->GetLevelWon()) {
+				if (OnLevelWon(dt)) {
+					return;
+				}
+			}
+			else{
+				baon->SetCloseToEnemy(false);
+				baon->SetTouchingGround(tileMap->IsTouchingGround(baon->GetBox(), baon->GetScale()));
+
+				if(!baon->bendHUD->IsDead()){
+					baon->bendHUD->Update(dt);
+				}
+
+				if (tileMap->CheckCollisions(baon->GetBox(), baon->GetScale())) {
+					tileMap->ResolveTileCollisions(baon);
+				}
+			}
 		}
 	}
+}
 
-	if(!baon->bendHUD->IsDead()){
-		baon->bendHUD->Update(dt);
+void AbstractStage::ResolveDeadObject(GameObject* object){
+	if(object->GetID() == GameObject::BAON){
+		Camera::Unfollow();
+		popRequested = true;
 	}
 }
 
@@ -76,23 +102,16 @@ void AbstractStage::Render() {
 		monuments[i]->Render();
 	}
 
-	if(!baon->IsDead()){
-		baon->Render();
-	}
-
 	if(!baon->bendHUD->IsDead()){
 		baon->bendHUD->Render();
 	}
 
-	RenderArray();
+	Hud::GetInstance()->Render();
 
 	if (levelUpText != NULL) {
 		levelUpText->Render();
 	}
 
-	for (unsigned int i = 0; i < enemies.size(); i++) {
-		enemies[i]->Render();
-	}
 }
 
 void AbstractStage::Pause() {
@@ -104,5 +123,27 @@ void AbstractStage::Pause() {
 void AbstractStage::Resume() {
 	if (music != NULL) {
 		music->Play(Music::ALWAYS);
+	}
+}
+
+void AbstractStage::UpdateBenderEnemy(Enemy* enemy, float dt) {
+	enemy->SetCloseToBaon(false);
+	enemyAI->SetEnemy(enemy);
+	enemyAI->update(dt);
+
+	if (tileMap->CheckCollisions(enemy->GetBox(), enemy->GetScale())) {
+		tileMap->ResolveTileCollisions(enemy);
+	}
+}
+
+void AbstractStage::Update(float dt) {
+}
+
+void AbstractStage::UpdateSwordEnemy(SwordEnemy* enemy, float dt) {
+	swordEnemyAI->SetEnemy(enemy);
+	swordEnemyAI->update(dt);
+
+	if (tileMap->CheckCollisions(enemy->GetBox(), enemy->GetScale())) {
+		tileMap->ResolveTileCollisions(enemy);
 	}
 }

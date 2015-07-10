@@ -178,12 +178,12 @@ void TileMap::ResolveTileCollisions(Being* being) {
 				// colidiu com a borda esquerda do player
 				intersectionX = (tile.GetBox().GetX() + tile.GetBox().GetW()) - scaledRect.GetX();
 				scaledRect.SetX(scaledRect.GetX() + intersectionX + 1);
-				being->NotifyTileCollision();
+				being->NotifyTileCollision(Collision::CollisionAxis::AXIS_X);
 			} else if (overlap.getX() < 0) {
 				// colidiu com a borda direita do player
 				intersectionX = (scaledRect.GetX() + scaledRect.GetW()) - tile.GetBox().GetX();
 				scaledRect.SetX(scaledRect.GetX() - intersectionX - 1);
-				being->NotifyTileCollision();
+				being->NotifyTileCollision(Collision::CollisionAxis::AXIS_X);
 			}
 
 		} else {
@@ -194,7 +194,7 @@ void TileMap::ResolveTileCollisions(Being* being) {
 					&& std::find(groundTileIndexes.begin(), groundTileIndexes.end(), tile.GetIndex()) != groundTileIndexes.end()) {
 				being->GetBody()->SetVelY(0);
 				scaledRect.SetY(tile.GetBox().GetY() - scaledRect.GetH());
-				being->NotifyTileCollision();
+				being->NotifyTileCollision(Collision::CollisionAxis::AXIS_Y);
 			}
 		}
 
@@ -215,7 +215,7 @@ void TileMap::ResolveTileCollisions(Being* being) {
 			if (distY < 0 && fabs(distY) > (4 * scaledRect.GetH()/5) && tile.GetIndex() != 5) {
 				being->GetBody()->SetVelY(0);
 				scaledRect.SetY(tile.GetBox().GetY() - scaledRect.GetH());
-				being->NotifyTileCollision();
+				being->NotifyTileCollision(Collision::CollisionAxis::AXIS_Y);
 			}
 
 		}
@@ -277,6 +277,7 @@ void TileMap::SetExtraCollisionLayer(int layer) {
 bool TileMap::IsTouchingGround(Rect rect, int scale) {
 	bool result = false;
 	std::multimap<float, Tile> previousTileCollisions = tileCollisions;
+	std::multimap<float, Tile> previousExtraTileCollisions = extraTileCollisions;
 
 	CheckCollisions(rect, scale);
 	std::multimap<float, Tile>::iterator it;
@@ -289,5 +290,24 @@ bool TileMap::IsTouchingGround(Rect rect, int scale) {
 		}
 	}
 	tileCollisions = previousTileCollisions;
+	extraTileCollisions = previousExtraTileCollisions;
 	return result;
+}
+
+float TileMap::GetGroundHeight(float x) {
+	float groundY;
+
+	Rect rect;
+	rect.SetX(x);
+	rect.SetW(21);
+	rect.SetH(1);
+
+	// TODO: verificar se passo de 1 pixel eh grande demais. Trocar por 0.5 caso seja.
+	for (groundY = 0; groundY < Game::SCREEN_HEIGHT; groundY++) {
+		rect.SetY(groundY);
+		if (IsTouchingGround(rect, 1)) {
+			break;
+		}
+	}
+	return groundY;
 }

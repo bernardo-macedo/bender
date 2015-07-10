@@ -30,7 +30,6 @@ TitleState::~TitleState() {
 void TitleState::Update(float dt) {
 
 	menu->Update(dt);
-
 	quitRequested = InputManager::GetInstance().QuitRequested();
 
 	if (InputManager::GetInstance().KeyPress(ENTER_KEY)) {
@@ -76,4 +75,10 @@ void TitleState::Resume() {
 	if (music != NULL) {
 		music->Play(Music::ALWAYS);
 	}
+}
+
+void TitleState::OnUpdate(float dt, GameObject*) {
+}
+
+void TitleState::ResolveDeadObject(GameObject* object) {
 }

@@ -19,9 +19,10 @@
 #include "../Geometry/Point.h"
 #include "../../Baon.h"
 #include "../Collision.h"
+#include "../../Being.h"
 #include "Tile.h"
 
-class TileMap {
+class TileMap : public GroundTouchResolver {
 private:
 	std::vector<int> tileMatrix ;
 	TileSet* tileSet ;
@@ -54,7 +55,9 @@ public:
 	bool CheckCollisions(Rect rect, int scale);
 	void ResolveTileCollisions(Being* being);
 	void SetExtraCollisionLayer(int layer);
+
 	bool IsTouchingGround(Rect rect, int scale);
+	float GetGroundHeight(float x);
 };
 
 #endif /* ENGINE_TILESET_TILEMAP_H_ */

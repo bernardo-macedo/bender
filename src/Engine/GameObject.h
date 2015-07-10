@@ -22,6 +22,7 @@ public:
 	static const int PEDRA_BASICO_ENEMY;
 	static const int BAON;
 	static const int ENEMY;
+	static const int SWORD_ENEMY;
 
 	virtual ~GameObject();
 

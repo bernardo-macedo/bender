@@ -18,20 +18,22 @@ class State {
 protected:
 	TileMap* tileMap;
 	std::vector<std::unique_ptr<GameObject>> objectArray;
-	EnemyAIManager *enemyAI;
 	bool popRequested;
 	bool quitRequested;
 	int initialPositionX;
+	int slowMotion;
 
-	void UpdateArray(float dt);
-	void RenderArray();
-
+	virtual void ResolveDeadObject(GameObject* object) = 0;
+	virtual void OnUpdate(float dt, GameObject* object) = 0;
+	virtual void Update(float dt) = 0;
+	virtual void Render() = 0;
+	void SetSlowMotion(int slow);
 public:
 	State(int posX = -1);
 	virtual ~State();
 
-	virtual void Update(float dt) = 0;
-	virtual void Render() = 0;
+	void UpdateArray(float dt);
+	void RenderArray();
 
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;

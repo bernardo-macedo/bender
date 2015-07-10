@@ -18,13 +18,16 @@ BaonFastPunch::BaonFastPunch(bool flipped) : BaonState(){
 	nextRequested = false;
 	this->flipped = flipped;
 	t = new Timer();
+	fastPunchSound = new Sound("audio/sfx_char_fast_punch.wav");
 }
 
 BaonFastPunch::~BaonFastPunch() {
+	delete fastPunchSound;
 }
 
 void BaonFastPunch::Update_(float dt) {
-	if(!executed){
+	if(!executed) {
+		fastPunchSound->Play(0);
 		baon->GetSprite()->SetFrameHeight(50);
 		baon->GetSprite()->SetFrameWidth(50);
 		baon->GetSprite()->SetFrameCount(3);

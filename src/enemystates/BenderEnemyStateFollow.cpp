@@ -7,7 +7,7 @@ void EnemyStateFollow::enter(){
 }
 
 void EnemyStateFollow::exit(){
-	enemy->Time()->Restart();
+	enemy->GetTimer()->Restart();
 }
 
 void EnemyStateFollow::update(const float dt_){

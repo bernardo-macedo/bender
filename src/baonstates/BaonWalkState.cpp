@@ -50,12 +50,12 @@ void BaonWalkState::Update_(float dt){
 		next = "JUMP";
 		nextFlipped = flipped;
 	}
-	if(InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
+	if(!baon->GetBendMode() && InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
 		nextRequested = true;
 		next = "PUNCH";
 		nextFlipped = flipped;
 	}
-	if(InputManager::GetInstance().KeyPress(RIGHT_ARROW_KEY)){
+	if(!baon->GetBendMode() && InputManager::GetInstance().KeyPress(RIGHT_ARROW_KEY)){
 		nextRequested = true;
 		next = "KICK";
 		nextFlipped = flipped;
