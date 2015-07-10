@@ -7,16 +7,22 @@
 
 #include "Enemy.h"
 
-#include <stdio.h>
-#include <cwchar>
+#include <map>
 #include <string>
 
+#include "enemystates/BenderEnemyBeingPushed.h"
 #include "enemystates/BenderEnemyStateBend.h"
 #include "enemystates/BenderEnemyStateDying.h"
 #include "enemystates/BenderEnemyStateFollow.h"
 #include "enemystates/BenderEnemyStatePatrolling.h"
 #include "enemystates/BenderEnemyStatePunch.h"
 #include "enemystates/BenderEnemyStateTakeDamage.h"
+#include "Engine/Collision.h"
+#include "Engine/Physics/Body.h"
+#include "Engine/Physics/Force.h"
+#include "Engine/Physics/Physic.h"
+#include "Engine/Sprite.h"
+#include "Engine/Timer.h"
 
 //#define ADD_STATE_EMPLACE(enemyStates, StateEnemy) this->enemyStatesMap.emplace(enemyStates, new StateEnemy(this))
 
@@ -54,6 +60,9 @@ void Enemy::Update(float dt) {
 
 	if(!isDead) {
 		currentState->update(dt);
+		if(currentState->AskEnd()){
+			changeState(Enemy::PATROLLING);
+		}
 		t->Update(dt);
 		Physic::GetInstance()->UpdatePhysic(b, dt);
 	} else {
@@ -67,7 +76,7 @@ void Enemy::Update(float dt) {
 
 void Enemy::NotifyCollision(GameObject* other) {
 	if(other->GetID() == GameObject::PEDRA_BASICO_BAON){
-		if(other->GetBox().GetX() > box.GetX()){
+		if(other->GetBox().GetX() < box.GetX()){
 			collisionFromRight = false;
 		}
 		if(other->GetBox().GetX() > box.GetX()){
@@ -78,7 +87,7 @@ void Enemy::NotifyCollision(GameObject* other) {
 
 	if(other->GetID() == GameObject::SPIKE_STONE_BAON){
 		b->SetX(other->GetBox().GetX() + other->GetBox().GetW() + 5);
-		changeState(Enemy::PATROLLING);
+		changeState(Enemy::BEINGPUSHED);
 	}
 }
 
@@ -109,6 +118,8 @@ void Enemy::InitializeStates(){
 	this->enemyStatesMap.emplace(BEND, new EnemyStateBend(this));
 	this->enemyStatesMap.emplace(TAKINGHIT, new EnemyStateTakeDamage(this));
 	this->enemyStatesMap.emplace(DYING, new EnemyStateDying(this));
+	this->enemyStatesMap.emplace(BEINGPUSHED, new EnemyBeingPushed(this));
+
 
 	currentState = enemyStatesMap.at(PATROLLING);
 }

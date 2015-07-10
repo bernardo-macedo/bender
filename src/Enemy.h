@@ -15,7 +15,7 @@ class StateEnemy;
 
 class Enemy : public AbstractEnemy {
 public:
-	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW, PUNCH, BEND, TAKINGHIT, DYING};
+	enum enemyStates {STAND, WALK, JUMP, RUN, FALLING, PATROLLING, FOLLOW, PUNCH, BEND, TAKINGHIT, DYING, BEINGPUSHED};
 
 	Enemy(int enemyScale, int x);
 	virtual ~Enemy();
