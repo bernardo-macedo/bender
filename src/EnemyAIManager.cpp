@@ -32,6 +32,7 @@ void EnemyAIManager::update(const float dt) {
 				if(!enemy->IsState(Enemy::enemyStates::BEND)
 					&& !enemy->IsState(Enemy::enemyStates::TAKINGHIT)
 					&& !enemy->IsState(Enemy::enemyStates::DYING)
+					&& !enemy->IsState(Enemy::enemyStates::BEINGPUSHED)
 					&& (enemy->GetCoolDown() <= 0)){
 					enemy->changeState(Enemy::enemyStates::BEND);
 				}

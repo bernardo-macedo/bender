@@ -6,11 +6,19 @@
  */
 
 #include "SwordEnemy.h"
-#include "enemystates/SwordEnemyStatePatrolling.h"
+
+#include "enemystates/SwordEnemyBeingPunched.h"
 #include "enemystates/SwordEnemyStateAttacking.h"
 #include "enemystates/SwordEnemyStateDying.h"
-#include "enemystates/SwordEnemyStateTakeDamage.h"
 #include "enemystates/SwordEnemyStateFollow.h"
+#include "enemystates/SwordEnemyStatePatrolling.h"
+#include "enemystates/SwordEnemyStateTakeDamage.h"
+#include "Engine/Collision.h"
+#include "Engine/Physics/Body.h"
+#include "Engine/Physics/Force.h"
+#include "Engine/Physics/Physic.h"
+#include "Engine/Sprite.h"
+#include "TransparentGameObject.h"
 
 SwordEnemy::SwordEnemy(int enemyScale, int x) : AbstractEnemy(enemyScale, x, 3, 50, 130, 0.2) {
 	SetID(GameObject::SWORD_ENEMY);
@@ -45,7 +53,12 @@ void SwordEnemy::Update(float dt) {
 	collidedHorizontally = false;
 	if(!isDead) {
 		currentState->update(dt);
-		t->Update(dt);
+		if(currentState->AskEnd()){
+			if(IsState(BEINGPUSHED)){
+				isTakingDamage = true;
+			}
+			changeState(SwordEnemy::PATROLLING);
+		}
 		Physic::GetInstance()->UpdatePhysic(b, dt);
 	} else {
 		isRemovable = true;
@@ -62,7 +75,7 @@ void SwordEnemy::Update(float dt) {
 }
 
 void SwordEnemy::NotifyCollision(GameObject* other) {
-	if(other->GetID() == 100){
+	if(other->GetID() == GameObject::PEDRA_BASICO_BAON){
 		if(other->GetBox().GetX() > box.GetX()){
 			collisionFromRight = false;
 		}
@@ -70,6 +83,20 @@ void SwordEnemy::NotifyCollision(GameObject* other) {
 			collisionFromRight = true;
 		}
 		isTakingDamage = true;
+	}
+	if(other->GetID() == GameObject::TRANSPARENT_GAME_OBJECT){
+		TransparentGameObject* transp = (TransparentGameObject*)other;
+		if(!IsState(SwordEnemy::BEINGPUSHED)
+				&& !IsState(SwordEnemy::TAKINGHIT)
+				&& !IsState(SwordEnemy::DYING)){
+			if(transp->IsRight()){
+				collisionFromRight = true;
+			}
+			else{
+				collisionFromRight = false;
+			}
+			changeState(SwordEnemy::BEINGPUSHED);
+		}
 	}
 }
 
@@ -95,6 +122,7 @@ void SwordEnemy::InitializeStates() {
 	this->enemyStatesMap.emplace(DYING, new SwordEnemyStateDying(this));
 	this->enemyStatesMap.emplace(PATROLLING, new SwordEnemyStatePatrolling(this));
 	this->enemyStatesMap.emplace(FOLLOW, new SwordEnemyStateFollow(this));
+	this->enemyStatesMap.emplace(BEINGPUSHED, new SwordEnemyBeingPushed(this));
 
 	currentState = enemyStatesMap.at(PATROLLING);
 }

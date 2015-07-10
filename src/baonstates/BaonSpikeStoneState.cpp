@@ -14,13 +14,22 @@
 BaonSpikeStoneState::BaonSpikeStoneState(bool flipped) : BaonState(){
 	nextRequested = false;
 	executed = false;
+	this->flipped = flipped;
 	t = new Timer();
 	id = "SPIKESTONE";
+	pedra = NULL;
 }
 
 void BaonSpikeStoneState::Update_(float dt) {
-	pedra = new SpikeStone(baon->GetBox().GetX(), baon->GetBox().GetY(), baon->GetScale());
-	Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+	if(!executed){
+		if(!flipped){
+			pedra = new SpikeStone(baon->GetBox().GetX() + 30*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), false);
+		}else{
+			pedra = new SpikeStone(baon->GetBox().GetX() - 30*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), true);
+		}
+		Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+		executed = true;
+	}
 	nextRequested = true;
 	next = "STAND";
 	nextFlipped = flipped;

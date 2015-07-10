@@ -23,6 +23,7 @@
 #include "Engine/Physics/Physic.h"
 #include "Engine/Sprite.h"
 #include "Engine/Timer.h"
+#include "SpikeStone.h"
 
 //#define ADD_STATE_EMPLACE(enemyStates, StateEnemy) this->enemyStatesMap.emplace(enemyStates, new StateEnemy(this))
 
@@ -61,6 +62,9 @@ void Enemy::Update(float dt) {
 	if(!isDead) {
 		currentState->update(dt);
 		if(currentState->AskEnd()){
+			if(IsState(BEINGPUSHED)){
+				isTakingDamage = true;
+			}
 			changeState(Enemy::PATROLLING);
 		}
 		t->Update(dt);
@@ -85,9 +89,19 @@ void Enemy::NotifyCollision(GameObject* other) {
 		isTakingDamage = true;
 	}
 
-	if(other->GetID() == GameObject::SPIKE_STONE_BAON){
-		b->SetX(other->GetBox().GetX() + other->GetBox().GetW() + 5);
-		changeState(Enemy::BEINGPUSHED);
+	if(other->GetID() == GameObject::TRANSPARENT_GAME_OBJECT){
+		TransparentGameObject* transp = (TransparentGameObject*)other;
+		if(!IsState(Enemy::BEINGPUSHED)
+				&& !IsState(Enemy::TAKINGHIT)
+				&& !IsState(Enemy::DYING)){
+			if(transp->IsRight()){
+				collisionFromRight = true;
+			}
+			else{
+				collisionFromRight = false;
+			}
+			changeState(Enemy::BEINGPUSHED);
+		}
 	}
 }
 

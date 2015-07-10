@@ -16,21 +16,32 @@
 #include "Engine/Physics/Body.h"
 #include "Engine/Physics/Physic.h"
 #include "Engine/Sprite.h"
+#include "Engine/Geometry/Rect.h"
+#include "TransparentGameObject.h"
+#include "Engine/Timer.h"
 
 class SpikeStone : public Being{
 public:
-	SpikeStone(int x, int y, int scale);
+	SpikeStone(int x, int y, int scale, bool flipped);
 	void Update(float dt);
 	void Render();
 	void NotifyCollision(GameObject* other);
 	void NotifyTileCollision(Collision::CollisionAxis collisionAxis);
 	bool IsDead();
 
+	bool IsRight();
+	void SetFlipped(bool fllipped);
+
 	virtual bool Is(std::string type);
 private:
 	Sprite *sp;
 	int scale;
 	bool dead;
+	bool flipped;
+	bool right;
+	TransparentGameObject* transp;
+	bool transpSet;
+	Timer* t;
 };
 
 #endif /* SPIKESTONE_H_ */
