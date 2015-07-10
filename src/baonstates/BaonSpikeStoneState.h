@@ -11,7 +11,7 @@
 #include <string>
 
 #include "BaonState.h"
-#include "../SpikeStone.h";
+#include "../SpikeStone.h"
 
 class BaonSpikeStoneState : public BaonState{
 public:

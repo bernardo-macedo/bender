@@ -180,7 +180,7 @@ void Baon::Update(float dt) {
 	Physic::GetInstance()->UpdatePhysic(b, dt);
 	float updatedY = b->GetY();
 
-	isFalling = (updatedY - previousY > 4);
+	isFalling = (updatedY - previousY > 2);
 
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());

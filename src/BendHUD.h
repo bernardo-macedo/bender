@@ -25,15 +25,20 @@ public:
 
 	virtual bool Is(std::string type);
 	int GetScale();
-	Sprite* GetSprite();
-	bool isHide;
+
+	void Hide();
+	void Show();
 
 private:
+	enum Arrows {UP, RIGHT, DOWN, LEFT};
+
 	int scale;
 	Sprite* sp;
 	Sprite* active[4];
 	bool activeHide[4];
 	Timer* activeTime[4];
+
+	bool isHidden;
 };
 
 #endif /* BENDHUD_H_ */

@@ -12,6 +12,13 @@ AbstractStage::AbstractStage(int scale, int level, int posX) : State(posX) {
 	this->level = level;
 	this->levelWon = false;
 	this->levelWonSound = new Sound("audio/sfx_levelWon.wav");
+	this->levelUpTimer = new Timer();
+	this->levelUpText = NULL;
+
+	baon = NULL;
+	enemyAI = NULL;
+	swordEnemyAI = NULL;
+	music = NULL;
 
 	Hud::GetInstance(scale, level);
 }
@@ -33,7 +40,6 @@ AbstractStage::~AbstractStage() {
 
 void AbstractStage::OnUpdate(float dt, GameObject* object) {
 	if(!popRequested){
-		Hud::GetInstance()->Update(dt);
 
 		if(baon->GetBendMode()){
 			SetSlowMotion(5);
@@ -46,15 +52,6 @@ void AbstractStage::OnUpdate(float dt, GameObject* object) {
 
 		popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
 		quitRequested = InputManager::GetInstance().QuitRequested();
-
-		for (unsigned int i = 0; i < monuments.size(); i++) {
-			monuments[i]->Update(dt);
-			if (monuments[i]->IsDead()) {
-				monuments.erase(monuments.begin() + i);
-			} else if (Collision::IsColliding(monuments[i]->GetBox(), baon->GetBox(), 0 , 0)) {
-				monuments[i]->NotifyCollision(baon);
-			}
-		}
 
 		if(object->GetID() == GameObject::ENEMY){
 			UpdateBenderEnemy((Enemy*)object, dt);
@@ -98,11 +95,7 @@ void AbstractStage::Render() {
 		tileMap->Render(i, 0, Camera::pos.getX(), Camera::pos.getY());
 	}
 
-	for (unsigned int i = 0; i < monuments.size(); i++) {
-		monuments[i]->Render();
-	}
-
-	if(!baon->bendHUD->IsDead()){
+	if(baon->bendHUD != NULL && !baon->bendHUD->IsDead()){
 		baon->bendHUD->Render();
 	}
 
@@ -137,6 +130,7 @@ void AbstractStage::UpdateBenderEnemy(Enemy* enemy, float dt) {
 }
 
 void AbstractStage::Update(float dt) {
+	Hud::GetInstance()->Update(dt);
 }
 
 void AbstractStage::UpdateSwordEnemy(SwordEnemy* enemy, float dt) {

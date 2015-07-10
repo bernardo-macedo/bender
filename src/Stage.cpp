@@ -28,43 +28,31 @@ Stage::Stage(int posX) : AbstractStage(2, 1, posX) {
 
 	tileMap = new TileMap("floresta.tmx", 5, scale);
 
-	levelUpTimer = new Timer();
-
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
 	baon->SetGroundTouchResolver(tileMap);
 	
+	Enemy* e = new Enemy(scale, 900);
+	SwordEnemy* swordEnemy = new SwordEnemy(scale, 50);
+	enemyAI = new EnemyAIManager(baon, e);
+	swordEnemyAI = new SwordEnemyAIManager(baon, swordEnemy);
+
+	AddObject(new Monumento(102, 8, scale, level));
+	AddObject(new Monumento(262, 8, scale, level));
+
 	AddObject(baon);
 
-	/*enemies.emplace_back(new Enemy(scale, 900));
-	enemies.emplace_back(new Enemy(scale, 4000));
-	enemies.emplace_back(new Enemy(scale, 8000));
-	enemies.emplace_back(new Enemy(scale, 8300));
-	enemies.emplace_back(new Enemy(scale, 8600));*/
-
-	AddObject(new Enemy(scale, 900));
+	AddObject(e);
+	AddObject(swordEnemy);
 	AddObject(new Enemy(scale, 4000));
 	AddObject(new Enemy(scale, 8000));
 	AddObject(new Enemy(scale, 8300));
 	AddObject(new Enemy(scale, 8600));
 
-	//enemies.emplace_back(new SwordEnemy(scale, 50));
-	Enemy* e = (Enemy*)objectArray[1].get();
-	enemyAI = new EnemyAIManager(baon, e);
-	SwordEnemy* swordEnemy = new SwordEnemy(scale, 50);
-	AddObject(swordEnemy);	
-	swordEnemyAI = new SwordEnemyAIManager(baon, swordEnemy);
-
-	monuments.emplace_back(new Monumento(102, 8, scale, level));
-	monuments.emplace_back(new Monumento(262, 8, scale, level));
-
 	AddObject(new Scroll(scale, level));
-	AddObject(new Hud(scale, level));
 
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);
 	Camera::Follow(baon);
-
-	levelUpText = NULL;
 }
 
 Stage::~Stage() {

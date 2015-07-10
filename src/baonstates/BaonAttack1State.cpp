@@ -48,7 +48,7 @@ void BaonAttack1State::Update_(float dt) {
 			executed = true;
 			justJumped = true;
 
-			Hud::GetInstance()->SetBuffering(Hud::ONE);
+			Hud::GetInstance()->SetBuffering(Hud::THREE);
 		}
 		else{
 			nextRequested = true;

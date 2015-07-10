@@ -1,18 +1,21 @@
 #include "BaonState.h"
 
-std::string BaonState::Next(){
-	return next;
-}
-
 BaonState::BaonState() {
 	t = NULL;
 	stateChanged = false;
 	bendTimer = new Timer();
-	bendTimer->Restart();
 	for (int i = 0; i < 4; ++i){
 		bendKey[i] = -1;
 	}
 	countBend = 0;
+	nextRequested = false;
+	popRequested = false;
+	executed = false;
+	nextFlipped = false;
+	flipped = false;
+	bendHUD = NULL;
+	baon = NULL;
+	sm = NULL;
 }
 
 BaonState::~BaonState(){
@@ -73,10 +76,14 @@ std::string BaonState::GetID() {
 	return id;
 }
 
+std::string BaonState::Next() {
+	return next;
+}
+
 void BaonState::Update(float dt) {
 	if(baon->GetBendMode()){
 		bendTimer->Update(dt);
-		baon->bendHUD->isHide = false;
+		baon->bendHUD->Show();
 		if(InputManager::GetInstance().KeyPress(UP_ARROW_KEY)){
 			bendKey[countBend] = Arrows::UP;
 			countBend++;
@@ -94,28 +101,17 @@ void BaonState::Update(float dt) {
 			countBend++;
 		}
 
-		VerifyAttackOne();
+		BendAttack matchedAttack = MatchAttack();
+		ResolveAttack(matchedAttack);
 
-		if(bendKey[2] == 1 && bendKey[1] == 2 && bendKey[0] == 3){
+		if(InputManager::GetInstance().KeyRelease(SPACE_KEY) || bendTimer->Get() > 3 ||countBend >= 3){
+			bendTimer->Restart();
+			countBend = 0;
 			stateChanged = true;
 			baon->SetBendMode(false);
-			executed = true;
-			nextRequested = true;
-			countBend = 0;
-			next = "SPIKESTONE";
-			nextFlipped = flipped;
-			baon->bendHUD->isHide = true;
+			baon->bendHUD->Hide();
 			for (int i = 0; i < 4; ++i){
 				bendKey[i] = -1;
-			}
-		}
-		if(InputManager::GetInstance().KeyRelease(SPACE_KEY) || bendTimer->Get() > 3 ||countBend >= 3){
-			countBend = 0;
-			stateChanged = true;
-			baon->SetBendMode(false);
-			baon->bendHUD->isHide = true;
-			for (int i = 0; i < 4; ++i){
-				bendKey[i] = false;
 			}
 		}
 	}
@@ -126,18 +122,41 @@ void BaonState::Update(float dt) {
 
 }
 
-void BaonState::VerifyAttackOne() {
-	if(bendKey[0] == Arrows::DOWN && bendKey[1] == Arrows::LEFT && bendKey[2] == Arrows::UP) {
-		stateChanged = true;
-		baon->SetBendMode(false);
-		executed = true;
-		nextRequested = true;
-		countBend = 0;
+BaonState::BendAttack BaonState::MatchAttack() {
+	if(bendKey[0] == Arrows::UP && bendKey[1] == Arrows::DOWN && bendKey[2] == Arrows::UP) {
+		return BendAttack::SUPERJUMP;
+	}
+	if (bendKey[0] == Arrows::LEFT && bendKey[1] == Arrows::DOWN && bendKey[2] == Arrows::RIGHT) {
+		return BendAttack::SPIKESTONE;
+	}
+	return BendAttack::NONE;
+}
+
+void BaonState::ResolveAttack(BendAttack attack) {
+	switch(attack) {
+	case SUPERJUMP:
 		next = "ATTACK1";
-		nextFlipped = flipped;
-		baon->bendHUD->isHide = true;
-		for (int i = 0; i < 4; ++i){
-			bendKey[i] = -1;
-		}
+		break;
+	case SPIKESTONE:
+		next = "SPIKESTONE";
+		break;
+	default:
+		// Nao deixa chamar CallAttackState caso attack = NONE
+		return;
+	}
+
+	CallAttackState();
+}
+
+void BaonState::CallAttackState() {
+	stateChanged = true;
+	baon->SetBendMode(false);
+	executed = true;
+	nextRequested = true;
+	countBend = 0;
+	nextFlipped = flipped;
+	baon->bendHUD->Hide();
+	for (int i = 0; i < 4; ++i){
+		bendKey[i] = -1;
 	}
 }

@@ -16,7 +16,6 @@
 class Hud : public GameObject {
 public:
 	enum HudAttack {ONE, TWO, THREE, FOUR, FIVE, SIX};
-	Hud(int scale, int level);
 
 	static Hud* GetInstance(int scale, int level);
 	static Hud* GetInstance();
@@ -39,6 +38,7 @@ private:
 	int level;
 	int scale;
 
+	Hud(int scale, int level);
 	bool IsValidAttack(HudAttack hudAttackNumber);
 };
 

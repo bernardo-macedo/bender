@@ -19,7 +19,7 @@ public:
 	void NotifyTileCollision();
 	bool Is(std::string state);
 private:
-	bool groundReached;
+	bool locallyExecuted;
 };
 
 #endif /* BAONFALLINGSTATE_H_ */

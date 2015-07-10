@@ -14,6 +14,7 @@ CoolDown::CoolDown(float x, float y, int scale, bool enabled) : currentFrame(1) 
 	sp.SetScaleX(scale);
 	sp.SetScaleY(scale);
 
+	completed = false;
 	SetEnabled(enabled);
 }
 

@@ -20,27 +20,25 @@ StageTwo::StageTwo(int posX) : AbstractStage(2, 2, posX) {
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
 	baon->SetGroundTouchResolver(tileMap);
 
-	AddObject(new Scroll(scale, 2));
+	Enemy* enemy = new Enemy(scale, 900);
+	enemyAI = new EnemyAIManager(baon, enemy);
 
-	monuments.emplace_back(new Monumento(90, 8, scale, level));
-	monuments.emplace_back(new Monumento(215, 8, scale, level));
+	AddObject(new Monumento(90, 8, scale, level));
+	AddObject(new Monumento(215, 8, scale, level));
+
+	AddObject(baon);
+
+	AddObject(enemy);
+	AddObject(new Enemy(scale, 4000));
+	AddObject(new Enemy(scale, 8000));
+	AddObject(new Enemy(scale, 8300));
+	AddObject(new Enemy(scale, 8600));
+
+	AddObject(new Scroll(scale, 2));
 
 	Camera::pos.setX(0);
 	Camera::pos.setY(0);
 	Camera::Follow(baon);
-
-	levelUpTimer = new Timer();
-
-	enemies.emplace_back(new Enemy(scale, 900));
-	enemies.emplace_back(new Enemy(scale, 4000));
-	enemies.emplace_back(new Enemy(scale, 8000));
-	enemies.emplace_back(new Enemy(scale, 8300));
-	enemies.emplace_back(new Enemy(scale, 8600));
-
-	Enemy* enemy = (Enemy*) enemies[0].get();
-	enemyAI = new EnemyAIManager(baon, enemy);
-	levelUpText = NULL;
-
 }
 
 StageTwo::~StageTwo() {

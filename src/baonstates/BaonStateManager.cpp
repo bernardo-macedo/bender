@@ -12,7 +12,6 @@
 #include "../Baon.h"
 #include "../Engine/InputManager.h"
 #include "../Engine/Timer.h"
-#include "BaonBendState.h"
 #include "BaonDyingState.h"
 #include "BaonFallingState.h"
 #include "BaonJumpState.h"
@@ -21,7 +20,6 @@
 #include "BaonRunState.h"
 #include "BaonStandState.h"
 #include "BaonTakeHitState.h"
-#include "BaonBendState.h"
 #include "BaonAttack1State.h"
 #include "BaonWalkState.h"
 #include "BaonFastPunch.h"
@@ -56,9 +54,6 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("TAKEHIT", new BaonTakeHitState(false));
 	estados["TAKEHIT"]->SetBaon(baon);
 	estados["TAKEHIT"]->SetStateManager(this);
-	estados.emplace("BEND", new BaonBendState(false));
-	estados["BEND"]->SetBaon(baon);
-	estados["BEND"]->SetStateManager(this);
 	estados.emplace("DYING", new BaonDyingState(false));
 	estados["DYING"]->SetBaon(baon);
 	estados["DYING"]->SetStateManager(this);

@@ -56,8 +56,11 @@ protected:
 
 private:
 	enum Arrows {UP, RIGHT, DOWN, LEFT};
+	enum BendAttack {SUPERJUMP, SPIKESTONE, NONE};
 
-	void VerifyAttackOne();
+	BendAttack MatchAttack();
+	void ResolveAttack(BendAttack attack);
+	void CallAttackState();
 };
 
 #endif /* BAONSTATE_H_ */

@@ -16,39 +16,34 @@
 #include "BaonWalkState.h"
 #include <iostream>
 
-BaonFallingState::BaonFallingState(bool flipped) : BaonState(){
+BaonFallingState::BaonFallingState(bool flipped) : BaonState() {
 	this->flipped = flipped;
 	popRequested = false;
 	nextRequested = false;
 	id = "FALLING";
 	executed = false;
-	groundReached = false;
+	locallyExecuted = false;
 }
 
 void BaonFallingState::Update_(float dt) {
-	if (!executed && baon->IsFalling()) {
+	if (!executed && !locallyExecuted && baon->IsFalling()) {
 		baon->SetJumpFrame();
 		baon->MidAir();
 		baon->Fall();
-		executed = true;
-	}
-
-
-	if (executed && groundReached) {
-		groundReached = false;
+		locallyExecuted = true;
 	}
 
 }
 
 void BaonFallingState::NotifyTileCollision() {
-	if (!baon->IsFalling() && !groundReached) {
+	if (!baon->IsFalling() && !executed) {
 		sm->GetPreviousState()->Reset();
 		next = sm->GetPreviousState()->GetID();
 		nextFlipped = flipped;
 		nextRequested = true;
 		baon->land->Play(0);
 		baon->TakeDamage(false, false);
-		groundReached = true;
+		executed = true;
 	}
 
 }
