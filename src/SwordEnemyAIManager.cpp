@@ -22,7 +22,8 @@ void SwordEnemyAIManager::update(const float dt) {
 		if(abs(enemy->GetDistanceToBaon()) < 30*baon->GetScale()){
 			if(!enemy->IsState(SwordEnemy::enemyStates::ATTACK)
 				&& !enemy->IsState(SwordEnemy::enemyStates::TAKINGHIT)
-				&& !enemy->IsState(SwordEnemy::enemyStates::DYING)){
+				&& !enemy->IsState(SwordEnemy::enemyStates::DYING)
+				&& !enemy->IsState(SwordEnemy::enemyStates::BEINGPUSHED)){
 
 				if (baon->GetBody()->GetX() < enemy->GetBody()->GetX()) {
 					enemy->SetFlipped(true);

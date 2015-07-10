@@ -17,7 +17,7 @@ class StateSwordEnemy;
 
 class SwordEnemy : public AbstractEnemy {
 public:
-	enum enemyStates {STAND, WALK, ATTACK, TAKINGHIT, DYING, PATROLLING, FOLLOW};
+	enum enemyStates {STAND, WALK, ATTACK, TAKINGHIT, DYING, PATROLLING, FOLLOW, BEINGPUSHED};
 
 	SwordEnemy(int enemyScale, int x);
 	virtual ~SwordEnemy();

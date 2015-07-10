@@ -5,13 +5,13 @@
  *      Author: Pedro2
  */
 
-#include "BenderEnemyBeingPushed.h"
+#include "SwordEnemyBeingPunched.h"
 
-EnemyBeingPushed::~EnemyBeingPushed() {
+SwordEnemyBeingPushed::~SwordEnemyBeingPushed() {
 	// TODO Auto-generated destructor stub
 }
 
-void EnemyBeingPushed::enter() {
+void SwordEnemyBeingPushed::enter() {
 	t->Restart();
 	if(enemy->IsCollisionFromRight()){
 		enemy->GetBody()->SetVelX(400);
@@ -22,11 +22,11 @@ void EnemyBeingPushed::enter() {
 	askEnd = false;
 }
 
-void EnemyBeingPushed::exit() {
+void SwordEnemyBeingPushed::exit() {
 	enemy->GetBody()->SetVelX(0);
 }
 
-void EnemyBeingPushed::update(const float dt_) {
+void SwordEnemyBeingPushed::update(const float dt_) {
 	if(t->Get() < 0.6){
 		t->Update(dt_);
 	}

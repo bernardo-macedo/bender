@@ -14,6 +14,7 @@ const int GameObject::BAON = 103;
 const int GameObject::ENEMY = 104;
 const int GameObject::PEDRA_BASICO_PULO_BAON = 105;
 const int GameObject::SWORD_ENEMY = 106;
+const int GameObject::TRANSPARENT_GAME_OBJECT = 107;
 
 GameObject::~GameObject() {
 	// TODO Auto-generated destructor stub
