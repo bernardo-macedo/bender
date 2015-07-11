@@ -7,25 +7,24 @@
 
 #include "BaonStateManager.h"
 
-#include "../Engine/SDL_Wrapper.h"
+#include <stddef.h>
 
 #include "../Baon.h"
 #include "../Engine/InputManager.h"
 #include "../Engine/Timer.h"
+#include "BaonAttack1State.h"
+#include "BaonDefenseStoneState.h"
 #include "BaonDyingState.h"
 #include "BaonFallingState.h"
+#include "BaonFastPunch.h"
 #include "BaonJumpState.h"
 #include "BaonKickState.h"
 #include "BaonPunchState.h"
 #include "BaonRunState.h"
+#include "BaonSpikeStoneState.h"
 #include "BaonStandState.h"
 #include "BaonTakeHitState.h"
-#include "BaonAttack1State.h"
 #include "BaonWalkState.h"
-#include "BaonFastPunch.h"
-#include "BaonSpikeStoneState.h"
-
-#include <iostream>
 
 
 
@@ -66,6 +65,9 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("SPIKESTONE", new BaonSpikeStoneState(false));
 	estados["SPIKESTONE"]->SetBaon(baon);
 	estados["SPIKESTONE"]->SetStateManager(this);
+	estados.emplace("BENDDEFESA", new BaonDefenseStoneState(false));
+	estados["BENDDEFESA"]->SetBaon(baon);
+	estados["BENDDEFESA"]->SetStateManager(this);
 
 	currentState = estados["STAND"];
 	this->baon = baon;

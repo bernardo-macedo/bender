@@ -14,10 +14,10 @@ SwordEnemyBeingPushed::~SwordEnemyBeingPushed() {
 void SwordEnemyBeingPushed::enter() {
 	t->Restart();
 	if(enemy->IsCollisionFromRight()){
-		enemy->GetBody()->SetVelX(400);
+		enemy->GetBody()->SetVelX(-400);
 	}
 	else{
-		enemy->GetBody()->SetVelX(-400);
+		enemy->GetBody()->SetVelX(400);
 	}
 	askEnd = false;
 }

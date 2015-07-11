@@ -8,6 +8,7 @@
 #include "SwordEnemy.h"
 
 #include "enemystates/SwordEnemyBeingPunched.h"
+#include "enemystates/SwordEnemyStandingState.h"
 #include "enemystates/SwordEnemyStateAttacking.h"
 #include "enemystates/SwordEnemyStateDying.h"
 #include "enemystates/SwordEnemyStateFollow.h"
@@ -18,7 +19,7 @@
 #include "Engine/Physics/Force.h"
 #include "Engine/Physics/Physic.h"
 #include "Engine/Sprite.h"
-#include "TransparentGameObject.h"
+#include "SpikeStone.h"
 
 SwordEnemy::SwordEnemy(int enemyScale, int x) : AbstractEnemy(enemyScale, x, 3, 50, 130, 0.2) {
 	SetID(GameObject::SWORD_ENEMY);
@@ -84,12 +85,12 @@ void SwordEnemy::NotifyCollision(GameObject* other) {
 		}
 		isTakingDamage = true;
 	}
-	if(other->GetID() == GameObject::TRANSPARENT_GAME_OBJECT){
-		TransparentGameObject* transp = (TransparentGameObject*)other;
+	if(other->GetID() == GameObject::SPIKE_STONE_BAON){
+		SpikeStone *pedra = (SpikeStone*)other;
 		if(!IsState(SwordEnemy::BEINGPUSHED)
 				&& !IsState(SwordEnemy::TAKINGHIT)
 				&& !IsState(SwordEnemy::DYING)){
-			if(transp->IsRight()){
+			if(pedra->GetFlipped()){
 				collisionFromRight = true;
 			}
 			else{
@@ -123,6 +124,7 @@ void SwordEnemy::InitializeStates() {
 	this->enemyStatesMap.emplace(PATROLLING, new SwordEnemyStatePatrolling(this));
 	this->enemyStatesMap.emplace(FOLLOW, new SwordEnemyStateFollow(this));
 	this->enemyStatesMap.emplace(BEINGPUSHED, new SwordEnemyBeingPushed(this));
+	this->enemyStatesMap.emplace(STAND, new SwordEnemyStandingState(this));
 
 	currentState = enemyStatesMap.at(PATROLLING);
 }

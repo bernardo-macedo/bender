@@ -24,9 +24,9 @@ void BaonSpikeStoneState::Update_(float dt) {
 	if(!executed && !Hud::GetInstance()->IsBuffering(Hud::TWO)) {
 		Hud::GetInstance()->SetBuffering(Hud::TWO);
 		if(!flipped){
-			pedra = new SpikeStone(baon->GetBox().GetX() + 30*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), false);
+			pedra = new SpikeStone(baon->GetBox().GetX() + 80*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), false);
 		}else{
-			pedra = new SpikeStone(baon->GetBox().GetX() - 30*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), true);
+			pedra = new SpikeStone(baon->GetBox().GetX() - 80*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), true);
 		}
 		Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 		executed = true;

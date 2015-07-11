@@ -56,7 +56,7 @@ protected:
 
 private:
 	enum Arrows {UP, RIGHT, DOWN, LEFT};
-	enum BendAttack {SUPERJUMP, SPIKESTONE, NONE};
+	enum BendAttack {SUPERJUMP, SPIKESTONE, DEFENSE, NONE};
 
 	BendAttack MatchAttack();
 	void ResolveAttack(BendAttack attack);

@@ -130,6 +130,9 @@ BaonState::BendAttack BaonState::MatchAttack() {
 	if (bendKey[0] == Arrows::LEFT && bendKey[1] == Arrows::DOWN && bendKey[2] == Arrows::RIGHT) {
 		return BendAttack::SPIKESTONE;
 	}
+	if (bendKey[0] == Arrows::DOWN && bendKey[1] == Arrows::LEFT && bendKey[2] == Arrows::UP) {
+		return BendAttack::DEFENSE;
+	}
 	return BendAttack::NONE;
 }
 
@@ -140,6 +143,9 @@ void BaonState::ResolveAttack(BendAttack attack) {
 		break;
 	case SPIKESTONE:
 		next = "SPIKESTONE";
+		break;
+	case DEFENSE:
+		next = "BENDDEFESA";
 		break;
 	default:
 		// Nao deixa chamar CallAttackState caso attack = NONE

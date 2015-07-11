@@ -31,6 +31,7 @@ public:
 
 	bool IsRight();
 	void SetFlipped(bool fllipped);
+	bool GetFlipped();
 
 	virtual bool Is(std::string type);
 private:

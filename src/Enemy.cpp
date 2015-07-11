@@ -89,12 +89,12 @@ void Enemy::NotifyCollision(GameObject* other) {
 		isTakingDamage = true;
 	}
 
-	if(other->GetID() == GameObject::TRANSPARENT_GAME_OBJECT){
-		TransparentGameObject* transp = (TransparentGameObject*)other;
+	if(other->GetID() == GameObject::SPIKE_STONE_BAON){
+		SpikeStone *pedra = (SpikeStone*)other;
 		if(!IsState(Enemy::BEINGPUSHED)
 				&& !IsState(Enemy::TAKINGHIT)
 				&& !IsState(Enemy::DYING)){
-			if(transp->IsRight()){
+			if(pedra->GetFlipped()){
 				collisionFromRight = true;
 			}
 			else{

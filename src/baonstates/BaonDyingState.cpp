@@ -32,12 +32,13 @@ void BaonDyingState::Update_(float dt) {
 		baon->GetSprite()->Update(dt);
 		baon->GetBody()->SetVelX(0);
 		baon->GetBody()->SetAccelX(0);
-		baon->GetBody()->clearForces();
+		baon->GetBody()->removeForce("resistance");
 		executed = true;
 	}
 	else{
 		t->Update(dt);
 		if(t->Get() >= STATE_TIME){
+			baon->GetBody()->clearForces();
 			baon->SetDead(true);
 		}
 	}

@@ -34,6 +34,11 @@ void BaonJumpState::Update_(float dt) {
 			next = "FALLING";
 			nextFlipped = flipped;
 		}
+		if(baon->isTakingDamage()){
+			nextRequested = true;
+			next = "TAKEHIT";
+			nextFlipped = flipped;
+		}
 	}
 }
 

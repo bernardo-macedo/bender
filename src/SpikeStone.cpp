@@ -23,12 +23,6 @@ SpikeStone::SpikeStone(int x, int y, int scale, bool flipped) {
 	sp->SetScaleY(scale);
 	this->scale = scale;
 
-	if(flipped){
-		transp = new TransparentGameObject(x - sp->GetFrameWidth()*10, y, sp->GetFrameWidth()*10, sp->GetFrameHeight(), false);
-	}
-	else{
-		transp = new TransparentGameObject(x, y, sp->GetFrameWidth()*10, sp->GetFrameHeight(), true);
-	}
 	t = new Timer();
 
 	b = new Body("spike", x, y);
@@ -53,18 +47,11 @@ void SpikeStone::Update(float dt) {
 		sp->Update(dt);
 	}
 	else{
-		if(!transpSet){
-			Game::GetInstance()->GetCurrentState()->AddObject(transp);
-			transpSet = true;
+		if(t->Get() < 0.5){
+			t->Update(dt);
 		}
 		else{
-			if(t->Get() < 0.5){
-				t->Update(dt);
-			}
-			else{
-				this->dead = true;
-				transp->SetDead(true);
-			}
+			this->dead = true;
 		}
 	}
 }
@@ -94,4 +81,8 @@ bool SpikeStone::Is(std::string type) {
 
 bool SpikeStone::IsRight() {
 	return right;
+}
+
+bool SpikeStone::GetFlipped() {
+	return flipped;
 }

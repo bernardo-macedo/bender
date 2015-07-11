@@ -14,10 +14,10 @@ EnemyBeingPushed::~EnemyBeingPushed() {
 void EnemyBeingPushed::enter() {
 	t->Restart();
 	if(enemy->IsCollisionFromRight()){
-		enemy->GetBody()->SetVelX(400);
+		enemy->GetBody()->SetVelX(-400);
 	}
 	else{
-		enemy->GetBody()->SetVelX(-400);
+		enemy->GetBody()->SetVelX(400);
 	}
 	askEnd = false;
 }
