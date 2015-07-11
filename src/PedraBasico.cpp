@@ -67,6 +67,9 @@ void PedraBasico::NotifyCollision(GameObject* other) {
 			&& other->GetID() == GameObject::BAON){
 		dead = true;
 	}
+	if(other->GetID() == GameObject::PEDRA_DEFESA){
+		dead = true;
+	}
 }
 
 void PedraBasico::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {

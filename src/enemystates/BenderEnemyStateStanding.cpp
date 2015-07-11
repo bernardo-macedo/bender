@@ -7,12 +7,17 @@
 
 #include "BenderEnemyStateStanding.h"
 
-BenderEnemyStateStanding::BenderEnemyStateStanding() {
-	// TODO Auto-generated constructor stub
 
+void BenderEnemyStateStanding::enter() {
+	enemy->GetSprite()->SetFrameWidth(38);
+	enemy->GetSprite()->SetFrameHeight(50);
+	enemy->GetSprite()->SetFrameCount(2);
+	enemy->GetSprite()->SetLine(0, 60);
+	enemy->GetBody()->SetVelX(0);
 }
 
-BenderEnemyStateStanding::~BenderEnemyStateStanding() {
-	// TODO Auto-generated destructor stub
+void BenderEnemyStateStanding::exit() {
 }
 
+void BenderEnemyStateStanding::update(const float dt_) {
+}

@@ -99,6 +99,13 @@ void SwordEnemy::NotifyCollision(GameObject* other) {
 			changeState(SwordEnemy::BEINGPUSHED);
 		}
 	}
+
+	if(other->GetID() == GameObject::PEDRA_DEFESA){
+		if(!IsState(SwordEnemy::STAND)){
+			changeState(SwordEnemy::STAND);
+		}
+
+	}
 }
 
 void SwordEnemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {

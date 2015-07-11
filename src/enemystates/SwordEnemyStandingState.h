@@ -14,7 +14,9 @@
 class SwordEnemyStandingState : public StateSwordEnemy{
 public:
 	SwordEnemyStandingState(SwordEnemy* const enemy_)
-		: StateSwordEnemy(enemy_){}
+		: StateSwordEnemy(enemy_){
+		askEnd = false;
+	}
 
 	void enter();
 	void exit();

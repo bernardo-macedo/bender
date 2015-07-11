@@ -16,6 +16,7 @@
 #include "enemystates/BenderEnemyStateFollow.h"
 #include "enemystates/BenderEnemyStatePatrolling.h"
 #include "enemystates/BenderEnemyStatePunch.h"
+#include "enemystates/BenderEnemyStateStanding.h"
 #include "enemystates/BenderEnemyStateTakeDamage.h"
 #include "Engine/Collision.h"
 #include "Engine/Physics/Body.h"
@@ -103,6 +104,11 @@ void Enemy::NotifyCollision(GameObject* other) {
 			changeState(Enemy::BEINGPUSHED);
 		}
 	}
+	if(other->GetID() == GameObject::PEDRA_DEFESA){
+		if(!IsState(Enemy::STAND)){
+			changeState(Enemy::STAND);
+		}
+	}
 }
 
 void Enemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {}
@@ -133,6 +139,7 @@ void Enemy::InitializeStates(){
 	this->enemyStatesMap.emplace(TAKINGHIT, new EnemyStateTakeDamage(this));
 	this->enemyStatesMap.emplace(DYING, new EnemyStateDying(this));
 	this->enemyStatesMap.emplace(BEINGPUSHED, new EnemyBeingPushed(this));
+	this->enemyStatesMap.emplace(STAND, new BenderEnemyStateStanding(this));
 
 
 	currentState = enemyStatesMap.at(PATROLLING);

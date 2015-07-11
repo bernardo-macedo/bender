@@ -12,6 +12,7 @@ void SwordEnemyStandingState::enter() {
 	enemy->GetSprite()->SetFrameHeight(60);
 	enemy->GetSprite()->SetFrameCount(2);
 	enemy->GetSprite()->SetLine(0, 60);
+	enemy->GetBody()->SetVelX(0);
 }
 
 void SwordEnemyStandingState::exit() {

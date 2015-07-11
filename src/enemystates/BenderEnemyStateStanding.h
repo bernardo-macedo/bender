@@ -8,10 +8,17 @@
 #ifndef ENEMYSTATES_BENDERENEMYSTATESTANDING_H_
 #define ENEMYSTATES_BENDERENEMYSTATESTANDING_H_
 
-class BenderEnemyStateStanding {
+#include "StateEnemy.h"
+
+class BenderEnemyStateStanding : public StateEnemy{
 public:
-	BenderEnemyStateStanding();
-	virtual ~BenderEnemyStateStanding();
+	BenderEnemyStateStanding(Enemy* const enemy_) : StateEnemy(enemy_){
+		askEnd = false;
+	}
+
+	void enter();
+	void exit();
+	void update(const float dt_);
 };
 
 #endif /* ENEMYSTATES_BENDERENEMYSTATESTANDING_H_ */
