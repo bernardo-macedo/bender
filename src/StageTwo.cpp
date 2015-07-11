@@ -20,19 +20,20 @@ StageTwo::StageTwo(int posX) : AbstractStage(2, 2, posX) {
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
 	baon->SetGroundTouchResolver(tileMap);
 
-	Enemy* enemy = new Enemy(scale, 900);
-	enemyAI = new EnemyAIManager(baon, enemy);
+	Enemy* e = new Enemy(scale, 700);
+	SwordEnemy* swordEnemy = new SwordEnemy(scale, 600);
+	enemyAI = new EnemyAIManager(baon, e);
+	swordEnemyAI = new SwordEnemyAIManager(baon, swordEnemy);
 
 	AddObject(new Monumento(90, 8, scale, level));
 	AddObject(new Monumento(215, 8, scale, level));
 
 	AddObject(baon);
 
-	AddObject(enemy);
-	AddObject(new Enemy(scale, 4000));
-	AddObject(new Enemy(scale, 8000));
-	AddObject(new Enemy(scale, 8300));
-	AddObject(new Enemy(scale, 8600));
+	AddObject(e);
+	AddObject(swordEnemy);
+
+	LoadLevelData("data/level2-data.txt");
 
 	AddObject(new Scroll(scale, 2));
 
@@ -47,12 +48,12 @@ StageTwo::~StageTwo() {
 bool StageTwo::OnLevelWon(float dt) {
 	levelUpTimer->Update(dt);
 
+	if (!levelWon) {
+		music->Stop();
+		levelWonSound->Play(0);
+		levelWon = true;
+	}
 	if (levelUpTimer->Get() > 1) {
-		if (!levelWon) {
-			music->Stop();
-			levelWonSound->Play(0);
-			levelWon = true;
-		}
 		SDL_Color color;
 		color.r = color.g = color.b = 225;
 		color.a = 255;
@@ -61,6 +62,8 @@ bool StageTwo::OnLevelWon(float dt) {
 		if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
 			Game::GetInstance()->Push(new StageThree());
 			popRequested = true;
+			levelWonSound->Stop();
+			music->Stop();
 		}
 		return true;
 	}

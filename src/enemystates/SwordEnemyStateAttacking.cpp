@@ -19,15 +19,18 @@ void SwordEnemyStateAttacking::enter() {
 	askEnd = false;
 	enemy->GetBody()->SetVelX(0);
 	enemy->SetAttackingSprite();
+	enemy->GetSprite()->SetFrameTime(0.05);
 	swordSwingSound->Play(0);
 }
 
-void SwordEnemyStateAttacking::exit() {}
+void SwordEnemyStateAttacking::exit() {
+	enemy->GetSprite()->SetFrameTime(0.1);
+}
 
 void SwordEnemyStateAttacking::update(const float dt_) {
 	enemy->GetSprite()->Update(dt_);
 
-	if(enemy->GetSprite()->GetCurrentFrame() > 3){
+	if(enemy->GetSprite()->GetCurrentFrame() >= 3){
 		enemy->isDamage = true;
 	}
 

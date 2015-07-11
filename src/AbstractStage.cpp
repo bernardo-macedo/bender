@@ -142,3 +142,28 @@ void AbstractStage::UpdateSwordEnemy(SwordEnemy* enemy, float dt) {
 		tileMap->ResolveTileCollisions(enemy);
 	}
 }
+
+void AbstractStage::LoadLevelData(std::string file) {
+	std::ifstream infile(file);
+	std::string line;
+	std::string enemyName;
+	int position;
+	while (std::getline(infile, line)) {
+		std::istringstream iss(line);
+		if (!(iss >> enemyName)) {
+			break;
+		} else if (enemyName == "bender") {
+			while (iss >> position) {
+				AddObject(new Enemy(scale, position));
+				std::cout << "adicionou inimigo bender em " << position << std::endl;
+			}
+		} else if (enemyName == "sword") {
+			while (iss >> position) {
+				AddObject(new SwordEnemy(scale, position));
+				std::cout << "adicionou inimigo sword em " << position << std::endl;
+			}
+		} else {
+			std::cout << "nada" << std::endl;
+		}
+	}
+}
