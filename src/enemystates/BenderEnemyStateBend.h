@@ -10,6 +10,7 @@
 
 #include "../PedraBasico.h"
 #include "StateEnemy.h"
+#include "../EnemyAttack.h"
 
 class EnemyStateBend : public StateEnemy{
 public:

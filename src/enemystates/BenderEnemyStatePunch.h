@@ -9,6 +9,7 @@
 #define ENEMYSTATES_BENDERENEMYSTATEPUNCH_H_
 
 #include "StateEnemy.h"
+#include "../EnemyAttack.h"
 
 class EnemyStatePunch : public StateEnemy{
 public:

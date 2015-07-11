@@ -10,6 +10,7 @@
 
 #include "StateSwordEnemy.h"
 #include "../Engine/Sound.h"
+#include "../EnemyAttack.h"
 
 class SwordEnemyStateAttacking : public StateSwordEnemy {
 

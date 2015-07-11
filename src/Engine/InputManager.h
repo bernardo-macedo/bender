@@ -30,6 +30,7 @@
 #define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
+#define ANY_KEY -1
 
 #include <unordered_map>
 #include <iostream>

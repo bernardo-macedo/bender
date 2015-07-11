@@ -42,8 +42,7 @@ void BaonFallingState::NotifyTileCollision() {
 		next = sm->GetPreviousState()->GetID();
 		nextFlipped = flipped;
 		nextRequested = true;
-		baon->land->Play(0);
-		baon->TakeDamage(false, false);
+		baon->Land();
 		executed = true;
 	}
 

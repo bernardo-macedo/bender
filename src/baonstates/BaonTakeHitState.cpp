@@ -33,7 +33,7 @@ void BaonTakeHitState::Update_(float dt) {
 		nextRequested = true;
 		next = "STAND";
 		nextFlipped = flipped;
-		baon->TakeDamage(false, false);
+		baon->TakeDamage(EnemyAttack::EMPTY, false, false);
 	}
 }
 

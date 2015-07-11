@@ -33,6 +33,7 @@ SwordEnemy::SwordEnemy(int enemyScale, int x) : AbstractEnemy(enemyScale, x, 3, 
 SwordEnemy::~SwordEnemy() {
 	delete kickhit;
 	delete punchhit;
+	delete rockHit;
 	delete currentState;
 }
 
@@ -118,9 +119,29 @@ bool SwordEnemy::Is(std::string type) {
 	return AbstractEnemy::Is(type) || type.compare("SwordEnemy") == 0;
 }
 
-void SwordEnemy::TakeDamage(bool damage) {
-	hp--;
-	punchhit->Play(0);
+void SwordEnemy::TakeDamage(BaonAttack attack) {
+	switch(attack) {
+	case BaonAttack::PUNCH:
+	case BaonAttack::FASTPUNCH:
+		hp--;
+		punchhit->Play(0);
+		break;
+	case BaonAttack::KICK:
+		hp--;
+		kickhit->Play(0);
+		break;
+	case BaonAttack::ROCK:
+		hp --;
+		rockHit->Play(0);
+		break;
+	case BaonAttack::SPIKESTONE:
+		hp -= 2;
+		rockHit->Play(0);
+		break;
+	default:
+		break;
+	}
+
 }
 
 void SwordEnemy::InitializeStates() {
@@ -169,6 +190,7 @@ void SwordEnemy::Initialize() {
 
 	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
 	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
+	rockHit = new Sound("audio/sfx_throwRock_hit.wav");
 }
 
 void SwordEnemy::SetWalkSprite() {

@@ -19,6 +19,8 @@
 #include "Engine/TileSet/GroundTouchResolver.h"
 #include "Lifebar.h"
 #include "BendHUD.h"
+#include "BaonAttack.h"
+#include "EnemyAttack.h"
 
 #define PLAYER_MAP_GROUND 425
 
@@ -44,12 +46,13 @@ public:
 	void Run(bool flipped);
 	void Walk(bool flipped);
 	void Stand(bool flipped);
+	void Land();
 	void Jump(bool flipped);
 	void Fall();
 	void MidAir();
 	void Punch();
 	void Kick();
-	void TakeDamage(bool damage, bool isFromRight);
+	void TakeDamage(EnemyAttack attack, bool damage, bool isFromRight);
 	bool isTakingDamage();
 	void TakeHit(bool flipped);
 	bool IsCollisionFromRight();
@@ -71,6 +74,10 @@ public:
 	void RestoreLife();
 	void SetTouchingGround(bool isTouchingGround);
 	bool GetTouchingGround();
+	Sound* GetStepSound(unsigned int stepNumber);
+
+	BaonAttack GetLastGivenAttack();
+	void SetLastGivenAttack(BaonAttack attack);
 
 	void SetGroundTouchResolver(GroundTouchResolver* resolver);
 	GroundTouchResolver* GetGroundTouchResolver();
@@ -80,7 +87,6 @@ public:
 	BendHUD* bendHUD;
 
 	bool isDamage;
-	Sound *jump, *land, *step1, *step2, *kicks, *punchs;
 
 private:
 	static int WALK_SPEED;
@@ -88,6 +94,9 @@ private:
 	static int JUMP_SPEED;
 	static float DOUBLECLICK_TIME;
 	static int MAX_HP;
+
+	Sound *jump, *land, *step1, *step2, *kicks, *punchs;
+	Sound *punchHit, *rockHit;
 
 	// Cheats
 	bool superJump;
@@ -106,6 +115,8 @@ private:
 	baonStates state;
 	baonStates beforeJump;
 	runController runStates;
+	BaonAttack lastGivenAttack;
+	EnemyAttack lastReceivedAttack;
 	std::vector<int> spriteData;
 	int numEst;
 	bool flipped;

@@ -20,6 +20,7 @@ void EnemyStatePunch::enter() {
 	enemy->GetSprite()->SetFrameWidth(36);
 	enemy->GetSprite()->SetFrameCount(5);
 	enemy->GetSprite()->SetLine(3, 50);
+	enemy->SetLastGivenAttack(EnemyAttack::PUNCH);
 }
 
 void EnemyStatePunch::exit() {

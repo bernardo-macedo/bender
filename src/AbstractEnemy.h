@@ -18,6 +18,8 @@
 #include "Engine/Camera.h"
 #include "Engine/Physics/Physic.h"
 #include "Being.h"
+#include "BaonAttack.h"
+#include "EnemyAttack.h"
 
 class AbstractEnemy : public Being {
 public:
@@ -34,7 +36,7 @@ public:
 	virtual bool IsDead();
 	virtual bool Is(std::string type);
 
-	virtual void TakeDamage(bool damage) = 0;
+	virtual void TakeDamage(BaonAttack attack) = 0;
 	virtual void Run(bool flipped);
 	virtual void Walk(bool flipped);
 	virtual void Stand(bool flipped);
@@ -56,6 +58,8 @@ public:
 	void SetDying(bool dying);
 	void SetDead(bool isDead);
 	void SetFlipped(bool flipped);
+	EnemyAttack GetLastGivenAttack();
+	void SetLastGivenAttack(EnemyAttack attack);
 
 	virtual void SetWalkSprite() = 0;
 	virtual void SetStandSprite() = 0;
@@ -74,6 +78,7 @@ protected:
 	Sprite *sp;
 	Timer *t;
 	runController runStates;
+	EnemyAttack lastGivenAttack;
 	std::vector<int> spriteData;
 	int numEst;
 	bool flipped;

@@ -81,11 +81,16 @@ Baon::Baon(int playerScale, float mapMax, int posX) {
 	step2 = new Sound("audio/sfx_char_stepGrass2.wav");
 	kicks = new Sound("audio/sfx_char_kick_swing1.wav");
 	punchs = new Sound("audio/sfx_char_punch_swing1.wav");
+	punchHit = new Sound("audio/sfx_char_punch_hit1.wav");
+	rockHit = new Sound("audio/sfx_throwRock_hit.wav");
 	hp = MAX_HP;
 
 	lifebar = new Lifebar(15 * scale, 215 * scale, scale, MAX_HP);
 	levelWon = false;
 	isFalling = false;
+
+	lastGivenAttack = BaonAttack::EMPTY;
+	lastReceivedAttack = EnemyAttack::EMPTY;
 }
 
 Baon::~Baon() {
@@ -93,6 +98,14 @@ Baon::~Baon() {
 	delete sp;
 	delete t;
 	delete stateManager;
+	delete land;
+	delete jump;
+	delete step1;
+	delete step2;
+	delete kicks;
+	delete punchs;
+	delete punchHit;
+	delete rockHit;
 }
 
 Sprite* Baon::GetSprite() {
@@ -152,6 +165,15 @@ void Baon::SetGroundTouchResolver(GroundTouchResolver* resolver) {
 
 GroundTouchResolver* Baon::GetGroundTouchResolver() {
 	return resolver;
+}
+
+Sound* Baon::GetStepSound(unsigned int stepNumber) {
+	if (stepNumber == 1) {
+		return step1;
+	} else if (stepNumber == 2) {
+		return step2;
+	}
+	return NULL;
 }
 
 void Baon::LoadSpriteData() {
@@ -235,6 +257,7 @@ void Baon::Render() {
 void Baon::NotifyCollision(GameObject* other) {
 	if(other->GetID() == GameObject::PEDRA_BASICO_ENEMY){
 		takingDamage = true;
+		lastReceivedAttack = EnemyAttack::ROCK;
 		if(other->GetBox().GetX() > box.GetX()){
 			damageDirectionRight = true;
 		}
@@ -320,6 +343,12 @@ void Baon::Jump(bool flipped) {
 	step1->Stop();
 	jump->Play(0);
 }
+
+void Baon::Land() {
+	land->Play(0);
+	TakeDamage(EnemyAttack::EMPTY, false, false);
+}
+
 void Baon::Fall() {
 	if(fallUpdateCount < 5){
 		sp->SetFrame(fallUpdateCount);
@@ -346,7 +375,10 @@ void Baon::Kick(){
 	kicks->Play(0);
 }
 
-void Baon::TakeDamage(bool damage, bool isFromRight) {
+void Baon::TakeDamage(EnemyAttack attack, bool damage, bool isFromRight) {
+	if (attack != EnemyAttack::EMPTY) {
+		lastReceivedAttack = attack;
+	}
 	takingDamage = damage;
 	damageDirectionRight = isFromRight;
 }
@@ -356,8 +388,29 @@ bool Baon::isTakingDamage() {
 }
 
 
-void Baon::TakeHit(bool flipped){
-	hp -= 5;
+void Baon::TakeHit(bool flipped) {
+	switch(lastReceivedAttack){
+	case EnemyAttack::PUNCH:
+		hp -= 2;
+		punchHit->Play(0);
+		break;
+	case EnemyAttack::ROCK:
+		hp -= 3;
+		rockHit->Play(0);
+		break;
+	case EnemyAttack::SWORD:
+		hp -= 2;
+		// deveria ser swordhit
+		punchHit->Play(0);
+		break;
+	case EnemyAttack::SHOULDER:
+		hp -= 3;
+		// deveria ser shoulderHit
+		punchHit->Play(0);
+		break;
+	default:
+		break;
+	}
 	sp->SetFrameHeight(spriteData[13*3]);
 	sp->SetFrameWidth(spriteData[13*3 + 1]);
 	sp->SetFrameCount(spriteData[13*3 + 2]);
@@ -450,4 +503,12 @@ void Baon::SetTouchingGround(bool isTouchingGround) {
 
 bool Baon::GetTouchingGround() {
 	return isTouchingGround;
+}
+
+BaonAttack Baon::GetLastGivenAttack() {
+	return lastGivenAttack;
+}
+
+void Baon::SetLastGivenAttack(BaonAttack attack) {
+	this->lastGivenAttack = attack;
 }

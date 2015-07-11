@@ -29,6 +29,7 @@ void BaonSpikeStoneState::Update_(float dt) {
 			pedra = new SpikeStone(baon->GetBox().GetX() - 80*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), true);
 		}
 		Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+		baon->SetLastGivenAttack(BaonAttack::SPIKESTONE);
 		executed = true;
 	}
 	nextRequested = true;

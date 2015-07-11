@@ -44,25 +44,29 @@ StageThree::StageThree(int posX) : AbstractStage(2, 3, posX) {
 StageThree::~StageThree() {}
 
 bool StageThree::OnLevelWon(float dt) {
-	levelUpTimer->Update(dt);
 
+	levelUpTimer->Update(dt);
 	if (!levelWon) {
 		music->Stop();
-		levelWonSound->Play(0);
+		delete music;
+		music = new Music("audio/sfx_levelWon.wav");
+		music->Play(0);
+		//levelWonSound->Play(0);
 		levelWon = true;
-	}
-	if (levelUpTimer->Get() > 1) {
 		SDL_Color color;
 		color.r = color.g = color.b = 125;
 		color.a = 255;
 		levelUpText = new Text("font/Call me maybe.ttf", 40, Text::SOLID,
-				"YOU WIN! Press space", color, Game::SCREEN_WIDTH/2 - 150, Game::SCREEN_HEIGHT/2 - 40);
-		if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
-			Game::GetInstance()->SetCheckpoint(NULL);
-			popRequested = true;
-			levelWonSound->Stop();
-			music->Stop();
-		}
+				"CONGRATULATIONS!", color, Game::SCREEN_WIDTH/2 - 150, Game::SCREEN_HEIGHT/2 - 40);
+	}
+
+	if (InputManager::GetInstance().KeyPress(SPACE_KEY)
+		|| InputManager::GetInstance().KeyPress(ENTER_KEY)
+		|| InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)
+		|| levelUpTimer->Get() > 6) {
+		Game::GetInstance()->SetCheckpoint(NULL);
+		popRequested = true;
+		music->Stop();
 		return true;
 	}
 	return false;

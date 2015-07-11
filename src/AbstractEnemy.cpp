@@ -164,3 +164,11 @@ void AbstractEnemy::LoadSpriteData(std::string file) {
 	}
 	fclose(fp);
 }
+
+EnemyAttack AbstractEnemy::GetLastGivenAttack() {
+	return lastGivenAttack;
+}
+
+void AbstractEnemy::SetLastGivenAttack(EnemyAttack attack) {
+	lastGivenAttack = attack;
+}

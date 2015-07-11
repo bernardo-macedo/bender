@@ -24,6 +24,7 @@ void BaonKickState::Update_(float dt) {
 	if(!executed){
 		baon->Kick();
 		executed = true;
+		baon->SetLastGivenAttack(BaonAttack::KICK);
 	}
 
 	if(t->Get() >= 4*0.06){

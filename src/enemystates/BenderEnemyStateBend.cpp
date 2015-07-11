@@ -52,6 +52,8 @@ void EnemyStateBend::enter() {
 	Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 
 	askEnd = false;
+
+	enemy->SetLastGivenAttack(EnemyAttack::ROCK);
 }
 
 void EnemyStateBend::exit() {

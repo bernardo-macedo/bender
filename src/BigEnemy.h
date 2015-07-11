@@ -1,26 +1,25 @@
 /*
- * SwordEnemy.h
+ * BigEnemy.h
  *
- *  Created on: Jul 8, 2015
+ *  Created on: Jul 11, 2015
  *      Author: -Bernardo
  */
 
-#ifndef SWORDENEMY_H_
-#define SWORDENEMY_H_
+#ifndef BIGENEMY_H_
+#define BIGENEMY_H_
 
-#include <map>
-#include <string>
-#include "Engine/Sound.h"
 #include "AbstractEnemy.h"
+#include "Engine/Sound.h"
 
-class StateSwordEnemy;
+class StateBigEnemy;
 
-class SwordEnemy : public AbstractEnemy {
+class BigEnemy : public AbstractEnemy {
+
 public:
 	enum enemyStates {STAND, WALK, ATTACK, TAKINGHIT, DYING, PATROLLING, FOLLOW, BEINGPUSHED};
 
-	SwordEnemy(int enemyScale, int x);
-	virtual ~SwordEnemy();
+	BigEnemy(int enemyScale, int x);
+	virtual ~BigEnemy();
 
 	void changeState(const enemyStates state_);
 	bool IsState(const enemyStates state_);
@@ -45,9 +44,9 @@ public:
 	bool HasCollidedHorizontally();
 
 private:
-	Sound *kickhit, *punchhit, *rockHit;
-	StateSwordEnemy* currentState;
-	std::map<enemyStates, StateSwordEnemy*> enemyStatesMap;
+	Sound *kickhit, *punchhit;
+	StateBigEnemy* currentState;
+	std::map<enemyStates, StateBigEnemy*> enemyStatesMap;
 	float distanceToBaon;
 	bool collidedHorizontally;
 
@@ -57,4 +56,4 @@ private:
 	void Initialize();
 };
 
-#endif /* SWORDENEMY_H_ */
+#endif /* BIGENEMY_H_ */

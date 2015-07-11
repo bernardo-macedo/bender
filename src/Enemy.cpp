@@ -40,6 +40,7 @@ Enemy::Enemy(int enemyScale, int x) : AbstractEnemy(enemyScale, x, 2, 50, 130, 0
 Enemy::~Enemy() {
 	delete kickhit;
 	delete punchhit;
+	delete rockHit;
 	delete currentState;
 }
 
@@ -125,9 +126,28 @@ void Enemy::SetCoolDown(float coolDown) {
 	this->bendCoolDown = coolDown;
 }
 
-void Enemy::TakeDamage(bool damage) {
-	hp--;
-	punchhit->Play(0);
+void Enemy::TakeDamage(BaonAttack attack) {
+	switch(attack) {
+	case BaonAttack::PUNCH:
+	case BaonAttack::FASTPUNCH:
+		hp--;
+		punchhit->Play(0);
+		break;
+	case BaonAttack::KICK:
+		hp--;
+		kickhit->Play(0);
+		break;
+	case BaonAttack::ROCK:
+		hp --;
+		rockHit->Play(0);
+		break;
+	case BaonAttack::SPIKESTONE:
+		hp -= 2;
+		rockHit->Play(0);
+		break;
+	default:
+		break;
+	}
 }
 
 void Enemy::InitializeStates(){
@@ -174,6 +194,7 @@ void Enemy::Initialize() {
 
 	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
 	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
+	rockHit = new Sound("audio/sfx_throwRock_hit.wav");
 }
 
 void Enemy::SetWalkSprite() {

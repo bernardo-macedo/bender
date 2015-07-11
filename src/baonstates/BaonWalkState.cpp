@@ -61,7 +61,7 @@ void BaonWalkState::Update_(float dt){
 		nextFlipped = flipped;
 	}
 	if(t->Get() >= 0.3){
-		baon->step1->Play(0);
+		baon->GetStepSound(1)->Play(0);
 		t->Restart();
 	}
 	if(baon->isTakingDamage()){

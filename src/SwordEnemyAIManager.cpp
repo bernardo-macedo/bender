@@ -51,7 +51,7 @@ void SwordEnemyAIManager::update(const float dt) {
 
 	if(!enemy->IsDead() && enemy->IsTakingDamage() && !enemy->IsDying()){
 		if(!enemy->IsState(SwordEnemy::enemyStates::TAKINGHIT)){
-			enemy->TakeDamage(true);
+			enemy->TakeDamage(baon->GetLastGivenAttack());
 			enemy->changeState(SwordEnemy::enemyStates::TAKINGHIT);
 		}
 		else{
@@ -92,7 +92,7 @@ void SwordEnemyAIManager::update(const float dt) {
 				}
 				if(!baon->isTakingDamage() && enemy->isDamage) {
 					if ((right && enemy->GetFlipped()) || (!right && !enemy->GetFlipped())) {
-						baon->TakeDamage(true, right);
+						baon->TakeDamage(enemy->GetLastGivenAttack(), true, right);
 					}
 				}
 			}

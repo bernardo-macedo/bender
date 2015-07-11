@@ -32,6 +32,7 @@ void BaonFastPunch::Update_(float dt) {
 		baon->GetSprite()->SetFrameWidth(50);
 		baon->GetSprite()->SetFrameCount(3);
 		baon->GetSprite()->SetLine(8, 50);
+		baon->SetLastGivenAttack(BaonAttack::FASTPUNCH);
 
 		if(flipped){
 			baon->GetBody()->ApplyForce(new Force("stopping", 700, 0));

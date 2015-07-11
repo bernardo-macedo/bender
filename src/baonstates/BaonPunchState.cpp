@@ -47,12 +47,14 @@ void BaonPunchState::Update_(float dt) {
 
 			//if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
 				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+				baon->SetLastGivenAttack(BaonAttack::ROCK);
 			//} else {
 			//	delete pedra;
 			//}
 		} else{
 			punchSound->Play(0);
 			baon->GetSprite()->SetFrameTime(0.06);
+			baon->SetLastGivenAttack(BaonAttack::PUNCH);
 		}
 		baon->Punch();
 		executed = true;

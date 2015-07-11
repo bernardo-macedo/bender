@@ -144,7 +144,11 @@ void BaonStateManager::Update(float dt) {
 	} else if (baon->IsFalling() && !currentState->Is("FALLING")
 			&& !currentState->Is("ATTACK1")
 			&& !currentState->Is("TAKEHIT")) {
-		previousState = currentState;
+		if (previousState->Is("JUMP")) {
+			previousState = estados["STAND"];
+		} else {
+			previousState = currentState;
+		}
 		estados["FALLING"]->SetFlipped(currentState->IsFlipped());
 		currentState = estados["FALLING"];
 		currentState->Reset();
@@ -160,3 +164,4 @@ BaonState* BaonStateManager::GetCurrentState(){
 BaonState* BaonStateManager::GetPreviousState(){
 	return previousState;
 }
+

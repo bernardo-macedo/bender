@@ -21,6 +21,7 @@ void SwordEnemyStateAttacking::enter() {
 	enemy->SetAttackingSprite();
 	enemy->GetSprite()->SetFrameTime(0.05);
 	swordSwingSound->Play(0);
+	enemy->SetLastGivenAttack(EnemyAttack::SWORD);
 }
 
 void SwordEnemyStateAttacking::exit() {

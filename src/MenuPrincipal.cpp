@@ -27,11 +27,11 @@ MenuPrincipal::~MenuPrincipal() {
 
 void MenuPrincipal::Update(float dt) {
 
-	if (InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)) {
+	if (InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY) || InputManager::GetInstance().KeyPress(S_KEY)) {
 		selectedButton = selectedButton < numButtons - 1 ? selectedButton + 1 : 0;
 		changeOptionSound->Play(0);
 	}
-	if (InputManager::GetInstance().KeyPress(UP_ARROW_KEY)) {
+	if (InputManager::GetInstance().KeyPress(UP_ARROW_KEY) || InputManager::GetInstance().KeyPress(W_KEY)) {
 		selectedButton = selectedButton == 0 ? numButtons - 1 : selectedButton - 1;
 		changeOptionSound->Play(0);
 	}
