@@ -59,14 +59,14 @@ Baon::Baon(int playerScale, float mapMax, int posX) {
 	if (posX != -1) {
 		box.SetX(posX);
 	} else {
-		box.SetX(Game::SCREEN_WIDTH/2);
+		box.SetX(3 * Game::SCREEN_WIDTH/8);
 	}
 	box.SetY(200);
 	box.SetH(sp->GetFrameHeight());
 	box.SetW(sp->GetFrameWidth());
 
 	limitX = mapMax - (box.GetW() * scale);
-	cameraLimitX = mapMax - Game::SCREEN_WIDTH/2;
+	cameraLimitX = mapMax - 5 * Game::SCREEN_WIDTH/8;
 
 	b = new Body("baon", box.GetX(), box.GetY());
 	b->ApplyForce(new Force("gravity", 0, 900));
@@ -188,12 +188,12 @@ void Baon::Update(float dt) {
 	bendHUD->SetPosX(box.GetX() - (int)(bendHUD->GetBox().GetW()/2) - box.GetW());
 	bendHUD->SetPosY(box.GetY() - (int)(bendHUD->GetBox().GetH()/2));
 
-	if(box.GetX() <= Game::SCREEN_WIDTH/2 || box.GetX() >= cameraLimitX){
+	if(box.GetX() <= 3 * Game::SCREEN_WIDTH/8 || box.GetX() >= cameraLimitX){
 		Camera::Unfollow();
 		if (box.GetX() >= cameraLimitX) {
 			levelWon = true;
 		}
-	} else if(box.GetX() > Game::SCREEN_WIDTH/2){
+	} else if(box.GetX() > 3 * Game::SCREEN_WIDTH/8){
 		Camera::Follow(this);
 	}
 

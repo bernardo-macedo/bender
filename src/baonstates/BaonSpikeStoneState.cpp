@@ -21,7 +21,8 @@ BaonSpikeStoneState::BaonSpikeStoneState(bool flipped) : BaonState(){
 }
 
 void BaonSpikeStoneState::Update_(float dt) {
-	if(!executed){
+	if(!executed && !Hud::GetInstance()->IsBuffering(Hud::TWO)) {
+		Hud::GetInstance()->SetBuffering(Hud::TWO);
 		if(!flipped){
 			pedra = new SpikeStone(baon->GetBox().GetX() + 30*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), false);
 		}else{

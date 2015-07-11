@@ -49,6 +49,7 @@ bool StageTwo::OnLevelWon(float dt) {
 
 	if (levelUpTimer->Get() > 1) {
 		if (!levelWon) {
+			music->Stop();
 			levelWonSound->Play(0);
 			levelWon = true;
 		}

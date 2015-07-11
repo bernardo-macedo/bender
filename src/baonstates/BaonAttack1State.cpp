@@ -26,7 +26,8 @@ BaonAttack1State::~BaonAttack1State() {
 
 void BaonAttack1State::Update_(float dt) {
 	if(!executed){
-		if(canExecute && !Hud::GetInstance()->IsBuffering(Hud::ONE)){
+		if(canExecute && !Hud::GetInstance()->IsBuffering(Hud::THREE)){
+			Hud::GetInstance()->SetBuffering(Hud::THREE);
 			bendJumpSound->Play(0);
 			pedra = new PedraBasico(baon->GetBox().GetX(),
 					baon->GetBox().GetY() + baon->GetBox().GetH() - 10*baon->GetScale(),
@@ -48,7 +49,6 @@ void BaonAttack1State::Update_(float dt) {
 			executed = true;
 			justJumped = true;
 
-			Hud::GetInstance()->SetBuffering(Hud::THREE);
 		}
 		else{
 			nextRequested = true;

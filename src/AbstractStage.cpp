@@ -64,10 +64,10 @@ void AbstractStage::OnUpdate(float dt, GameObject* object) {
 		if(object->GetID() == GameObject::BAON){
 			if (baon->GetLevelWon()) {
 				if (OnLevelWon(dt)) {
-					return;
+					//return;
 				}
 			}
-			else{
+			//else{
 				baon->SetCloseToEnemy(false);
 				baon->SetTouchingGround(tileMap->IsTouchingGround(baon->GetBox(), baon->GetScale()));
 
@@ -78,7 +78,7 @@ void AbstractStage::OnUpdate(float dt, GameObject* object) {
 				if (tileMap->CheckCollisions(baon->GetBox(), baon->GetScale())) {
 					tileMap->ResolveTileCollisions(baon);
 				}
-			}
+			//}
 		}
 	}
 }
@@ -87,6 +87,7 @@ void AbstractStage::ResolveDeadObject(GameObject* object){
 	if(object->GetID() == GameObject::BAON){
 		Camera::Unfollow();
 		popRequested = true;
+		baon = NULL;
 	}
 }
 
@@ -95,7 +96,7 @@ void AbstractStage::Render() {
 		tileMap->Render(i, 0, Camera::pos.getX(), Camera::pos.getY());
 	}
 
-	if(baon->bendHUD != NULL && !baon->bendHUD->IsDead()){
+	if(baon!= NULL && baon->bendHUD != NULL && !baon->bendHUD->IsDead()) {
 		baon->bendHUD->Render();
 	}
 
