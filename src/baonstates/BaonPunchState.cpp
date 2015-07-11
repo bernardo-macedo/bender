@@ -35,22 +35,17 @@ void BaonPunchState::Update_(float dt) {
 			else{
 				pedraX = baon->GetBox().GetX() - 30*baon->GetScale();
 			}
-			pedra = new PedraBasico(pedraX,
-						baon->GetBox().GetY() + 25*baon->GetScale(),
-						//baon->GetGroundTouchResolver()->GetGroundHeight(pedraX + 10),
-						baon->GetScale());
+			pedra = new PedraBasico(pedraX, baon->GetGroundTouchResolver()->GetGroundHeight(pedraX + 10) - 25*baon->GetScale(), baon->GetScale());
 			pedra->SetID(GameObject::PEDRA_BASICO_BAON);
 			pedra->GetSprite()->SetFrameHeight(25);
 			pedra->GetSprite()->SetFrameWidth(35);
 			pedra->GetSprite()->SetLine(2, 23);
 			pedra->GetSprite()->SetFrameTime(0.02);
 
-			//if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
+			if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
 				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 				baon->SetLastGivenAttack(BaonAttack::ROCK);
-			//} else {
-			//	delete pedra;
-			//}
+			}
 		} else{
 			punchSound->Play(0);
 			baon->GetSprite()->SetFrameTime(0.06);

@@ -23,11 +23,14 @@ BaonSpikeStoneState::BaonSpikeStoneState(bool flipped) : BaonState(){
 void BaonSpikeStoneState::Update_(float dt) {
 	if(!executed && !Hud::GetInstance()->IsBuffering(Hud::TWO)) {
 		Hud::GetInstance()->SetBuffering(Hud::TWO);
+		float pedraX;
 		if(!flipped){
-			pedra = new SpikeStone(baon->GetBox().GetX() + 80*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), false);
+			pedraX = baon->GetBox().GetX() + 80*baon->GetScale();
+
 		}else{
-			pedra = new SpikeStone(baon->GetBox().GetX() - 80*baon->GetScale(), baon->GetBox().GetY() + 12*baon->GetScale(), baon->GetScale(), true);
+			pedraX = baon->GetBox().GetX() - 80*baon->GetScale();
 		}
+		pedra = new SpikeStone(pedraX, baon->GetGroundTouchResolver()->GetGroundHeight(pedraX + 15) - 38*baon->GetScale(), baon->GetScale(), flipped);
 		Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 		baon->SetLastGivenAttack(BaonAttack::SPIKESTONE);
 		executed = true;

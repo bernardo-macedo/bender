@@ -12,6 +12,8 @@
 
 #include "BaonState.h"
 #include "../PedraDefesa.h"
+#include "../Hud.h"
+
 class BaonDefenseStoneState : public BaonState{
 public:
 	BaonDefenseStoneState(bool flipped);

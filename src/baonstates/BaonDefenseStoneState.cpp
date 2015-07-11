@@ -22,16 +22,20 @@ BaonDefenseStoneState::BaonDefenseStoneState(bool flipped) {
 }
 
 void BaonDefenseStoneState::Update_(float dt) {
-	if(!executed){
+	if(!executed && !Hud::GetInstance()->IsBuffering(Hud::ONE)) {
+		Hud::GetInstance()->SetBuffering(Hud::ONE);
+		float pedraX;
 		if(flipped){
-			pedra = new PedraDefesa(baon->GetBox().GetX() - 20*baon->GetScale(),
-					baon->GetBox().GetY() - 10*baon->GetScale());
+			pedraX = baon->GetBox().GetX() - 20*baon->GetScale();
 		}
 		else{
-			pedra = new PedraDefesa(baon->GetBox().GetX() + 20*baon->GetScale(),
-					baon->GetBox().GetY() - 10*baon->GetScale());
+			pedraX = baon->GetBox().GetX() + 20*baon->GetScale();
 		}
-		Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+		pedra = new PedraDefesa(pedraX, baon->GetGroundTouchResolver()->GetGroundHeight(pedraX + 10) - 58*baon->GetScale());
+
+		if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), baon->GetScale())) {
+			Game::GetInstance()->GetCurrentState()->AddObject(pedra);
+		}
 	}
 
 	next = "STAND";
