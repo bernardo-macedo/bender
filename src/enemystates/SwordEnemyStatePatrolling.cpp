@@ -28,7 +28,12 @@ void SwordEnemyStatePatrolling::update(const float dt_) {
 
 	float patrollDx = patrollMaxDistance - patrollDistance;
 	if(abs(patrollDx) > 100.0){
-		isLeft = (patrollDx <= 0.0);
+		if(patrollDx > 0.0){
+			isLeft = false;
+		}
+		else{
+			isLeft = true;
+		};
 	}
 
 	enemy->Walk(isLeft);
