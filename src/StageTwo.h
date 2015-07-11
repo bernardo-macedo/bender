@@ -19,7 +19,9 @@
 #include "Hud.h"
 #include "Monumento.h"
 #include "Enemy.h"
+#include "SwordEnemy.h"
 #include "EnemyAIManager.h"
+#include "SwordEnemyAIManager.h"
 #include "StageThree.h"
 
 class StageTwo : public AbstractStage {

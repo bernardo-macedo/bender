@@ -8,6 +8,8 @@
 #ifndef ABSTRACTSTAGE_H_
 #define ABSTRACTSTAGE_H_
 
+#include <sstream>
+#include <fstream>
 #include <stddef.h>
 #include "Engine/State.h"
 #include "Engine/TileSet/TileMap.h"
@@ -60,6 +62,7 @@ protected:
 	void ResolveDeadObject(GameObject* object);
 	void UpdateBenderEnemy(Enemy* enemy, float dt);
 	void UpdateSwordEnemy(SwordEnemy* enemy, float dt);
+	void LoadLevelData(std::string file);
 };
 
 #endif /* ABSTRACTSTAGE_H_ */

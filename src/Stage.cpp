@@ -31,8 +31,8 @@ Stage::Stage(int posX) : AbstractStage(2, 1, posX) {
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
 	baon->SetGroundTouchResolver(tileMap);
 	
-	Enemy* e = new Enemy(scale, 900);
-	SwordEnemy* swordEnemy = new SwordEnemy(scale, 50);
+	Enemy* e = new Enemy(scale, 700);
+	SwordEnemy* swordEnemy = new SwordEnemy(scale, 600);
 	enemyAI = new EnemyAIManager(baon, e);
 	swordEnemyAI = new SwordEnemyAIManager(baon, swordEnemy);
 
@@ -43,10 +43,38 @@ Stage::Stage(int posX) : AbstractStage(2, 1, posX) {
 
 	AddObject(e);
 	AddObject(swordEnemy);
+
+	LoadLevelData("data/level1-data.txt");
+	/*
+	AddObject(new Enemy(scale, 1000));
+	AddObject(new Enemy(scale, 2000));
+	AddObject(new Enemy(scale, 3000));
 	AddObject(new Enemy(scale, 4000));
+	AddObject(new Enemy(scale, 5000));
+	AddObject(new Enemy(scale, 6000));
+	AddObject(new Enemy(scale, 7000));
 	AddObject(new Enemy(scale, 8000));
 	AddObject(new Enemy(scale, 8300));
 	AddObject(new Enemy(scale, 8600));
+
+	AddObject(new SwordEnemy(scale, 950));
+	AddObject(new SwordEnemy(scale, 1100));
+	AddObject(new SwordEnemy(scale, 2100));
+	AddObject(new SwordEnemy(scale, 2500));
+	AddObject(new SwordEnemy(scale, 3100));
+	AddObject(new SwordEnemy(scale, 3800));
+	AddObject(new SwordEnemy(scale, 4100));
+	AddObject(new SwordEnemy(scale, 5100));
+	AddObject(new SwordEnemy(scale, 6100));
+	AddObject(new SwordEnemy(scale, 6500));
+	AddObject(new SwordEnemy(scale, 7100));
+	AddObject(new SwordEnemy(scale, 8100));
+	AddObject(new SwordEnemy(scale, 8500));
+	AddObject(new SwordEnemy(scale, 9000));
+	AddObject(new SwordEnemy(scale, 9500));
+	AddObject(new SwordEnemy(scale, 10000));
+	AddObject(new SwordEnemy(scale, 11000));
+	*/
 
 	AddObject(new Scroll(scale, level));
 
@@ -60,12 +88,12 @@ Stage::~Stage() {
 
 bool Stage::OnLevelWon(float dt) {
 	levelUpTimer->Update(dt);
+	if (!levelWon) {
+		music->Stop();
+		levelWonSound->Play(0);
+		levelWon = true;
+	}
 	if (levelUpTimer->Get() > 1) {
-		if (!levelWon) {
-			music->Stop();
-			levelWonSound->Play(0);
-			levelWon = true;
-		}
 		SDL_Color color;
 		color.r = color.g = color.b = 225;
 		color.a = 255;
@@ -74,6 +102,8 @@ bool Stage::OnLevelWon(float dt) {
 		if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
 			Game::GetInstance()->Push(new StageTwo());
 			popRequested = true;
+			levelWonSound->Stop();
+			music->Stop();
 		}
 		return true;
 	}
