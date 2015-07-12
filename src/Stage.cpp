@@ -45,36 +45,6 @@ Stage::Stage(int posX) : AbstractStage(2, 1, posX) {
 	AddObject(swordEnemy);
 
 	LoadLevelData("data/level1-data.txt");
-	/*
-	AddObject(new Enemy(scale, 1000));
-	AddObject(new Enemy(scale, 2000));
-	AddObject(new Enemy(scale, 3000));
-	AddObject(new Enemy(scale, 4000));
-	AddObject(new Enemy(scale, 5000));
-	AddObject(new Enemy(scale, 6000));
-	AddObject(new Enemy(scale, 7000));
-	AddObject(new Enemy(scale, 8000));
-	AddObject(new Enemy(scale, 8300));
-	AddObject(new Enemy(scale, 8600));
-
-	AddObject(new SwordEnemy(scale, 950));
-	AddObject(new SwordEnemy(scale, 1100));
-	AddObject(new SwordEnemy(scale, 2100));
-	AddObject(new SwordEnemy(scale, 2500));
-	AddObject(new SwordEnemy(scale, 3100));
-	AddObject(new SwordEnemy(scale, 3800));
-	AddObject(new SwordEnemy(scale, 4100));
-	AddObject(new SwordEnemy(scale, 5100));
-	AddObject(new SwordEnemy(scale, 6100));
-	AddObject(new SwordEnemy(scale, 6500));
-	AddObject(new SwordEnemy(scale, 7100));
-	AddObject(new SwordEnemy(scale, 8100));
-	AddObject(new SwordEnemy(scale, 8500));
-	AddObject(new SwordEnemy(scale, 9000));
-	AddObject(new SwordEnemy(scale, 9500));
-	AddObject(new SwordEnemy(scale, 10000));
-	AddObject(new SwordEnemy(scale, 11000));
-	*/
 
 	AddObject(new Scroll(scale, level));
 

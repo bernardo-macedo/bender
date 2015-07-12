@@ -18,10 +18,13 @@ BaonRunState::BaonRunState(bool flipped) : BaonState(){
 	nextRequested = false;
 	t = new Timer();
 	id = "RUN";
+
+	startRunningSound = new Sound("audio/sfx_char_run.wav");
 }
 void BaonRunState::Update_(float dt) {
 	t->Update(dt);
 	if(!executed) {
+		startRunningSound->Play(0);
 		baon->Run(flipped);
 		executed = true;
 	}
@@ -59,6 +62,10 @@ void BaonRunState::Update_(float dt) {
 		next = "TAKEHIT";
 		nextFlipped = flipped;
 	}
+}
+
+BaonRunState::~BaonRunState() {
+	delete startRunningSound;
 }
 
 bool BaonRunState::Is(std::string state) {
