@@ -25,6 +25,7 @@ public:
 	static const int SWORD_ENEMY;
 	static const int TRANSPARENT_GAME_OBJECT;
 	static const int PEDRA_DEFESA;
+	static const int CONTROLE_BEND;
 
 	virtual ~GameObject();
 

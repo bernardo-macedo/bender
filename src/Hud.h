@@ -29,6 +29,7 @@ public:
 	void SetBuffering(HudAttack hudAttackNumber);
 	bool IsBuffering(HudAttack hudAttackNumber);
 	void SetLevel(int level);
+	int GetLevel();
 
 private:
 	static Hud* instance;

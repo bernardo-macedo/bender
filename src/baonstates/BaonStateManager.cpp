@@ -13,6 +13,7 @@
 #include "../Engine/InputManager.h"
 #include "../Engine/Timer.h"
 #include "BaonAttack1State.h"
+#include "BaonControleState.h"
 #include "BaonDefenseStoneState.h"
 #include "BaonDyingState.h"
 #include "BaonFallingState.h"
@@ -68,6 +69,9 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("BENDDEFESA", new BaonDefenseStoneState(false));
 	estados["BENDDEFESA"]->SetBaon(baon);
 	estados["BENDDEFESA"]->SetStateManager(this);
+	estados.emplace("BENDCONTROLE", new BaonControleState(false));
+	estados["BENDCONTROLE"]->SetBaon(baon);
+	estados["BENDCONTROLE"]->SetStateManager(this);
 
 	currentState = estados["STAND"];
 	this->baon = baon;

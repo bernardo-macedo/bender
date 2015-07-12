@@ -129,3 +129,7 @@ bool Hud::IsValidAttack(HudAttack hudAttackNumber) {
 	return valid;
 
 }
+
+int Hud::GetLevel() {
+	return level;
+}
