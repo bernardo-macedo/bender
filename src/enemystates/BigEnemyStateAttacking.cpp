@@ -19,7 +19,6 @@ void BigEnemyStateAttacking::enter() {
 	askEnd = false;
 	enemy->GetBody()->SetVelX(0);
 	enemy->SetAttackingSprite();
-	enemy->GetSprite()->SetFrameTime(0.05);
 	shoulderSwingSound->Play(0);
 	enemy->SetLastGivenAttack(EnemyAttack::SHOULDER);
 }

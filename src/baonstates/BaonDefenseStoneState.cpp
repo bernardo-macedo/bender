@@ -7,12 +7,12 @@
 
 #include "BaonDefenseStoneState.h"
 
-#include <string>
-
 #include "../Baon.h"
+#include "../ControleBend.h"
 #include "../Engine/Game.h"
+#include "../Engine/Sound.h"
 #include "../Engine/State.h"
-#include "../PedraDefesa.h"
+#include "../Engine/TileSet/GroundTouchResolver.h"
 
 BaonDefenseStoneState::BaonDefenseStoneState(bool flipped) {
 	executed = false;
@@ -32,7 +32,7 @@ void BaonDefenseStoneState::Update_(float dt) {
 			else{
 				pedraX = baon->GetBox().GetX() + 20*baon->GetScale();
 			}
-			pedra = new PedraDefesa(pedraX, baon->GetGroundTouchResolver()->GetGroundHeight(pedraX + 10) - 58*baon->GetScale());
+			pedra = new PedraDefesa(pedraX, baon->GetGroundTouchResolver()->GetGroundHeight(pedraX + 10) - 10*baon->GetScale());
 
 			if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), baon->GetScale())) {
 				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
