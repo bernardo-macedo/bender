@@ -14,6 +14,7 @@
 #include "../Engine/InputManager.h"
 #include "../BendHUD.h"
 #include "../Baon.h"
+#include "../Engine/Sound.h"
 
 class Body;
 class BaonStateManager;
@@ -48,6 +49,7 @@ protected:
 	std::string next, id;
 	bool nextRequested, popRequested, flipped, executed, nextFlipped;
 	Timer *t, *bendTimer;
+	Sound* bendErrorSound;
 
 	int bendKey[4];
 	bool stateChanged;

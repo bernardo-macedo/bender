@@ -24,7 +24,7 @@ void SwordEnemyStateTakeDamage::enter() {
 
 void SwordEnemyStateTakeDamage::exit() {
 	enemy->GetBody()->SetVelX(0);
-	enemy->GetBody()->clearForces();
+	enemy->GetBody()->removeForce("resistance");
 	enemy->SetTakingDamage(false);
 	enemy->GetSprite()->SetFrameTime(0.1);
 	if(enemy->GetHP() <= 0){

@@ -63,22 +63,18 @@ void AbstractStage::OnUpdate(float dt, GameObject* object) {
 
 		if(object->GetID() == GameObject::BAON){
 			if (baon->GetLevelWon()) {
-				if (OnLevelWon(dt)) {
-					//return;
-				}
+				OnLevelWon(dt);
 			}
-			//else{
-				baon->SetCloseToEnemy(false);
-				baon->SetTouchingGround(tileMap->IsTouchingGround(baon->GetBox(), baon->GetScale()));
+			baon->SetCloseToEnemy(false);
+			baon->SetTouchingGround(tileMap->IsTouchingGround(baon->GetBox(), baon->GetScale()));
 
-				if(!baon->bendHUD->IsDead()){
-					baon->bendHUD->Update(dt);
-				}
+			if(!baon->bendHUD->IsDead()){
+				baon->bendHUD->Update(dt);
+			}
 
-				if (tileMap->CheckCollisions(baon->GetBox(), baon->GetScale())) {
-					tileMap->ResolveTileCollisions(baon);
-				}
-			//}
+			if (tileMap->CheckCollisions(baon->GetBox(), baon->GetScale())) {
+				tileMap->ResolveTileCollisions(baon);
+			}
 		}
 	}
 }

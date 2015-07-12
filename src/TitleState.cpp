@@ -8,13 +8,15 @@
 #include "TitleState.h"
 
 TitleState::TitleState() {
-	bg.SetScaleX(2);
-	bg.SetScaleY(2);
+	bg = new Sprite("img/title.png", 24, 0.1);
+	bg->SetScaleX(2);
+	bg->SetScaleY(2);
 
-	bg.Open("img/title.png");
 	menu = new MenuPrincipal(2);
 	music = new Music("audio/title.ogg");
 	music->Play(Music::ALWAYS);
+
+	selectButtonSound = new Sound("audio/sfx_menuSelect.wav");
 
 }
 
@@ -22,17 +24,19 @@ TitleState::~TitleState() {
 	if (music != NULL) {
 		music->Stop();
 	}
-
+	delete bg;
 	delete menu;
 	delete music;
+	delete selectButtonSound;
 }
 
 void TitleState::Update(float dt) {
-
+	bg->Update(dt);
 	menu->Update(dt);
 	quitRequested = InputManager::GetInstance().QuitRequested();
 
 	if (InputManager::GetInstance().KeyPress(ENTER_KEY)) {
+		selectButtonSound->Play(0);
 		switch (menu->GetSelectedButton()) {
 		case 0:
 			Game::GetInstance()->SetCheckpoint(NULL);
@@ -63,7 +67,7 @@ void TitleState::Update(float dt) {
 }
 
 void TitleState::Render() {
-	bg.Render(0,0);
+	bg->Render(0,0);
 	menu->Render();
 }
 

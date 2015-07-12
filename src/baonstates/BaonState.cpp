@@ -16,9 +16,12 @@ BaonState::BaonState() {
 	bendHUD = NULL;
 	baon = NULL;
 	sm = NULL;
+
+	bendErrorSound = new Sound("audio/sfx_bend_error.wav");
 }
 
 BaonState::~BaonState(){
+	delete bendErrorSound;
 }
 bool BaonState::NextRequested(){
 	return nextRequested;
@@ -101,10 +104,15 @@ void BaonState::Update(float dt) {
 			countBend++;
 		}
 
-		BendAttack matchedAttack = MatchAttack();
-		ResolveAttack(matchedAttack);
+		if(InputManager::GetInstance().KeyRelease(SPACE_KEY) || bendTimer->Get() > 0.6 ||countBend >= 3) {
+			BendAttack matchedAttack = MatchAttack();
 
-		if(InputManager::GetInstance().KeyRelease(SPACE_KEY) || bendTimer->Get() > 0.6 ||countBend >= 3){
+			if (bendTimer->Get() > 0.6 || (countBend >= 3 && matchedAttack == BendAttack::NONE)) {
+				bendErrorSound->Play(0);
+			}
+
+			ResolveAttack(matchedAttack);
+
 			baon->SetBendMode(false);
 			bendTimer->Restart();
 			countBend = 0;

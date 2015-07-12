@@ -22,9 +22,10 @@
 
 class TitleState : public State {
 private:
-	Sprite bg;
+	Sprite* bg;
 	Music* music;
 	MenuPrincipal* menu;
+	Sound* selectButtonSound;
 
 public:
 	TitleState();

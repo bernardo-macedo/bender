@@ -30,10 +30,13 @@ void BaonTakeHitState::Update_(float dt) {
 			|| (baon->IsCollisionFromRight() && baon->GetBody()->GetVelX() >= 0)){
 		baon->GetBody()->SetVelX(0);
 		baon->GetBody()->removeForce("resistance");
-		nextRequested = true;
-		next = "STAND";
-		nextFlipped = flipped;
-		baon->TakeDamage(EnemyAttack::EMPTY, false, false);
+
+		if (baon->GetGroundTouchResolver()->IsTouchingGround(baon->GetBox(), baon->GetScale())) {
+			nextRequested = true;
+			next = "STAND";
+			nextFlipped = flipped;
+			baon->TakeDamage(EnemyAttack::EMPTY, false, false);
+		}
 	}
 }
 

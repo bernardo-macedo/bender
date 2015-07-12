@@ -27,6 +27,8 @@ MenuPrincipal::~MenuPrincipal() {
 
 void MenuPrincipal::Update(float dt) {
 
+	sp->Update(dt);
+
 	if (InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY) || InputManager::GetInstance().KeyPress(S_KEY)) {
 		selectedButton = selectedButton < numButtons - 1 ? selectedButton + 1 : 0;
 		changeOptionSound->Play(0);
@@ -47,7 +49,16 @@ void MenuPrincipal::Render() {
 		} else {
 			sp->SetFrame(1);
 		}
-		sp->Render(20 * scale, (20 + (i * sp->GetFrameHeight())) * scale, 0);
+
+		if (i == 0) {
+			sp->Render(25 * scale, 18 * scale, 0);
+		} else if (i == 1) {
+			sp->Render(25 * scale, 37 * scale, 0);
+		} else if (i == 2) {
+			sp->Render(25 * scale, 56 * scale, 0);
+		} else if (i == 3)  {
+			sp->Render(25 * scale, 76 * scale, 0);
+		}
 	}
 }
 

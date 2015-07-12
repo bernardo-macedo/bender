@@ -14,10 +14,21 @@ void BenderEnemyStateStanding::enter() {
 	enemy->GetSprite()->SetFrameCount(2);
 	enemy->GetSprite()->SetLine(0, 60);
 	enemy->GetBody()->SetVelX(0);
+	t->Restart();
+	askEnd = false;
 }
 
 void BenderEnemyStateStanding::exit() {
 }
 
+BenderEnemyStateStanding::~BenderEnemyStateStanding() {
+	delete t;
+}
+
 void BenderEnemyStateStanding::update(const float dt_) {
+	t->Update(dt_);
+
+	if (t->Get() > 1) {
+		askEnd = true;
+	}
 }

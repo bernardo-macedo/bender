@@ -33,8 +33,7 @@ void SwordEnemyStatePatrolling::update(const float dt_) {
 		}
 		else{
 			isLeft = true;
-		};
+		}
 	}
-
-	enemy->Walk(isLeft);
+	enemy->Run(isLeft);
 }
