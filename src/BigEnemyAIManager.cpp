@@ -1,58 +1,59 @@
 /*
- * SwordEnemyAIManager.cpp
+ * BigEnemyAIManager.cpp
  *
- *  Created on: Jul 8, 2015
+ *  Created on: Jul 12, 2015
  *      Author: -Bernardo
  */
 
-#include "SwordEnemyAIManager.h"
+#include "BigEnemyAIManager.h"
 
-SwordEnemyAIManager::SwordEnemyAIManager(Baon* baon_, SwordEnemy* enemy_) {
+BigEnemyAIManager::BigEnemyAIManager(Baon* baon_, BigEnemy* enemy_) {
 	this->baon = baon_;
 	this->enemy = enemy_;
 }
 
-SwordEnemyAIManager::~SwordEnemyAIManager() {}
+BigEnemyAIManager::~BigEnemyAIManager() {
+	// TODO Auto-generated destructor stub
+}
 
-void SwordEnemyAIManager::update(const float dt) {
-
+void BigEnemyAIManager::update(const float dt) {
 	if(!baon->IsDead()){
 		enemy->SetDistanceToBaon(enemy->GetBody()->GetX() - baon->GetBody()->GetX());
 
 		if(abs(enemy->GetDistanceToBaon()) < 30*baon->GetScale() && abs(enemy->GetBody()->GetY() - baon->GetBody()->GetY()) < enemy->GetBox().GetH()){
-			if(!enemy->IsState(SwordEnemy::enemyStates::ATTACK)
-				&& !enemy->IsState(SwordEnemy::enemyStates::TAKINGHIT)
-				&& !enemy->IsState(SwordEnemy::enemyStates::DYING)
-				&& !enemy->IsState(SwordEnemy::enemyStates::BEINGPUSHED)){
+			if(!enemy->IsState(BigEnemy::enemyStates::ATTACK)
+				&& !enemy->IsState(BigEnemy::enemyStates::TAKINGHIT)
+				&& !enemy->IsState(BigEnemy::enemyStates::DYING)
+				&& !enemy->IsState(BigEnemy::enemyStates::BEINGPUSHED)){
 
 				if (baon->GetBody()->GetX() < enemy->GetBody()->GetX()) {
 					enemy->SetFlipped(true);
 				}
-				enemy->changeState(SwordEnemy::enemyStates::ATTACK);
+				enemy->changeState(BigEnemy::enemyStates::ATTACK);
 			}
 		} else if(abs(enemy->GetDistanceToBaon()) < 75*baon->GetScale()){
 			baon->SetCloseToEnemy(true);
 		} else {
 			baon->SetCloseToEnemy(false);
-			if (abs(enemy->GetDistanceToBaon()) < 150*baon->GetScale() && !enemy->IsState(SwordEnemy::enemyStates::FOLLOW)) {
-				if (enemy->IsState(SwordEnemy::enemyStates::PATROLLING) || enemy->StateEnd()) {
-					enemy->changeState(SwordEnemy::enemyStates::FOLLOW);
+			if (abs(enemy->GetDistanceToBaon()) < 150*baon->GetScale() && !enemy->IsState(BigEnemy::enemyStates::FOLLOW)) {
+				if (enemy->IsState(BigEnemy::enemyStates::PATROLLING) || enemy->StateEnd()) {
+					enemy->changeState(BigEnemy::enemyStates::FOLLOW);
 				}
 			}
 		}
 
 	}
-	if(enemy->IsState(SwordEnemy::enemyStates::ATTACK)
-			|| enemy->IsState(SwordEnemy::enemyStates::TAKINGHIT)){
+	if(enemy->IsState(BigEnemy::enemyStates::ATTACK)
+			|| enemy->IsState(BigEnemy::enemyStates::TAKINGHIT)){
 		if(enemy->StateEnd()){
-			enemy->changeState(SwordEnemy::enemyStates::PATROLLING);
+			enemy->changeState(BigEnemy::enemyStates::PATROLLING);
 		}
 	}
 
 	if(!enemy->IsDead() && enemy->IsTakingDamage() && !enemy->IsDying()){
-		if(!enemy->IsState(SwordEnemy::enemyStates::TAKINGHIT)){
+		if(!enemy->IsState(BigEnemy::enemyStates::TAKINGHIT)){
 			enemy->TakeDamage(baon->GetLastGivenAttack());
-			enemy->changeState(SwordEnemy::enemyStates::TAKINGHIT);
+			enemy->changeState(BigEnemy::enemyStates::TAKINGHIT);
 		}
 		else{
 			enemy->SetTakingDamage(false);
@@ -60,8 +61,8 @@ void SwordEnemyAIManager::update(const float dt) {
 	}
 
 	if(!enemy->IsDead() && enemy->IsDying()){
-		if(!enemy->IsState(SwordEnemy::enemyStates::DYING)){
-			enemy->changeState(SwordEnemy::enemyStates::DYING);
+		if(!enemy->IsState(BigEnemy::enemyStates::DYING)){
+			enemy->changeState(BigEnemy::enemyStates::DYING);
 		}
 	}
 
@@ -98,9 +99,8 @@ void SwordEnemyAIManager::update(const float dt) {
 			}
 		}
 	}
-
 }
 
-void SwordEnemyAIManager::SetEnemy(SwordEnemy* enemy) {
+void BigEnemyAIManager::SetEnemy(BigEnemy* enemy) {
 	this->enemy = enemy;
 }

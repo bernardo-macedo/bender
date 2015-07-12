@@ -5,13 +5,13 @@
  *      Author: Pedro2
  */
 
-#include "SwordEnemyBeingPunched.h"
+#include "BigEnemyBeingPunched.h"
 
-SwordEnemyBeingPushed::~SwordEnemyBeingPushed() {
+BigEnemyBeingPushed::~BigEnemyBeingPushed() {
 	delete t;
 }
 
-void SwordEnemyBeingPushed::enter() {
+void BigEnemyBeingPushed::enter() {
 	t->Restart();
 	if(enemy->IsCollisionFromRight()){
 		enemy->GetBody()->SetVelX(-400);
@@ -22,11 +22,11 @@ void SwordEnemyBeingPushed::enter() {
 	askEnd = false;
 }
 
-void SwordEnemyBeingPushed::exit() {
+void BigEnemyBeingPushed::exit() {
 	enemy->GetBody()->SetVelX(0);
 }
 
-void SwordEnemyBeingPushed::update(const float dt_) {
+void BigEnemyBeingPushed::update(const float dt_) {
 	if(t->Get() < 0.6){
 		t->Update(dt_);
 	}

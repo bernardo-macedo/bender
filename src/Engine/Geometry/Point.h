@@ -31,6 +31,8 @@ public:
 	Point operator*(float rhs) const {
 	   return Point(x*rhs, y*rhs);
 	}
+
+	float Distance(Point other);
 };
 
 #endif /* ENGINE_GEOMETRY_POINT_H_ */

@@ -30,6 +30,7 @@
 #include "AbstractEnemy.h"
 #include "EnemyAIManager.h"
 #include "SwordEnemyAIManager.h"
+#include "BigEnemyAIManager.h"
 
 class AbstractStage : public State {
 public:
@@ -53,8 +54,7 @@ protected:
 
 	EnemyAIManager *enemyAI;
 	SwordEnemyAIManager *swordEnemyAI;
-	std::vector<std::unique_ptr<Monumento>> monuments;
-	std::vector<std::unique_ptr<Enemy>> enemies;
+	BigEnemyAIManager *bigEnemyAI;
 
 	void OnUpdate(float dt, GameObject* object);
 	void Update(float dt);
@@ -62,6 +62,7 @@ protected:
 	void ResolveDeadObject(GameObject* object);
 	void UpdateBenderEnemy(Enemy* enemy, float dt);
 	void UpdateSwordEnemy(SwordEnemy* enemy, float dt);
+	void UpdateBigEnemy(BigEnemy* enemy, float dt);
 	void LoadLevelData(std::string file);
 };
 

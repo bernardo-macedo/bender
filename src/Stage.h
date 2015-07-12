@@ -17,6 +17,7 @@
 #include "Baon.h"
 #include "Enemy.h"
 #include "SwordEnemy.h"
+#include "BigEnemy.h"
 #include "Monumento.h"
 #include "EnemyAIManager.h" 
 #include "Being.h"

@@ -5,6 +5,7 @@
  *      Author: Pedro
  */
 
+#include <math.h>
 #include "Point.h"
 
 Point::~Point() {
@@ -34,4 +35,10 @@ float Point::getY() {
 
 void Point::setY(float y) {
 	this->y = y;
+}
+
+float Point::Distance(Point other) {
+	float diffx = this->x - other.getX();
+	float diffy = this->y - other.getY();
+	return sqrt((diffx * diffx) + (diffy * diffy));
 }

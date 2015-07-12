@@ -35,6 +35,7 @@ AbstractStage::~AbstractStage() {
 	delete levelUpTimer;
 	delete enemyAI;
 	delete swordEnemyAI;
+	delete bigEnemyAI;
 	delete levelWonSound;
 }
 
@@ -57,8 +58,12 @@ void AbstractStage::OnUpdate(float dt, GameObject* object) {
 			UpdateBenderEnemy((Enemy*)object, dt);
 		}
 
-		if(object->GetID() == GameObject::SWORD_ENEMY){
+		if(object->GetID() == GameObject::SWORD_ENEMY) {
 			UpdateSwordEnemy((SwordEnemy*)object, dt);
+		}
+
+		if (object->GetID() == GameObject::BIG_ENEMY) {
+			UpdateBigEnemy((BigEnemy*)object, dt);
 		}
 
 		if(object->GetID() == GameObject::BAON){
@@ -139,6 +144,15 @@ void AbstractStage::UpdateSwordEnemy(SwordEnemy* enemy, float dt) {
 	}
 }
 
+void AbstractStage::UpdateBigEnemy(BigEnemy* enemy, float dt) {
+	bigEnemyAI->SetEnemy(enemy);
+	bigEnemyAI->update(dt);
+
+	if (tileMap->CheckCollisions(enemy->GetBox(), enemy->GetScale())) {
+		tileMap->ResolveTileCollisions(enemy);
+	}
+}
+
 void AbstractStage::LoadLevelData(std::string file) {
 	std::ifstream infile(file);
 	std::string line;
@@ -157,6 +171,11 @@ void AbstractStage::LoadLevelData(std::string file) {
 			while (iss >> position) {
 				AddObject(new SwordEnemy(scale, position));
 				std::cout << "adicionou inimigo sword em " << position << std::endl;
+			}
+		} else if (enemyName == "big") {
+			while (iss >> position) {
+				AddObject(new BigEnemy(scale, position));
+				std::cout << "adicionou inimigo grande em " << position << std::endl;
 			}
 		} else {
 			std::cout << "nada" << std::endl;

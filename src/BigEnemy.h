@@ -44,7 +44,7 @@ public:
 	bool HasCollidedHorizontally();
 
 private:
-	Sound *kickhit, *punchhit;
+	Sound *kickhit, *punchhit, *rockHit;
 	StateBigEnemy* currentState;
 	std::map<enemyStates, StateBigEnemy*> enemyStatesMap;
 	float distanceToBaon;

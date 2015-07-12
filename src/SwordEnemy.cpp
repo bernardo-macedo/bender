@@ -105,7 +105,6 @@ void SwordEnemy::NotifyCollision(GameObject* other) {
 		if(!IsState(SwordEnemy::STAND)){
 			changeState(SwordEnemy::STAND);
 		}
-
 	}
 }
 
