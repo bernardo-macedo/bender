@@ -11,13 +11,18 @@
 #include <string>
 
 #include "BaonState.h"
+#include "../Engine/Sound.h"
 
 class BaonRunState : public BaonState{
 public:
 	BaonRunState(bool flipped);
+	virtual ~BaonRunState();
 	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
+
+private:
+	Sound* startRunningSound;
 };
 
 #endif /* BAONRUNSTATE_H_ */
