@@ -187,14 +187,16 @@ void BaonState::ResolveAttack(BendAttack attack) {
 }
 
 void BaonState::CallAttackState() {
-	stateChanged = true;
-	baon->SetBendMode(false);
-	executed = true;
-	nextRequested = true;
-	countBend = 0;
-	nextFlipped = flipped;
-	baon->bendHUD->Hide();
-	for (int i = 0; i < 4; ++i){
-		bendKey[i] = -1;
+	if(!baon->IsState("TAKEHIT")){
+		stateChanged = true;
+		baon->SetBendMode(false);
+		executed = true;
+		nextRequested = true;
+		countBend = 0;
+		nextFlipped = flipped;
+		baon->bendHUD->Hide();
+		for (int i = 0; i < 4; ++i){
+			bendKey[i] = -1;
+		}
 	}
 }
