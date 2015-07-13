@@ -28,35 +28,31 @@ BaonAttack1State::~BaonAttack1State() {
 
 void BaonAttack1State::Update_(float dt) {
 	if(!executed){
-		if(canExecute) {
-			if (!Hud::GetInstance()->IsBuffering(Hud::THREE)) {
-				Hud::GetInstance()->SetBuffering(Hud::THREE);
-				bendJumpSound->Play(0);
-				pedra = new PedraBasico(baon->GetBox().GetX(),
-						baon->GetBox().GetY() + baon->GetBox().GetH() - 10*baon->GetScale(),
-						baon->GetScale());
-				pedra->SetID(GameObject::PEDRA_BASICO_PULO_BAON);
-				pedra->GetSprite()->SetFrameWidth(35);
-				pedra->GetSprite()->SetFrameHeight(50);
-				pedra->GetSprite()->SetFrameCount(3);
-				pedra->GetSprite()->SetLine(0, 50);
+		if (!Hud::GetInstance()->IsBuffering(Hud::THREE)) {
+			Hud::GetInstance()->SetBuffering(Hud::THREE);
+			bendJumpSound->Play(0);
+			pedra = new PedraBasico(baon->GetBox().GetX(),
+					baon->GetBox().GetY() + baon->GetBox().GetH() - 10*baon->GetScale(),
+					baon->GetScale());
+			pedra->SetID(GameObject::PEDRA_BASICO_PULO_BAON);
+			pedra->GetSprite()->SetFrameWidth(35);
+			pedra->GetSprite()->SetFrameHeight(50);
+			pedra->GetSprite()->SetFrameCount(3);
+			pedra->GetSprite()->SetLine(0, 50);
 
-				if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
-					Game::GetInstance()->GetCurrentState()->AddObject(pedra);
-				}
-				baon->Jump(flipped);
-				baon->SetJumpFrame();
-				baon->GetBody()->SetVelY(-700);
-				justJumped = true;
-				executed = true;
-			} else {
-				if (!soundPlayed) {
-					soundPlayed = true;
-					bendErrorSound->Play(0);
-				}
+			if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
+				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 			}
-		}
-		else{
+			baon->Jump(flipped);
+			baon->SetJumpFrame();
+			baon->GetBody()->SetVelY(-700);
+			justJumped = true;
+			executed = true;
+		} else {
+			if (!soundPlayed) {
+				soundPlayed = true;
+				bendErrorSound->Play(0);
+			}
 			nextRequested = true;
 			next = "STAND";
 			nextFlipped = flipped;
@@ -95,9 +91,6 @@ void BaonAttack1State::NotifyTileCollision() {
 			justJumped = true;
 			canExecute = false;
 		}
-	}
-	else{
-		canExecute = true;
 	}
 }
 
