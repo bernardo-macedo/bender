@@ -16,7 +16,7 @@
 
 class BigRock : public Being{
 public:
-	BigRock(int x, int y);
+	BigRock(int x, int y, bool flipped);
 	virtual ~BigRock();
 
 	void Update(float dt);
@@ -30,7 +30,7 @@ public:
 private:
 	Sprite *sp;
 	Timer *t;
-	bool dead, finnishedLifting;
+	bool dead, finnishedLifting, flipped;
 };
 
 #endif /* BIGROCK_H_ */

@@ -30,10 +30,10 @@ void BaonBigRockState::Update_(float dt) {
 				Hud::GetInstance()->SetBuffering(Hud::SIX);
 				baon->SetLastGivenAttack(BaonAttack::CONTROL);
 				if(flipped){
-					pedra = new BigRock(baon->GetBox().GetX() - 20, baon->GetBox().GetY() );
+					pedra = new BigRock(baon->GetBox().GetX() - 80, baon->GetBox().GetY(), flipped);
 				}
 				else{
-					pedra = new BigRock(baon->GetBox().GetX() + 80, baon->GetBox().GetY() );
+					pedra = new BigRock(baon->GetBox().GetX() + 80, baon->GetBox().GetY(), flipped);
 				}
 				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 				executed = true;

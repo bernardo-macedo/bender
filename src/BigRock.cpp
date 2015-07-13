@@ -14,7 +14,7 @@
 #include "Engine/Physics/Body.h"
 #include "Engine/Physics/Physic.h"
 
-BigRock::BigRock(int x, int y) {
+BigRock::BigRock(int x, int y, bool flipped) {
 	SetID(GameObject::BIG_ROCK);
 
 	sp = new Sprite("img/bigrock.png", 5, 0.2);
@@ -24,6 +24,7 @@ BigRock::BigRock(int x, int y) {
 	dead = false;
 	b = new Body("bigrock", x, y);
 	finnishedLifting = false;
+	this->flipped = flipped;
 }
 
 BigRock::~BigRock() {
@@ -43,7 +44,12 @@ void BigRock::Update(float dt) {
 			t->Update(dt);
 		}
 		else{
-			b->SetVelX(300);
+			if(flipped){
+				b->SetVelX(-300);
+			}
+			else{
+				b->SetVelX(300);
+			}
 			if(GetBody()->GetX() > Game::SCREEN_WIDTH - Camera::pos.getX()
 					|| GetBody()->GetX() < 0  - Camera::pos.getX()){
 				dead = true;
