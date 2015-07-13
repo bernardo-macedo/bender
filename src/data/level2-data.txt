@@ -1,2 +1,3 @@
 bender 1000 2000
 sword 950 1100
+big 960

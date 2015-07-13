@@ -22,8 +22,10 @@ StageTwo::StageTwo(int posX) : AbstractStage(2, 2, posX) {
 
 	Enemy* e = new Enemy(scale, 700);
 	SwordEnemy* swordEnemy = new SwordEnemy(scale, 600);
+	BigEnemy* bigEnemy = new BigEnemy(scale, 50);
 	enemyAI = new EnemyAIManager(baon, e);
 	swordEnemyAI = new SwordEnemyAIManager(baon, swordEnemy);
+	bigEnemyAI = new BigEnemyAIManager(baon, bigEnemy);
 
 	AddObject(new Monumento(90, 8, scale, level));
 	AddObject(new Monumento(215, 8, scale, level));
@@ -32,6 +34,7 @@ StageTwo::StageTwo(int posX) : AbstractStage(2, 2, posX) {
 
 	AddObject(e);
 	AddObject(swordEnemy);
+	AddObject(bigEnemy);
 
 	LoadLevelData("data/level2-data.txt");
 
