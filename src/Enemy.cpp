@@ -112,11 +112,6 @@ void Enemy::NotifyCollision(GameObject* other) {
 		}
 	}
 
-	if(other->GetID() == GameObject::CONTROLE_BEND) {
-		if(!IsState(Enemy::TAKINGHIT)){
-			changeState(Enemy::TAKINGHIT);
-		}
-	}
 }
 
 void Enemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {}
