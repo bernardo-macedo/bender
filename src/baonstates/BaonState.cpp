@@ -88,23 +88,35 @@ void BaonState::Update(float dt) {
 		bendTimer->Update(dt);
 		baon->bendHUD->Show();
 		if(InputManager::GetInstance().KeyPress(UP_ARROW_KEY)){
-			baon->GetSprite()->SetFrameWidth(30);
+			baon->GetSprite()->SetFrameWidth(35);
 			baon->GetSprite()->SetFrameHeight(50);
 			baon->GetSprite()->SetFrameCount(1);
-
 			baon->GetSprite()->SetLine(12, 50);
+
 			bendKey[countBend] = Arrows::UP;
 			countBend++;
 		}
 		if(InputManager::GetInstance().KeyPress(RIGHT_ARROW_KEY)){
+			baon->GetSprite()->SetFrameWidth(35);
+			baon->GetSprite()->SetFrameHeight(50);
+			baon->GetSprite()->SetFrameCount(1);
+			baon->GetSprite()->SetLine(9, 50);
 			bendKey[countBend] = Arrows::RIGHT;
 			countBend++;
 		}
 		if(InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)){
+			baon->GetSprite()->SetFrameWidth(35);
+			baon->GetSprite()->SetFrameHeight(50);
+			baon->GetSprite()->SetFrameCount(1);
+			baon->GetSprite()->SetLine(10, 50);
 			bendKey[countBend] = Arrows::DOWN;
 			countBend++;
 		}
 		if(InputManager::GetInstance().KeyPress(LEFT_ARROW_KEY)){
+			baon->GetSprite()->SetFrameWidth(35);
+			baon->GetSprite()->SetFrameHeight(50);
+			baon->GetSprite()->SetFrameCount(1);
+			baon->GetSprite()->SetLine(11, 50);
 			bendKey[countBend] = Arrows::LEFT;
 			countBend++;
 		}
