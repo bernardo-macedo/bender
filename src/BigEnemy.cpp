@@ -97,12 +97,6 @@ void BigEnemy::NotifyCollision(GameObject* other) {
 			changeState(BigEnemy::STAND);
 		}
 	}
-
-	if(other->GetID() == GameObject::CONTROLE_BEND) {
-		if(!IsState(BigEnemy::TAKINGHIT)){
-			changeState(BigEnemy::TAKINGHIT);
-		}
-	}
 }
 
 void BigEnemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {
