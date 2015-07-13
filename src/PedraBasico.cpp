@@ -104,10 +104,12 @@ void PedraBasico::NotifyCollision(GameObject* other) {
 		listener->OnRockDead();
 	}
 
+	/*
 	if(other->GetID() == GameObject::PEDRA_DEFESA) {
 		dead = true;
 		listener->OnRockDead();
 	}
+	*/
 
 	if(other->GetID() == GameObject::BIG_ROCK){
 		dead = true;

@@ -93,12 +93,9 @@ bool BaonAttack1State::Is(std::string state) {
 }
 
 void BaonAttack1State::ResolveDeadReferences(int id) {
-	/*
 	if (id == GameObject::PEDRA_BASICO_PULO_BAON) {
 		pedra = NULL;
-		std::cout << "anulei a pedra nao sei pq" << std::endl;
 	}
-	*/
 }
 
 void BaonAttack1State::OnRockDead() {

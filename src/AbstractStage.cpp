@@ -29,6 +29,8 @@ AbstractStage::~AbstractStage() {
 		music->Stop();
 	}
 
+	Hud::GetInstance()->Nullify();
+
 	objectArray.clear();
 	delete music;
 	delete tileMap;

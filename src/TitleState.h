@@ -19,6 +19,7 @@
 #include "Stage.h"
 #include "StageTwo.h"
 #include "StageThree.h"
+#include "StageBoss.h"
 
 class TitleState : public State {
 private:

@@ -43,6 +43,8 @@ void Cutscenes::OnUpdate(float dt, GameObject* object) {
 }
 
 void Cutscenes::Update(float dt) {
+	quitRequested = InputManager::GetInstance().QuitRequested();
+
 	t->Update(dt);
 
 	if (t->Get() > 10) {

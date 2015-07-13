@@ -130,6 +130,7 @@ void BaonState::Update(float dt) {
 
 			if (bendTimer->Get() > 0.6 || (countBend >= 3 && matchedAttack == BendAttack::NONE)) {
 				bendErrorSound->Play(0);
+				baon->GetBody()->SetVelX(0);
 			}
 
 			ResolveAttack(matchedAttack);
@@ -156,7 +157,7 @@ BaonState::BendAttack BaonState::MatchAttack() {
 	if(bendKey[0] == Arrows::UP && bendKey[1] == Arrows::DOWN && bendKey[2] == Arrows::UP) {
 		return BendAttack::SUPERJUMP;
 	}
-	if (bendKey[0] == Arrows::LEFT && bendKey[1] == Arrows::DOWN && bendKey[2] == Arrows::RIGHT) {
+	if (bendKey[0] == Arrows::UP && bendKey[1] == Arrows::RIGHT && bendKey[2] == Arrows::UP) {
 		return BendAttack::SPIKESTONE;
 	}
 	if (bendKey[0] == Arrows::DOWN && bendKey[1] == Arrows::LEFT && bendKey[2] == Arrows::UP) {
