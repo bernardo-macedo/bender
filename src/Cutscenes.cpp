@@ -36,8 +36,12 @@ void Cutscenes::OnUpdate(float dt, GameObject* object) {
 }
 
 void Cutscenes::Update(float dt) {
-	if(InputManager::GetInstance().KeyPress(SPACE_KEY)){
+	if(InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)){
 		number++;
+	}
+	if(InputManager::GetInstance().KeyPress(ENTER_KEY)){
+		popRequested = true;
+		Game::GetInstance()->Push(new TitleState());
 	}
 
 	switch (number){
