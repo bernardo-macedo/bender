@@ -207,6 +207,8 @@ void Baon::Update(float dt) {
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
 	
+	//std::cout << "baon.x = " << box.GetX() << " baon.y = " << box.GetY() << std::endl;
+
 	bendHUD->SetPosX(box.GetX() - (int)(bendHUD->GetBox().GetW()/2) - box.GetW());
 	bendHUD->SetPosY(box.GetY() - (int)(bendHUD->GetBox().GetH()/2));
 

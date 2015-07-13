@@ -7,7 +7,9 @@
 
 #include "StateSwordEnemy.h"
 
-StateSwordEnemy::StateSwordEnemy(SwordEnemy* const enemy_)  : enemy(enemy_) {}
+StateSwordEnemy::StateSwordEnemy(SwordEnemy* const enemy_)  : enemy(enemy_) {
+	askEnd = false;
+}
 
 StateSwordEnemy::~StateSwordEnemy() {
 	this->enemy = nullptr;

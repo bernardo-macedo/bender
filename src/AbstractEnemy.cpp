@@ -13,11 +13,13 @@ AbstractEnemy::AbstractEnemy(int enemyScale, int x, int hp, int walkSpeed, int r
 	this->hp = hp;
 	scale = enemyScale;
 	spawnX = x;
+	numEst = 0;
 	WALK_SPEED_E = walkSpeed;
 	RUN_SPEED_E = runSpeed;
 	DOUBLECLICK_TIME = doubleClickTime;
 
 	t = new Timer();
+	sp = NULL;
 
 	flipped = false;
 	fallUpdateCount = 0;
@@ -25,13 +27,28 @@ AbstractEnemy::AbstractEnemy(int enemyScale, int x, int hp, int walkSpeed, int r
 	isDying  = false;
 	isDamage = false;
 	isTakingDamage = false;
+	closeToBaon = false;
+	collisionFromRight = false;
+	isRemovable = false;
 
 	runStates = NONE;
+	lastGivenAttack = EnemyAttack::EMPTY;
+
+	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
+	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
+	rockHit = new Sound("audio/sfx_throwRock_hit.wav");
+	spikeHit = new Sound("audio/sfx_bend_spikeRock_hit.wav");
+	controlHit = new Sound("audio/sfx_bend_groundRock_hit.wav");
 }
 
 AbstractEnemy::~AbstractEnemy() {
 	delete sp;
 	delete t;
+	delete kickhit;
+	delete punchhit;
+	delete rockHit;
+	delete spikeHit;
+	delete controlHit;
 }
 
 void AbstractEnemy::Render() {
@@ -151,6 +168,34 @@ void AbstractEnemy::SetDead(bool isDead){
 
 void AbstractEnemy::SetFlipped(bool flipped) {
 	this->flipped = flipped;
+}
+
+void AbstractEnemy::TakeDamage(BaonAttack attack) {
+	switch(attack) {
+	case BaonAttack::PUNCH:
+	case BaonAttack::FASTPUNCH:
+		hp--;
+		punchhit->Play(0);
+		break;
+	case BaonAttack::KICK:
+		hp--;
+		kickhit->Play(0);
+		break;
+	case BaonAttack::ROCK:
+		hp --;
+		rockHit->Play(0);
+		break;
+	case BaonAttack::SPIKESTONE:
+		hp -= 2;
+		spikeHit->Play(0);
+		break;
+	case BaonAttack::CONTROL:
+		hp -= 2;
+		controlHit->Play(0);
+		break;
+	default:
+		break;
+	}
 }
 
 void AbstractEnemy::LoadSpriteData(std::string file) {

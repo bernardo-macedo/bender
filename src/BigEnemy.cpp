@@ -97,6 +97,12 @@ void BigEnemy::NotifyCollision(GameObject* other) {
 			changeState(BigEnemy::STAND);
 		}
 	}
+
+	if(other->GetID() == GameObject::CONTROLE_BEND) {
+		if(!IsState(BigEnemy::TAKINGHIT)){
+			changeState(BigEnemy::TAKINGHIT);
+		}
+	}
 }
 
 void BigEnemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {
@@ -107,30 +113,6 @@ void BigEnemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {
 
 bool BigEnemy::Is(std::string type) {
 	return AbstractEnemy::Is(type) || type.compare("BigEnemy") == 0;
-}
-
-void BigEnemy::TakeDamage(BaonAttack attack) {
-	switch(attack) {
-	case BaonAttack::PUNCH:
-	case BaonAttack::FASTPUNCH:
-		hp--;
-		punchhit->Play(0);
-		break;
-	case BaonAttack::KICK:
-		hp--;
-		kickhit->Play(0);
-		break;
-	case BaonAttack::ROCK:
-		hp --;
-		rockHit->Play(0);
-		break;
-	case BaonAttack::SPIKESTONE:
-		hp -= 2;
-		rockHit->Play(0);
-		break;
-	default:
-		break;
-	}
 }
 
 void BigEnemy::SetWalkSprite() {
@@ -231,8 +213,4 @@ void BigEnemy::InitializeForces() {
 void BigEnemy::Initialize() {
 	distanceToBaon = 0;
 	collidedHorizontally = false;
-
-	punchhit = new Sound("audio/sfx_char_punch_hit1.wav");
-	kickhit = new Sound("audio/sfx_char_kick_hit1.wav");
-	rockHit = new Sound("audio/sfx_throwRock_hit.wav");
 }

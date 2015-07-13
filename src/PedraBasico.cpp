@@ -17,8 +17,8 @@ PedraBasico::PedraBasico(int x, int y, int scale) {
 	sp = new Sprite("img/basico.png", 7, 0.1);
 	sp->SetScaleX(scale);
 	sp->SetScaleY(scale);
-	collided = false;
 	this->scale = scale;
+	limitX = 0;
 
 	box.SetX(x);
 	box.SetW(21*scale);
@@ -29,6 +29,8 @@ PedraBasico::PedraBasico(int x, int y, int scale) {
 
 	thrown = false;
 	dead = false;
+	goingLeft = false;
+	collided = false;
 }
 
 PedraBasico::~PedraBasico() {

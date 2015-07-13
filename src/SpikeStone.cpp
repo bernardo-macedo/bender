@@ -32,8 +32,9 @@ SpikeStone::SpikeStone(int x, int y, int scale, bool flipped) {
 	box.SetW(sp->GetFrameHeight());
 	flipped = false;
 	transpSet = false;
-
 	dead = false;
+	right = false;
+	transp = NULL;
 }
 
 void SpikeStone::Update(float dt) {

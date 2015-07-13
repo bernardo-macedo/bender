@@ -19,7 +19,7 @@
 EnemyStateBend::EnemyStateBend(Enemy* const enemy_)  :
 StateEnemy(enemy_)
 {
-
+	pedra = NULL;
 }
 // TODO Auto-generated constructor stub
 

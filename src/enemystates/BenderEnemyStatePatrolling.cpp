@@ -40,8 +40,8 @@ void EnemyStatePatrolling::update(const float dt_){
 	enemy->Run(isLeft);
 }
 
-EnemyStatePatrolling::EnemyStatePatrolling(Enemy* const enemy_) :
-	StateEnemy(enemy_)
-{
-
+EnemyStatePatrolling::EnemyStatePatrolling(Enemy* const enemy_) : StateEnemy(enemy_) {
+	isLeft = false;
+	patrollDistance = 0;
+	patrollMaxDistance = 0;
 }

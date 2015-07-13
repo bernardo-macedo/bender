@@ -29,6 +29,7 @@ void BaonControleState::Update_(float dt) {
 		if(!executed) {
 			if(!Hud::GetInstance()->IsBuffering(Hud::FOUR)) {
 				Hud::GetInstance()->SetBuffering(Hud::FOUR);
+				baon->SetLastGivenAttack(BaonAttack::CONTROL);
 				float pedraX;
 				if(flipped){
 					pedraX = baon->GetBox().GetX() - 30*baon->GetScale();
@@ -57,4 +58,5 @@ void BaonControleState::NotifyTileCollision() {
 }
 
 bool BaonControleState::Is(std::string state) {
+	return state.compare("CONTROLE") == 0;
 }

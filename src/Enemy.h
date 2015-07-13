@@ -33,11 +33,8 @@ public:
 	float GetCoolDown();
 	void SetCoolDown(float coolDown);
 
-	void TakeDamage(BaonAttack attack);
-
 private:
 	float bendCoolDown;
-	Sound *kickhit, *punchhit, *rockHit;
 	StateEnemy* currentState;
 	std::map<enemyStates, StateEnemy*> enemyStatesMap;
 

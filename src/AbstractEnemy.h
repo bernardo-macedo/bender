@@ -17,6 +17,7 @@
 #include "Engine/Timer.h"
 #include "Engine/Camera.h"
 #include "Engine/Physics/Physic.h"
+#include "Engine/Sound.h"
 #include "Being.h"
 #include "BaonAttack.h"
 #include "EnemyAttack.h"
@@ -36,7 +37,7 @@ public:
 	virtual bool IsDead();
 	virtual bool Is(std::string type);
 
-	virtual void TakeDamage(BaonAttack attack) = 0;
+	virtual void TakeDamage(BaonAttack attack);
 	virtual void Run(bool flipped);
 	virtual void Walk(bool flipped);
 	virtual void Stand(bool flipped);
@@ -77,6 +78,7 @@ protected:
 
 	Sprite *sp;
 	Timer *t;
+	Sound *kickhit, *punchhit, *rockHit, *spikeHit, *controlHit;
 	runController runStates;
 	EnemyAttack lastGivenAttack;
 	std::vector<int> spriteData;

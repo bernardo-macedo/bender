@@ -24,7 +24,7 @@ public:
 	bool Is(std::string state);
 private:
 	PedraBasico* pedra;
-	bool justJumped, canExecute;
+	bool justJumped, canExecute, soundPlayed;
 	Sound *bendJumpSound;
 };
 

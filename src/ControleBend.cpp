@@ -28,7 +28,10 @@ ControleBend::ControleBend(int x, int y, bool flipped) {
 	box.SetH(sp->GetFrameHeight());
 }
 
-ControleBend::~ControleBend(){}
+ControleBend::~ControleBend(){
+	delete t;
+	delete sp;
+}
 
 void ControleBend::Update(float dt) {
 	if(sp->GetFrameWidth() < 200){
@@ -57,8 +60,9 @@ void ControleBend::Render() {
 }
 
 void ControleBend::NotifyCollision(GameObject* other) {
+	std::cout << "colidiu com = " << other->GetID() << std::endl;
 }
 
 bool ControleBend::Is(std::string type) {
-	return false;
+	return type.compare("Controle") == 0;
 }

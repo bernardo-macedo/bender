@@ -106,6 +106,14 @@ void SwordEnemy::NotifyCollision(GameObject* other) {
 			changeState(SwordEnemy::STAND);
 		}
 	}
+
+	if(other->GetID() == GameObject::CONTROLE_BEND) {
+		std::cout << "entrou" << std::endl;
+		if(!IsState(SwordEnemy::TAKINGHIT)){
+			std::cout << "entrou certo" << std::endl;
+			changeState(SwordEnemy::TAKINGHIT);
+		}
+	}
 }
 
 void SwordEnemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {
@@ -116,31 +124,6 @@ void SwordEnemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {
 
 bool SwordEnemy::Is(std::string type) {
 	return AbstractEnemy::Is(type) || type.compare("SwordEnemy") == 0;
-}
-
-void SwordEnemy::TakeDamage(BaonAttack attack) {
-	switch(attack) {
-	case BaonAttack::PUNCH:
-	case BaonAttack::FASTPUNCH:
-		hp--;
-		punchhit->Play(0);
-		break;
-	case BaonAttack::KICK:
-		hp--;
-		kickhit->Play(0);
-		break;
-	case BaonAttack::ROCK:
-		hp --;
-		rockHit->Play(0);
-		break;
-	case BaonAttack::SPIKESTONE:
-		hp -= 2;
-		rockHit->Play(0);
-		break;
-	default:
-		break;
-	}
-
 }
 
 void SwordEnemy::InitializeStates() {

@@ -30,6 +30,7 @@
 
 
 BaonStateManager::BaonStateManager(Baon* baon) {
+	flipped = false;
 	estados.emplace("STAND", new BaonStandState(false));
 	estados["STAND"]->SetBaon(baon);
 	estados["STAND"]->SetStateManager(this);

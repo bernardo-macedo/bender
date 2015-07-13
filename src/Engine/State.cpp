@@ -19,6 +19,7 @@ State::State(int posX) : initialPositionX(posX) {
 	quitRequested = false;
 	popRequested = false;
 	slowMotion = 1;
+	tileMap = NULL;
 }
 
 void State::UpdateArray(float dt) {

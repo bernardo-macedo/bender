@@ -32,8 +32,6 @@ public:
 	void NotifyTileCollision(Collision::CollisionAxis collisionAxis);
 	bool Is(std::string type);
 
-	void TakeDamage(BaonAttack attack);
-
 	void SetWalkSprite();
 	void SetStandSprite();
 	void SetJumpSprite();

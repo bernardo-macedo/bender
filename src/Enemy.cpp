@@ -111,6 +111,12 @@ void Enemy::NotifyCollision(GameObject* other) {
 			changeState(Enemy::STAND);
 		}
 	}
+
+	if(other->GetID() == GameObject::CONTROLE_BEND) {
+		if(!IsState(Enemy::TAKINGHIT)){
+			changeState(Enemy::TAKINGHIT);
+		}
+	}
 }
 
 void Enemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {}
@@ -125,30 +131,6 @@ float Enemy::GetCoolDown() {
 
 void Enemy::SetCoolDown(float coolDown) {
 	this->bendCoolDown = coolDown;
-}
-
-void Enemy::TakeDamage(BaonAttack attack) {
-	switch(attack) {
-	case BaonAttack::PUNCH:
-	case BaonAttack::FASTPUNCH:
-		hp--;
-		punchhit->Play(0);
-		break;
-	case BaonAttack::KICK:
-		hp--;
-		kickhit->Play(0);
-		break;
-	case BaonAttack::ROCK:
-		hp --;
-		rockHit->Play(0);
-		break;
-	case BaonAttack::SPIKESTONE:
-		hp -= 2;
-		rockHit->Play(0);
-		break;
-	default:
-		break;
-	}
 }
 
 void Enemy::InitializeStates(){

@@ -7,11 +7,11 @@
 
 #include "InputManager.h"
 
-InputManager::InputManager():
-	controllerHandler(new ControllerHandler())
-{
+InputManager::InputManager(): controllerHandler(new ControllerHandler()) {
 	quitRequested = false;
 	updateCounter = 0;
+	mouseX = 0;
+	mouseY = 0;
 	for (int i = 0; i < 6; i++){
 		mouseState[i] = false;
 		mouseUpdate[i] = 0;

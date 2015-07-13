@@ -19,6 +19,7 @@ BaonPunchState::BaonPunchState(bool flipped) : BaonState(){
 	t = new Timer();
 	id = "PUNCH";
 	soltouPedra = false;
+	pedra = NULL;
 	throwRockSound = new Sound("audio/sfx_throwRock.wav");
 	punchSound = new Sound("audio/sfx_char_punch_swing1.wav");
 }

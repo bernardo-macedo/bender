@@ -18,6 +18,7 @@ AbstractStage::AbstractStage(int scale, int level, int posX) : State(posX) {
 	baon = NULL;
 	enemyAI = NULL;
 	swordEnemyAI = NULL;
+	bigEnemyAI = NULL;
 	music = NULL;
 
 	Hud::GetInstance(scale, level);

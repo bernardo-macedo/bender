@@ -17,6 +17,8 @@ BaonAttack1State::BaonAttack1State(bool flipped) : BaonState(){
 	id = "ATTACK1";
 	justJumped = true;
 	canExecute = false;
+	soundPlayed = false;
+	pedra = NULL;
 	bendJumpSound = new Sound("audio/sfx_bend_jump.wav");
 }
 
@@ -46,10 +48,13 @@ void BaonAttack1State::Update_(float dt) {
 				baon->SetJumpFrame();
 				baon->GetBody()->SetVelY(-700);
 				justJumped = true;
+				executed = true;
 			} else {
-				bendErrorSound->Play(0);
+				if (!soundPlayed) {
+					soundPlayed = true;
+					bendErrorSound->Play(0);
+				}
 			}
-			executed = true;
 		}
 		else{
 			nextRequested = true;
@@ -60,6 +65,7 @@ void BaonAttack1State::Update_(float dt) {
 		}
 	}
 	else{
+		soundPlayed = false;
 		if(pedra != NULL){
 			if(!pedra->IsDead()){
 				if(pedra->GetSprite()->GetCurrentFrame() < 3){

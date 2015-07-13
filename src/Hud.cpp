@@ -118,8 +118,10 @@ bool Hud::IsValidAttack(HudAttack hudAttackNumber) {
 	switch (level) {
 	case 3:
 		valid = hudAttackNumber == HudAttack::SIX;
+		/* no break */
 	case 2:
 		valid = valid || hudAttackNumber == HudAttack::FOUR || HudAttack::FIVE;
+		/* no break */
 	case 1:
 		valid = valid || hudAttackNumber == HudAttack::ONE || hudAttackNumber == HudAttack::TWO || hudAttackNumber == HudAttack::THREE;
 		break;

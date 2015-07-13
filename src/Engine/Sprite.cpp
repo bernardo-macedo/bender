@@ -15,6 +15,8 @@ Sprite::Sprite() {
 	frameTime = 1;
 	timeElapsed = 0;
 	frameTime = 0;
+	frameHeight = 0;
+	frameWidth = 0;
 	currentFrame = 1;
 	scaleX = 1;
 	scaleY = 1;

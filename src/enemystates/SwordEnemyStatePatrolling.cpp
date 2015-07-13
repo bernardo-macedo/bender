@@ -7,7 +7,11 @@
 
 #include "SwordEnemyStatePatrolling.h"
 
-SwordEnemyStatePatrolling::SwordEnemyStatePatrolling(SwordEnemy* const enemy_) : StateSwordEnemy(enemy_) {}
+SwordEnemyStatePatrolling::SwordEnemyStatePatrolling(SwordEnemy* const enemy_) : StateSwordEnemy(enemy_) {
+	isLeft = false;
+	patrollDistance = 0;
+	patrollMaxDistance = 0;
+}
 
 void SwordEnemyStatePatrolling::enter() {
 	patrollDistance = enemy->GetSpawnX();

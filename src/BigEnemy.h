@@ -31,8 +31,6 @@ public:
 	void NotifyTileCollision(Collision::CollisionAxis collisionAxis);
 	bool Is(std::string type);
 
-	void TakeDamage(BaonAttack attack);
-
 	void SetWalkSprite();
 	void SetStandSprite();
 	void SetJumpSprite();
@@ -44,7 +42,6 @@ public:
 	bool HasCollidedHorizontally();
 
 private:
-	Sound *kickhit, *punchhit, *rockHit;
 	StateBigEnemy* currentState;
 	std::map<enemyStates, StateBigEnemy*> enemyStatesMap;
 	float distanceToBaon;
