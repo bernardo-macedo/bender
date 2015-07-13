@@ -42,7 +42,8 @@ void State::UpdateArray(float dt) {
 			OnUpdate(dt, objectArray[i].get());
 			objectArray[i]->Update(dt);
 			for(unsigned int j = 0; j < objectArray.size(); j++){
-				if(Collision::IsColliding(objectArray[i]->GetBox(), objectArray[j]->GetBox(), 0, 0)){
+				if(objectArray[i]->GetID() != objectArray[j]->GetID()
+						&& Collision::IsColliding(objectArray[i]->GetBox(), objectArray[j]->GetBox(), 0, 0)){
 					objectArray[i]->NotifyCollision(objectArray[j].get());
 					objectArray[j]->NotifyCollision(objectArray[i].get());
 				}

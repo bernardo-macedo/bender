@@ -61,15 +61,11 @@ void PedraBasico::Render() {
 }
 
 void PedraBasico::NotifyCollision(GameObject* other) {
-	if(this->GetID() == GameObject::PEDRA_BASICO_BAON
-			&& (other->GetID() == GameObject::ENEMY || other->GetID() == GameObject::SWORD_ENEMY)){
-		dead = true;
-	}
 	if(this->GetID() == GameObject::PEDRA_BASICO_ENEMY
 			&& other->GetID() == GameObject::BAON){
 		dead = true;
 	}
-	if(other->GetID() == GameObject::PEDRA_DEFESA){
+	else{
 		dead = true;
 	}
 }

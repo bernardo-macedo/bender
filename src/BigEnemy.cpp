@@ -68,7 +68,8 @@ void BigEnemy::Update(float dt) {
 }
 
 void BigEnemy::NotifyCollision(GameObject* other) {
-	if(other->GetID() == GameObject::PEDRA_BASICO_BAON){
+	if(other->GetID() == GameObject::PEDRA_BASICO_BAON
+			|| other->GetID() == GameObject::CONTROLE_BEND){
 		if(other->GetBox().GetX() > box.GetX()){
 			collisionFromRight = false;
 		}
