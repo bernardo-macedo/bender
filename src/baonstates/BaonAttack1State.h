@@ -15,7 +15,7 @@
 #include "../Hud.h"
 #include "../Engine/Sound.h"
 
-class BaonAttack1State : public BaonState{
+class BaonAttack1State : public BaonState, public RockDeathListener {
 public:
 	BaonAttack1State(bool flipped);
 	virtual ~BaonAttack1State();
@@ -23,6 +23,7 @@ public:
 	void NotifyTileCollision();
 	bool Is(std::string state);
 	virtual void ResolveDeadReferences(int id);
+	void OnRockDead();
 private:
 	PedraBasico* pedra;
 	bool justJumped, canExecute, soundPlayed;

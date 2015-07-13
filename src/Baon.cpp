@@ -92,6 +92,7 @@ Baon::Baon(int playerScale, float mapMax, int posX) {
 	lifebar = new Lifebar(15 * scale, 215 * scale, scale, MAX_HP);
 	levelWon = false;
 	isFalling = false;
+	isFinished = false;
 
 	lastGivenAttack = BaonAttack::EMPTY;
 	lastReceivedAttack = EnemyAttack::EMPTY;
@@ -196,6 +197,18 @@ void Baon::RenderTransp() {
 	}
 }
 
+void Baon::SetTransitionFrame(bool flipped) {
+	delete sp;
+	sp = new Sprite("img/transition.png", 14, 0.1);
+	sp->SetScaleX(scale);
+	sp->SetScaleY(scale);
+	this->flipped = flipped;
+}
+
+bool Baon::IsFinished() {
+	return isFinished;
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);
@@ -214,7 +227,13 @@ void Baon::Update(float dt) {
 			&& !stateManager->GetCurrentState()->Is("DYING")
 			&& !stateManager->GetCurrentState()->Is("FASTPUNCH")
 			&& !stateManager->GetCurrentState()->Is("ATTACK1")
-			&& !stateManager->GetCurrentState()->Is("SPIKESTONE")){
+			&& !stateManager->GetCurrentState()->Is("SPIKESTONE")) {
+
+		if (stateManager->GetCurrentState()->Is("TRANSITION") && sp->GetCurrentFrame() >= 13) {
+			isFinished = true;
+			return;
+		}
+
 		sp->Update(dt);
 	}
 
@@ -226,8 +245,6 @@ void Baon::Update(float dt) {
 
 	box.SetX(b->GetX());
 	box.SetY(b->GetY());
-	
-	//std::cout << "baon.x = " << box.GetX() << " baon.y = " << box.GetY() << std::endl;
 
 	bendHUD->SetPosX(box.GetX() - (int)(bendHUD->GetBox().GetW()/2) - box.GetW());
 	bendHUD->SetPosY(box.GetY() - (int)(bendHUD->GetBox().GetH()/2));
@@ -312,7 +329,7 @@ void Baon::Run(bool flipped) {
 	if(!flipped){
 		this->flipped = false;
 		if (superSpeed) {
-			b->SetVelX(2 * RUN_SPEED);
+			b->SetVelX(5 * RUN_SPEED);
 		} else {
 			b->SetVelX(RUN_SPEED);
 		}

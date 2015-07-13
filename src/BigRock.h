@@ -16,7 +16,7 @@
 
 class BigRock : public Being{
 public:
-	BigRock(int x, int y, bool flipped);
+	BigRock(int x, int y);
 	virtual ~BigRock();
 
 	void Update(float dt);
@@ -27,6 +27,7 @@ public:
 
 	bool Is(std::string type);
 	bool finnished();
+	void SetFlipped(bool flipped);
 private:
 	Sprite *sp;
 	Timer *t;

@@ -67,7 +67,6 @@ void SwordEnemy::Update(float dt) {
 	}
 
 	box.SetX(b->GetX());
-
 	box.SetY(b->GetY() + 5);
 }
 

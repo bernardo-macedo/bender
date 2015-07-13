@@ -9,8 +9,10 @@
 #define CUTSCENES_H_
 
 #include "Engine/State.h"
+#include "Engine/Music.h"
+#include "Engine/Timer.h"
 
-class Cutscenes : public State{
+class Cutscenes : public State {
 public:
 	Cutscenes();
 	virtual ~Cutscenes();
@@ -23,6 +25,8 @@ public:
 	void Resume();
 private:
 	Sprite *c1, *c2, *c3;
+	Music *music;
+	Timer *t;
 	int number;
 };
 

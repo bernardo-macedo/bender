@@ -14,7 +14,7 @@
 #include "Engine/Physics/Body.h"
 #include "Engine/Physics/Physic.h"
 
-BigRock::BigRock(int x, int y, bool flipped) {
+BigRock::BigRock(int x, int y) {
 	SetID(GameObject::BIG_ROCK);
 
 	sp = new Sprite("img/bigrock.png", 5, 0.2);
@@ -24,7 +24,7 @@ BigRock::BigRock(int x, int y, bool flipped) {
 	dead = false;
 	b = new Body("bigrock", x, y);
 	finnishedLifting = false;
-	this->flipped = flipped;
+	flipped = false;
 }
 
 BigRock::~BigRock() {
@@ -82,4 +82,8 @@ bool BigRock::Is(std::string type) {
 
 bool BigRock::finnished() {
 	return finnishedLifting;
+}
+
+void BigRock::SetFlipped(bool flipped) {
+	this->flipped = flipped;
 }

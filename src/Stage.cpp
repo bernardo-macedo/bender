@@ -31,21 +31,10 @@ Stage::Stage(int posX) : AbstractStage(2, 1, posX) {
 	baon = new Baon(scale, tileMap->GetMapMax(), initialPositionX);
 	baon->SetGroundTouchResolver(tileMap);
 	
-	Enemy* e = new Enemy(scale, 700);
-	SwordEnemy* swordEnemy = new SwordEnemy(scale, 600);
-	BigEnemy* bigEnemy = new BigEnemy(scale, 50);
-	enemyAI = new EnemyAIManager(baon, e);
-	swordEnemyAI = new SwordEnemyAIManager(baon, swordEnemy);
-	bigEnemyAI = new BigEnemyAIManager(baon, bigEnemy);
-
 	AddObject(new Monumento(102, 8, scale, level));
 	AddObject(new Monumento(262, 8, scale, level));
 
 	AddObject(baon);
-
-	AddObject(e);
-	AddObject(swordEnemy);
-	AddObject(bigEnemy);
 
 	LoadLevelData("data/level1-data.txt");
 
@@ -75,11 +64,8 @@ bool Stage::OnLevelWon(float dt) {
 				"YOU WIN!", color, Game::SCREEN_WIDTH/2 - 70, Game::SCREEN_HEIGHT/2 - 40);
 	}
 
-	if (InputManager::GetInstance().KeyPress(SPACE_KEY)
-		|| InputManager::GetInstance().KeyPress(ENTER_KEY)
-		|| InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)
-		|| levelUpTimer->Get() > 6) {
-		Game::GetInstance()->Push(new StageTwo());
+	if (baon->IsFinished() && levelUpTimer->Get() > 6) {
+		Game::GetInstance()->Push(new StageTwo(50));
 		popRequested = true;
 		//levelWonSound->Stop();
 		music->Stop();

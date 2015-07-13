@@ -21,7 +21,8 @@ TileSet::TileSet(int tileWidth, int tileHeight, std::string file, int tileSetSca
 
 void TileSet::Render(int index, float x, float y) {
 	float xt, yt;
-	if(index > (rows*columns - 1)){
+	if(index > (rows*columns)){
+		std::cout << "index = " << index << " rows = " << rows << " columns = " << columns << std::endl;
 		throw INDEX_OUT_OF_RANGE;
 	}
 	else{

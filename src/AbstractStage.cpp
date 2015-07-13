@@ -44,7 +44,7 @@ void AbstractStage::OnUpdate(float dt, GameObject* object) {
 	if(!popRequested){
 
 		if(baon->GetBendMode()){
-			SetSlowMotion(5);
+			SetSlowMotion(10);
 		}
 		else{
 			SetSlowMotion(1);
@@ -127,7 +127,12 @@ void AbstractStage::Resume() {
 
 void AbstractStage::UpdateBenderEnemy(Enemy* enemy, float dt) {
 	enemy->SetCloseToBaon(false);
-	enemyAI->SetEnemy(enemy);
+	if(enemyAI == NULL){
+		enemyAI = new EnemyAIManager(baon, enemy);
+	}
+	else{
+		enemyAI->SetEnemy(enemy);
+	}
 	enemyAI->update(dt);
 
 	if (tileMap->CheckCollisions(enemy->GetBox(), enemy->GetScale())) {
@@ -140,7 +145,12 @@ void AbstractStage::Update(float dt) {
 }
 
 void AbstractStage::UpdateSwordEnemy(SwordEnemy* enemy, float dt) {
-	swordEnemyAI->SetEnemy(enemy);
+	if(swordEnemyAI == NULL){
+		swordEnemyAI = new SwordEnemyAIManager(baon, enemy);
+	}
+	else{
+		swordEnemyAI->SetEnemy(enemy);
+	}
 	swordEnemyAI->update(dt);
 
 	if (tileMap->CheckCollisions(enemy->GetBox(), enemy->GetScale())) {
@@ -149,7 +159,12 @@ void AbstractStage::UpdateSwordEnemy(SwordEnemy* enemy, float dt) {
 }
 
 void AbstractStage::UpdateBigEnemy(BigEnemy* enemy, float dt) {
-	bigEnemyAI->SetEnemy(enemy);
+	if(bigEnemyAI == NULL){
+		bigEnemyAI = new BigEnemyAIManager(baon, enemy);
+	}
+	else{
+		bigEnemyAI->SetEnemy(enemy);
+	}
 	bigEnemyAI->update(dt);
 
 	if (tileMap->CheckCollisions(enemy->GetBox(), enemy->GetScale())) {

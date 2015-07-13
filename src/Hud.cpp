@@ -87,7 +87,7 @@ bool Hud::IsBuffering(HudAttack hudAttackNumber) {
 void Hud::SetLevel(int level) {
 	this->level = level;
 
-	if (level == 3) {
+	if (level >= 3) {
 		hudItems[5].SetEnabled(true);
 	}
 	if (level > 1) {
@@ -112,10 +112,15 @@ Hud* Hud::GetInstance() {
 	return instance;
 }
 
+void Hud::Nullify() {
+	instance = NULL;
+}
+
 bool Hud::IsValidAttack(HudAttack hudAttackNumber) {
 	bool valid = false;
 
 	switch (level) {
+	case 4:
 	case 3:
 		valid = hudAttackNumber == HudAttack::SIX;
 		/* no break */

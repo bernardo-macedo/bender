@@ -26,14 +26,7 @@ void State::UpdateArray(float dt) {
 	dt = dt/slowMotion;
 	Update(dt);
 	for (unsigned int i = 0; i < objectArray.size(); i++) {
-		/*
-		if (objectArray[i]->Is("Being")) {
-			Being* being = (Being*) objectArray[i].get();
-			if (tileMap->CheckCollisions(being)) {
-				tileMap->ResolveTileCollisions(being);
-			}
-		}
-		*/
+
 		if (objectArray[i]->IsDead()) {
 			ResolveDeadObject(objectArray[i].get());
 			objectArray.erase(objectArray.begin() + i);

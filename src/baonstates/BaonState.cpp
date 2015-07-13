@@ -121,10 +121,16 @@ void BaonState::Update(float dt) {
 		}
 
 		if(InputManager::GetInstance().KeyRelease(SPACE_KEY) || bendTimer->Get() > 0.6 ||countBend >= 3) {
+			baon->GetSprite()->SetFrameWidth(25);
+			baon->GetSprite()->SetFrameHeight(50);
+			baon->GetSprite()->SetFrameCount(1);
+			baon->GetSprite()->SetLine(0, 50);
+
 			BendAttack matchedAttack = MatchAttack();
 
 			if (bendTimer->Get() > 0.6 || (countBend >= 3 && matchedAttack == BendAttack::NONE)) {
 				bendErrorSound->Play(0);
+				baon->GetBody()->SetVelX(0);
 			}
 
 			ResolveAttack(matchedAttack);
@@ -151,7 +157,7 @@ BaonState::BendAttack BaonState::MatchAttack() {
 	if(bendKey[0] == Arrows::UP && bendKey[1] == Arrows::DOWN && bendKey[2] == Arrows::UP) {
 		return BendAttack::SUPERJUMP;
 	}
-	if (bendKey[0] == Arrows::LEFT && bendKey[1] == Arrows::DOWN && bendKey[2] == Arrows::RIGHT) {
+	if (bendKey[0] == Arrows::UP && bendKey[1] == Arrows::RIGHT && bendKey[2] == Arrows::UP) {
 		return BendAttack::SPIKESTONE;
 	}
 	if (bendKey[0] == Arrows::DOWN && bendKey[1] == Arrows::LEFT && bendKey[2] == Arrows::UP) {
@@ -192,16 +198,14 @@ void BaonState::ResolveAttack(BendAttack attack) {
 }
 
 void BaonState::CallAttackState() {
-	if(!baon->IsState("TAKEHIT")){
-		stateChanged = true;
-		baon->SetBendMode(false);
-		executed = true;
-		nextRequested = true;
-		countBend = 0;
-		nextFlipped = flipped;
-		baon->bendHUD->Hide();
-		for (int i = 0; i < 4; ++i){
-			bendKey[i] = -1;
-		}
+	stateChanged = true;
+	baon->SetBendMode(false);
+	executed = true;
+	nextRequested = true;
+	countBend = 0;
+	nextFlipped = flipped;
+	baon->bendHUD->Hide();
+	for (int i = 0; i < 4; ++i){
+		bendKey[i] = -1;
 	}
 }

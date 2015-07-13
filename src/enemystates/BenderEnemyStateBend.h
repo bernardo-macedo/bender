@@ -12,13 +12,14 @@
 #include "StateEnemy.h"
 #include "../EnemyAttack.h"
 
-class EnemyStateBend : public StateEnemy{
+class EnemyStateBend : public StateEnemy, public RockDeathListener {
 public:
 	EnemyStateBend(Enemy* const enemy_);
 	virtual ~EnemyStateBend();
 	void enter();
 	void exit();
 	void update(const float dt_);
+	void OnRockDead();
 private:
 	PedraBasico *pedra;
 };

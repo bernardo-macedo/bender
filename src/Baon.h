@@ -78,6 +78,8 @@ public:
 	void ResolveDeadReferences(int id);
 	bool IsState(std::string name);
 	void RenderTransp();
+	void SetTransitionFrame(bool flipped);
+	bool IsFinished();
 
 	BaonAttack GetLastGivenAttack();
 	void SetLastGivenAttack(BaonAttack attack);
@@ -112,6 +114,7 @@ private:
 	bool levelWon;
 	bool isFalling;
 	bool isTouchingGround;
+	bool isFinished;
 
 	Sprite *spBending;
 	Sprite *sp;

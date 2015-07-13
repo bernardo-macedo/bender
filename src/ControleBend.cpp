@@ -60,7 +60,6 @@ void ControleBend::Render() {
 }
 
 void ControleBend::NotifyCollision(GameObject* other) {
-	std::cout << "colidiu com = " << other->GetID() << std::endl;
 }
 
 bool ControleBend::Is(std::string type) {

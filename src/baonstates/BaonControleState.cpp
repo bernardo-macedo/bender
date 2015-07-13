@@ -48,6 +48,9 @@ void BaonControleState::Update_(float dt) {
 			executed = true;
 		}
 	}
+	else{
+		std::cout << Hud::GetInstance()->GetLevel() << std::endl;
+	}
 
 	next = "STAND";
 	nextFlipped = flipped;

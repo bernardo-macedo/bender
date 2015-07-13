@@ -33,12 +33,9 @@ void BaonAttack1State::Update_(float dt) {
 			bendJumpSound->Play(0);
 			pedra = new PedraBasico(baon->GetBox().GetX(),
 					baon->GetBox().GetY() + baon->GetBox().GetH() - 10*baon->GetScale(),
-					baon->GetScale());
+					baon->GetScale(), this);
 			pedra->SetID(GameObject::PEDRA_BASICO_PULO_BAON);
-			pedra->GetSprite()->SetFrameWidth(35);
-			pedra->GetSprite()->SetFrameHeight(50);
-			pedra->GetSprite()->SetFrameCount(3);
-			pedra->GetSprite()->SetLine(0, 50);
+			pedra->SetJumpRockSprite();
 
 			if (baon->GetGroundTouchResolver()->IsTouchingGround(pedra->GetBox(), pedra->GetScale())) {
 				Game::GetInstance()->GetCurrentState()->AddObject(pedra);
@@ -64,10 +61,7 @@ void BaonAttack1State::Update_(float dt) {
 		soundPlayed = false;
 		if(pedra != NULL){
 			if(!pedra->IsDead()){
-				if(pedra->GetSprite()->GetCurrentFrame() < 3){
-					pedra->GetSprite()->Update(dt);
-				}
-				else{
+				if(pedra->GetCurrentFrame() >= 3){
 					pedra->SetDead(true);
 					pedra = NULL;
 					justJumped = false;
@@ -101,6 +95,9 @@ bool BaonAttack1State::Is(std::string state) {
 void BaonAttack1State::ResolveDeadReferences(int id) {
 	if (id == GameObject::PEDRA_BASICO_PULO_BAON) {
 		pedra = NULL;
-		std::cout << "anulei a pedra nao sei pq" << std::endl;
 	}
+}
+
+void BaonAttack1State::OnRockDead() {
+	pedra = NULL;
 }

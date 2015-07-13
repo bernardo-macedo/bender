@@ -15,18 +15,21 @@
 #include "../Engine/Sound.h"
 class Timer;
 
-class BaonPunchState : public BaonState {
+class BaonPunchState : public BaonState, public RockDeathListener {
 public:
 	BaonPunchState(bool flipped);
 	virtual ~BaonPunchState();
 	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
+	virtual void ResolveDeadReferences(int id);
+	void OnRockDead();
 private:
 	PedraBasico *pedra;
 	bool soltouPedra;
 	Sound *throwRockSound;
 	Sound *punchSound;
+	int previousFrame;
 };
 
 #endif /* BAONSTATES_BAONPUNCHSTATE_H_ */

@@ -193,6 +193,10 @@ void AbstractEnemy::TakeDamage(BaonAttack attack) {
 		hp -= 2;
 		controlHit->Play(0);
 		break;
+	case BaonAttack::BIGROCK:
+		hp -= 3;
+		rockHit->Play(0);
+		break;
 	default:
 		break;
 	}

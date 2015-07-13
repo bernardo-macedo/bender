@@ -20,17 +20,11 @@ StageThree::StageThree(int posX) : AbstractStage(2, 3, posX) {
 	baon->SetGroundTouchResolver(tileMap);
 
 	Enemy* e = new Enemy(scale, 450);
-	SwordEnemy* swordEnemy = new SwordEnemy(scale, 600);
-	enemyAI = new EnemyAIManager(baon, e);
-	swordEnemyAI = new SwordEnemyAIManager(baon, swordEnemy);
 
 	AddObject(new Monumento(90, 9, scale, level));
 	AddObject(new Monumento(205, 8, scale, level));
 
 	AddObject(baon);
-
-	AddObject(e);
-	AddObject(swordEnemy);
 
 	LoadLevelData("data/level3-data.txt");
 
@@ -58,12 +52,10 @@ bool StageThree::OnLevelWon(float dt) {
 		color.a = 255;
 		levelUpText = new Text("font/Call me maybe.ttf", 40, Text::SOLID,
 				"CONGRATULATIONS!", color, Game::SCREEN_WIDTH/2 - 150, Game::SCREEN_HEIGHT/2 - 40);
+		Hud::GetInstance()->Nullify();
 	}
 
-	if (InputManager::GetInstance().KeyPress(SPACE_KEY)
-		|| InputManager::GetInstance().KeyPress(ENTER_KEY)
-		|| InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)
-		|| levelUpTimer->Get() > 6) {
+	if (baon->IsFinished() && levelUpTimer->Get() > 6) {
 		Game::GetInstance()->SetCheckpoint(NULL);
 		popRequested = true;
 		music->Stop();

@@ -36,19 +36,16 @@ void EnemyStateBend::enter() {
 
 	if(!enemy->GetFlipped()){
 		pedra = new PedraBasico(enemy->GetBox().GetX() + 30*enemy->GetScale(),
-				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale());
+				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale(), this);
 		pedra->SetID(GameObject::PEDRA_BASICO_ENEMY);
 	}
 	else{
 		pedra = new PedraBasico(enemy->GetBox().GetX() - 30*enemy->GetScale(),
-				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale());
+				enemy->GetBox().GetY() + 25*enemy->GetScale(), enemy->GetScale(), this);
 		pedra->SetID(GameObject::PEDRA_BASICO_ENEMY);
 	}
 
-	pedra->GetSprite()->SetFrameHeight(25);
-	pedra->GetSprite()->SetFrameWidth(35);
-	pedra->GetSprite()->SetLine(2, 23);
-	pedra->GetSprite()->SetFrameTime(0.04);
+	pedra->SetRockSprite(0.04);
 	Game::GetInstance()->GetCurrentState()->AddObject(pedra);
 
 	askEnd = false;
@@ -57,7 +54,7 @@ void EnemyStateBend::enter() {
 }
 
 void EnemyStateBend::exit() {
-	if(!pedra->Isthrown()){
+	if(pedra != NULL && !pedra->Isthrown()){
 		pedra->SetDead(true);
 	}
 }
@@ -65,28 +62,34 @@ void EnemyStateBend::exit() {
 void EnemyStateBend::update(const float dt_) {
 	enemy->GetSprite()->Update(dt_);
 	if(enemy->GetSprite()->GetCurrentFrame() >= 5){
-		if(!enemy->GetFlipped()){
-			pedra->GetBody()->SetVelX(1000);
-			pedra->GetBody()->SetVelY(0);
-			pedra->SetGoingLeft(false);
+		if (pedra != NULL) {
+			if(!enemy->GetFlipped()){
+				pedra->GetBody()->SetVelX(1000);
+				pedra->GetBody()->SetVelY(0);
+				pedra->SetGoingLeft(false);
+			}
+			else{
+				pedra->GetBody()->SetVelX(-1000);
+				pedra->GetBody()->SetVelY(0);
+				pedra->SetGoingLeft(true);
+			}
+			pedra->SetThrown(true);
+			enemy->SetCoolDown(2);
 		}
-		else{
-			pedra->GetBody()->SetVelX(-1000);
-			pedra->GetBody()->SetVelY(0);
-			pedra->SetGoingLeft(true);
-		}
-		pedra->SetThrown(true);
-		enemy->SetCoolDown(2);
 		askEnd = true;
 	}
 	else{
 		if(pedra != NULL){
 			if(!pedra->IsFinnished()){
-				pedra->GetSprite()->Update(dt_);
+				//pedra->GetSprite()->Update(dt_);
 			}
 			else{
 				pedra->GetBody()->SetVelY(-300);
 			}
 		}
 	}
+}
+
+void EnemyStateBend::OnRockDead() {
+	pedra = NULL;
 }
