@@ -176,6 +176,10 @@ Sound* Baon::GetStepSound(unsigned int stepNumber) {
 	return NULL;
 }
 
+void Baon::ResolveDeadReferences(int id) {
+	stateManager->GetCurrentState()->ResolveDeadReferences(id);
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);

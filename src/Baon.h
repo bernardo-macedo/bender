@@ -75,6 +75,7 @@ public:
 	void SetTouchingGround(bool isTouchingGround);
 	bool GetTouchingGround();
 	Sound* GetStepSound(unsigned int stepNumber);
+	void ResolveDeadReferences(int id);
 
 	BaonAttack GetLastGivenAttack();
 	void SetLastGivenAttack(BaonAttack attack);

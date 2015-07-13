@@ -90,6 +90,8 @@ void AbstractStage::ResolveDeadObject(GameObject* object){
 		Camera::Unfollow();
 		popRequested = true;
 		baon = NULL;
+	} else {
+		baon->ResolveDeadReferences(object->GetID());
 	}
 }
 

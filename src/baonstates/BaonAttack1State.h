@@ -22,6 +22,7 @@ public:
 	void Update_(float dt);
 	void NotifyTileCollision();
 	bool Is(std::string state);
+	virtual void ResolveDeadReferences(int id);
 private:
 	PedraBasico* pedra;
 	bool justJumped, canExecute, soundPlayed;
