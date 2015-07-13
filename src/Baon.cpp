@@ -180,6 +180,10 @@ void Baon::ResolveDeadReferences(int id) {
 	stateManager->GetCurrentState()->ResolveDeadReferences(id);
 }
 
+bool Baon::IsState(std::string name) {
+	return stateManager->GetCurrentState()->Is(name);
+}
+
 void Baon::LoadSpriteData() {
 	FILE *fp = fopen("data/baon-data.txt", "r");
 	fscanf(fp, "%d", &numEst);

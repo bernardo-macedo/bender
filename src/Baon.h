@@ -76,6 +76,7 @@ public:
 	bool GetTouchingGround();
 	Sound* GetStepSound(unsigned int stepNumber);
 	void ResolveDeadReferences(int id);
+	bool IsState(std::string name);
 
 	BaonAttack GetLastGivenAttack();
 	void SetLastGivenAttack(BaonAttack attack);
