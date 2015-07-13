@@ -1,14 +1,15 @@
+#include <SDL_main.h>
 #include <iostream>
-#include "Engine/SDL_Wrapper.h"
+
+#include "Cutscenes.h"
+#include "Engine/Exceptions.h"
 #include "Engine/Game.h"
-#include "Engine/TileSet/TileMap.h"
-#include "TitleState.h"
 
 using namespace std;
 int main (int argc, char** argv) {
 	try{
 		Game *gm = new Game("Bender", 600, 480);
-		gm->Push(new TitleState());
+		gm->Push(new Cutscenes());
 		gm->Run();
 	}catch(int e){
 		switch(e){

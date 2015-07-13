@@ -52,9 +52,7 @@ void PedraBasico::Update(float dt) {
 		box.SetY(GetBody()->GetY());
 	} else {
 		// O Y cresce pra baixo
-		std::cout << "body.y = " << GetBody()->GetY() << " limitY = " << limitY << std::endl;
 		if (GetBody()->GetY() < limitY) {
-			std::cout << "throwando" << std::endl;
 			thrown = true;
 			box.SetY(limitY);
 			GetBody()->SetVelY(0);
@@ -65,9 +63,8 @@ void PedraBasico::Update(float dt) {
 				GetBody()->SetVelX(1000);
 			}
 		} else {
-			std::cout << "subindo" << std::endl;
 			box.SetY(GetBody()->GetY());
-			GetBody()->SetVelY(-100);
+			GetBody()->SetVelY(-8 * (GetBody()->GetY() - limitY + 5));
 			GetBody()->SetVelX(0);
 		}
 		box.SetX(GetBody()->GetX());
@@ -101,12 +98,18 @@ void PedraBasico::NotifyCollision(GameObject* other) {
 		listener->OnRockDead();
 	}
 	if(this->GetID() == GameObject::PEDRA_BASICO_ENEMY
-			&& other->GetID() == GameObject::BAON){
+			&& (other->GetID() == GameObject::BAON
+					|| other->GetID() == GameObject::PEDRA_DEFESA)){
 		dead = true;
 		listener->OnRockDead();
 	}
 
-	if(other->GetID() == GameObject::PEDRA_DEFESA){
+	if(other->GetID() == GameObject::PEDRA_DEFESA) {
+		dead = true;
+		listener->OnRockDead();
+	}
+
+	if(other->GetID() == GameObject::BIG_ROCK){
 		dead = true;
 		listener->OnRockDead();
 	}

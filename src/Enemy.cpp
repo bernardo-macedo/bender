@@ -112,6 +112,10 @@ void Enemy::NotifyCollision(GameObject* other) {
 		}
 	}
 
+	if(other->GetID() == GameObject::BIG_ROCK){
+		isTakingDamage = true;
+	}
+
 }
 
 void Enemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {}

@@ -15,6 +15,7 @@
 #include "../BendHUD.h"
 #include "../Baon.h"
 #include "../Engine/Sound.h"
+#include "../Engine/Sprite.h"
 
 class Body;
 class BaonStateManager;
@@ -59,7 +60,7 @@ protected:
 
 private:
 	enum Arrows {UP, RIGHT, DOWN, LEFT};
-	enum BendAttack {SUPERJUMP, SPIKESTONE, DEFENSE, CONTROLE, NONE};
+	enum BendAttack {SUPERJUMP, SPIKESTONE, DEFENSE, CONTROLE, BIGROCK, NONE};
 
 	BendAttack MatchAttack();
 	void ResolveAttack(BendAttack attack);

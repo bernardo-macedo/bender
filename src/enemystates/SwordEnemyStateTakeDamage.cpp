@@ -12,6 +12,7 @@ SwordEnemyStateTakeDamage::SwordEnemyStateTakeDamage(SwordEnemy* const enemy_) :
 void SwordEnemyStateTakeDamage::enter() {
 	askEnd = false;
 	enemy->SetTakingDamageSprite();
+	enemy->GetSprite()->SetFrameTime(0.2);
 	if(enemy->IsCollisionFromRight()){
 		enemy->GetBody()->SetVelX(-100);
 		enemy->GetBody()->ApplyForce(new Force("resistance", 150, 0));
