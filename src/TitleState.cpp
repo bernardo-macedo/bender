@@ -40,7 +40,7 @@ void TitleState::Update(float dt) {
 		switch (menu->GetSelectedButton()) {
 		case 0:
 			Game::GetInstance()->SetCheckpoint(NULL);
-			Game::GetInstance()->Push(new StageThree());
+			Game::GetInstance()->Push(new Stage());
 			break;
 		case 1:
 		{

@@ -27,6 +27,7 @@
 #include "BaonStandState.h"
 #include "BaonTakeHitState.h"
 #include "BaonWalkState.h"
+#include "BaonTransitionState.h"
 
 
 
@@ -77,6 +78,9 @@ BaonStateManager::BaonStateManager(Baon* baon) {
 	estados.emplace("BIGROCK", new BaonBigRockState(false));
 	estados["BIGROCK"]->SetBaon(baon);
 	estados["BIGROCK"]->SetStateManager(this);
+	estados.emplace("TRANSITION", new BaonTransitionState(false));
+	estados["TRANSITION"]->SetBaon(baon);
+	estados["TRANSITION"]->SetStateManager(this);
 
 	currentState = estados["STAND"];
 	this->baon = baon;
@@ -160,6 +164,11 @@ void BaonStateManager::Update(float dt) {
 		}
 		estados["FALLING"]->SetFlipped(currentState->IsFlipped());
 		currentState = estados["FALLING"];
+		currentState->Reset();
+		executed = false;
+	} else if (baon->GetLevelWon() && currentState->Is("STAND")) {
+		estados["TRANSITION"]->SetFlipped(currentState->IsFlipped());
+		currentState = estados["TRANSITION"];
 		currentState->Reset();
 		executed = false;
 	}

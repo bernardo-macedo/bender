@@ -75,10 +75,7 @@ bool Stage::OnLevelWon(float dt) {
 				"YOU WIN!", color, Game::SCREEN_WIDTH/2 - 70, Game::SCREEN_HEIGHT/2 - 40);
 	}
 
-	if (InputManager::GetInstance().KeyPress(SPACE_KEY)
-		|| InputManager::GetInstance().KeyPress(ENTER_KEY)
-		|| InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)
-		|| levelUpTimer->Get() > 6) {
+	if (baon->IsFinished() && levelUpTimer->Get() > 6) {
 		Game::GetInstance()->Push(new StageTwo());
 		popRequested = true;
 		//levelWonSound->Stop();

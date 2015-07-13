@@ -60,10 +60,7 @@ bool StageThree::OnLevelWon(float dt) {
 				"CONGRATULATIONS!", color, Game::SCREEN_WIDTH/2 - 150, Game::SCREEN_HEIGHT/2 - 40);
 	}
 
-	if (InputManager::GetInstance().KeyPress(SPACE_KEY)
-		|| InputManager::GetInstance().KeyPress(ENTER_KEY)
-		|| InputManager::GetInstance().KeyPress(DOWN_ARROW_KEY)
-		|| levelUpTimer->Get() > 6) {
+	if (baon->IsFinished() && levelUpTimer->Get() > 6) {
 		Game::GetInstance()->SetCheckpoint(NULL);
 		popRequested = true;
 		music->Stop();
