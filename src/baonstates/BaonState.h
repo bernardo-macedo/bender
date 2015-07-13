@@ -41,6 +41,7 @@ public:
 	void Reset();
 	bool GetNextFlipped();
 	std::string GetID();
+	virtual void ResolveDeadReferences(int id) {}
 
 	virtual bool Is(std::string state) = 0;
 protected:

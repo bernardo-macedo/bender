@@ -104,3 +104,10 @@ void BaonAttack1State::NotifyTileCollision() {
 bool BaonAttack1State::Is(std::string state) {
 	return state.compare("ATTACK1") == 0;
 }
+
+void BaonAttack1State::ResolveDeadReferences(int id) {
+	if (id == GameObject::PEDRA_BASICO_PULO_BAON) {
+		pedra = NULL;
+		std::cout << "anulei a pedra nao sei pq" << std::endl;
+	}
+}
