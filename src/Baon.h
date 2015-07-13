@@ -77,6 +77,7 @@ public:
 	Sound* GetStepSound(unsigned int stepNumber);
 	void ResolveDeadReferences(int id);
 	bool IsState(std::string name);
+	void RenderTransp();
 
 	BaonAttack GetLastGivenAttack();
 	void SetLastGivenAttack(BaonAttack attack);
@@ -130,6 +131,7 @@ private:
 	bool bendMode;
 	bool damageDirectionRight;
 	Lifebar *lifebar;
+	Sprite* trasp;
 
 	GroundTouchResolver* resolver;
 

@@ -16,7 +16,6 @@ BaonState::BaonState() {
 	bendHUD = NULL;
 	baon = NULL;
 	sm = NULL;
-
 	bendErrorSound = new Sound("audio/sfx_bend_error.wav");
 }
 

@@ -85,6 +85,10 @@ Baon::Baon(int playerScale, float mapMax, int posX) {
 	rockHit = new Sound("audio/sfx_throwRock_hit.wav");
 	hp = MAX_HP;
 
+	trasp = new Sprite("img/bendmask.png", 1, 1);
+	trasp->SetScaleX(scale);
+	trasp->SetScaleY(scale);
+
 	lifebar = new Lifebar(15 * scale, 215 * scale, scale, MAX_HP);
 	levelWon = false;
 	isFalling = false;
@@ -182,6 +186,14 @@ void Baon::ResolveDeadReferences(int id) {
 
 bool Baon::IsState(std::string name) {
 	return stateManager->GetCurrentState()->Is(name);
+}
+
+void Baon::RenderTransp() {
+	if(GetBendMode()){
+		trasp->SetFrameWidth(300);
+		trasp->SetFrameHeight(240);
+		trasp->Render(0, 0, 0, false);
+	}
 }
 
 void Baon::LoadSpriteData() {

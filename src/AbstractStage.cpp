@@ -101,6 +101,7 @@ void AbstractStage::Render() {
 	}
 
 	if(baon!= NULL && baon->bendHUD != NULL && !baon->bendHUD->IsDead()) {
+		baon->RenderTransp();
 		baon->bendHUD->Render();
 	}
 

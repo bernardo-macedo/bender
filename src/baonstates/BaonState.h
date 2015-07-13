@@ -15,6 +15,7 @@
 #include "../BendHUD.h"
 #include "../Baon.h"
 #include "../Engine/Sound.h"
+#include "../Engine/Sprite.h"
 
 class Body;
 class BaonStateManager;
