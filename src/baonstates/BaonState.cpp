@@ -122,6 +122,11 @@ void BaonState::Update(float dt) {
 		}
 
 		if(InputManager::GetInstance().KeyRelease(SPACE_KEY) || bendTimer->Get() > 0.6 ||countBend >= 3) {
+			baon->GetSprite()->SetFrameWidth(25);
+			baon->GetSprite()->SetFrameHeight(50);
+			baon->GetSprite()->SetFrameCount(1);
+			baon->GetSprite()->SetLine(0, 50);
+
 			BendAttack matchedAttack = MatchAttack();
 
 			if (bendTimer->Get() > 0.6 || (countBend >= 3 && matchedAttack == BendAttack::NONE)) {
