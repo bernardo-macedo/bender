@@ -68,12 +68,12 @@ void SwordEnemy::Update(float dt) {
 
 	box.SetX(b->GetX());
 
-	if (IsState(enemyStates::DYING)) {
+	//if (IsState(enemyStates::DYING)) {
 		// Necessario pq o sprite de morte esta em perspectiva
-		box.SetY(b->GetY() + 5);
-	} else {
+	//	box.SetY(b->GetY() + 5);
+	//} else {
 		box.SetY(b->GetY());
-	}
+	//}
 }
 
 void SwordEnemy::NotifyCollision(GameObject* other) {
