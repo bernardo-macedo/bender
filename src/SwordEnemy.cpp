@@ -109,9 +109,7 @@ void SwordEnemy::NotifyCollision(GameObject* other) {
 	}
 
 	if(other->GetID() == GameObject::CONTROLE_BEND) {
-		std::cout << "entrou" << std::endl;
 		if(!IsState(SwordEnemy::TAKINGHIT)){
-			std::cout << "entrou certo" << std::endl;
 			changeState(SwordEnemy::TAKINGHIT);
 		}
 	}

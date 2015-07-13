@@ -88,6 +88,11 @@ void BaonState::Update(float dt) {
 		bendTimer->Update(dt);
 		baon->bendHUD->Show();
 		if(InputManager::GetInstance().KeyPress(UP_ARROW_KEY)){
+			baon->GetSprite()->SetFrameWidth(30);
+			baon->GetSprite()->SetFrameHeight(50);
+			baon->GetSprite()->SetFrameCount(1);
+
+			baon->GetSprite()->SetLine(12, 50);
 			bendKey[countBend] = Arrows::UP;
 			countBend++;
 		}
