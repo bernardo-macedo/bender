@@ -27,6 +27,7 @@ public:
 	static const int TRANSPARENT_GAME_OBJECT;
 	static const int PEDRA_DEFESA;
 	static const int CONTROLE_BEND;
+	static const int BIG_ROCK;
 
 	virtual ~GameObject();
 

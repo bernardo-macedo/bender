@@ -161,6 +161,9 @@ BaonState::BendAttack BaonState::MatchAttack() {
 	if (bendKey[0] == Arrows::RIGHT && bendKey[1] == Arrows::DOWN && bendKey[2] == Arrows::RIGHT) {
 		return BendAttack::CONTROLE;
 	}
+	if (bendKey[0] == Arrows::LEFT && bendKey[1] == Arrows::UP && bendKey[2] == Arrows::RIGHT) {
+		return BendAttack::BIGROCK;
+	}
 	return BendAttack::NONE;
 }
 
@@ -177,6 +180,9 @@ void BaonState::ResolveAttack(BendAttack attack) {
 		break;
 	case CONTROLE:
 		next = "BENDCONTROLE";
+		break;
+	case BIGROCK:
+		next = "BIGROCK";
 		break;
 	default:
 		// Nao deixa chamar CallAttackState caso attack = NONE

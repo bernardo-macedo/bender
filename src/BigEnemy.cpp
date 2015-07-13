@@ -98,6 +98,9 @@ void BigEnemy::NotifyCollision(GameObject* other) {
 			changeState(BigEnemy::STAND);
 		}
 	}
+	if(other->GetID() == GameObject::BIG_ROCK){
+		isTakingDamage = true;
+	}
 }
 
 void BigEnemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {

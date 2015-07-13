@@ -102,6 +102,10 @@ void SwordEnemy::NotifyCollision(GameObject* other) {
 			changeState(SwordEnemy::STAND);
 		}
 	}
+
+	if(other->GetID() == GameObject::BIG_ROCK){
+		isTakingDamage = true;
+	}
 }
 
 void SwordEnemy::NotifyTileCollision(Collision::CollisionAxis collisionAxis) {

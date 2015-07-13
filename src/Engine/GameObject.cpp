@@ -18,6 +18,7 @@ const int GameObject::TRANSPARENT_GAME_OBJECT = 107;
 const int GameObject::PEDRA_DEFESA = 108;
 const int GameObject::BIG_ENEMY = 109;
 const int GameObject::CONTROLE_BEND = 110;
+const int GameObject::BIG_ROCK = 111;
 
 GameObject::~GameObject() {
 	// TODO Auto-generated destructor stub
