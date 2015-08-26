@@ -1,0 +1,31 @@
+=============
+Jogo Bender
+=============
+
+Programadores:
+	- Bernardo Macêdo - 10/0008224
+	- Pedro Leal 	  - 10/0019226
+
+Instruções:
+	- W: pular
+	- A: andar para a esquerda
+	- D: andar para a direita
+	- Duplo A ou duplo D: correr
+	- H: abrir ou fechar papiro
+	- Segurar espaço: modo bending
+	- Seta para esquerda: ataque básico (ou comando do modo bending)
+	- Seta para a direita: chute (ou comando do modo bending)
+	- Seta para cima ou para baixo: comandos do modo bending
+	- ESC: voltar para menu inicial
+	- ENTER: selecionar opção do menu
+
+Ataques especiais do modo bending:
+	- Super pulo: cima/baixo/cima
+	- Pedra de defesa: baixo/esquerda/cima
+	- Pedra pontuda: cima/direita/cima
+	- Ataque rasteiro: direita/baixo/direita (disponível a partir da fase 2)
+	- Super pedra: esquerda/cima/direita (disponível a partir da fase 3)
+
+Observações:
+	Na pasta "Release" existe uma versão portátil do jogo que contém as DLLs necessárias para a execução do jogo em outros dispositivos sem necessidade de instalações.
+
